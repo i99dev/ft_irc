@@ -6,11 +6,11 @@
 #    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/08 12:25:45 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/11/08 12:37:30 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FT_NAME = ft_irc_FT
+FT_NAME = ircserv
 
 SRC =	main.cpp \
 		./src/Server.cpp

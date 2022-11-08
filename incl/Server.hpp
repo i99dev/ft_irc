@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/08 12:25:41 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:36:32 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
             int fd;
             int new_socket;
         public:
-            Server(std::string const &host, std::string const &port, std::string const &password);
+            Server(std::string const &port, std::string const &password);
             void run();
             void create_socket();
             void accept_connection();

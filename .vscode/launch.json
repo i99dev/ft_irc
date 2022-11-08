@@ -1,0 +1,58 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "42 lab",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/ircserv",
+            "args": ["6667", "123456"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true,
+                },
+                {
+                    "description": "Enable Follow Fork Proccess for gdb",
+                    "text": "-gdb-set follow-fork-mode child",
+                    "ignoreFailures": true,
+                }
+            ],
+            "preLaunchTask": "build",
+        },
+        {
+            "name": "linux", //I named it Pusk because i can 
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/ircserv", //path to your programs exe and exe name
+            "args": ["6667", "123456"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true,
+                },
+                // {
+                //     "description": "Enable Follow Fork Proccess for gdb",
+                //     "text": "-gdb-set follow-fork-mode child",
+                //     "ignoreFailures": true,
+                // }
+            ],
+            "preLaunchTask": "build",
+        }
+    ]
+}

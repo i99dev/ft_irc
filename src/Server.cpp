@@ -6,14 +6,14 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/08 12:25:37 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:36:46 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
 
-ft::Server::Server(std::string const &host, std::string const &port, std::string const &password):
-    host(host),
+ft::Server::Server(std::string const &port, std::string const &password):
+    host("localhost"),
     servername("ft_irc"),
     version("0.1"),
     port(port),
