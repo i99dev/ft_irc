@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/08 11:59:33 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:25:41 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 # include <unistd.h>
 # include <cstring>
 
-
-
+# define EXIT_FAILURE 1
 
 namespace ft
 {
