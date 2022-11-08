@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/08 11:20:24 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:59:33 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <iostream>
 # include <string>
+# include <arpa/inet.h>
+# include <cstdlib>
+# include <fcntl.h>
+# include <unistd.h>
+# include <cstring>
+
+
 
 
 namespace ft
@@ -27,8 +34,18 @@ namespace ft
             std::string const version;
             std::string const port;
             std::string const password;
+            int fd;
+            int new_socket;
         public:
             Server(std::string const &host, std::string const &port, std::string const &password);
+            void run();
+            void create_socket();
+            void accept_connection();
+            void send_message();
+            void receive_message();
+            void close_connection();
+            void close_socket();
+            void close_server();
             ~Server();
     };
 }
