@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/08 12:36:32 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:53:31 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <cstring>
+# include <sys/types.h>
+# include <sys/socket.h>
 
 # define EXIT_FAILURE 1
 
