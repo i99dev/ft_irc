@@ -6,22 +6,24 @@
 #    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/08 12:37:30 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/11/10 09:16:10 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FT_NAME = ircserv
 
 SRC =	main.cpp \
-		./src/Server.cpp
+		./src/Server.cpp \
+		./src/Client.cpp \
+		./src/Message.cpp \
 
 
 OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CC = clang++ -g 
-CFLAGS = -Wall -Wextra -Werror -std=c++98 
+CC = clang++ -g  -std=c++98 
+# CFLAGS = -Wall -Wextra -Werror
 
 all: $(FT_NAME)
 

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/09 18:03:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/10 09:18:19 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,7 @@ ft::Server::Server(std::string const &port, std::string const &password):
     std::cout << "Port: " << port << std::endl; 
     std::cout << "Password: " << password << std::endl;
 
-    create_socket();
-    accept_connection();
-    send_message();
-    receive_message();
-    close_connection();
-    close_socket();
-    close_server();
+    run();
     
 }
 
@@ -86,6 +80,7 @@ void ft::Server::create_socket()
 
 void ft::Server::accept_connection()
 {
+    int new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     /**
@@ -93,42 +88,24 @@ void ft::Server::accept_connection()
      * fd: Socket file descriptor
      * (struct sockaddr *)&address: Pointer to the address
      * (socklen_t *)&addrlen: Pointer to the size of the address
-     * Returns a new file descriptor for the accepted socket
      */
-    if ((new_socket = accept(fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0)
+    if ((new_socket = accept(fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0)
     {
         std::cout << "Accept failed" << std::endl;
         exit(EXIT_FAILURE);
     }
     std::cout << "New connection" << std::endl;
-}
-/**
- * Send a message to the client
- */
-void ft::Server::send_message()
-{
-    char buffer[1024] = {0};
-    std::string message;
-    std::cout << "Enter message: ";
-    std::getline(std::cin, message);
-    strcpy(buffer, message.c_str());
-    send(new_socket, buffer, strlen(buffer), 0);
-    std::cout << "Message sent" << std::endl;
-}
+    /**
+     * Creating a new client
+     */
+    ft::Client *client = new ft::Client(new_socket, host, servername);
+    /**
+     * Adding the client to the clients vector
+     */
+    clients.push_back(client);
 
-/**
- * Receive a message from the client
- */
-void ft::Server::receive_message()
-{
-    char buffer[1024] = {0};
-    int valread;
-    if ((valread = read(new_socket, buffer, 1024)) == 0)
-    {
-        std::cout << "Client disconnected" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    std::cout << "Message received: " << buffer << std::endl;
+    std::cout << "Client added:" << client << std::endl;
+    
 }
 
 /**
@@ -136,7 +113,7 @@ void ft::Server::receive_message()
  */
 void ft::Server::close_connection()
 {
-    close(new_socket);
+    close(master_socket);
     std::cout << "Connection closed" << std::endl;
 }
 
@@ -165,11 +142,9 @@ void ft::Server::close_server()
 void ft::Server::run()
 {
     create_socket();
-    accept_connection();
     while (1)
     {
-        send_message();
-        receive_message();
+        accept_connection();
     }
     close_server();
 }
