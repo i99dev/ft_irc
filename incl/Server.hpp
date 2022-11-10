@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/10 08:58:24 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:19:47 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,10 @@ namespace ft
             } status;
             std::vector<struct pollfd> fds;
             Server(std::string const &port, std::string const &password);
-            void run();
-            void create_socket();
-            void accept_connection();
-            void send_message();
-            void receive_message();
-            void close_connection();
-            void close_socket();
-            void close_server();
             ~Server();
+
+            void create_socket();
+            void createPoll();
     };
 }
 

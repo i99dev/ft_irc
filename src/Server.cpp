@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/10 09:18:19 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:57:08 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ ft::Server::Server(std::string const &port, std::string const &password):
     std::cout << "Host: " << host << std::endl;
     std::cout << "Port: " << port << std::endl; 
     std::cout << "Password: " << password << std::endl;
-
-    run();
+    std::cout << "Servername: " << servername << std::endl;
     
+    this->create_socket();
+    this->createPoll();
 }
 
 void ft::Server::create_socket()
@@ -78,77 +79,58 @@ void ft::Server::create_socket()
     std::cout << "Server running" << std::endl;
 }
 
-void ft::Server::accept_connection()
+void ft::Server::createPoll()
 {
-    int new_socket;
-    struct sockaddr_in address;
-    int addrlen = sizeof(address);
-    /**
-     * Accepting a new connection
-     * fd: Socket file descriptor
-     * (struct sockaddr *)&address: Pointer to the address
-     * (socklen_t *)&addrlen: Pointer to the size of the address
-     */
-    if ((new_socket = accept(fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0)
-    {
-        std::cout << "Accept failed" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    std::cout << "New connection" << std::endl;
-    /**
-     * Creating a new client
-     */
-    ft::Client *client = new ft::Client(new_socket, host, servername);
-    /**
-     * Adding the client to the clients vector
-     */
-    clients.push_back(client);
+    struct pollfd pfd;
+    pfd.fd = fd;
+    pfd.events = POLLIN;
+    fds.push_back(pfd);
 
-    std::cout << "Client added:" << client << std::endl;
-    
-}
-
-/**
- * Close the connection
- */
-void ft::Server::close_connection()
-{
-    close(master_socket);
-    std::cout << "Connection closed" << std::endl;
-}
-
-/**
- * Close the socket
- */
-void ft::Server::close_socket()
-{
-    close(fd);
-    std::cout << "Socket closed" << std::endl;
-}
-
-/**
- * Close the server
- */
-void ft::Server::close_server()
-{
-    close_connection();
-    close_socket();
-    std::cout << "Server closed" << std::endl;
-}
-
-/**
- * run the server
-*/
-void ft::Server::run()
-{
-    create_socket();
     while (1)
     {
-        accept_connection();
+        int ret = poll(fds.data(), fds.size(), -1);
+        if (ret == -1)
+        {
+            if (errno == EINTR)
+                continue;
+            std::cout << "Poll failed" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        for (size_t i = 0; i < fds.size(); i++)
+        {
+            if (fds[i].revents & POLLIN)
+            {
+                if (fds[i].fd == fd)
+                {
+                    struct sockaddr_in addr;
+                    socklen_t addrlen = sizeof(addr);
+                    int client_fd = accept(fd, (struct sockaddr *)&addr, &addrlen);
+                    if (client_fd == -1)
+                    {
+                        std::cout << "Accept failed" << std::endl;
+                        exit(EXIT_FAILURE);
+                    }
+                    std::cout << "New connection" << std::endl;
+                    Client client(client_fd);
+                    clients.push_back(&client);
+                    struct pollfd pfd;
+                    pfd.fd = client_fd;
+                    pfd.events = POLLIN;
+                    fds.push_back(pfd);
+                }
+                else
+                {
+                    char buffer[1024];
+                    int bytes_rec = recv(fds[i].fd, buffer,1024, 0);
+                    std::string msg(buffer, bytes_rec);
+                    clients[i - 1]->saveMsg(msg);
+                    std::cout << i << std::endl;
+                    std::cout << msg << std::endl;
+                }
+            }
+        }
     }
-    close_server();
 }
-
 
 
 ft::Server::~Server()
