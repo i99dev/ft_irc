@@ -1,10 +1,15 @@
-# include <sys/socket.h>
-# include <sys/types.h>
-# include <netinet/in.h>
 # include <iostream>
+# include <string>
+# include <arpa/inet.h>
+# include <cstdlib>
+# include <fcntl.h>
 # include <unistd.h>
-# include <string.h>
-
+# include <cstring>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <sys/poll.h>
+#include <sys/select.h>
+#include <vector>
 
 int main()
 {
@@ -34,25 +39,58 @@ int main()
     }
 
     //accept
-    int client = accept(sock, NULL, NULL);
-    if (client < 0)
+    std::vector<struct pollfd> fds;
+    struct pollfd fd;
+    fd.fd = sock;
+    fd.events = POLLIN;
+    fds.push_back(fd);
+    while (true)
     {
-        std::cout << "Error accepting connection" << std::endl;
-        return 1;
+        int ret = poll(fds.data(), fds.size(), -1);
+        if (ret < 0)
+        {
+            std::cout << "Error polling" << std::endl;
+            return 1;
+        }
+        for (int i = 0; i < fds.size(); i++)
+        {
+            if (fds[i].revents & POLLIN)
+            {
+                if (fds[i].fd == sock)
+                {
+                    sockaddr_in client_addr;
+                    socklen_t client_addr_size = sizeof(client_addr);
+                    int client_sock = accept(sock, (sockaddr*)&client_addr, &client_addr_size);
+                    if (client_sock < 0)
+                    {
+                        std::cout << "Error accepting client" << std::endl;
+                        return 1;
+                    }
+                    struct pollfd fd;
+                    fd.fd = client_sock;
+                    fd.events = POLLIN;
+                    fds.push_back(fd);
+                }
+                else
+                {
+                    char buf[1024];
+                    int bytes = recv(fds[i].fd, buf, 1024, 0);
+                    if (bytes < 0)
+                    {
+                        std::cout << "Error receiving data" << std::endl;
+                        return 1;
+                    }
+                    if (bytes == 0)
+                    {
+                        close(fds[i].fd);
+                        fds.erase(fds.begin() + i);
+                        i--;
+                        continue;
+                    }
+                    std::cout << "Received: " << std::string(buf, 0, bytes) << std::endl;
+                }
+            }
+        }
     }
-
-    //send
-    const char* msg = "Hello from server";
-    int sendRes = send(client, msg, strlen(msg), 0);
-    if (sendRes < 0)
-    {
-        std::cout << "Error sending message" << std::endl;
-        return 1;
-    }
-
-    //close
-    close(client);
-    close(sock);
-
     return 0;
 }
