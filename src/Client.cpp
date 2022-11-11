@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/10 09:18:29 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:56:25 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ std::vector <ft::Message>	ft::Client::getMsgRecv(void)const
 	return (this->_msgRecv);
 }
 
-ft::Client::Client(int &fd, std::string host, std::string servername)
+ft::Client::Client(int &fd)
 {
-	this->_fd = fd;
+	this->fd = fd;
 	this->_is_authenticated = false;
 	this->_is_ope = false;
 	this->_attempts = 0;
