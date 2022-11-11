@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/11 07:17:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/11 07:33:01 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void ft::Server::createPoll()
                 }
                 else if (i > 0)
                 {
-                    char buffer[1024] = {0};
-                    int valread = read(fds[i].fd, buffer, 1024);
+                    char buffer[1024] = {0}; // 1024 is the max size of the message
+                    int valread = read(fds[i].fd, buffer, 1024); // read from client
                     if (valread == 0)
                     {
                         std::cout << "Client disconnected" << std::endl;
