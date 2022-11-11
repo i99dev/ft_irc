@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/11 07:04:32 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/11 07:17:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,20 @@ void ft::Server::createPoll()
                     pfd.events = POLLIN;
                     fds.push_back(pfd);
                 }
-                else
+                else if (i > 0)
                 {
-                    char buffer[1024];
-                    int bytes_rec = recv(fds[i].fd, buffer,1024, 0);
-                    std::string msg(buffer, bytes_rec);
-                    clients[i - 1]->saveMsg(msg);
-                    std::cout << i << std::endl;
-                    std::cout << msg << std::endl;
+                    char buffer[1024] = {0};
+                    int valread = read(fds[i].fd, buffer, 1024);
+                    if (valread == 0)
+                    {
+                        std::cout << "Client disconnected" << std::endl;
+                        close(fds[i].fd);
+                        fds.erase(fds.begin() + i);
+                        clients.erase(clients.begin() + i - 1);
+                        continue;
+                    }
+                    std::cout << "Message received: " << buffer << std::endl;
+                    std::string msg(buffer);
                 }
             }
         }
