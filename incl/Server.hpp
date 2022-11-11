@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/10 18:19:47 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/11 07:01:42 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define EINTR 4
 
 # define EXIT_FAILURE 1
-# define errno 1
+
 namespace ft
 {
     class Server
@@ -45,7 +45,7 @@ namespace ft
             
         public:
             std::vector<Client *> clients;
-            int fd; // file descriptor
+            int master_fd; // file descriptor
             int master_socket; // new socket
             enum Status {
                 OFFLINE,

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/10 18:57:08 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/11 07:04:32 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ ft::Server::Server(std::string const &port, std::string const &password):
 
 void ft::Server::create_socket()
 {
-    struct sockaddr_in addr;
+    struct sockaddr_in addr; // option to add to master_fd 
     int opt = 1;
     /**
      * Creating socket file descriptor
@@ -39,7 +39,7 @@ void ft::Server::create_socket()
      * SOCK_STREAM: TCP
      * 0: Default protocol
      */ 
-    if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+    if ((master_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         std::cout << "Socket failed" << std::endl;
         exit(EXIT_FAILURE);
@@ -52,7 +52,7 @@ void ft::Server::create_socket()
      * &opt: Pointer to the option value
      * sizeof(opt): Size of the option value
      */
-    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
+    if (setsockopt(master_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
     {
         std::cout << "Setsockopt failed" << std::endl;
         exit(EXIT_FAILURE);
@@ -66,12 +66,12 @@ void ft::Server::create_socket()
      * (struct sockaddr *)&addr: Pointer to the address
      * sizeof(addr): Size of the address
      */
-    if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    if (bind(master_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
         std::cout << "Bind failed" << std::endl;
         exit(EXIT_FAILURE);
     }
-    if (listen(fd, 3) < 0)
+    if (listen(master_fd, 3) < 0)
     {
         std::cout << "Listen failed" << std::endl;
         exit(EXIT_FAILURE);
@@ -81,8 +81,8 @@ void ft::Server::create_socket()
 
 void ft::Server::createPoll()
 {
-    struct pollfd pfd;
-    pfd.fd = fd;
+    pollfd pfd;
+    pfd.fd = master_fd;
     pfd.events = POLLIN;
     fds.push_back(pfd);
 
@@ -100,11 +100,11 @@ void ft::Server::createPoll()
         {
             if (fds[i].revents & POLLIN)
             {
-                if (fds[i].fd == fd)
+                if (fds[i].fd == master_fd)
                 {
                     struct sockaddr_in addr;
                     socklen_t addrlen = sizeof(addr);
-                    int client_fd = accept(fd, (struct sockaddr *)&addr, &addrlen);
+                    int client_fd = accept(master_fd, (struct sockaddr *)&addr, &addrlen);
                     if (client_fd == -1)
                     {
                         std::cout << "Accept failed" << std::endl;
