@@ -8,5 +8,14 @@
             "type": "shell",
             "command": "make re",
         },
+        {
+            "label": "g++ build active file",
+            "type": "shell",
+            "command": "g++ -g -std=c++98 ${file} -o ${fileDirname}/a.out",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
     ]
 }
