@@ -9,7 +9,7 @@
 #include <sys/socket.h> 
 #include <netinet/in.h> 
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
-#define PORT 8882
+#define PORT 8884
 #define	MAXCLNT 10
 #define	WLCMSG "Welcome to ft_irc_server \r\n"
 #include <vector>
@@ -135,6 +135,7 @@ int	Server::connectClients()
 
 void	Server::getClientMsg()
 {
+
 	for (std::vector<int>::iterator clientFD = this->_clientSocket.begin(); clientFD != this->_clientSocket.end(); clientFD++)  
 	{
 		if (FD_ISSET(*clientFD, &this->_readfds))  
@@ -145,8 +146,12 @@ void	Server::getClientMsg()
 				// assign the address if the peer connected to the socket(_clientSocket[i]) in the buffer pointed to by adress
 				getpeername(*clientFD, (struct sockaddr*)&this->_address, (socklen_t*)&this->_addrlen);  
 				std::cout << "Disconnection: socket fd is " << *clientFD << ", ip address is " << inet_ntoa(this->_address.sin_addr) << ", port is" << ntohs(this->_address.sin_port) << std::endl;
+				std::cout << "hey" << std::endl;
 				close(*clientFD);
 				this->_clientSocket.erase(clientFD);
+				if (this->_clientSocket.empty())
+					break ;
+				std::cout << "hey" << std::endl;
 			}
 			else 
 			{
