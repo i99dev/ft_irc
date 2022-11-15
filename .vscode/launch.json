@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ircserv",
-            "args": ["6667", "123456"],
+            "args": ["8886", "123456"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -34,7 +34,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ircserv", //path to your programs exe and exe name
-            "args": ["6667", "123456"],
+            "args": ["8886", "123456"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
