@@ -9,7 +9,7 @@
 #include <sys/socket.h> 
 #include <netinet/in.h> 
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
-#define PORT 8884
+#define PORT 8886
 #define	MAXCLNT 10
 #define	WLCMSG "Welcome to ft_irc_server \r\n"
 #include <vector>
@@ -135,25 +135,25 @@ int	Server::connectClients()
 
 void	Server::getClientMsg()
 {
-
-	for (std::vector<int>::iterator clientFD = this->_clientSocket.begin(); clientFD != this->_clientSocket.end(); clientFD++)  
+	for (int i = 0; i < this->_clientSocket.size(); i++)  
 	{
-		if (FD_ISSET(*clientFD, &this->_readfds))  
+		// std::cout << "3 hey" << std::endl;
+		if (FD_ISSET(*(this->_clientSocket.begin()+i), &this->_readfds))  
 		{
 			// read the message recieved
-			if ((this->_readbyte = read(*clientFD, this->_msgBuffer, 1024)) == 0)  
+			if ((this->_readbyte = read(*(this->_clientSocket.begin()+i), this->_msgBuffer, 1024)) == 0)  
 			{
 				// assign the address if the peer connected to the socket(_clientSocket[i]) in the buffer pointed to by adress
-				getpeername(*clientFD, (struct sockaddr*)&this->_address, (socklen_t*)&this->_addrlen);  
-				std::cout << "Disconnection: socket fd is " << *clientFD << ", ip address is " << inet_ntoa(this->_address.sin_addr) << ", port is" << ntohs(this->_address.sin_port) << std::endl;
-				std::cout << "hey" << std::endl;
-				close(*clientFD);
-				this->_clientSocket.erase(clientFD);
+				getpeername(*(this->_clientSocket.begin()+i), (struct sockaddr*)&this->_address, (socklen_t*)&this->_addrlen);  
+				std::cout << "Disconnection: socket fd is " << *(this->_clientSocket.begin()+i) << ", ip address is " << inet_ntoa(this->_address.sin_addr) << ", port is" << ntohs(this->_address.sin_port) << std::endl;
+				// std::cout << "1 hey" << std::endl;
+				close(*(this->_clientSocket.begin()+i));
+				this->_clientSocket.erase(this->_clientSocket.begin() + i);
 				if (this->_clientSocket.empty())
 					break ;
-				std::cout << "hey" << std::endl;
+				// std::cout << "2 hey" << std::endl;
 			}
-			else 
+			else
 			{
 				// print the message received
 				this->_msgBuffer[this->_readbyte] = '\0';
@@ -161,9 +161,9 @@ void	Server::getClientMsg()
 				std::string msg ("Server received this message: ");
 				msg += this->_msgBuffer;
 				// send message to the client 
-				send(*clientFD, msg.c_str(), msg.length(), 0);
+				send(*(this->_clientSocket.begin()+i), msg.c_str(), msg.length(), 0);
 			}
-		}  
+		}
 	}
 }
 
