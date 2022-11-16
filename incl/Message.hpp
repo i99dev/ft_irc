@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/15 18:53:05 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/16 06:04:41 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ namespace ft
 			std::string _Command;
 			std::string	*_Parameter;
 			int			_ParaNum;
+
+			//privet methods
+			void 		ParseMsg();
 		public:
 			std::string	getMsg(void) const;
 			std::string	getCommand(void) const;
 			std::string	*getParameter(void) const;
 			int			getParaNum(void) const;
-			void 		ParseMsg();
 			Message(std::string _msg);
 			~Message();
 	};

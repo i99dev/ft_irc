@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/15 18:53:55 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/16 06:10:06 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int			ft::Message::getParaNum(void) const
 	return(this->_ParaNum);
 }
 
-ft::Message::Message(std::string msg):_msg(msg){}
+ft::Message::Message(std::string msg):_msg(msg){
+	this->ParseMsg();
+}
 
 ft::Message::~Message(){}
 
@@ -73,4 +75,7 @@ void ft::Message::ParseMsg()
 	for (int i = 0; i < j; i++)
 		tmp2[i] = tmp[i + 1];
 	this->_Parameter = tmp2;
+	//print 
+	std::cout << "Command: " << this->_Command << std::endl;
+	std::cout << "Parameters: " << this->_Parameter[0] << std::endl;
 }

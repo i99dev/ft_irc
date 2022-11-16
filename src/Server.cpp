@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/15 07:42:14 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/16 06:09:11 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,19 @@ void ft::Server::createPoll()
                         clients.erase(clients.begin() + i - 1);
                         continue;
                     }
-                    std::cout << "Message received: " << buffer << std::endl;
-                    std::string msg(buffer);
+                    std::cout << buffer << std::endl;
+                    //send message to all clients -- > test only 
+                    for (size_t j = 1; j < fds.size(); j++)
+                    {
+                        if (fds[j].fd != master_fd)
+                        {
+                            send(fds[j].fd, buffer, strlen(buffer), 0);
+                        }
+                    }
+                    /**
+                     * this section will use to handle the message
+                    */
+                    Message msg(buffer);
                 }
             }
         }
