@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/11 07:33:01 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/16 06:09:11 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ void ft::Server::createPoll()
                 }
                 else if (i > 0)
                 {
+                    //print client number and message
+                    std::cout << "Client " << clients[i - 1]->fd << " sent a message" << std::endl;
                     char buffer[1024] = {0}; // 1024 is the max size of the message
                     int valread = read(fds[i].fd, buffer, 1024); // read from client
                     if (valread == 0)
@@ -130,8 +132,19 @@ void ft::Server::createPoll()
                         clients.erase(clients.begin() + i - 1);
                         continue;
                     }
-                    std::cout << "Message received: " << buffer << std::endl;
-                    std::string msg(buffer);
+                    std::cout << buffer << std::endl;
+                    //send message to all clients -- > test only 
+                    for (size_t j = 1; j < fds.size(); j++)
+                    {
+                        if (fds[j].fd != master_fd)
+                        {
+                            send(fds[j].fd, buffer, strlen(buffer), 0);
+                        }
+                    }
+                    /**
+                     * this section will use to handle the message
+                    */
+                    Message msg(buffer);
                 }
             }
         }

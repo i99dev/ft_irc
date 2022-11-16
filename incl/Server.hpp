@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/11 07:11:54 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/15 07:33:27 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <sys/select.h>
 #include <cerrno>
 
+// Our Headers...
 #include "Client.hpp"
 #include "Message.hpp"
 
@@ -39,23 +40,25 @@ namespace ft
         std::string const version;
         std::string const port;
         std::string const password;
-
-    public:
-        std::vector<Client *> clients;
         int master_fd;     // file descriptor
         int master_socket; // new socket
+
+    public:
+        Server(std::string const &port, std::string const &password);
+        ~Server();
+        std::vector<Client *> clients;
+        std::vector<struct pollfd> fds;
+        
         enum Status
         {
             OFFLINE,
             ONLINE,
             CLOSED
         } status;
-        std::vector<struct pollfd> fds;
-        Server(std::string const &port, std::string const &password);
-        ~Server();
 
         void create_socket();
         void createPoll();
+        void setfd(int fd);
     };
 }
 
