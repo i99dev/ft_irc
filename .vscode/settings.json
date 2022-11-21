@@ -76,6 +76,8 @@
         "thread": "cpp",
         "variant": "cpp",
         "stop_token": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "map": "cpp",
+        "fstream": "cpp"
     }
 }
