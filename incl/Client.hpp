@@ -6,15 +6,32 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/10 18:42:49 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:24:13 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
-#include <iostream>
-#include <vector>
+
+// Main libraries
+#include <algorithm>
+#include <poll.h>
+#include <unistd.h>
+
+// Socket includes
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+
 #include "Message.hpp"
+# include"Replies.hpp"
+#include <string>
+
+#include <fstream>
+#include <vector>
+
 /*
 ! used for 
 	- registring the user
@@ -35,6 +52,8 @@ namespace ft
 			bool                 	_is_authenticated;
 			bool                 	_is_ope;
 			int                  	_attempts;
+			//ip 
+			 
 			
 		public:
 			int						fd;
@@ -48,7 +67,7 @@ namespace ft
 				Message msg_new = Message(msg);
 				_msgSend.push_back(msg_new);
 			}
-			Client(int &fd);
+			Client(int &fd, std::string servername);
 			~Client();
 	};
 }

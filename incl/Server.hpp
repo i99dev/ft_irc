@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/15 07:33:27 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:51:35 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ namespace ft
     public:
         Server(std::string const &port, std::string const &password);
         ~Server();
+
+        void acceptConnection();
+        void receiveMessage(int i);
+
         std::vector<Client *> clients;
-        std::vector<struct pollfd> fds;
-        
+        std::vector<pollfd> fds;
+
         enum Status
         {
             OFFLINE,
