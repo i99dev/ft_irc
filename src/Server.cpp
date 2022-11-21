@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/21 17:24:31 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:39:19 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void ft::Server::acceptConnection()
     their_addr.ss_family = AF_INET;
     their_addr.__ss_align = 0;
     socklen_t addr_size = sizeof(their_addr);
-    char s[INET6_ADDRSTRLEN];
+    char ip_client[INET6_ADDRSTRLEN];
 
     if ((new_fd = accept(master_fd, (sockaddr *)&their_addr, &addr_size)) == -1)
     {
@@ -130,8 +130,8 @@ void ft::Server::acceptConnection()
         exit(1);
     }
 
-    inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), s, sizeof(s));
-    std::cout << "New connection from " << s << std::endl;
+    inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
+    std::cout << "New connection from " << ip_client << std::endl;
 
     Client *client = new Client(new_fd, servername);
     this->clients.push_back(client);
@@ -164,6 +164,9 @@ void ft::Server::receiveMessage(int i)
     {
         buf[nbytes] = '\0';
         std::cout << "Received: " << buf <<"----"<< std::endl;
+        //persing (buf)
+        //set NIck name
+        //set username 
         std::cout << clients[i- 1]->fd << std::endl;
     }
 }
