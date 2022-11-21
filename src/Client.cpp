@@ -6,11 +6,12 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/21 17:27:33 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:37:29 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Client.hpp"
+#include <string.h>
 
 
 /******************* GETTERS *******************/
@@ -32,6 +33,9 @@ std::string ft::Client::getChannelsJoined(void) const
 
 std::vector<ft::Message> ft::Client::getMsgSend(void) const
 {
+	char buf[1024];
+	read(this->fd, buf, strlen(buf));
+	std::cout << "test:" << buf << std::endl;
 	return (this->_msgSend);
 }
 
