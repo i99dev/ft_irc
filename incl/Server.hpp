@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/21 16:51:35 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/22 07:17:33 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ namespace ft
         void create_socket();
         void createPoll();
         void setfd(int fd);
+        void parseMessage(std::string const &msg, int i);
     };
 }
 

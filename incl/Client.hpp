@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/21 17:24:13 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/22 06:18:37 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ namespace ft
 			std::string				_channelsJoined;
 			std::vector <Message>	_msgSend;
 			std::vector <Message>	_msgRecv;
+			std::string				_client_ip;
 			bool                 	_is_authenticated;
 			bool                 	_is_ope;
 			int                  	_attempts;
@@ -57,17 +58,20 @@ namespace ft
 			
 		public:
 			int						fd;
+			//user info
 			std::string				getNickName(void)const;
+			void 					setNickName(std::string nickName);
 			std::string				getUserName(void)const;
+			void 					setUserName(std::string userName);
+			//user channels
 			std::string				getChannelsJoined(void)const;
+			void 					setChannelsJoined(std::string channelsJoined);
+			// user ip 
+			std::string				getIp(void)const;
+			// user massage
 			std::vector <Message>	getMsgSend(void)const;
 			std::vector <Message>	getMsgRecv(void)const;
-			void 					saveMsg(std::string msg)
-			{
-				Message msg_new = Message(msg);
-				_msgSend.push_back(msg_new);
-			}
-			Client(int &fd, std::string servername);
+			Client(int &fd, std::string servername, std::string ip);
 			~Client();
 	};
 }

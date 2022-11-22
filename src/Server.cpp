@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/21 19:39:19 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/22 07:55:32 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
     this->createPoll();
 }
 
+ft::Server::~Server()
+{
+    std::cout << "Server destroyed" << std::endl;
+}
+
+/**
+ * @brief Create a socket object
+*/
 void ft::Server::create_socket()
 {
     int yes = 1;
@@ -71,6 +79,9 @@ void ft::Server::create_socket()
     std::cout << "Server listening on " << servinfo->ai_canonname << ":" << port << std::endl;
 }
 
+/**
+ * @brief Create a Poll object
+*/
 void ft::Server::createPoll()
 {
     pollfd pfd;
@@ -108,6 +119,9 @@ void ft::Server::createPoll()
     }
 }
 
+/**
+ * @brief tools to get the client's ip address
+*/
 void *get_in_addr(struct sockaddr *sa)
 {
     if (sa->sa_family == AF_INET)
@@ -115,6 +129,9 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
 
+/**
+ * @brief Accept a new connection
+*/
 void ft::Server::acceptConnection()
 {
     int new_fd;
@@ -131,9 +148,7 @@ void ft::Server::acceptConnection()
     }
 
     inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
-    std::cout << "New connection from " << ip_client << std::endl;
-
-    Client *client = new Client(new_fd, servername);
+    Client *client = new Client(new_fd, servername, ip_client);
     this->clients.push_back(client);
     
     pollfd pfd;
@@ -143,11 +158,15 @@ void ft::Server::acceptConnection()
     fds.push_back(pfd);
 }
 
+/**
+ * @brief Receive message from client
+*/
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
     char buf[1024];
-    if ((nbytes = recv(fds[i].fd, buf, 1024, 0)) <= 0)
+    nbytes = recv(fds[i].fd, buf, 1024, 0);
+    if (nbytes <= 0)
     {
         if (nbytes == 0)
         {
@@ -163,15 +182,53 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-        std::cout << "Received: " << buf <<"----"<< std::endl;
-        //persing (buf)
-        //set NIck name
-        //set username 
-        std::cout << clients[i- 1]->fd << std::endl;
+         std::cout << "____________________" << std::endl;
+        std::cout << "Received: " << buf;
+        std::cout << "____________________" << std::endl;
+        this->parseMessage(buf, i);
     }
 }
 
-ft::Server::~Server()
+/**
+ * @brief Parse the message received from the client
+ * 
+*/
+void ft::Server::parseMessage(std::string const &msg, int i)
 {
-    std::cout << "Server destroyed" << std::endl;
+    std::cout << "Parsing message" << std::endl;
+    std::string command;
+    std::string params;
+    std::string prefix;
+    std::string trailing;
+    std::string::size_type pos = 0;
+
+    if (msg[0] == ':')
+    {
+        pos = msg.find(' ');
+        prefix = msg.substr(1, pos - 1);
+        pos++;
+    }
+    std::string::size_type pos2 = msg.find(' ', pos);
+    command = msg.substr(pos, pos2 - pos);
+    pos = pos2 + 1;
+    if (msg[pos] == ':')
+    {
+        trailing = msg.substr(pos + 1);
+    }
+    else
+    {
+        pos2 = msg.find(' ', pos);
+        params = msg.substr(pos, pos2 - pos);
+        pos = pos2 + 1;
+        trailing = msg.substr(pos);
+    }
+    std::cout << "----------------" << std::endl;
+    std::cout << "Command: " << command << std::endl;
+    std::cout << "Prefix: " << prefix << std::endl;
+    std::cout << "Params: " << params << std::endl;
+    std::cout << "Trailing: " << trailing << std::endl;
+    std::cout << "----------------" << std::endl;
+
+    //execute from here
+    //this->executeCommand(command, params, trailing, i); // exmaple of command
 }
