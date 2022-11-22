@@ -34,7 +34,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ircserv",
-            "args": ["8886", "123456"],
+            "args": ["6667", "123"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

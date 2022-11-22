@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/22 07:55:32 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/22 09:50:43 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void ft::Server::create_socket()
         std::cerr << "listen" << std::endl;
         exit(1);
     }
-    std::cout << "Server listening on " << servinfo->ai_canonname << ":" << port << std::endl;
+    std::cout << "Server listening on " << std::endl;
 }
 
 /**
