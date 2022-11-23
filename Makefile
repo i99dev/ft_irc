@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/11 07:10:54 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/11/23 05:33:48 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC =	main.cpp \
 		./src/Server.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
+		./src/Channel.cpp
 
 
 OBJ_DIR = obj

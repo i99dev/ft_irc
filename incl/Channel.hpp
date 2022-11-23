@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Client.hpp"
 #define CHNAME_LENGTH 50
+#define EXC_WRONG_CHNAME "Wrong Channel Name"
 
 class Client;
 
@@ -21,9 +22,8 @@ enum ChannelMode{
 	CHANNEL_MODE_KEY = 7
 };
 
-
-
-namespace ft{
+namespace ft
+{
 	class Channel{
 		private:
 			ChannelMode					_mode;
@@ -33,7 +33,7 @@ namespace ft{
 			time_t						_created_at;
 			size_t						_max_clients;
 			Client						*_creator;
-			int							_ChName_parse(std::string name)
+			int							_ChName_parse(std::string &name)
 			{
 				if (name[0] == '&' || name[0] == '#' || name[0] == '+' || name[0] == '!')
 				{
@@ -73,12 +73,17 @@ namespace ft{
 			bool						isVoice(Client *client);
 			void						setCreator(Client *creator);
 			void						removeClientFromChannel(Client *client);
-			class WrongChannelNameRequir : public std::exception
-			{
-				public:
-					const char* what() const throw();
-			};
+		~Channel();
 	};
 }
+
+class WrongChannelNameRequir : public std::exception
+{
+	public:
+		const char* what() const throw()
+		{
+			return (EXC_WRONG_CHNAME);
+		}
+};
 
 #endif

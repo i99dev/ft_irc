@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 04:43:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/23 05:34:37 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <vector>
 #include "Message.hpp"
 #include "Channel.hpp"
+
+class Channel;
 /*
 ! used for 
 	- registring the user
