@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "Client.hpp"
+class Client;
 
 
 enum ChannelMode{
@@ -30,12 +31,12 @@ namespace ft{
 			size_t						_max_clients;
 			Client						*_creator;
 		public:
-			std::vector<ft::Client *>	_normal_clients;
-			std::vector<ft::Client *>	_voice_clients;
-			std::vector<ft::Client *>	_ope_clients;
+			std::vector<Client *>	_normal_clients;
+			std::vector<Client *>	_voice_clients;
+			std::vector<Client *>	_ope_clients;
 		public:
 			Channel(std::string &name,  std::string &password);
-			std::vector<ft::Client *>	getClients() const;
+			std::vector<Client *>	getClients() const;
 			ChannelMode					getMode();
 			ChannelMode					addMode(ChannelMode mode);
 			ChannelMode					removeMode(ChannelMode mode);
@@ -43,17 +44,17 @@ namespace ft{
 			std::string					&getName();
 			std::string					&getTopic();
 			std::string					getModeString();
-			std::string					getClientRoleString(ft::Client *client);
-			ft::Client					&getCreator();
+			std::string					getClientRoleString(Client *client);
+			Client						&getCreator();
 			time_t						&getCreatedAt();
 			size_t						&getMaxClients();
-			bool						joined(ft::Client *client);
-			bool						isOwner(ft::Client *client);
-			bool						isOpe(ft::Client *client);
-			bool						isNormal(ft::Client *client);
-			bool						isVoice(ft::Client *client);
-			void						setCreator(ft::Client *creator);
-			void						removeClientFromChannel(ft::Client *client);
+			bool						joined(Client *client);
+			bool						isOwner(Client *client);
+			bool						isOpe(Client *client);
+			bool						isNormal(Client *client);
+			bool						isVoice(Client *client);
+			void						setCreator(Client *creator);
+			void						removeClientFromChannel(Client *client);
 	};
 }
 
