@@ -87,6 +87,7 @@ int main()
                         i--;
                         continue;
                     }
+					send(fds[i].fd, ":ft_irc 001 sasori :Welcome to the Internet Relay Network sasori!sasori@127.0.0.1\r\n",168, 0); 
                     std::cout << "Received: " << std::string(buf, 0, bytes) << std::endl;
                 }
             }
