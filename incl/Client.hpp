@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 06:54:33 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 08:50:03 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,12 @@
 
 #include "Message.hpp"
 # include"Replies.hpp"
+#include "Channel.hpp"
 #include <string>
 
 #include <fstream>
 #include <vector>
 
-/*
-! used for 
-	- registring the user
-	- getting his info
-	- storing his msg
-*/
 
 namespace ft
 {
@@ -46,7 +41,7 @@ namespace ft
 		private:
 			std::string				_nickName;
 			std::string				_userName;
-			std::string				_channelsJoined;
+			std::vector <Channel>	_channelsJoined;
 			std::vector <Message>	_msgSend;
 			std::vector <Message>	_msgRecv;
 			std::string				_client_ip;

@@ -6,7 +6,10 @@
 #include <vector>
 #include <iostream>
 #include "Client.hpp"
+#define CHNAME_LENGTH 50
+#define EXC_WRONG_CHNAME "Wrong Channel Name"
 
+class Client;
 
 enum ChannelMode{
 	CHANNEL_MODEPRIVATE = 0,
@@ -19,7 +22,8 @@ enum ChannelMode{
 	CHANNEL_MODE_KEY = 7
 };
 
-namespace ft{
+namespace ft
+{
 	class Channel{
 		private:
 			ChannelMode					_mode;
@@ -29,13 +33,28 @@ namespace ft{
 			time_t						_created_at;
 			size_t						_max_clients;
 			Client						*_creator;
+			int							_ChName_parse(std::string &name)
+			{
+				if (name[0] == '&' || name[0] == '#' || name[0] == '+' || name[0] == '!')
+				{
+					if (name.find('&', 1) == std::string::npos && name.find('#', 1) == std::string::npos && name.find('+', 1) == std::string::npos && name.find('!', 1) == std::string::npos)
+					{
+						if (name.length() <= CHNAME_LENGTH)
+						{
+							if (name.find(' ') == std::string::npos && name.find(':') == std::string::npos && name.find(',') == std::string::npos && name.find(7) == std::string::npos)
+								return (1);
+						}
+					}
+				}
+				return(0);
+			}
 		public:
-			std::vector<ft::Client *>	_normal_clients;
-			std::vector<ft::Client *>	_voice_clients;
-			std::vector<ft::Client *>	_ope_clients;
+			std::vector<Client *>	_normal_clients;
+			std::vector<Client *>	_voice_clients;
+			std::vector<Client *>	_ope_clients;
 		public:
 			Channel(std::string &name,  std::string &password);
-			std::vector<ft::Client *>	getClients() const;
+			std::vector<Client *>	getClients() const;
 			ChannelMode					getMode();
 			ChannelMode					addMode(ChannelMode mode);
 			ChannelMode					removeMode(ChannelMode mode);
@@ -43,18 +62,28 @@ namespace ft{
 			std::string					&getName();
 			std::string					&getTopic();
 			std::string					getModeString();
-			std::string					getClientRoleString(ft::Client *client);
-			ft::Client					&getCreator();
+			std::string					getClientRoleString(Client *client);
+			Client						&getCreator();
 			time_t						&getCreatedAt();
 			size_t						&getMaxClients();
-			bool						joined(ft::Client *client);
-			bool						isOwner(ft::Client *client);
-			bool						isOpe(ft::Client *client);
-			bool						isNormal(ft::Client *client);
-			bool						isVoice(ft::Client *client);
-			void						setCreator(ft::Client *creator);
-			void						removeClientFromChannel(ft::Client *client);
+			bool						joined(Client *client);
+			bool						isOwner(Client *client);
+			bool						isOpe(Client *client);
+			bool						isNormal(Client *client);
+			bool						isVoice(Client *client);
+			void						setCreator(Client *creator);
+			void						removeClientFromChannel(Client *client);
+		~Channel();
 	};
 }
+
+class WrongChannelNameRequir : public std::exception
+{
+	public:
+		const char* what() const throw()
+		{
+			return (EXC_WRONG_CHNAME);
+		}
+};
 
 #endif
