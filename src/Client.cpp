@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 08:49:47 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 08:52:47 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,6 @@ void ft::Client::setUserName(std::string userName)
 {
 	this->_userName = userName;
 }
-
-std::string ft::Client::getChannelsJoined(void) const
-{
-	return (this->_channelsJoined);
-}
-
-void ft::Client::setChannelsJoined(std::string channelsJoined)
-{
-	this->_channelsJoined = channelsJoined;
-}
-
 
 std::string ft::Client::getIp(void) const
 {
