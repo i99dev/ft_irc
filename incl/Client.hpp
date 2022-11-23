@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/10 18:42:49 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 03:51:51 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include "Message.hpp"
+#include "Channel.hpp"
 /*
 ! used for 
 	- registring the user
@@ -29,7 +30,7 @@ namespace ft
 		private:
 			std::string				_nickName;
 			std::string				_userName;
-			std::string				_channelsJoined;
+			std::vector <Channel *>	_channelsJoined;
 			std::vector <Message>	_msgSend;
 			std::vector <Message>	_msgRecv;
 			bool                 	_is_authenticated;
