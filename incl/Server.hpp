@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/23 06:49:57 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:54:36 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 // Our Headers...
 #include "Client.hpp"
 #include "Message.hpp"
+# include "Channel.hpp"
 
 namespace ft
 {
@@ -51,7 +52,8 @@ namespace ft
         void receiveMessage(int i);
 
         std::vector<Client *> clients;
-        std::vector<pollfd> fds;
+        std::vector<pollfd *> fds;
+        std::vector<Channel *> channels;
 
         enum Status
         {
