@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/23 14:53:50 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:10:55 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ void ft::Server::createPoll()
     pollfd pfd;
     pfd.fd = this->master_fd;
     pfd.events = POLLIN;
-    this->fds.push_back(&pfd);
+    this->fds.push_back(pfd);
 
     std::cout << "Server is online" << std::endl;
 
     while (1)
     {
-        int ret = poll(this->fds[0], this->fds.size(), -1);
+        int ret = poll(&this->fds[0], this->fds.size(), -1);
         if (ret == -1)
         {
             std::cerr << "poll" << std::endl;
@@ -103,9 +103,9 @@ void ft::Server::createPoll()
         {
             for (size_t i = 0; i < this->fds.size(); i++)
             {
-                if (this->fds[i]->revents & POLLIN)
+                if (this->fds[i].revents & POLLIN)
                 {
-                    if (this->fds[i]->fd == this->master_fd)
+                    if (this->fds[i].fd == this->master_fd)
                     {
                         this->acceptConnection();
                     }
@@ -154,8 +154,8 @@ void ft::Server::acceptConnection()
     pollfd pfd;
     pfd.fd = new_fd;
     pfd.events = POLLIN;
-    this->fds.push_back(&pfd);
-    
+    pfd.revents = 0;
+    fds.push_back(pfd);
 }
 
 /**
@@ -165,19 +165,18 @@ void ft::Server::receiveMessage(int i)
 {
     int nbytes;
     char buf[1024];
-    nbytes = recv(this->fds[i]->fd, buf, sizeof(buf), 0);
+    nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes <= 0)
     {
         if (nbytes == 0)
         {
-            std::cout << "Client disconnected" << std::endl;
-            std::cout << "socket " << fds[i]->fd << " is out" << std::endl;
+            std::cout << "socket " << fds[i].fd << " hung up" << std::endl;
         }
         else
         {
             std::cerr << "recv" << std::endl;
         }
-        close(fds[i]->fd);
+        close(fds[i].fd);
         fds.erase(fds.begin() + i);
     }
     else
