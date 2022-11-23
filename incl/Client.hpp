@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 03:51:51 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/23 04:43:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ namespace ft
 			
 		public:
 			int						fd;
-			std::string				getNickName(void)const;
-			std::string				getUserName(void)const;
-			std::string				getChannelsJoined(void)const;
-			std::vector <Message>	getMsgSend(void)const;
-			std::vector <Message>	getMsgRecv(void)const;
-			void 					saveMsg(std::string msg)
+			std::string							getNickName(void)const;
+			std::string							getUserName(void)const;
+			std::vector <Channel *>				getChannelsJoined(void)const;
+			std::vector <Message>				getMsgSend(void)const;
+			std::vector <Message>				getMsgRecv(void)const;
+			void 								saveMsg(std::string msg)
 			{
 				Message msg_new = Message(msg);
 				_msgSend.push_back(msg_new);

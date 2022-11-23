@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/10 17:56:25 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 04:44:21 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 /******************* GETTERS *******************/
 
-std::string				ft::Client::getNickName(void)const
+std::string					ft::Client::getNickName(void)const
 {
 	return (this->_nickName);
 }
 
-std::string				ft::Client::getUserName(void)const
+std::string					ft::Client::getUserName(void)const
 {
 	return (this->_userName);
 }
 
-std::string				ft::Client::getChannelsJoined(void)const
+std::vector <ft::Channel *>		ft::Client::getChannelsJoined(void)const
 {
 	return (this->_channelsJoined);
 }
