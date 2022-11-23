@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/16 06:10:06 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 06:46:54 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,68 +14,101 @@
 
 /******************* GETTERS *******************/
 
-std::string	ft::Message::getMsg(void) const
+/**
+ * @brief Parse the message received from the client
+ * 
+*/
+void ft::Message::parseMessage(std::string const &msg)
 {
-	return(this->_msg);	
-}
+    std::cout << "Parsing message" << std::endl;
+    std::string::size_type pos = 0;
 
-std::string	ft::Message::getCommand(void) const
-{
-	return(this->_Command);
-}
+    if (msg[0] == ':')
+    {
+        pos = msg.find(' ');
+        _Prefix = msg.substr(1, pos - 1);
+        pos++;
+    }
+    std::string::size_type pos2 = msg.find(' ', pos);
+    _Command = msg.substr(pos, pos2 - pos);
+    pos = pos2 + 1;
+    if (msg[pos] == ':')
+    {
+        _Trailing = msg.substr(pos + 1);
+    }
+    else
+    {
+        pos2 = msg.find(' ', pos);
+        _Parameter = msg.substr(pos, pos2 - pos);
+        pos = pos2 + 1;
+        _Trailing = msg.substr(pos);
+    }
+	//get channel name from parameter
+	if (_Command == "JOIN" || _Command == "PART" || _Command == "PRIVMSG")
+	{
+		pos = _Parameter.find('#');
+		_channel = _Parameter.substr(pos);
+	}
+    std::cout << "----------------" << std::endl;
+    std::cout << "Command: " << _Command << std::endl;
+    std::cout << "Prefix: " << _Prefix << std::endl;
+    std::cout << "Params: " << _Parameter << std::endl;
+    std::cout << "Trailing: " << _Trailing << std::endl;
+	std::cout << "Channel: " << _channel << std::endl;
+    std::cout << "----------------" << std::endl;
 
-std::string	*ft::Message::getParameter(void) const
-{
-	return(this->_Parameter);
-}
-
-int			ft::Message::getParaNum(void) const
-{
-	return(this->_ParaNum);
+    //execute from here
+    //this->executeCommand(command, params, trailing, i); // exmaple of command
 }
 
 ft::Message::Message(std::string msg):_msg(msg){
-	this->ParseMsg();
+	parseMessage(msg);
 }
 
 ft::Message::~Message(){}
 
-
-/**
- * @brief Parse the message and store the command and parameters
- * 
- * @return void
-*/
-void ft::Message::ParseMsg()
-{
-	std::string		*tmp;
-	std::string		*tmp2;
-	int				i;
-	int				j;
-
-	i = 0;
-	j = 0;
-	tmp = new std::string[15];
-	tmp2 = new std::string[15];
-	while (this->_msg[i] != '\0')
-	{
-		if (this->_msg[i] == ' ')
-		{
-			tmp[j] = this->_msg.substr(0, i);
-			this->_msg = this->_msg.substr(i + 1, this->_msg.length());
-			i = 0;
-			j++;
-		}
-		else
-			i++;
-	}
-	tmp[j] = this->_msg;
-	this->_Command = tmp[0];
-	this->_ParaNum = j;
-	for (int i = 0; i < j; i++)
-		tmp2[i] = tmp[i + 1];
-	this->_Parameter = tmp2;
-	//print 
-	std::cout << "Command: " << this->_Command << std::endl;
-	std::cout << "Parameters: " << this->_Parameter[0] << std::endl;
+std::string ft::Message::getCommand(){
+	return _Command;
 }
+
+std::string ft::Message::getParameter(){
+	return _Parameter;
+}
+
+std::string ft::Message::getPrefix(){
+	return _Prefix;
+}
+
+std::string ft::Message::getTrailing(){
+	return _Trailing;
+}
+
+bool ft::Message::isValid(){
+	return true;
+}
+
+bool ft::Message::isCommand(){
+	if (_Command.empty())
+		return false;
+	return true;
+}
+
+bool ft::Message::isPrefix(){
+	if (_Prefix.empty())
+		return false;
+	return true;
+}
+
+bool ft::Message::isParameter(){
+	if (_Parameter.empty())
+		return false;
+	return true;
+}
+
+bool ft::Message::isTrailing(){
+	if (_Trailing.empty())
+		return false;
+	return true;
+}
+
+

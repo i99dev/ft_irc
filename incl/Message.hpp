@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/16 06:04:41 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 06:40:17 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,28 @@ namespace ft
 		private:
 			std::string	_msg;
 			std::string _Command;
-			std::string	*_Parameter;
-			int			_ParaNum;
+			std::string	_Parameter;
+			std::string _Prefix;
+			std::string _Trailing;
+			std::string _channel;
 
 			//privet methods
-			void 		ParseMsg();
+			void 		parseMessage(std::string const &msg);
 		public:
-			std::string	getMsg(void) const;
-			std::string	getCommand(void) const;
-			std::string	*getParameter(void) const;
-			int			getParaNum(void) const;
-			Message(std::string _msg);
+			Message(std::string const _msg);
 			~Message();
+
+			//methods
+			std::string getCommand();
+			std::string getParameter();
+			std::string getPrefix();
+			std::string getTrailing();
+			bool 		isValid();
+			bool 		isCommand();
+			bool 		isPrefix();
+			bool 		isParameter();
+			bool 		isTrailing();
+
 	};
 }
 

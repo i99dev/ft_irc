@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/22 16:05:23 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 08:15:05 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,27 @@ std::string ft::Client::getIp(void) const
 	return (this->_client_ip);
 }
 
-std::vector<ft::Message> ft::Client::getMsgSend(void) const
+//user messages
+std::vector <ft::Message> ft::Client::getMsgSend(void) const
 {
-	char buf[1024];
-	read(this->fd, buf, strlen(buf));
-	std::cout << "test:" << buf << std::endl;
 	return (this->_msgSend);
 }
 
-std::vector<ft::Message> ft::Client::getMsgRecv(void) const
+void ft::Client::setMsgSend(Message  msgSend)
+{
+	this->_msgSend.push_back(msgSend);
+}
+
+std::vector <ft::Message> ft::Client::getMsgRecv(void) const
 {
 	return (this->_msgRecv);
 }
+
+void ft::Client::setMsgRecv(Message  msgRecv)
+{
+	this->_msgRecv.push_back(msgRecv);
+}
+
 
 ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 {
