@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/22 06:18:37 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 06:54:33 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ namespace ft
 			std::string				getIp(void)const;
 			// user massage
 			std::vector <Message>	getMsgSend(void)const;
+			void 					setMsgSend(Message  msgSend);
 			std::vector <Message>	getMsgRecv(void)const;
+			void 					setMsgRecv(Message msgRecv);
+			
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();
 	};

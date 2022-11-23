@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/22 09:50:43 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 08:17:05 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,50 +185,18 @@ void ft::Server::receiveMessage(int i)
          std::cout << "____________________" << std::endl;
         std::cout << "Received: " << buf;
         std::cout << "____________________" << std::endl;
-        this->parseMessage(buf, i);
+        Message message = Message(buf);
+        //set message to client
+        this->clients[i - 1]->setMsgSend(message);
+        std::cout << "____________________" << std::endl;
+        std::cout << "isCommand: " << message.isCommand() << std::endl;
+        std::cout << "Command: " << message.getCommand() << std::endl;
+        std::cout << "isParams: " << message.isParameter() << std::endl;
+        std::cout << "Params: " << message.getParameter() << std::endl;
+        std::cout << "isTrailing: " << message.isTrailing() << std::endl;
+        std::cout << "Trailing: " << message.getTrailing() << std::endl;
+        std::cout << "____________________" << std::endl;
+        
     }
 }
 
-/**
- * @brief Parse the message received from the client
- * 
-*/
-void ft::Server::parseMessage(std::string const &msg, int i)
-{
-    std::cout << "Parsing message" << std::endl;
-    std::string command;
-    std::string params;
-    std::string prefix;
-    std::string trailing;
-    std::string::size_type pos = 0;
-
-    if (msg[0] == ':')
-    {
-        pos = msg.find(' ');
-        prefix = msg.substr(1, pos - 1);
-        pos++;
-    }
-    std::string::size_type pos2 = msg.find(' ', pos);
-    command = msg.substr(pos, pos2 - pos);
-    pos = pos2 + 1;
-    if (msg[pos] == ':')
-    {
-        trailing = msg.substr(pos + 1);
-    }
-    else
-    {
-        pos2 = msg.find(' ', pos);
-        params = msg.substr(pos, pos2 - pos);
-        pos = pos2 + 1;
-        trailing = msg.substr(pos);
-    }
-    std::cout << "----------------" << std::endl;
-    std::cout << "Command: " << command << std::endl;
-    std::cout << "Prefix: " << prefix << std::endl;
-    std::cout << "Params: " << params << std::endl;
-    std::cout << "Trailing: " << trailing << std::endl;
-    std::cout << "----------------" << std::endl;
-
-    //execute from here
-    //this->executeCommand(command, params, trailing, i); // exmaple of command
-}
