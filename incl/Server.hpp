@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/23 22:21:52 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/23 22:29:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 // Our Headers...
 #include "Client.hpp"
 #include "Message.hpp"
+# include "Channel.hpp"
 
 namespace ft
 {
@@ -52,6 +53,7 @@ namespace ft
 
         std::vector<Client *> clients;
         std::vector<pollfd> fds;
+        std::vector<Channel *> channels;
 
         enum Status
         {
