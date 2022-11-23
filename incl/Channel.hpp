@@ -6,8 +6,9 @@
 #include <vector>
 #include <iostream>
 #include "Client.hpp"
-class Client;
+#define CHNAME_LENGTH 50
 
+class Client;
 
 enum ChannelMode{
 	CHANNEL_MODEPRIVATE = 0,
@@ -20,6 +21,8 @@ enum ChannelMode{
 	CHANNEL_MODE_KEY = 7
 };
 
+
+
 namespace ft{
 	class Channel{
 		private:
@@ -30,6 +33,21 @@ namespace ft{
 			time_t						_created_at;
 			size_t						_max_clients;
 			Client						*_creator;
+			int							_ChName_parse(std::string name)
+			{
+				if (name[0] == '&' || name[0] == '#' || name[0] == '+' || name[0] == '!')
+				{
+					if (name.find('&', 1) == std::string::npos && name.find('#', 1) == std::string::npos && name.find('+', 1) == std::string::npos && name.find('!', 1) == std::string::npos)
+					{
+						if (name.length() <= CHNAME_LENGTH)
+						{
+							if (name.find(' ') == std::string::npos && name.find(':') == std::string::npos && name.find(',') == std::string::npos && name.find(7) == std::string::npos)
+								return (1);
+						}
+					}
+				}
+				return(0);
+			}
 		public:
 			std::vector<Client *>	_normal_clients;
 			std::vector<Client *>	_voice_clients;
@@ -55,6 +73,11 @@ namespace ft{
 			bool						isVoice(Client *client);
 			void						setCreator(Client *creator);
 			void						removeClientFromChannel(Client *client);
+			class WrongChannelNameRequir : public std::exception
+			{
+				public:
+					const char* what() const throw();
+			};
 	};
 }
 
