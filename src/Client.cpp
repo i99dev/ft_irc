@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 20:58:41 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 06:51:38 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void ft::Client::setMsgRecv(Message  msgRecv)
 	this->_msgRecv.push_back(msgRecv);
 }
 
-
 ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 {
 	this->fd = fd;
@@ -72,7 +71,7 @@ ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 	this->_client_ip = clinet_ip;
 	std::cout << "New client connected from " << this->_client_ip << std::endl;
 	std::string msg = RPL_WELCOME(servername, this->_client_ip);
-	send(this->fd, msg.c_str(), msg.length(), 0);	
+	send(this->fd, msg.c_str(), msg.length(), 0);
 }
 
 ft::Client::~Client() {}
