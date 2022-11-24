@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/24 12:49:01 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 22:50:31 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void ft::Server::receiveMessage(int i)
     {
         buf[nbytes] = '\0';
         Message *message = new Message(buf, fds[i].fd);
-        this->clients[i - 1]->setMsgSend(message);         
+        this->clients[i - 1]->setMsgSend(message);
     }
 }
 

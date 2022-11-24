@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/24 05:42:11 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 22:48:13 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,15 @@
 #include <sys/select.h>
 #include <cerrno>
 
+#define HOST "127.0.0.1"
+#define CRLF "\r\n"
+
 // Our Headers...
 #include "Client.hpp"
 #include "Message.hpp"
-# include "Channel.hpp"
+#include "Channel.hpp"
+
+class	Channel;
 
 namespace ft
 {
@@ -51,7 +56,7 @@ namespace ft
         void acceptConnection();
         void receiveMessage(int i);
 
-        std::vector<Client *> clients;
+        std::vector<ft::Client *> clients;
         std::vector<pollfd> fds;
         std::vector<Channel *> channels;
 
