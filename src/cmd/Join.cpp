@@ -32,7 +32,7 @@ std::string	ft::Join::getChannelName(ft::Client *client){
 
 bool	ft::Join::check_exist(std::vector<ft::Channel *> channels, int channel_size){
 	for (int i = 0; i < channels.size(); i++){
-		if (channels[i]->getName().compare(this->name) == 0)
+		if (channels[i]->getChName().compare(this->name) == 0)
 			return true;
 	}
 	return false;
