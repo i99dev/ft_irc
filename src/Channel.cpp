@@ -25,4 +25,9 @@ std::string	ft::Channel::getChName(void)
 	return (this->_name);
 }
 
+void	ft::Channel::sendMsgtoChannel(Message *message)
+{
+	
+}
+
 ft::Channel::~Channel(){}
