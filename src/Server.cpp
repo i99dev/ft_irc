@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/23 16:10:55 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 05:42:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void ft::Server::acceptConnection()
     inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
     Client *client = new Client(new_fd, servername, ip_client);
     this->clients.push_back(client);
-    
     pollfd pfd;
     pfd.fd = new_fd;
     pfd.events = POLLIN;
@@ -182,21 +181,8 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-         std::cout << "____________________" << std::endl;
-        std::cout << "Received: " << buf;
-        std::cout << "____________________" << std::endl;
         Message message = Message(buf);
-        //set message to client
-        this->clients[i - 1]->setMsgSend(message);
-        std::cout << "____________________" << std::endl;
-        std::cout << "isCommand: " << message.isCommand() << std::endl;
-        std::cout << "Command: " << message.getCommand() << std::endl;
-        std::cout << "isParams: " << message.isParameter() << std::endl;
-        std::cout << "Params: " << message.getParameter() << std::endl;
-        std::cout << "isTrailing: " << message.isTrailing() << std::endl;
-        std::cout << "Trailing: " << message.getTrailing() << std::endl;
-        std::cout << "____________________" << std::endl;
-        
+        this->clients[i - 1]->setMsgSend(message);         
     }
 }
 
