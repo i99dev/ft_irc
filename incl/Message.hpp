@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 20:09:37 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:29:55 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ namespace ft
 	class Message
 	{
 		private:
+			int _owner_fd;
 			std::string	_msg;
 			std::string _Command;
 			std::string	_Parameter;
@@ -33,7 +34,7 @@ namespace ft
 			//privet methods
 			void 		parseMessage(std::string const &msg);
 		public:
-			Message(std::string const _msg);
+			Message(std::string const _msg, int _owner_fd);
 			~Message();
 
 			//methods
@@ -41,6 +42,7 @@ namespace ft
 			std::string getParameter();
 			std::string getPrefix();
 			std::string getTrailing();
+			int 		gerOwnerFd();
 			bool 		isValid();
 			bool 		isCommand();
 			bool 		isPrefix();

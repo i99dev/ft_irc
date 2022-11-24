@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/24 05:42:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:37:44 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-        Message message = Message(buf);
+        Message message = Message(buf, fds[i].fd);
         this->clients[i - 1]->setMsgSend(message);         
     }
 }
