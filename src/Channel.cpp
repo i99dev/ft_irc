@@ -30,4 +30,6 @@ void	ft::Channel::sendMsgtoChannel(Message *message)
 	
 }
 
+
+
 ft::Channel::~Channel(){}
