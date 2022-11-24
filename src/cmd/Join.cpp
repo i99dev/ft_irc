@@ -11,7 +11,7 @@ ft::Join::Join(ft::Client *client, std::vector<ft::Channel *> &channels){
 }
 
 bool	ft::Join::check_params(ft::Client *client){
-	if (client->getMsgSend().back().getCommand() == "JOIN"){
+	if (client->getMsgSend().back()->getCommand() == "JOIN"){
 		name = getChannelName(client);
 		if (name.empty() == false && name[0] != 0)
 			return true;
@@ -26,7 +26,7 @@ std::string	ft::Join::getChannelName(ft::Client *client){
 	int j = 1;
 	char *s;
 
-	client->getMsgSend().back().getParameter().copy(s, client->getMsgSend().back().getParameter().length() - 3, 1);
+	client->getMsgSend().back()->getParameter().copy(s, client->getMsgSend().back()->getParameter().length() - 3, 1);
 	return s;
 }
 
