@@ -26,13 +26,13 @@ namespace ft
 {
 	class Channel{
 		private:
-			ChannelMode					_mode;
-			std::string					_password;
+			Client						*_creator;
 			std::string					_name;
-			std::string					_topic;
 			time_t						_created_at;
 			size_t						_max_clients;
-			Client						*_creator;
+			ChannelMode					_mode;
+			std::string					_password;
+			std::string					_topic;
 			int							_ChName_parse(std::string &name)
 			{
 				if (name[0] == '&' || name[0] == '#' || name[0] == '+' || name[0] == '!')
@@ -50,11 +50,11 @@ namespace ft
 			}
 		public:
 			std::vector<Client *>	_normal_clients;
-			std::vector<Client *>	_voice_clients;
 			std::vector<Client *>	_ope_clients;
 		public:
-			Channel(std::string &name,  std::string &password);
-			std::vector<Client *>	getClients() const;
+		Channel(Client *user, std::string &name);
+			void						addClient(Client *user, std::string &name);
+			std::vector<Client *>		getClients() const;
 			ChannelMode					getMode();
 			ChannelMode					addMode(ChannelMode mode);
 			ChannelMode					removeMode(ChannelMode mode);
