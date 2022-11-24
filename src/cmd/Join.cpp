@@ -37,3 +37,5 @@ bool	ft::Join::check_exist(std::vector<ft::Channel *> channels, int channel_size
 	}
 	return false;
 }
+
+ft::Join::~Join(){}

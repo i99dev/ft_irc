@@ -18,6 +18,7 @@ namespace ft{
 			bool	check_params(ft::Client *client);
 			std::string	getChannelName(ft::Client *client);
 			bool	check_exist(std::vector<ft::Channel *> channels, int channel_size);
+			~Join();
 	};
 }
 

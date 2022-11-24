@@ -3,37 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:10:43 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 04:20:22 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:04:04 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include <iostream>
+#include <vector>
+#include "../Channel.hpp"
+#include "../Server.hpp"
+#include "../Client.hpp"
 
-
-class Command
-{
-	protected:
-		std::string _command;
-		std::string *_parameters;	
-	public:
-		Command(std::string command, std::string *parameters);
-		~Command();
-};
-
-Command::Command(std::string command, std::string *parameters):_command(command)
-{
-	int	i;
-
-	i = -1;
-	_parameters = new std::string [parameters->length()];
-	while (++i < parameters->length())
-		_parameters[i] = parameters[i];
-}
-
-Command::~Command()
-{
-	delete[] _parameters;
+namespace ft{
+	class Command
+	{
+		protected:
+			std::vector<ft::Channel *> &channels;
+			std::vector<ft::Client *> &clients;
+			ft::Client *client;
+			std::vector<pollfd> _fds;
+			std::string command;
+		public:
+			Command(std::vector<ft::Channel *> &_channels, ft::Client *_client, std::vector<pollfd> _fds, std::vector<ft::Client *> &clients);
+			~Command();
+	};
 }
