@@ -12,15 +12,7 @@ class Join{
 	private:
 			std::string name;
 	public:
-		Join(ft::Client *client, std::vector<ft::Channel *> &channels){
-			if (check_params(client)){
-				// if (check_existence(channels, int(channels.size())))
-					// join channel
-				// else
-					// create channel
-			}
-				
-		}
+		Join(ft::Client *client, std::vector<ft::Channel *> &channels);
 
 		bool	check_params(ft::Client *client){
 			if (client->getMsgSend().back().getCommand() == "JOIN"){
