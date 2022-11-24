@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 20:10:24 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:30:06 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,15 @@ void ft::Message::parseMessage(std::string const &msg)
     //this->executeCommand(command, params, trailing, i); // exmaple of command
 }
 
-ft::Message::Message(std::string msg):_msg(msg){
+ft::Message::Message(std::string msg,int owner_fd):_msg(msg),_owner_fd(owner_fd){
 	parseMessage(msg);
 }
 
 ft::Message::~Message(){}
+
+int ft::Message::gerOwnerFd(){
+    return _owner_fd;
+}
 
 std::string ft::Message::getCommand(){
 	return _Command;
