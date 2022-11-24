@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 14:47:16 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 20:09:37 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ namespace ft
 			std::string _Prefix;
 			std::string _Trailing;
 			std::string _channel;
+			time_t		_time;
 
 			//privet methods
 			void 		parseMessage(std::string const &msg);

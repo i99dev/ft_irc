@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/23 14:53:50 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/24 05:42:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ void ft::Server::createPoll()
     pollfd pfd;
     pfd.fd = this->master_fd;
     pfd.events = POLLIN;
-    this->fds.push_back(&pfd);
+    this->fds.push_back(pfd);
 
     std::cout << "Server is online" << std::endl;
 
     while (1)
     {
-        int ret = poll(this->fds[0], this->fds.size(), -1);
+        int ret = poll(&this->fds[0], this->fds.size(), -1);
         if (ret == -1)
         {
             std::cerr << "poll" << std::endl;
@@ -103,9 +103,9 @@ void ft::Server::createPoll()
         {
             for (size_t i = 0; i < this->fds.size(); i++)
             {
-                if (this->fds[i]->revents & POLLIN)
+                if (this->fds[i].revents & POLLIN)
                 {
-                    if (this->fds[i]->fd == this->master_fd)
+                    if (this->fds[i].fd == this->master_fd)
                     {
                         this->acceptConnection();
                     }
@@ -150,12 +150,11 @@ void ft::Server::acceptConnection()
     inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
     Client *client = new Client(new_fd, servername, ip_client);
     this->clients.push_back(client);
-    
     pollfd pfd;
     pfd.fd = new_fd;
     pfd.events = POLLIN;
-    this->fds.push_back(&pfd);
-    
+    pfd.revents = 0;
+    fds.push_back(pfd);
 }
 
 /**
@@ -165,39 +164,25 @@ void ft::Server::receiveMessage(int i)
 {
     int nbytes;
     char buf[1024];
-    nbytes = recv(this->fds[i]->fd, buf, sizeof(buf), 0);
+    nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes <= 0)
     {
         if (nbytes == 0)
         {
-            std::cout << "Client disconnected" << std::endl;
-            std::cout << "socket " << fds[i]->fd << " is out" << std::endl;
+            std::cout << "socket " << fds[i].fd << " hung up" << std::endl;
         }
         else
         {
             std::cerr << "recv" << std::endl;
         }
-        close(fds[i]->fd);
+        close(fds[i].fd);
         fds.erase(fds.begin() + i);
     }
     else
     {
         buf[nbytes] = '\0';
-         std::cout << "____________________" << std::endl;
-        std::cout << "Received: " << buf;
-        std::cout << "____________________" << std::endl;
         Message message = Message(buf);
-        //set message to client
-        this->clients[i - 1]->setMsgSend(message);
-        std::cout << "____________________" << std::endl;
-        std::cout << "isCommand: " << message.isCommand() << std::endl;
-        std::cout << "Command: " << message.getCommand() << std::endl;
-        std::cout << "isParams: " << message.isParameter() << std::endl;
-        std::cout << "Params: " << message.getParameter() << std::endl;
-        std::cout << "isTrailing: " << message.isTrailing() << std::endl;
-        std::cout << "Trailing: " << message.getTrailing() << std::endl;
-        std::cout << "____________________" << std::endl;
-        
+        this->clients[i - 1]->setMsgSend(message);         
     }
 }
 

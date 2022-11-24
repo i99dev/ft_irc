@@ -6,14 +6,13 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/23 06:46:54 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/23 20:10:24 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Message.hpp"
 
 /******************* GETTERS *******************/
-
 /**
  * @brief Parse the message received from the client
  * 
@@ -49,12 +48,18 @@ void ft::Message::parseMessage(std::string const &msg)
 		pos = _Parameter.find('#');
 		_channel = _Parameter.substr(pos);
 	}
+
+    
+    time_t now = time(0);
+    _time = now;
+
     std::cout << "----------------" << std::endl;
     std::cout << "Command: " << _Command << std::endl;
     std::cout << "Prefix: " << _Prefix << std::endl;
     std::cout << "Params: " << _Parameter << std::endl;
     std::cout << "Trailing: " << _Trailing << std::endl;
 	std::cout << "Channel: " << _channel << std::endl;
+    std::cout << "Time: " << ctime(&_time) << std::endl;
     std::cout << "----------------" << std::endl;
 
     //execute from here
