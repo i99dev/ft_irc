@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/24 08:39:12 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:52:30 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,22 @@ std::string ft::Client::getIp(void) const
 }
 
 //user messages
-std::vector <ft::Message> ft::Client::getMsgSend(void) const
+std::vector <ft::Message *> ft::Client::getMsgSend(void) const
 {
 	return (this->_msgSend);
 }
 
-void ft::Client::setMsgSend(Message  msgSend)
+void ft::Client::setMsgSend(Message  *msgSend)
 {
 	this->_msgSend.push_back(msgSend);
 }
 
-std::vector <ft::Message> ft::Client::getMsgRecv(void) const
+std::vector <ft::Message *> ft::Client::getMsgRecv(void) const
 {
 	return (this->_msgRecv);
 }
 
-void ft::Client::setMsgRecv(Message  msgRecv)
+void ft::Client::setMsgRecv(Message  *msgRecv)
 {
 	this->_msgRecv.push_back(msgRecv);
 }
