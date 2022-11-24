@@ -20,4 +20,9 @@ void	ft::Channel::addClient(Client *user)
 	this->_normal_clients.push_back(user);
 }
 
+std::string	ft::Channel::getChName(void)
+{
+	return (this->_name);
+}
+
 ft::Channel::~Channel(){}
