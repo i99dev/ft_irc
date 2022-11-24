@@ -53,7 +53,7 @@ namespace ft
 			std::vector<Client *>	_ope_clients;
 		public:
 		Channel(Client *user, std::string &name);
-			void						addClient(Client *user, std::string &name);
+			void						addClient(Client *user);
 			std::vector<Client *>		getClients() const;
 			ChannelMode					getMode();
 			ChannelMode					addMode(ChannelMode mode);

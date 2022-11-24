@@ -20,6 +20,4 @@ void	ft::Channel::addClient(Client *user)
 	this->_normal_clients.push_back(user);
 }
 
-
-
 ft::Channel::~Channel(){}
