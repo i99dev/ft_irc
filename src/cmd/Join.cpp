@@ -1,4 +1,4 @@
-#include "../incl/cmd/Join.hpp"
+#include "../../incl/cmd/Join.hpp"
 
 ft::Join::Join(ft::Client *client, std::vector<ft::Channel *> &channels){
 	if (check_params(client)){
