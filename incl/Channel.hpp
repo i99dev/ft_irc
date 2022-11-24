@@ -54,6 +54,7 @@ namespace ft
 		public:
 		Channel(Client *user, std::string &name);
 			std::string					getChName(void);
+			void						sendMsgtoChannel(Message *message);
 			void						addClient(Client *user);
 			std::vector<Client *>		getClients() const;
 			ChannelMode					getMode();
