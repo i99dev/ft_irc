@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
+#    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/23 05:33:48 by aaljaber         ###   ########.fr        #
+#    Updated: 2022/11/24 07:26:35 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC =	main.cpp \
 		./src/Server.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
+		./src/Join.cpp \
 		./src/Channel.cpp
 
 
