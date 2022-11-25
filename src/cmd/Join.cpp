@@ -11,7 +11,7 @@ ft::Join::Join(ft::Client *client, std::vector<ft::Channel *> &channels){
 }
 
 bool	ft::Join::check_params(ft::Client *client){
-	if (client->getMsgSend().back()->getCommand() == "JOIN"){
+	if (client->getMsgSend().back()->getCommand()[0] == "JOIN"){
 		name = getChannelName(client);
 		if (name.empty() == false && name[0] != 0)
 			return true;

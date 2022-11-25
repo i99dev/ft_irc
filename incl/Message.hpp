@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/25 18:17:16 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/25 19:10:15 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ namespace ft
 			int _owner_fd;
 			std::string	_msg;
 			std::string *_Command;
+			std::string f_Command;
 			std::string	_Parameter;
 			std::string _Prefix;
 			std::string _Trailing;
