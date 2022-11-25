@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/25 19:10:15 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/25 22:43:09 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ namespace ft
 			int _owner_fd;
 			std::string	_msg;
 			std::string *_Command;
+			int			cmdCount; // number of parameters needed for the commands, taken from the parse
 			std::string f_Command;
 			std::string	_Parameter;
 			std::string _Prefix;
@@ -43,6 +44,7 @@ namespace ft
 			std::string getParameter();
 			std::string getPrefix();
 			std::string getTrailing();
+			int			getCmdCount(); // needed for the commands
 			int 		gerOwnerFd();
 			bool 		isValid();
 			bool 		isCommand();

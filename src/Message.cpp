@@ -6,11 +6,12 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/25 20:56:38 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/25 22:28:33 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Message.hpp"
+#include "../incl/cmd/PrivMsg.hpp"
 
 /******************* GETTERS *******************/
 /**
@@ -75,6 +76,7 @@ void ft::Message::parseMessage(std::string const &msg)
 	_Command = new std::string[words + 1];
 	for (int i = 0; i < words; i++)
 		_Command[i] = std::string(final[i]);
+	cmdCount = words;
 
 	//freeing the double array
 	for (int i = 0; i < words; i++)
@@ -115,6 +117,10 @@ std::string ft::Message::getTrailing(){
 
 bool ft::Message::isValid(){
 	return true;
+}
+
+int ft::Message::getCmdCount(){
+	return cmdCount;
 }
 
 // bool ft::Message::isCommand(){
