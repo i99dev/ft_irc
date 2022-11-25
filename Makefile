@@ -6,7 +6,7 @@
 #    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/24 07:39:54 by isaad            ###   ########.fr        #
+#    Updated: 2022/11/25 23:07:16 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC =	main.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
 		./src/cmd/Join.cpp \
+		./src/cmd/PrivMsg.cpp \
 		./src/Channel.cpp
 
 
