@@ -39,6 +39,7 @@ void	ft::PRIVMSG::getMsg(){
 	int i = 2;
 	char *tmp;
 
+	tmp = new char[cmd[i].size() - 1];
 	cmd[i].copy(tmp, cmd[i].size() - 1, 1);
 	msg = std::string(tmp);
 	i++;
@@ -47,4 +48,5 @@ void	ft::PRIVMSG::getMsg(){
 		msg += cmd[i];
 		i++;
 	}
+	delete[] tmp;
 }
