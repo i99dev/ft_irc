@@ -6,6 +6,7 @@ ft::PRIVMSG::PRIVMSG(std::vector<ft::Channel *> channels, Client *client): cmd(c
 	getChName(client);
 	getChannel(channels);
 	getMsg();
+	printf("here\n");
 	execute(client);
 }
 

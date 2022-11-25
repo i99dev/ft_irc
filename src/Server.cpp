@@ -6,12 +6,13 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/25 23:30:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/26 00:03:42 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
 #include <netdb.h>
+#include "../incl/cmd/PrivMsg.hpp"
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("ft_irc"),
@@ -183,6 +184,8 @@ void ft::Server::receiveMessage(int i)
         buf[nbytes] = '\0';
         Message *message = new Message(buf, fds[i].fd);
         this->clients[i - 1]->setMsgSend(message);
+		if (message->getCommand()[0] == "PRIVMSG")
+			PRIVMSG priv = PRIVMSG(this->channels, this->clients[i - 1]);
     }
 }
 
