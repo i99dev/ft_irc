@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/24 11:29:55 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:10:15 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ namespace ft
 		private:
 			int _owner_fd;
 			std::string	_msg;
-			std::string _Command;
+			std::string *_Command;
+			std::string f_Command;
 			std::string	_Parameter;
 			std::string _Prefix;
 			std::string _Trailing;
@@ -38,7 +39,7 @@ namespace ft
 			~Message();
 
 			//methods
-			std::string getCommand();
+			std::string *getCommand();
 			std::string getParameter();
 			std::string getPrefix();
 			std::string getTrailing();
