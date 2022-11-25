@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/24 11:30:06 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/25 22:28:33 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Message.hpp"
+#include "../incl/cmd/PrivMsg.hpp"
 
 /******************* GETTERS *******************/
 /**
@@ -19,64 +20,86 @@
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
-    std::cout << "Parsing message" << std::endl;
-    std::string::size_type pos = 0;
+	int	i = 0;
+	int	words = 0;
+	int	flag = 1;
 
-    if (msg[0] == ':')
-    {
-        pos = msg.find(' ');
-        _Prefix = msg.substr(1, pos - 1);
-        pos++;
-    }
-    std::string::size_type pos2 = msg.find(' ', pos);
-    _Command = msg.substr(pos, pos2 - pos);
-    pos = pos2 + 1;
-    if (msg[pos] == ':')
-    {
-        _Trailing = msg.substr(pos + 1);
-    }
-    else
-    {
-        pos2 = msg.find(' ', pos);
-        _Parameter = msg.substr(pos, pos2 - pos);
-        pos = pos2 + 1;
-        _Trailing = msg.substr(pos);
-    }
-	//get channel name from parameter
-	if (_Command == "JOIN" || _Command == "PART" || _Command == "PRIVMSG")
+	std::cout << "Parsing message" << std::endl;
+	std::cout << "________" << msg << "________" << std::endl;
+
+	// count how many words we have received
+	while (msg[i])
 	{
-		pos = _Parameter.find('#');
-		_channel = _Parameter.substr(pos);
+		if (msg[i] == ' ' && msg[i] != '\n' && !flag)
+			flag = 1;
+		else if (msg[i] != ' ' && msg[i] != '\n' && flag)
+		{
+			words++;
+			flag = 0;
+		}
+		i++;
 	}
 
-    
-    time_t now = time(0);
-    _time = now;
+	std::cout << words << std::endl;
 
-    std::cout << "----------------" << std::endl;
-    std::cout << "Command: " << _Command << std::endl;
-    std::cout << "Prefix: " << _Prefix << std::endl;
-    std::cout << "Params: " << _Parameter << std::endl;
-    std::cout << "Trailing: " << _Trailing << std::endl;
-	std::cout << "Channel: " << _channel << std::endl;
-    std::cout << "Time: " << ctime(&_time) << std::endl;
-    std::cout << "----------------" << std::endl;
+	// final is the variable to store the words
+	char **final = new char*[words + 1];
 
-    //execute from here
-    //this->executeCommand(command, params, trailing, i); // exmaple of command
+	i = 0; // index
+	int j = 0; // count the length of each word
+	int counter = 0; // count the number of words done
+	int start = 0; // start index of each word
+
+	// copying the parameters word by word
+	while (counter < words){
+		j = 0;
+		while ((msg[i] == ' ' || msg[i] == '\n' || msg[i] == 13) && msg[i])
+			i++;
+		if ((msg[i] != ' ' && msg[i] != '\n'))
+			start = i;
+		while ((msg[i] != ' ' && msg[i] != '\n')){
+			i++;
+			j++;
+		}
+		if (j >= 1){
+			final[counter] = new char[j + 1];
+			msg.copy(final[counter], j, start);
+			final[counter][j] = 0;
+			while ((msg[i] == ' ' || msg[i] == '\n'))
+				i++;
+			counter++;
+		}
+	}
+	final[counter] = 0;
+	
+	// copying one by one is required
+	_Command = new std::string[words + 1];
+	for (int i = 0; i < words; i++)
+		_Command[i] = std::string(final[i]);
+	cmdCount = words;
+
+	//freeing the double array
+	for (int i = 0; i < words; i++)
+		delete[] final[i];
+	delete[] final;
+
+	for (int i = 0; i < words; i++)
+		std::cout << "Command: " << _Command[i] << std::endl;
 }
 
 ft::Message::Message(std::string msg,int owner_fd):_msg(msg),_owner_fd(owner_fd){
 	parseMessage(msg);
 }
 
-ft::Message::~Message(){}
-
-int ft::Message::gerOwnerFd(){
-    return _owner_fd;
+ft::Message::~Message(){
+	delete[] _Command;
 }
 
-std::string ft::Message::getCommand(){
+int ft::Message::gerOwnerFd(){
+	return _owner_fd;
+}
+
+std::string *ft::Message::getCommand(){
 	return _Command;
 }
 
@@ -96,11 +119,15 @@ bool ft::Message::isValid(){
 	return true;
 }
 
-bool ft::Message::isCommand(){
-	if (_Command.empty())
-		return false;
-	return true;
+int ft::Message::getCmdCount(){
+	return cmdCount;
 }
+
+// bool ft::Message::isCommand(){
+// 	if (_Command.empty())
+// 		return false;
+// 	return true;
+// }
 
 bool ft::Message::isPrefix(){
 	if (_Prefix.empty())
