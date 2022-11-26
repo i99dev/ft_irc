@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/26 00:34:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/26 20:49:53 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,13 @@ void ft::Server::receiveMessage(int i)
         buf[nbytes] = '\0';
         Message *message = new Message(buf, fds[i].fd);
         this->clients[i - 1]->setMsgSend(message);
-		if (message->getCommand()[0] == "PRIVMSG")
-			PRIVMSG priv = PRIVMSG(this->channels, this->clients[i - 1]);
+			// PRIVMSG priv = PRIVMSG(this->channels, this->clients[i - 1]);
+		if (message->getCommand()[0] == "PRIVMSG" && message->getCommand()[1] == "abrar")
+		{
+			printf("heyyy %d\n", this->clients[i - 1]->fd);
+			
+			send(this->clients[i - 1]->fd, ":PRIVMSG abrar :Hello are you receiving this message ?\r\n", 100, 0);
+		}
     }
 }
 

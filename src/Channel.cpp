@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/25 23:54:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/26 20:52:16 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ ft::Channel::Channel(Client *user, std::string &name)
 
 void	ft::Channel::addClient(Client *user)
 {
+	for (int i = -1; i < this->users.size(); ++i)
+	{
+		if (this->users[i]->fd == user->fd)
+			return ;
+	}
 	this->users.push_back(user);
 }
 
