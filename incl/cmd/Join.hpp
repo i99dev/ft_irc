@@ -11,13 +11,20 @@
 namespace ft{
 	class Join{
 		private:
-				std::string name;
+				std::string *cmd;
+				std::string *channels;
+				std::string channel;
+				int			Count;
+				std::string *passwords;
+				std::string password;
+				int			index;
 		public:
 			Join(ft::Client *client, std::vector<ft::Channel *> &channels);
 
-			bool	check_params(ft::Client *client);
-			std::string	getChannelName(ft::Client *client);
-			bool	check_exist(std::vector<ft::Channel *> channels, int channel_size);
+			void		getChannelName(ft::Client *client);
+			bool		check_cmd(ft::Client *client);
+			bool		check_exist(std::vector<ft::Channel *> channels);
+			ft::Channel *getExistingCh(std::vector<ft::Channel *> channels, int index);
 			~Join();
 	};
 }

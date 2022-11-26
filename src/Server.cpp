@@ -6,11 +6,12 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/26 00:27:55 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/26 19:28:02 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
+#include "../incl/cmd/Join.hpp"
 #include <netdb.h>
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
@@ -182,7 +183,8 @@ void ft::Server::receiveMessage(int i)
     {
         buf[nbytes] = '\0';
         Message *message = new Message(buf, fds[i].fd);
-        this->clients[i - 1]->setMsgSend(message);         
+        this->clients[i - 1]->setMsgSend(message);
+        ft::Join J(clients[i - 1], this->channels);
     }
 }
 
