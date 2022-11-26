@@ -12,11 +12,9 @@ namespace ft{
 	class Join{
 		private:
 				std::string *cmd;
-				std::string *channels;
-				std::string channel;
+				std::vector<std::string> channels;
 				int			Count;
-				std::string *passwords;
-				std::string password;
+				std::vector<std::string> passwords;
 				int			index;
 		public:
 			Join(ft::Client *client, std::vector<ft::Channel *> &channels);
