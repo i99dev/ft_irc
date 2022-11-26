@@ -36,7 +36,7 @@ void	ft::Join::getChannelName(ft::Client *client){
 				size++;
 			}
 			s = new char[size + 1];
-			cmd[1].copy(s, size, start);
+			cmd[1].copy(s, size - 1, start + 1);
 			s[size] = 0;
 			this->channels[i] = std::string(s);
 			delete [] s;
@@ -51,7 +51,7 @@ void	ft::Join::getChannelName(ft::Client *client){
 	j = 0;
 	start = 0;
 	size = 0;
-	if (this->Count > 1){
+	if (this->Count > 1 && cmd[2].empty()){
 		this->passwords = new std::string[this->Count];
 		for(int i = 0; i < this->Count; i++){
 			size = 0;
