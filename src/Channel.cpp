@@ -6,26 +6,55 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/26 20:52:16 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/27 04:07:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Channel.hpp"
 
+// * Constructor and Destructor * //
 ft::Channel::Channel(Client *user, std::string &name)
 {
+	// ! no need to throw exception if the client will ignore
 	if (!this->_ChName_parse(name))
 		throw WrongChannelNameRequir();
 	else
 		this->_name = name;
 	this->_creator = user;
-	_created_at = time(0);
+	this->_created_at = time(0);
 	this->_topic = "";
-	//it depends on how mant clients we can handle
-	this->_max_clients = 255;
+	this->_max_clients = 0; //? it depends on user limit mode + what the server can handle
+	this->_mode = CLEAR_MODE;
 }
 
-void	ft::Channel::addClient(Client *user)
+ft::Channel::~Channel(){}
+
+// * Getters * //
+std::string	ft::Channel::getChName(void)
+{
+	return (this->_name);
+}
+
+// * Channel actions * //
+// ? JOIN
+bool	ft::Channel::_ChName_parse(std::string &name)
+{
+	if (name[0] == '&' || name[0] == '#' || name[0] == '+' || name[0] == '!')
+	{
+		if (name.find('&', 1) == std::string::npos && name.find('#', 1) == std::string::npos && name.find('+', 1) == std::string::npos && name.find('!', 1) == std::string::npos)
+		{
+			if (name.length() <= CHNAME_LENGTH)
+			{
+				if (name.find(' ') == std::string::npos && name.find(':') == std::string::npos && name.find(',') == std::string::npos && name.find(7) == std::string::npos)
+					return (true);
+			}
+		}
+	}
+	return(false);
+}
+
+// ? JOIN
+void	ft::Channel::addUser(Client *user)
 {
 	for (int i = -1; i < this->users.size(); ++i)
 	{
@@ -35,11 +64,38 @@ void	ft::Channel::addClient(Client *user)
 	this->users.push_back(user);
 }
 
-std::string	ft::Channel::getChName(void)
+// ? MODE
+// ! this could be chancged if the channel can have multi-modes
+void	ft::Channel::setChannelMode(char mode)
 {
-	return (this->_name);
+	for (int i = -1; i < MODE_NUM; ++i)
+	{
+		if (MODE_CHAR[i] == mode)
+		{
+			this->_mode = MODE_ENUM[i];
+			return ;
+		}
+	}
 }
 
+void	ft::Channel::addChannelOperators(Client *user)
+{
+	for (int i = -1; i < this->users.size(); ++i)
+	{
+		if (this->users[i]->fd == user->fd)
+		{
+			this->users.erase(this->users.begin() + i);
+			this->operators.push_back(user);
+			return ;
+		}
+	}
+	/* 
+		! need to make sure if the server will ignore
+		! it or error message will be sent
+	*/
+}
+
+// ? PRIVMSG
 /*
 ! be carefull about this null condition (Protection may needed)
 		// if (message->getCommand() == "PRIVMSG" && message->getParameter() == "#lala")
@@ -48,7 +104,7 @@ std::string	ft::Channel::getChName(void)
 		// 	printf("here\n");
 		// }
 */
-ft::Client	*ft::Channel::getSenderinfo(int ownerFD)
+ft::Client	*ft::Channel::_getSenderinfo(int ownerFD)
 {
 	for (int i = -1; i < this->users.size(); ++i)
 	{
@@ -58,9 +114,9 @@ ft::Client	*ft::Channel::getSenderinfo(int ownerFD)
 	return (NULL);
 }
 
-std::string		ft::Channel::ChnMsgFormat(Message *message)
+std::string		ft::Channel::sendMsgFormat(Message *message)
 {
-	Client *sender = this->getSenderinfo(message->gerOwnerFd());
+	Client *sender = this->_getSenderinfo(message->gerOwnerFd());
 	// printf("")
 	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
 	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand()[2] + " " + this->_name + " " + message->getCommand()[2] + CRLF);
@@ -68,10 +124,9 @@ std::string		ft::Channel::ChnMsgFormat(Message *message)
 
 void	ft::Channel::sendMsgtoChannel(Message *message)
 {
-	std::string	msg = this->ChnMsgFormat(message);
+	std::string	msg = this->sendMsgFormat(message);
 	printf("here\n");
 	for (int i = -1; i < this->users.size(); ++i)
 		send(this->users[i]->fd, msg.c_str(), msg.length(), 0);
 }
 
-ft::Channel::~Channel(){}
