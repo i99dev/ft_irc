@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/27 04:06:46 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/27 05:12:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@
 #define EXC_WRONG_CHNAME "Wrong Channel Name"
 #define	MODE_NUM 8
 
-
 class Client;
 
 namespace ft
 {
 	enum Channel_Mode
 	{
-		CLEAR_MODE,
 		O_CHANNEL_CREATOR, // ? channel creator
         o_CHANNEL_OPERATOR, //? give/take(+/-) channel operator privileges; 
         i_INVITE_ONLY_CHANNEL, //? invite-only channel flag
@@ -44,14 +42,14 @@ namespace ft
 	{	
 		private:
 
-			ft::Client		*_creator;
-			std::string		_name;
-			time_t			_created_at;
-			Channel_Mode	_mode; // ! check if u can set more than one mode to the channel
-			std::string		_topic;
-			size_t			_max_clients;
-			bool			_ChName_parse(std::string &name);
-			ft::Client		*_getSenderinfo(int ownerFD);
+			ft::Client					*_creator;
+			std::string					_name;
+			time_t						_created_at;
+			std::vector<Channel_Mode>	_mode;
+			std::string					_topic;
+			size_t						_max_clients;
+			bool						_ChName_parse(std::string &name);
+			ft::Client					*_getSenderinfo(int ownerFD);
 
 		public:
 

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/27 04:07:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/27 05:15:25 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ ft::Channel::Channel(Client *user, std::string &name)
 	this->_created_at = time(0);
 	this->_topic = "";
 	this->_max_clients = 0; //? it depends on user limit mode + what the server can handle
-	this->_mode = CLEAR_MODE;
 }
 
 ft::Channel::~Channel(){}
@@ -65,14 +64,15 @@ void	ft::Channel::addUser(Client *user)
 }
 
 // ? MODE
-// ! this could be chancged if the channel can have multi-modes
+//! check for duplicated mode, modes that can't be both set, 
+//! remove mode check for (- and +)
 void	ft::Channel::setChannelMode(char mode)
 {
 	for (int i = -1; i < MODE_NUM; ++i)
 	{
 		if (MODE_CHAR[i] == mode)
 		{
-			this->_mode = MODE_ENUM[i];
+			this->_mode.push_back(MODE_ENUM[i]);
 			return ;
 		}
 	}
@@ -129,4 +129,5 @@ void	ft::Channel::sendMsgtoChannel(Message *message)
 	for (int i = -1; i < this->users.size(); ++i)
 		send(this->users[i]->fd, msg.c_str(), msg.length(), 0);
 }
+
 
