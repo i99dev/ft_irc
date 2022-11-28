@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 19:48:21 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 23:38:54 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <sys/select.h>
 #include <cerrno>
 #include <netdb.h>
+# include <sstream>
 
 // Our Headers...
 #include "Client.hpp"
@@ -70,6 +71,8 @@ namespace ft
         void createPoll();
         void setfd(int fd);
         void init_commands(void);
+        std::vector<ft::Message *> splitMessage(std::string msg, char delim, int fd);
+
     };
 }
 

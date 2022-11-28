@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 22:49:25 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 23:57:31 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,21 +187,24 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-        Message *message = new Message(buf, fds[i].fd);
-        this->clients[i - 1]->setMsgSend(message);
-        std::map<std::string, Command *>::iterator it;
-        if ((it = _commands.find(message->getCommand())) != _commands.end())
+        std::vector <Message *> args = ft::Server::splitMessage(buf, '\n', fds[i].fd);
+        for (size_t k = 0; k < args.size(); k++)
         {
-            std::cout << "Command found" << std::endl;
-            std::cout << "Command: " << message->getCommand() << std::endl;
-            Command *cmd = it->second;
-            cmd->setClient(this->clients[i - 1]);
-            cmd->setServer(this);
-            cmd->setMessage(message);
-            cmd->execute();
-        }
-        else
-        {
+            this->clients[i - 1]->setMsgSend(args[k]);
+            std::map<std::string, Command *>::iterator it;
+            if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
+            {
+                std::cout << "Command found" << std::endl;
+                std::cout << "Command: " << args[k]->getCommand() << std::endl;
+                Command *cmd = it->second;
+                cmd->setClient(this->clients[i - 1]);
+                cmd->setServer(this);
+                cmd->setMessage(args[k]);
+                cmd->execute();
+            }
+            else
+            {
+            }
         }
     }
 }
@@ -211,4 +214,21 @@ void ft::Server::init_commands(void)
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
     _commands["CAP"] = new ft::Cap(); // 
+}
+
+/**
+ * @brief Message by newlines
+*/
+
+std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
+{
+    std::vector<ft::Message *> messages;
+    std::stringstream ss(msg);
+    std::string item;
+    while (std::getline(ss, item, delim))
+    {
+        ft::Message *message = new ft::Message(item, fd);
+        messages.push_back(message);
+    }
+    return messages;
 }
