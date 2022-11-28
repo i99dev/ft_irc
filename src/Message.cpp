@@ -6,13 +6,30 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 21:12:40 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 23:01:51 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Message.hpp"
 #include "../incl/cmd/PrivMsg.hpp"
 
+
+
+static std::map<size_t, std::string> tokenize(std::string const &str, const char delim)
+{
+	size_t                        start;
+	size_t                        end = 0;
+	size_t                        occurrences = 0;
+	std::map<size_t, std::string> ret;
+
+	while ((start = str.find_first_not_of(delim, end)) != std::string::npos)
+	{
+		end = str.find(delim, start);
+		ret[occurrences] = str.substr(start, end - start);
+		occurrences++;
+	}
+	return ret;
+}
 /******************* GETTERS *******************/
 /**
  * @brief Parse the message received from the client
@@ -20,58 +37,49 @@
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
-	//irc parsing msg here
-	std::cout << "msg: " << msg << std::endl;
-	int i = 0;
-	if (msg[i] == ':')
+	std::map<size_t, std::string> tokens = tokenize(msg, ' ');
+	std::map<size_t, std::string>::iterator it = tokens.begin();
+	std::map<size_t, std::string>::iterator ite = tokens.end();
+	std::string tmp;
+
+	if (it->first == 0)
 	{
-		i++;
-		while (msg[i] != ' ' && msg[i])
-		{
-			this->_Prefix += msg[i];
-			i++;
-		}
-		i++;
+		// if (it->second[0] == ':')
+		// {
+		// 	_Prefix = it->second.substr(1);
+		// 	it++;
+		// }
+		_Command = it->second;
+		it++;
 	}
-	while (msg[i] != ' ' && msg[i])
+	while (it != ite)
 	{
-		this->_Command += msg[i];
-		i++;
-	}
-	i++;
-	while (msg[i] != ' ' && msg[i])
-	{
-		this->_Parameter.push_back(std::string());
-		while (msg[i] != ' ' && msg[i])
+		if (it->second[0] == ':')
 		{
-			this->_Parameter.back() += msg[i];
-			i++;
-		}
-		i++;
-	}
-	if (msg[i] == ':')
-	{
-		i++;
-		while (msg[i])
-		{
-			this->_Parameter.push_back(std::string());
-			while (msg[i] != ' ' && msg[i])
+			tmp = it->second.substr(1);
+			it++;
+			while (it != ite)
 			{
-				this->_Parameter.back() += msg[i];
-				i++;
+				tmp += " " + it->second;
+				it++;
 			}
-			i++;
+			_Parameter.push_back(tmp);
+			break;
 		}
-		//close _Paramters 
-		_Parameter.push_back(std::string());
+		_Parameter.push_back(it->second);
+		it++;
 	}
+
 	//cout 
-	std::cout << "Command: " << _Command << std::endl;
 	std::cout << "Prefix: " << _Prefix << std::endl;
+	std::cout << "Command: " << _Command << std::endl;
+	std::cout << "Parameter: " << std::endl;
 	for (size_t i = 0; i < _Parameter.size(); i++)
 	{
-		std::cout << "Parameter: " << _Parameter[i] << std::endl;
+		std::cout << _Parameter[i] << std::endl;
 	}
+	std::cout << "Parameter size: " << _Parameter.size() << std::endl;
+	std::cout << "_____________" << std::endl;
 }
 
 ft::Message::Message(std::string msg,int owner_fd){
@@ -95,9 +103,7 @@ std::vector<std::string> ft::Message::getParameter(){
 	return _Parameter;
 }
 
-std::string ft::Message::getPrefix(){
-	return _Prefix;
-}
+
 
 
 bool ft::Message::isValid(){
@@ -110,11 +116,6 @@ bool ft::Message::isValid(){
 // 	return true;
 // }
 
-bool ft::Message::isPrefix(){
-	if (_Prefix.empty())
-		return false;
-	return true;
-}
 
 bool ft::Message::isParameter(){
 	if (_Parameter.empty())

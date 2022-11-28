@@ -6,7 +6,7 @@
 #    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/28 19:59:58 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/11/28 22:47:24 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC =	main.cpp \
 		./src/Message.cpp \
 		./src/cmd/Join.cpp \
 		./src/cmd/User.cpp \
+		./src/cmd/Cap.cpp \
 		./src/cmd/PrivMsg.cpp \
 		./src/Channel.cpp
 

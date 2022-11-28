@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:10:43 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 21:42:15 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 22:44:35 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ namespace ft
 			std::cout << "Command " << _name << " destructor called" << std::endl;
 		};
 		virtual void execute() = 0;
-
-		//methods
+		virtual bool validate(void)
+		{
+			return (true);
+		}
 		void setClient(Client *client)
 		{
 			_client = client;
@@ -49,7 +51,7 @@ namespace ft
 		{
 			_message = message;
 		}
-
+		
 		//getters
 		std::string getName()
 		{

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 20:03:30 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 22:29:16 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,13 @@ namespace ft
 			//methods
 			std::string getCommand();
 			std::vector<std::string> getParameter();
-			std::string getPrefix();
 			std::string getTrailing();
 			int			getCmdCount(); // needed for the commands
 			int 		gerOwnerFd();
 			bool 		isValid();
 			bool 		isCommand();
-			bool 		isPrefix();
 			bool 		isParameter();
 			bool 		isTrailing();
-
 	};
 }
 

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 21:32:34 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 22:49:25 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 //command functions
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
+#include "../incl/cmd/Cap.hpp"
+
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("ft_irc"),
@@ -208,4 +210,5 @@ void ft::Server::init_commands(void)
 {
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
+    _commands["CAP"] = new ft::Cap(); // 
 }
