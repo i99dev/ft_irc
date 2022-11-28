@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 13:48:49 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/28 20:03:51 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,64 +20,61 @@
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
-	int	i = 0;
-	int	words = 0;
-	int	flag = 1;
-
-	std::cout << "Parsing message" << std::endl;
-	std::cout << "________" << msg << "________" << std::endl;
-
-	// count how many words we have received
-	while (msg[i])
+	//irc parsing msg here
+// std::cout << "msg: " << msg << std::endl;
+	int i = 0;
+	if (msg[i] == ':')
 	{
-		if (msg[i] == ' ' && msg[i] != '\n' && !flag)
-			flag = 1;
-		else if (msg[i] != ' ' && msg[i] != '\n' && flag)
+		i++;
+		while (msg[i] != ' ' && msg[i])
 		{
-			words++;
-			flag = 0;
+			this->_Prefix += msg[i];
+			i++;
 		}
 		i++;
 	}
-
-	std::cout << words << std::endl;
-
-	// final is the variable to store the words
-	char *final;
-
-	i = 0; // index
-	int j = 0; // count the length of each word
-	int counter = 0; // count the number of words done
-	int start = 0; // start index of each word
-
-	// copying the parameters word by word
-	while (counter < words){
-		j = 0;
-		while ((msg[i] == ' ' || msg[i] == '\n' || msg[i] == 13) && msg[i])
+	while (msg[i] != ' ' && msg[i])
+	{
+		this->_Command += msg[i];
+		i++;
+	}
+	i++;
+	while (msg[i] != ' ' && msg[i])
+	{
+		this->_Parameter.push_back(std::string());
+		while (msg[i] != ' ' && msg[i])
+		{
+			this->_Parameter.back() += msg[i];
 			i++;
-		if ((msg[i] != ' ' && msg[i] != '\n'))
-			start = i;
-		while ((msg[i] != ' ' && msg[i] != '\n')){
-			i++;
-			j++;
 		}
-		if (j >= 1){
-			final = new char[j + 1];
-			msg.copy(final, j, start);
-			final[j] = 0;
-			_Command.push_back(std::string(final));
-			delete[] final;
-			while ((msg[i] == ' ' || msg[i] == '\n'))
+		i++;
+	}
+	if (msg[i] == ':')
+	{
+		i++;
+		while (msg[i])
+		{
+			this->_Parameter.push_back(std::string());
+			while (msg[i] != ' ' && msg[i])
+			{
+				this->_Parameter.back() += msg[i];
 				i++;
-			counter++;
+			}
+			i++;
 		}
 	}
-
-	for (int i = 0; i < words; i++)
-		std::cout << "Command: " << _Command[i] << std::endl;
+	//cout 
+	std::cout << "Command: " << _Command << std::endl;
+	std::cout << "Prefix: " << _Prefix << std::endl;
+	for (size_t i = 0; i < _Parameter.size(); i++)
+	{
+		std::cout << "Parameter: " << _Parameter[i] << std::endl;
+	}
 }
 
-ft::Message::Message(std::string msg,int owner_fd):_msg(msg),_owner_fd(owner_fd){
+ft::Message::Message(std::string msg,int owner_fd){
+	this->_owner_fd = owner_fd;
+	this->_msg = msg;
 	parseMessage(msg);
 }
 
@@ -88,11 +85,11 @@ int ft::Message::gerOwnerFd(){
 	return _owner_fd;
 }
 
-std::vector<std::string> ft::Message::getCommand(){
+std::string ft::Message::getCommand(){
 	return _Command;
 }
 
-std::string ft::Message::getParameter(){
+std::vector<std::string> ft::Message::getParameter(){
 	return _Parameter;
 }
 
@@ -100,9 +97,6 @@ std::string ft::Message::getPrefix(){
 	return _Prefix;
 }
 
-std::string ft::Message::getTrailing(){
-	return _Trailing;
-}
 
 bool ft::Message::isValid(){
 	return true;
@@ -126,10 +120,5 @@ bool ft::Message::isParameter(){
 	return true;
 }
 
-bool ft::Message::isTrailing(){
-	if (_Trailing.empty())
-		return false;
-	return true;
-}
 
 

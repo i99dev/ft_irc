@@ -27,7 +27,7 @@ std::string	ft::Channel::getChName(void)
 
 void	ft::Channel::sendMsgtoChannel(Message *message)
 {
-	
+	(void)message;
 }
 
 ft::Channel::~Channel(){}

@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Join.hpp                                           :+:      :+:    :+:   */
+/*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 19:58:17 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 20:31:20 by oal-tena         ###   ########.fr       */
+/*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
+/*   Updated: 2022/11/28 19:29:41 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../incl/cmd/User.hpp"
 
-#ifndef JOIN_HPP
-
-#define JOIN_HPP
-
-#include "./Command.hpp"
-
-namespace ft
+ft::User::User()
 {
-	class Join : public ft::Command
-	{
-	public:
-		Join(void);
-		void execute();
-	};
-
+    _name = "User";
+    _description = "Set username";
+    _usage = "/user <username>";
 }
 
-#endif
+void ft::User::execute()
+{
+    std::cout << "Join executed" << std::endl;
+}

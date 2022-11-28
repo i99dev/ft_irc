@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 13:48:39 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/28 20:03:30 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ namespace ft
 		private:
 			int 						_owner_fd;
 			std::string					_msg;
-			std::vector<std::string>	_Command;
-			std::string 				f_Command;
-			std::string					_Parameter;
+			std::string					_Command;
+			std::vector<std::string>	_Parameter;
 			std::string 				_Prefix;
-			std::string 				_Trailing;
 			std::string 				_channel;
 			time_t						_time;
 
@@ -41,8 +39,8 @@ namespace ft
 			~Message();
 
 			//methods
-			std::vector<std::string> getCommand();
-			std::string getParameter();
+			std::string getCommand();
+			std::vector<std::string> getParameter();
 			std::string getPrefix();
 			std::string getTrailing();
 			int			getCmdCount(); // needed for the commands

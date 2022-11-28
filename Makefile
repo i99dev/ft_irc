@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
+#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/25 23:07:16 by isaad            ###   ########.fr        #
+#    Updated: 2022/11/28 19:59:58 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC =	main.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
 		./src/cmd/Join.cpp \
+		./src/cmd/User.cpp \
 		./src/cmd/PrivMsg.cpp \
 		./src/Channel.cpp
 
@@ -26,7 +27,7 @@ OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
 CC = g++ -g  -std=c++98 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(FT_NAME)
 

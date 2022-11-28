@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/27 02:49:19 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/28 20:54:52 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
-#include <netdb.h>
+
+//command functions
+#include "../incl/cmd/User.hpp"
+#include "../incl/cmd/Join.hpp"
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("ft_irc"),
@@ -26,6 +29,7 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
     std::cout << "Servername: " << servername << std::endl;
 
     this->create_socket();
+    init_commands();
     this->createPoll();
 }
 
@@ -183,6 +187,23 @@ void ft::Server::receiveMessage(int i)
         buf[nbytes] = '\0';
         Message *message = new Message(buf, fds[i].fd);
         this->clients[i - 1]->setMsgSend(message);
+        std::map<std::string, Command *>::iterator it;
+        if ((it = _commands.find(message->getCommand())) != _commands.end())
+        {
+            Command *cmd = it->second;
+            cmd->setClient(this->clients[i - 1]);
+            cmd->setServer(this);
+            cmd->setMessage(message);
+        }
+        else
+        {
+        }
     }
 }
 
+void ft::Server::init_commands(void)
+{
+    _commands["JOIN"] = new ft::Join();
+    _commands["USER"] = new ft::User();
+    
+}
