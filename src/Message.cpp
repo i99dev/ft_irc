@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 23:01:51 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 00:12:06 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void ft::Message::parseMessage(std::string const &msg)
 	}
 
 	//cout 
-	std::cout << "Prefix: " << _Prefix << std::endl;
 	std::cout << "Command: " << _Command << std::endl;
 	std::cout << "Parameter: " << std::endl;
 	for (size_t i = 0; i < _Parameter.size(); i++)

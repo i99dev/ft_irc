@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.cpp                                           :+:      :+:    :+:   */
+/*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 00:10:48 by oal-tena         ###   ########.fr       */
+/*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
+/*   Updated: 2022/11/29 00:16:53 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/cmd/User.hpp"
+#include "../../incl/cmd/Nick.hpp"
 
-ft::User::User()
+ft::Nick::Nick(void)
 {
-    _name = "User";
-    _description = "Set username";
-    _usage = "/user <username>";
+    _name =  "Nick";
+    _description = "Change your nickname or set it if you don't have one";
+    _usage = "/nick <nickname>";
 }
 
-void ft::User::execute()
+void ft::Nick::execute()
 {
-    std::cout << "User executed" << std::endl;
+    std::cout << "Nick executed" << std::endl;
+    _client->setNickName(_message->getParameter()[0]);
+    //cout 
+    std::cout << "Nickname changed to " << _client->getNickName() << std::endl;
 }

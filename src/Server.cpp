@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 23:57:31 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 00:18:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 //command functions
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
-#include "../incl/cmd/Cap.hpp"
+#include "../incl/cmd/Nick.hpp"
+
 
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
@@ -194,8 +195,6 @@ void ft::Server::receiveMessage(int i)
             std::map<std::string, Command *>::iterator it;
             if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
             {
-                std::cout << "Command found" << std::endl;
-                std::cout << "Command: " << args[k]->getCommand() << std::endl;
                 Command *cmd = it->second;
                 cmd->setClient(this->clients[i - 1]);
                 cmd->setServer(this);
@@ -213,7 +212,7 @@ void ft::Server::init_commands(void)
 {
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
-    _commands["CAP"] = new ft::Cap(); // 
+    _commands["NICK"] = new ft::Nick();
 }
 
 /**

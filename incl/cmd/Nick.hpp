@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cap.hpp                                            :+:      :+:    :+:   */
+/*   Nick.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 22:41:02 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 22:45:11 by oal-tena         ###   ########.fr       */
+/*   Created: 2022/11/29 00:12:53 by oal-tena          #+#    #+#             */
+/*   Updated: 2022/11/29 00:14:13 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CAP_HPP
-# define CAP_HPP
+#ifndef NICK_HPP
+#define NICK_HPP
 
 #include "./Command.hpp"
 
 namespace ft
 {
-	class Cap : public ft::Command
+	class Nick : public ft::Command
 	{
 	public:
-		Cap(void);
+		Nick(void);
 		void execute();
 	};
 
