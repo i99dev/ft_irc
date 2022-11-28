@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/25 22:28:33 by isaad            ###   ########.fr       */
+/*   Updated: 2022/11/28 13:48:49 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /******************* GETTERS *******************/
 /**
  * @brief Parse the message received from the client
- * 
+ *
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
@@ -43,7 +43,7 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::cout << words << std::endl;
 
 	// final is the variable to store the words
-	char **final = new char*[words + 1];
+	char *final;
 
 	i = 0; // index
 	int j = 0; // count the length of each word
@@ -62,26 +62,16 @@ void ft::Message::parseMessage(std::string const &msg)
 			j++;
 		}
 		if (j >= 1){
-			final[counter] = new char[j + 1];
-			msg.copy(final[counter], j, start);
-			final[counter][j] = 0;
+			final = new char[j + 1];
+			msg.copy(final, j, start);
+			final[j] = 0;
+			_Command.push_back(std::string(final));
+			delete[] final;
 			while ((msg[i] == ' ' || msg[i] == '\n'))
 				i++;
 			counter++;
 		}
 	}
-	final[counter] = 0;
-	
-	// copying one by one is required
-	_Command = new std::string[words + 1];
-	for (int i = 0; i < words; i++)
-		_Command[i] = std::string(final[i]);
-	cmdCount = words;
-
-	//freeing the double array
-	for (int i = 0; i < words; i++)
-		delete[] final[i];
-	delete[] final;
 
 	for (int i = 0; i < words; i++)
 		std::cout << "Command: " << _Command[i] << std::endl;
@@ -92,14 +82,13 @@ ft::Message::Message(std::string msg,int owner_fd):_msg(msg),_owner_fd(owner_fd)
 }
 
 ft::Message::~Message(){
-	delete[] _Command;
 }
 
 int ft::Message::gerOwnerFd(){
 	return _owner_fd;
 }
 
-std::string *ft::Message::getCommand(){
+std::vector<std::string> ft::Message::getCommand(){
 	return _Command;
 }
 
@@ -117,10 +106,6 @@ std::string ft::Message::getTrailing(){
 
 bool ft::Message::isValid(){
 	return true;
-}
-
-int ft::Message::getCmdCount(){
-	return cmdCount;
 }
 
 // bool ft::Message::isCommand(){

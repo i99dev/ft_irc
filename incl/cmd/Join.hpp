@@ -11,7 +11,7 @@
 namespace ft{
 	class Join{
 		private:
-				std::string *cmd;
+				std::vector<std::string> cmd;
 				std::vector<std::string> channels;
 				int			Count;
 				std::vector<std::string> passwords;

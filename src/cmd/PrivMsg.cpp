@@ -1,6 +1,6 @@
 #include "../../incl/cmd/PrivMsg.hpp"
 
-ft::PRIVMSG::PRIVMSG(std::vector<ft::Channel *> channels, Client *client): cmd(client->getMsgSend().back()->getCommand()), cmdCount(client->getMsgSend().back()->getCmdCount()){
+ft::PRIVMSG::PRIVMSG(std::vector<ft::Channel *> channels, Client *client): cmd(client->getMsgSend().back()->getCommand()), cmdCount(client->getMsgSend().back()->getCommand().size()){
 	if (check_cmd(client) == false)
 		return ;
 	getChName(client);
@@ -13,7 +13,7 @@ void	ft::PRIVMSG::execute(Client *client){
 	target->sendMsgtoChannel(client->getMsgSend().back());
 }
 
-bool    ft::PRIVMSG::check_cmd(ft::Client *client){
+bool	ft::PRIVMSG::check_cmd(ft::Client *client){
 	if (client->getMsgSend().back()->getCommand()[0] == "PRIVMSG")
 		return true;
 	return false;
