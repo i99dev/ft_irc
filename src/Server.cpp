@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 20:54:52 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:32:34 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,10 +190,13 @@ void ft::Server::receiveMessage(int i)
         std::map<std::string, Command *>::iterator it;
         if ((it = _commands.find(message->getCommand())) != _commands.end())
         {
+            std::cout << "Command found" << std::endl;
+            std::cout << "Command: " << message->getCommand() << std::endl;
             Command *cmd = it->second;
             cmd->setClient(this->clients[i - 1]);
             cmd->setServer(this);
             cmd->setMessage(message);
+            cmd->execute();
         }
         else
         {
@@ -205,5 +208,4 @@ void ft::Server::init_commands(void)
 {
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
-    
 }

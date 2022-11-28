@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 20:03:51 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:12:40 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 void ft::Message::parseMessage(std::string const &msg)
 {
 	//irc parsing msg here
-// std::cout << "msg: " << msg << std::endl;
+	std::cout << "msg: " << msg << std::endl;
 	int i = 0;
 	if (msg[i] == ':')
 	{
@@ -62,6 +62,8 @@ void ft::Message::parseMessage(std::string const &msg)
 			}
 			i++;
 		}
+		//close _Paramters 
+		_Parameter.push_back(std::string());
 	}
 	//cout 
 	std::cout << "Command: " << _Command << std::endl;

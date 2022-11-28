@@ -10,4 +10,5 @@ ft::Join::Join(void)
 void ft::Join::execute()
 {
     std::cout << "Join executed" << std::endl;
+    
 }

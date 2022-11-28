@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:10:43 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 20:54:24 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:42:15 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ namespace ft
 	class Command
 	{
 	protected:
-		// std::vector<ft::Channel *> &channels;
-		// std::vector<ft::Client *> &clients;
-		// ft::Client *client;
-		// std::vector<pollfd> _fds;
-		// std::string command;
-
 		std::string _name;
 		std::string _description;
 		std::string _usage;
