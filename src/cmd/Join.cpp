@@ -12,6 +12,26 @@ bool	ft::Join::check_cmd(ft::Client *client){
 	return false;
 }
 
+void	ft::Join::getPassword(int j, int start, int size, char *s){
+	for(int i = 0; i < this->Count; i++){
+		size = 0;
+		if (cmd[2][j] != ',' && cmd[2][j])
+			start = j;
+		while(j < cmd[2].size()){
+			if (cmd[2][j] == ',')
+				break ;
+			j++;
+			size++;
+		}
+		s = new char[size + 1];
+		cmd[2].copy(s, size, start);
+		s[size] = 0;
+		this->passwords.push_back(std::string(s));
+		delete [] s;
+		j++;
+	}
+}
+
 void	ft::Join::getChannelName(ft::Client *client){
 	char *s;
 
@@ -43,23 +63,7 @@ void	ft::Join::getChannelName(ft::Client *client){
 	j = 0;
 	start = 0;
 	size = 0;
-	for(int i = 0; i < this->Count; i++){
-		size = 0;
-		if (cmd[2][j] != ',' && cmd[2][j])
-			start = j;
-		while(j < cmd[2].size()){
-			if (cmd[2][j] == ',')
-				break ;
-			j++;
-			size++;
-		}
-		s = new char[size + 1];
-		cmd[2].copy(s, size, start);
-		s[size] = 0;
-		this->passwords.push_back(std::string(s));
-		delete [] s;
-		j++;
-	}
+	getPassword(j, start, size, s);
 }
 
 // bool	ft::Join::check_exist(std::vector<ft::Channel *> channels){

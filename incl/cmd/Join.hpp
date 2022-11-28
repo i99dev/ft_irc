@@ -20,6 +20,7 @@ namespace ft{
 			Join(ft::Client *client, std::vector<ft::Channel *> &channels);
 
 			void		getChannelName(ft::Client *client);
+			void		getPassword(int j, int start, int size, char *s);
 			bool		check_cmd(ft::Client *client);
 			bool		check_exist(std::vector<ft::Channel *> channels);
 			ft::Channel *getExistingCh(std::vector<ft::Channel *> channels, int index);
