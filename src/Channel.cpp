@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 14:32:19 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:34:38 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,18 @@ ft::Client	*ft::Channel::_getSenderinfo(int ownerFD)
 			return (this->users[i]);
 	}
 	return (NULL);
+}
+
+void	ft::Channel::removeUser(int userFD)
+{
+	for (long unsigned int i = 0; i < this->users.size(); i++)
+	{
+		if (this->users[i]->fd == userFD)
+		{
+			this->users.erase(this->users.begin() + i);
+			return ;
+		}	
+	}
 }
 
 std::string		ft::Channel::sendMsgFormat(Message *message)

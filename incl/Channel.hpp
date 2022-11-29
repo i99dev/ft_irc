@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 14:31:28 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:28:43 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ namespace ft
 			void						setChannelMode(char mode);
 			void						addChannelOperators(Client *user);
 			void						setPassword(std::string &password);
+			
+			// ? PART
+			void						removeUser(int userFD);
+			
 	};
 
 class WrongChannelNameRequir : public std::exception
