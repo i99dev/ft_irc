@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 07:34:42 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:36:38 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 
 std::string ft::Client::getNickName(void) const
 {
-	return (this->_nickName);
+	if (_nickName.empty())
+		return _userName;
+	return _nickName;
 }
 
 void ft::Client::setNickName(std::string nickName)

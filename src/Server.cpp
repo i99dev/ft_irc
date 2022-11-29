@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 06:47:58 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:11:51 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,5 +264,11 @@ std::string ft::Server::getServerName()
 std::string ft::Server::getPort()
 {
     return this->port;
+}
+
+void ft::Server::sendReply(Client *client, std::string reply)
+{
+    std::string msg = reply + "\r";
+    send(client->fd, msg.c_str(), msg.size(), 0);
 }
 
