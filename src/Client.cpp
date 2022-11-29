@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 11:28:19 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:18:15 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 
 std::string ft::Client::getNickName(void) const
 {
-	return (this->_nickName);
+	if (_nickName.empty())
+		return _userName;
+	return _nickName;
 }
 
 void ft::Client::setNickName(std::string nickName)

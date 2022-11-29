@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 11:29:04 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:36:43 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void ft::Server::receiveMessage(int i)
             }
             else
             {
+                this->clients[i - 1]->sendReply("ERROR :Unknown command\r \n");
             }
         }
     }
@@ -266,3 +267,18 @@ std::string ft::Server::getPort()
     return this->port;
 }
 
+void ft::Server::sendReply(Client *client, std::string reply)
+{
+    std::string msg = reply + "\r";
+    send(client->fd, msg.c_str(), msg.size(), 0);
+}
+
+bool ft::Server::isNickNameTaken(std::string nickname)
+{
+    for (size_t i = 0; i < this->clients.size(); i++)
+    {
+        if (this->clients[i]->getNickName() == nickname)
+            return true;
+    }
+    return false;
+}
