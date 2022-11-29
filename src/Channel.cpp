@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 11:20:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:26:51 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ ft::Channel::Channel(Client *user, std::string &name)
 	this->_created_at = time(0);
 	this->_topic = "";
 	this->_max_clients = 0; //? it depends on user limit mode + what the server can handle
+
+	std::cout << "created channel:" << _name << std::endl;
 }
 
 
@@ -59,9 +61,10 @@ bool	ft::Channel::_ChName_parse(std::string &name)
 	return(false);
 }
 
+// ? JOIN
 void	ft::Channel::addUser(Client *user)
 {
-	for (int i = -1; i < this->users.size(); ++i)
+	for (long unsigned int i = 0; i < this->users.size(); i++)
 	{
 		if (this->users[i]->fd == user->fd)
 			return ;
@@ -86,7 +89,7 @@ void	ft::Channel::setChannelMode(char mode)
 
 void	ft::Channel::addChannelOperators(Client *user)
 {
-	for (int i = -1; i < this->users.size(); ++i)
+	for (long unsigned int i = 0; i < this->users.size(); i++)
 	{
 		if (this->users[i]->fd == user->fd)
 		{
@@ -112,7 +115,7 @@ void	ft::Channel::addChannelOperators(Client *user)
 */
 ft::Client	*ft::Channel::_getSenderinfo(int ownerFD)
 {
-	for (int i = -1; i < this->users.size(); ++i)
+	for (long unsigned int i = 0; i < this->users.size(); i++)
 	{
 		if (this->users[i]->fd == ownerFD)
 			return (this->users[i]);
@@ -122,7 +125,8 @@ ft::Client	*ft::Channel::_getSenderinfo(int ownerFD)
 
 std::string		ft::Channel::sendMsgFormat(Message *message)
 {
-	Client *sender = this->_getSenderinfo(message->gerOwnerFd());
+	(void)message;
+	// Client *sender = this->_getSenderinfo(message->gerOwnerFd());
 	// printf("")
 	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
 	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand()[2] + " " + this->_name + " " + message->getCommand()[2] + CRLF);
@@ -132,6 +136,6 @@ void	ft::Channel::sendMsgtoChannel(Message *message)
 {
 	std::string	msg = this->sendMsgFormat(message);
 	printf("here\n");
-	for (int i = -1; i < this->users.size(); ++i)
+	for (long unsigned int i = 0; i < this->users.size(); i++)
 		send(this->users[i]->fd, msg.c_str(), msg.length(), 0);
 }

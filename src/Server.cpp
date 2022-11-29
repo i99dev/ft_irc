@@ -6,13 +6,18 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/26 20:49:53 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:29:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
-#include <netdb.h>
-#include "../incl/cmd/PrivMsg.hpp"
+
+//command functions
+#include "../incl/cmd/User.hpp"
+#include "../incl/cmd/Join.hpp"
+#include "../incl/cmd/Nick.hpp"
+
+
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("ft_irc"),
@@ -27,6 +32,7 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
     std::cout << "Servername: " << servername << std::endl;
 
     this->create_socket();
+    init_commands();
     this->createPoll();
 }
 
@@ -182,15 +188,81 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-        Message *message = new Message(buf, fds[i].fd);
-        this->clients[i - 1]->setMsgSend(message);
-			// PRIVMSG priv = PRIVMSG(this->channels, this->clients[i - 1]);
-		if (message->getCommand()[0] == "PRIVMSG" && message->getCommand()[1] == "abrar")
-		{
-			printf("heyyy %d\n", this->clients[i - 1]->fd);
-			
-			send(this->clients[i - 1]->fd, ":PRIVMSG abrar :Hello are you receiving this message ?\r\n", 100, 0);
-		}
+        std::vector <Message *> args = ft::Server::splitMessage(buf, '\n', fds[i].fd);
+        for (size_t k = 0; k < args.size(); k++)
+        {
+            this->clients[i - 1]->setMsgSend(args[k]);
+            std::map<std::string, Command *>::iterator it;
+            if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
+            {
+                Command *cmd = it->second;
+                cmd->setClient(this->clients[i - 1]);
+                cmd->setServer(this);
+                cmd->setMessage(args[k]);
+                cmd->execute();
+            }
+            else
+            {
+            }
+        }
     }
+}
+
+void ft::Server::init_commands(void)
+{
+    _commands["JOIN"] = new ft::Join();
+    _commands["USER"] = new ft::User();
+    _commands["NICK"] = new ft::Nick();
+}
+
+/**
+ * @brief split Message by newlines to to be multiple messages
+*/
+
+std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
+{
+    std::vector<ft::Message *> messages;
+    std::stringstream ss(msg);
+    std::string item;
+    while (std::getline(ss, item, delim))
+    {
+        ft::Message *message = new ft::Message(item, fd);
+        messages.push_back(message);
+    }
+    return messages;
+}
+
+/**
+ * @brief get Channels list
+*/
+
+std::vector<ft::Channel *> ft::Server::getChannels()
+{
+    return this->channels;
+}
+
+/**
+ * @brief get Clients list
+*/
+std::vector<ft::Client *> ft::Server::getClients()
+{
+    return this->clients;
+}
+
+/**
+ * @brief get Server name
+*/
+std::string ft::Server::getServerName()
+{
+    return this->servername;
+}
+
+/**
+ * @brief get Server port
+*/
+
+std::string ft::Server::getPort()
+{
+    return this->port;
 }
 

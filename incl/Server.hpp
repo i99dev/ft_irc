@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/24 22:48:13 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:27:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 #include <sys/poll.h>
 #include <sys/select.h>
 #include <cerrno>
+#include <netdb.h>
+#include <sstream>
+
 
 #define HOST "127.0.0.1"
 #define CRLF "\r\n"
@@ -34,10 +37,11 @@
 #include "Message.hpp"
 #include "Channel.hpp"
 
-class	Channel;
 
 namespace ft
 {
+    class Channel;
+    class Command;
     class Server
     {
     private:
@@ -59,6 +63,7 @@ namespace ft
         std::vector<ft::Client *> clients;
         std::vector<pollfd> fds;
         std::vector<Channel *> channels;
+        std::map<std::string, ft::Command *> _commands;
 
         enum Status
         {
@@ -70,6 +75,21 @@ namespace ft
         void create_socket();
         void createPoll();
         void setfd(int fd);
+        void init_commands(void);
+        std::vector<ft::Message *> splitMessage(std::string msg, char delim, int fd);
+
+        //channel functions
+        std::vector<Channel *> getChannels();
+
+        //server functions
+        std::string getHost();
+        std::string getServerName();
+        std::string getVersion();
+        std::string getPort();
+
+        //client functions
+        std::vector<Client *> getClients();
+
     };
 }
 

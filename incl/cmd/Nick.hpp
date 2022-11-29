@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Join.hpp                                           :+:      :+:    :+:   */
+/*   Nick.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 19:58:17 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 07:50:00 by oal-tena         ###   ########.fr       */
+/*   Created: 2022/11/29 00:12:53 by oal-tena          #+#    #+#             */
+/*   Updated: 2022/11/29 00:14:13 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef JOIN_HPP
-
-#define JOIN_HPP
+#ifndef NICK_HPP
+#define NICK_HPP
 
 #include "./Command.hpp"
 
 namespace ft
 {
-	class Join : public ft::Command
+	class Nick : public ft::Command
 	{
 	public:
-		Join(void);
+		Nick(void);
 		void execute();
 	};
 
 }
-
 #endif

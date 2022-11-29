@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/24 13:24:00 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:28:19 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ std::vector <ft::Message *> ft::Client::getMsgRecv(void) const
 void ft::Client::setMsgRecv(Message  *msgRecv)
 {
 	this->_msgRecv.push_back(msgRecv);
+}
+
+void ft::Client::sendReply(std::string reply)
+{
+	std::string replyToSend = reply + "\n";
+
+	if (send(fd, replyToSend.c_str(), replyToSend.size(), 0) == -1)
+	{
+		std::cout << "Error sending reply" << std::endl;
+	}
 }
 
 ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
