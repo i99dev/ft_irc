@@ -42,7 +42,7 @@ void ft::Join::execute()
 			size++;
 		}
 		s = new char[size + 1];
-		cmd.copy(s, size - 1, start + 1);
+		cmd.copy(s, size, start);
 		s[size] = 0;
 		chName.push_back(std::string(s));
 		delete [] s;
@@ -75,13 +75,13 @@ void ft::Join::execute()
 	for (int i = 0; i < Count; i++){
 		flag = 0;
 	    // get channel name from message
-	    std::string channelName = "&" + chName[i];
+	    std::string channelName = chName[i];
 		std::cout << "channel name: " << channelName << std::endl;
 	    // get channel key from message
 	    std::string channelKey = "";
-	    if (!passwords[i].empty())
+	    if (!passwords[i].empty() || (passwords[i][0] == 'x' && passwords[i][0] == 0))
 	    {
-	        std::string channelKey = passwords[i];
+	        channelKey = passwords[i];
 			std::cout << "channel key: " << channelKey << std::endl;
 	    }
 	    // check if channel exists
@@ -90,6 +90,7 @@ void ft::Join::execute()
 	    {
 	        if ((*it)->getChName() == channelName)
 	        {
+						flag = 1;
 	            // check if channel has a key
 	            if ((*it)->getpassword() != "")
 	            {
@@ -101,18 +102,12 @@ void ft::Join::execute()
 	                    // send message to client
 	                    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
 	                    _client->sendReply(joinMsg);
-						flag = 1;
-						break;
-						// return ;
 	                }
 	                else
 	                {
 	                    // send message to client
 	                    std::string errMsg = ERR_BADCHANNELKEY(_server->getServerName(), _client->getNickName(), channelName);
 	                    _client->sendReply(errMsg);
-						flag = 1;
-						break;
-						// return ;
 	                }
 	            }
 	            else
@@ -122,9 +117,6 @@ void ft::Join::execute()
 	                // send message to client
 	                std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
 	                _client->sendReply(joinMsg);
-					flag = 1;
-					break;
-					// return ;
 	            }
 	        }
 	    }
