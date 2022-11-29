@@ -13,7 +13,6 @@ namespace ft{
 			std::string					ChName; // name of channel string
 			std::string					msg; // pure message to send to channel
 			ft::Channel					*target; // target channel to send message on
-			int							cmdCount; // helper for my functions
 			bool	check_cmd(std::string s);
 			void	getChannel(std::vector<ft::Channel *> channels);
 		public:
