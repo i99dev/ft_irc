@@ -51,56 +51,60 @@ void ft::Join::execute()
 	j = 0;
 	start = 0;
 	size = 0;
-	cmd = _message->getParameter()[1];
-	// loop to get all the passwords one by one
-	for(int i = 0; i < Count; i++){
-		size = 0;
-		if (cmd[j] != ',' && cmd[j])
-			start = j;
-		while(j < int(cmd.size())){
-			if (cmd[j] == ',')
-				break ;
+		try{
+	if (_message->getParameter()[1].size() > 1){
+		cmd = _message->getParameter()[1];
+		// loop to get all the passwords one by one
+		for(int i = 0; i < Count; i++){
+			size = 0;
+			if (cmd[j] != ',' && cmd[j])
+				start = j;
+			while(j < int(cmd.size())){
+				if (cmd[j] == ',')
+					break ;
+				j++;
+				size++;
+			}
+			s = new char[size + 1];
+			cmd.copy(s, size, start);
+			s[size] = 0;
+			passwords.push_back(std::string(s));
+			delete [] s;
 			j++;
-			size++;
 		}
-		s = new char[size + 1];
-		cmd.copy(s, size, start);
-		s[size] = 0;
-		passwords.push_back(std::string(s));
-		delete [] s;
-		j++;
 	}
+
 
 
 	for (int i = 0; i < Count; i++){
 		flag = 0;
 	    // get channel name from message
 	    std::string channelName = chName[i];
-		std::cout << "channel name: " << channelName << std::endl;
 	    // get channel key from message
 	    std::string channelKey = "";
-	    if (!passwords[i].empty() || (passwords[i][0] == 'x' && passwords[i][0] == 0))
+	    if (_message->getParameter()[1].size() > 1)
 	    {
-	        channelKey = passwords[i];
-			std::cout << "channel key: " << channelKey << std::endl;
+			if (!passwords[i].empty()){
+		        channelKey = passwords[i];
+			}
 	    }
 	    // check if channel exists
-	    std::vector<Channel *>::iterator it;
-	    for (it = channels.begin(); it != channels.end(); it++)
+	    // std::vector<Channel *>::iterator it;
+	    for (int i = 0; i < int(channels.size()); i++)
 	    {
-	        if ((*it)->getChName() == channelName)
+	        if (_message->getParameter()[1].size() > 1 && channels[i]->getChName() == channelName)
 	        {
 						flag = 1;
 	            // check if channel has a key
-	            if ((*it)->getpassword() != "")
+	            if (channels[i]->getpassword() != "")
 	            {
 	                // check if key is correct
-	                if ((*it)->getpassword() == channelKey)
+	                if (_message->getParameter()[1].size() > 1 && channels[i]->getpassword() == channelKey)
 	                {
 	                    // add client to channel
-	                    (*it)->addUser(_client);
+	                    channels[i]->addUser(_client);
 	                    // send message to client
-	                    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
+	                    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
 	                    _client->sendReply(joinMsg);
 	                }
 	                else
@@ -113,14 +117,14 @@ void ft::Join::execute()
 	            else
 	            {
 	                // add client to channel
-	                (*it)->addUser(_client);
+	                channels[i]->addUser(_client);
 	                // send message to client
-	                std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
+	                std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
 	                _client->sendReply(joinMsg);
 	            }
 	        }
 	    }
-		if (flag == 0 && i == Count - 1){
+		if (flag == 0){
 		    //if channel does not exist create 
 		    Channel *channel = new Channel(_client,channelName);
 		    // channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
