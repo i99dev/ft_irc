@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/24 12:36:07 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 06:39:53 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ namespace ft
 			void 					setMsgSend(Message  *msgSend);
 			std::vector <Message *>	getMsgRecv(void)const;
 			void 					setMsgRecv(Message *msgRecv);
+			void 					sendReply(std::string reply);
 			
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();

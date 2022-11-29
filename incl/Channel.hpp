@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Channel.hpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
+/*   Updated: 2022/11/29 14:31:28 by aaljaber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CHANNEL_HPP
 
 #define CHANNEL_HPP
@@ -6,78 +18,67 @@
 #include <vector>
 #include <iostream>
 #include "Client.hpp"
+#include "Server.hpp"
 #define CHNAME_LENGTH 50
 #define EXC_WRONG_CHNAME "Wrong Channel Name"
+#define	MODE_NUM 6
+#define MODE_CHAR (char []){'i', 'p', 's', 't', 'k', 'l'}
+#define MODE_ENUM (Channel_Mode []){i_INVITE_ONLY_CHANNEL, p_PRIVATE_CHANNEL, s_SECRET_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
 
 class Client;
 
-enum ChannelMode{
-	CHANNEL_MODEPRIVATE = 0,
-	CHANNEL_MODE_SECRET = 1,
-	CHANNEL_MODE_INVITE_ONLY = 2,
-	CHANNEL_MODE_MODERATED = 3,
-	CHANNEL_MODE_TOPIC_SETTABLE_BY_CHANNEL_OPERATOR_ONLY = 4,
-	CHANNEL_MODE_CANT_SENT_MESSAGES_OUTSIDE = 5,
-	CHANNEL_MODE_BAN_MASK = 6,
-	CHANNEL_MODE_KEY = 7
-};
-
 namespace ft
 {
-	class Channel{
+	enum Channel_Mode
+	{
+        i_INVITE_ONLY_CHANNEL, //? invite-only channel flag
+        p_PRIVATE_CHANNEL, //? private channel flag;
+        s_SECRET_CHANNEL, //? secret channel flag;
+        t_TOPIC, // ? topic
+        k_CAHNNEL_PASSWORD, //? set/remove(+/-) the channel key (password);
+		l_USER_LIMIT, //? set/remove(+/-) the user limit to channel;
+ 	};
+	class Channel
+	{	
 		private:
-			Client						*_creator;
+
+			ft::Client					*_creator;
 			std::string					_name;
 			time_t						_created_at;
-			size_t						_max_clients;
-			ChannelMode					_mode;
+			std::vector<Channel_Mode>	_mode;
 			std::string					_password;
 			std::string					_topic;
-			int							_ChName_parse(std::string &name)
-			{
-				if (name[0] == '&' || name[0] == '#' || name[0] == '+' || name[0] == '!')
-				{
-					if (name.find('&', 1) == std::string::npos && name.find('#', 1) == std::string::npos && name.find('+', 1) == std::string::npos && name.find('!', 1) == std::string::npos)
-					{
-						if (name.length() <= CHNAME_LENGTH)
-						{
-							if (name.find(' ') == std::string::npos && name.find(':') == std::string::npos && name.find(',') == std::string::npos && name.find(7) == std::string::npos)
-								return (1);
-						}
-					}
-				}
-				return(0);
-			}
+			bool						_ChName_parse(std::string &name);
+			ft::Client					*_getSenderinfo(int ownerFD);
+
 		public:
-			std::vector<Client *>	_normal_clients;
-			std::vector<Client *>	_ope_clients;
-		public:
-		Channel(Client *user, std::string &name);
+
+			// * Constructor and Destructor * //
+			Channel(ft::Client *user, std::string &name);
+			~Channel();
+		
+			// * Channel members * //
+			std::vector<ft::Client *>	users;
+			std::vector<ft::Client *>	operators;
+
+			// * Getters * //
 			std::string					getChName(void);
+			std::string					getpassword(void);
+			
+			// * Channel actions * //
+
+			// ? PRIVMSG
 			void						sendMsgtoChannel(Message *message);
-			void						addClient(Client *user);
-			std::vector<Client *>		getClients() const;
-			ChannelMode					getMode();
-			ChannelMode					addMode(ChannelMode mode);
-			ChannelMode					removeMode(ChannelMode mode);
-			std::string					&getPassword();
-			std::string					&getName();
-			std::string					&getTopic();
-			std::string					getModeString();
-			std::string					getClientRoleString(Client *client);
-			Client						&getCreator();
-			time_t						&getCreatedAt();
-			size_t						&getMaxClients();
-			bool						joined(Client *client);
-			bool						isOwner(Client *client);
-			bool						isOpe(Client *client);
-			bool						isNormal(Client *client);
-			bool						isVoice(Client *client);
-			void						setCreator(Client *creator);
-			void						removeClientFromChannel(Client *client);
-		~Channel();
+			std::string					sendMsgFormat(Message *message);
+
+			// ? JOIN
+			void						addUser(ft::Client *user);
+			
+			// ? MODE
+			void						setChannelMode(char mode);
+			void						addChannelOperators(Client *user);
+			void						setPassword(std::string &password);
 	};
-}
 
 class WrongChannelNameRequir : public std::exception
 {
@@ -87,5 +88,8 @@ class WrongChannelNameRequir : public std::exception
 			return (EXC_WRONG_CHNAME);
 		}
 };
+
+}
+
 
 #endif

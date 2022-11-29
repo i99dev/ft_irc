@@ -1,41 +1,65 @@
 #include "../../incl/cmd/Join.hpp"
 
-ft::Join::Join(ft::Client *client, std::vector<ft::Channel *> &channels){
-	if (check_params(client)){
-		// if (check_existence(channels, int(channels.size())))
-			// join channel
-		// else
-			// create channel
-	}
-		
+ft::Join::Join(void)
+{
+    _name = "Join";
+    _description = "Join a channel";
+    _usage = "/join <channel> [key]";
 }
 
-bool	ft::Join::check_params(ft::Client *client){
-	if (client->getMsgSend().back()->getCommand()[0] == "JOIN"){
-		name = getChannelName(client);
-		if (name.empty() == false && name[0] != 0)
-			return true;
-		else
-			std::cout << "ERROR: incorrect number of arguments" << std::endl;
-	}
-	return false;
+void ft::Join::execute()
+{
+    // get channel ;ist from server
+    std::vector<Channel *> channels = _server->getChannels();
+    // get channel name from message
+    std::string channelName = _message->getParameter()[0];
+    // get channel key from message
+    std::string channelKey = "";
+    // if ( _message->getParameter()[1] != "")
+    // {
+    //     std::string channelKey = _message->getParameter()[1];
+    // }
+    // check if channel exists
+    std::vector<Channel *>::iterator it;
+    for (it = channels.begin(); it != channels.end(); it++)
+    {
+        if ((*it)->getChName() == channelName)
+        {
+            // check if channel has a key
+            if ((*it)->getpassword() != "")
+            {
+                // check if key is correct
+                if ((*it)->getpassword() == channelKey)
+                {
+                    // add client to channel
+                    (*it)->addUser(_client);
+                    // send message to client
+                    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
+                    _client->sendReply(joinMsg);
+                }
+                else
+                {
+                    // send message to client
+                    std::string errMsg = ERR_BADCHANNELKEY(_server->getServerName(), _client->getNickName(), channelName);
+                    _client->sendReply(errMsg);
+                }
+            }
+            else
+            {
+                // add client to channel
+                (*it)->addUser(_client);
+                // send message to client
+                std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
+                _client->sendReply(joinMsg);
+            }
+        }
+    }
+    //if channel does not exist create 
+    Channel *channel = new Channel(_client,channelName);
+    // channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
+    _server->channels.push_back(channel);
+    // send message to client
+    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channel->getChName();
+    _client->sendReply(joinMsg);
 }
-
-std::string	ft::Join::getChannelName(ft::Client *client){
-	int i = 0;
-	int j = 1;
-	char *s;
-
-	client->getMsgSend().back()->getParameter().copy(s, client->getMsgSend().back()->getParameter().length() - 3, 1);
-	return s;
-}
-
-bool	ft::Join::check_exist(std::vector<ft::Channel *> channels, int channel_size){
-	for (int i = 0; i < channels.size(); i++){
-		if (channels[i]->getChName().compare(this->name) == 0)
-			return true;
-	}
-	return false;
-}
-
-ft::Join::~Join(){}
+    
