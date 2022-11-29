@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 11:28:00 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:31:28 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ namespace ft
 			std::vector<Channel_Mode>	_mode;
 			std::string					_password;
 			std::string					_topic;
-			size_t						_max_clients;
 			bool						_ChName_parse(std::string &name);
 			ft::Client					*_getSenderinfo(int ownerFD);
 
@@ -77,7 +76,8 @@ namespace ft
 			
 			// ? MODE
 			void						setChannelMode(char mode);
-			void						addChannelOperators(Client *user);		
+			void						addChannelOperators(Client *user);
+			void						setPassword(std::string &password);
 	};
 
 class WrongChannelNameRequir : public std::exception

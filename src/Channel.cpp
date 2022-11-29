@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 11:26:51 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:32:19 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ ft::Channel::Channel(Client *user, std::string &name)
 	this->_creator = user;
 	this->_created_at = time(0);
 	this->_topic = "";
-	this->_max_clients = 0; //? it depends on user limit mode + what the server can handle
-
 	std::cout << "created channel:" << _name << std::endl;
 }
-
-
 
 ft::Channel::~Channel(){}
 
@@ -102,6 +98,11 @@ void	ft::Channel::addChannelOperators(Client *user)
 		! need to make sure if the server will ignore
 		! it or error message will be sent
 	*/
+}
+
+void	ft::Channel::setPassword(std::string &password)
+{
+	this->_password = password;
 }
 
 // ? PRIVMSG
