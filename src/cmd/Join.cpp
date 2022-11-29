@@ -26,13 +26,13 @@ void ft::Join::execute()
         if ((*it)->getChName() == channelName)
         {
             // check if channel has a key
-            if ((*it)->getPassword() != "")
+            if ((*it)->getpassword() != "")
             {
                 // check if key is correct
-                if ((*it)->getPassword() == channelKey)
+                if ((*it)->getpassword() == channelKey)
                 {
                     // add client to channel
-                    (*it)->addClient(_client);
+                    (*it)->addUser(_client);
                     // send message to client
                     std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
                     _client->sendReply(joinMsg);
@@ -47,7 +47,7 @@ void ft::Join::execute()
             else
             {
                 // add client to channel
-                (*it)->addClient(_client);
+                (*it)->addUser(_client);
                 // send message to client
                 std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + (*it)->getChName();
                 _client->sendReply(joinMsg);
@@ -55,9 +55,9 @@ void ft::Join::execute()
         }
     }
     //if channel does not exist create 
-    Channel *channel = new Channel(channelName, channelKey);
-    channel->addClient(_client);
-    channels.push_back(channel);
+    Channel *channel = new Channel(_client,channelName);
+    // channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
+    _server->channels.push_back(channel);
     // send message to client
     std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channel->getChName();
     _client->sendReply(joinMsg);
