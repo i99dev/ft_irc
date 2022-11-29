@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/28 23:38:54 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 07:00:28 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 #include <sys/select.h>
 #include <cerrno>
 #include <netdb.h>
-# include <sstream>
+#include <sstream>
+
 
 // Our Headers...
 #include "Client.hpp"
@@ -72,6 +73,18 @@ namespace ft
         void setfd(int fd);
         void init_commands(void);
         std::vector<ft::Message *> splitMessage(std::string msg, char delim, int fd);
+
+        //channel functions
+        std::vector<Channel *> getChannels();
+
+        //server functions
+        std::string getHost();
+        std::string getServerName();
+        std::string getVersion();
+        std::string getPort();
+
+        //client functions
+        std::vector<Client *> getClients();
 
     };
 }

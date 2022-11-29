@@ -52,7 +52,8 @@ namespace ft
 			std::vector<Client *>	_normal_clients;
 			std::vector<Client *>	_ope_clients;
 		public:
-		Channel(Client *user, std::string &name);
+			// Channel(Client *user, std::string &name);
+			Channel(std::string &name, std::string &password);
 			std::string					getChName(void);
 			void						sendMsgtoChannel(Message *message);
 			void						addClient(Client *user);

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 00:18:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 06:47:58 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void ft::Server::init_commands(void)
 }
 
 /**
- * @brief Message by newlines
+ * @brief split Message by newlines to to be multiple messages
 */
 
 std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
@@ -231,3 +231,38 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
     }
     return messages;
 }
+
+/**
+ * @brief get Channels list
+*/
+
+std::vector<ft::Channel *> ft::Server::getChannels()
+{
+    return this->channels;
+}
+
+/**
+ * @brief get Clients list
+*/
+std::vector<ft::Client *> ft::Server::getClients()
+{
+    return this->clients;
+}
+
+/**
+ * @brief get Server name
+*/
+std::string ft::Server::getServerName()
+{
+    return this->servername;
+}
+
+/**
+ * @brief get Server port
+*/
+
+std::string ft::Server::getPort()
+{
+    return this->port;
+}
+

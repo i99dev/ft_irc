@@ -6,12 +6,14 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:10:43 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 22:44:35 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 06:31:13 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "../Server.hpp"
+#include "../Replies.hpp"
+
 
 namespace ft
 {
