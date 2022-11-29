@@ -1,51 +1,31 @@
-// #include "../../incl/cmd/PrivMsg.hpp"
+#include "../../incl/cmd/PrivMsg.hpp"
 
-// ft::PRIVMSG::PRIVMSG(){
-// 	if (check_cmd(client) == false)
-// 		return ;
-// 	getChName(client);
-// 	getChannel(channels);
-// 	getMsg();
-// 	execute(client);
-// }
+ft::PRIVMSG::PRIVMSG(): cmd(_message->getParameter()){
+    _name = "privmsg";
+    _description = "Send message to a set of users/channels";
+    _usage = "privmsg <receptor|channel>{,<receptor|channel>} :<texto>";
+}
 
-// void	ft::PRIVMSG::execute(Client *client){
-// 	target->sendMsgtoChannel(client->getMsgSend().back());
-// }
+void	ft::PRIVMSG::execute(){
+	if (check_cmd(_message->getCommand()) == false)
+		return ;
+	ChName = _message->getParameter()[0];
+	getChannel(_server->channels);
+	msg = _message->getParameter()[1];
+	target->sendMsgtoChannel(_client->getMsgSend().back());    // executethe command from channel
+}
 
-// bool	ft::PRIVMSG::check_cmd(ft::Client *client){
-// 	if (client->getMsgSend().back()->getCommand() == "PRIVMSG")
-// 		return true;
-// 	return false;
-// }
+bool	ft::PRIVMSG::check_cmd(std::string s){
+	if (s == "PRIVMSG")
+		return true;
+	return false;
+}
 
-// void	ft::PRIVMSG::getChName(Client *client){
-// 	char *tmp;
-// 	client->getMsgSend().back()->getCommand()[1].copy(tmp, client->getMsgSend().back()->getCommand()[1].size() - 1, 1);
-// 	ChName = std::string(tmp);
-// }
-
-// void	ft::PRIVMSG::getChannel(std::vector<ft::Channel *> channels){
-// 	for (int i = 0; i < channels.size(); i++){
-// 		if (channels[i]->getChName() == ChName){
-// 			target = channels[i];
-// 			return ;
-// 		}
-// 	}
-// }
-
-// void	ft::PRIVMSG::getMsg(){
-// 	int i = 2;
-// 	char *tmp;
-
-// 	tmp = new char[cmd[i].size() - 1];
-// 	cmd[i].copy(tmp, cmd[i].size() - 1, 1);
-// 	msg = std::string(tmp);
-// 	i++;
-// 	while (i < cmdCount){
-// 		msg += " ";
-// 		msg += cmd[i];
-// 		i++;
-// 	}
-// 	delete[] tmp;
-// }
+void	ft::PRIVMSG::getChannel(std::vector<ft::Channel *> channels){
+	for (int i = 0; i < int(channels.size()); i++){
+		if (channels[i]->getChName() == ChName){
+			target = channels[i];
+			return ;
+		}
+	}
+}
