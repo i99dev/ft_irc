@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 06:39:30 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/29 07:34:42 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void ft::Client::setMsgRecv(Message  *msgRecv)
 
 void ft::Client::sendReply(std::string reply)
 {
-	std::string replyToSend = reply + "\r";
+	std::string replyToSend = reply + "\n";
 
 	if (send(fd, replyToSend.c_str(), replyToSend.size(), 0) == -1)
 	{
