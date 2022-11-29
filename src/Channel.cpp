@@ -6,14 +6,14 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 09:19:11 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 09:41:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Channel.hpp"
 
 // * Constructor and Destructor * //
-ft::Channel::Channel(Client *user, std::string &name, std::string &password)
+ft::Channel::Channel(Client *user, std::string &name)
 {
 	// ! no need to throw exception if the client will ignore
 	if (!this->_ChName_parse(name))
@@ -21,7 +21,6 @@ ft::Channel::Channel(Client *user, std::string &name, std::string &password)
 	else
 		this->_name = name;
 	this->_creator = user;
-	this->_password = password;
 	this->_created_at = time(0);
 	this->_topic = "";
 	this->_max_clients = 0; //? it depends on user limit mode + what the server can handle
@@ -61,6 +60,16 @@ bool	ft::Channel::_ChName_parse(std::string &name)
 }
 
 // ? JOIN
+void	ft::Channel::addUser(Client *user, std::string &password)
+{
+	for (int i = -1; i < this->users.size(); ++i)
+	{
+		if (this->users[i]->fd == user->fd)
+			return ;
+	}
+	this->users.push_back(user);
+}
+
 void	ft::Channel::addUser(Client *user)
 {
 	for (int i = -1; i < this->users.size(); ++i)
