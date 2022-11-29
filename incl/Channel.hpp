@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/27 05:12:04 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 09:21:43 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 #include "Server.hpp"
 #define CHNAME_LENGTH 50
 #define EXC_WRONG_CHNAME "Wrong Channel Name"
-#define	MODE_NUM 8
+#define	MODE_NUM 6
+#define MODE_CHAR (char []){'i', 'p', 's', 't', 'k', 'l'}
+#define MODE_ENUM (Channel_Mode []){i_INVITE_ONLY_CHANNEL, p_PRIVATE_CHANNEL, s_SECRET_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
 
 class Client;
 
@@ -29,8 +31,6 @@ namespace ft
 {
 	enum Channel_Mode
 	{
-		O_CHANNEL_CREATOR, // ? channel creator
-        o_CHANNEL_OPERATOR, //? give/take(+/-) channel operator privileges; 
         i_INVITE_ONLY_CHANNEL, //? invite-only channel flag
         p_PRIVATE_CHANNEL, //? private channel flag;
         s_SECRET_CHANNEL, //? secret channel flag;
@@ -46,6 +46,7 @@ namespace ft
 			std::string					_name;
 			time_t						_created_at;
 			std::vector<Channel_Mode>	_mode;
+			std::string					_password;
 			std::string					_topic;
 			size_t						_max_clients;
 			bool						_ChName_parse(std::string &name);
@@ -54,7 +55,7 @@ namespace ft
 		public:
 
 			// * Constructor and Destructor * //
-			Channel(ft::Client *user, std::string &name);
+			Channel(ft::Client *user, std::string &name, std::string &password);
 			~Channel();
 		
 			// * Channel members * //
@@ -63,6 +64,7 @@ namespace ft
 
 			// * Getters * //
 			std::string					getChName(void);
+			std::string					getpassword(void);
 			
 			// * Channel actions * //
 
@@ -89,7 +91,5 @@ class WrongChannelNameRequir : public std::exception
 
 }
 
-#define MODE_CHAR (char []){'O', 'o', 'i', 'p', 's', 't', 'k', 'l'}
-#define MODE_ENUM (Channel_Mode []){O_CHANNEL_CREATOR, o_CHANNEL_OPERATOR, i_INVITE_ONLY_CHANNEL, p_PRIVATE_CHANNEL, s_SECRET_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
 
 #endif

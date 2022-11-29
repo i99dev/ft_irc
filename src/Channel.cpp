@@ -6,14 +6,14 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/27 05:15:25 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 09:19:11 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Channel.hpp"
 
 // * Constructor and Destructor * //
-ft::Channel::Channel(Client *user, std::string &name)
+ft::Channel::Channel(Client *user, std::string &name, std::string &password)
 {
 	// ! no need to throw exception if the client will ignore
 	if (!this->_ChName_parse(name))
@@ -21,10 +21,13 @@ ft::Channel::Channel(Client *user, std::string &name)
 	else
 		this->_name = name;
 	this->_creator = user;
+	this->_password = password;
 	this->_created_at = time(0);
 	this->_topic = "";
 	this->_max_clients = 0; //? it depends on user limit mode + what the server can handle
 }
+
+
 
 ft::Channel::~Channel(){}
 
@@ -32,6 +35,11 @@ ft::Channel::~Channel(){}
 std::string	ft::Channel::getChName(void)
 {
 	return (this->_name);
+}
+
+std::string	ft::Channel::getpassword(void)
+{
+	return (this->_password);
 }
 
 // * Channel actions * //
@@ -129,5 +137,3 @@ void	ft::Channel::sendMsgtoChannel(Message *message)
 	for (int i = -1; i < this->users.size(); ++i)
 		send(this->users[i]->fd, msg.c_str(), msg.length(), 0);
 }
-
-
