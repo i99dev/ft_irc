@@ -14,7 +14,7 @@ namespace ft{
 			ft::Channel					*target; // target channel to send message on
 			int							cmdCount; // helper for my functions
 		public:
-			PRIVMSG(std::vector<ft::Channel *> channels, Client *client);
+			PRIVMSG();
 
 			void	execute(Client *client);
 

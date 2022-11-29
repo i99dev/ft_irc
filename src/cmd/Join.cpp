@@ -51,7 +51,6 @@ void ft::Join::execute()
 	j = 0;
 	start = 0;
 	size = 0;
-		try{
 	if (_message->getParameter()[1].size() > 1){
 		cmd = _message->getParameter()[1];
 		// loop to get all the passwords one by one
@@ -132,7 +131,6 @@ void ft::Join::execute()
 		    // send message to client
 		    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channel->getChName();
 		    _client->sendReply(joinMsg);
-		}	
+		}
 	}
 }
-    
