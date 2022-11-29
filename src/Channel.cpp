@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 09:41:03 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:20:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,6 @@ bool	ft::Channel::_ChName_parse(std::string &name)
 		}
 	}
 	return(false);
-}
-
-// ? JOIN
-void	ft::Channel::addUser(Client *user, std::string &password)
-{
-	for (int i = -1; i < this->users.size(); ++i)
-	{
-		if (this->users[i]->fd == user->fd)
-			return ;
-	}
-	this->users.push_back(user);
 }
 
 void	ft::Channel::addUser(Client *user)

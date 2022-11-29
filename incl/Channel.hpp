@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 09:43:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:20:31 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ namespace ft
 
 			// ? JOIN
 			void						addUser(ft::Client *user);
-			void						addUser(ft::Client *user, std::string &password);
 			
 			// ? MODE
 			void						setChannelMode(char mode);
