@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 20:36:43 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 08:23:46 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
 #include "../incl/cmd/Nick.hpp"
+#include "../incl/cmd/Whois.hpp"
+#include "../incl/cmd/Cap.hpp"
+#include "../incl/cmd/Mode.hpp"
+#include "../incl/cmd/Ping.hpp"
 
 
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
-                                                                           servername("ft_irc"),
+                                                                           servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
                                                                            password(password)
@@ -214,6 +218,11 @@ void ft::Server::init_commands(void)
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
     _commands["NICK"] = new ft::Nick();
+    _commands["WHOIS"] = new ft::Whois();
+    _commands["CAP"] = new ft::Cap();
+    _commands["MODE"] = new ft::Mode();
+    _commands["PING"] = new ft::Ping();
+
 }
 
 /**
@@ -269,7 +278,7 @@ std::string ft::Server::getPort()
 
 void ft::Server::sendReply(Client *client, std::string reply)
 {
-    std::string msg = reply + "\r";
+    std::string msg = reply;
     send(client->fd, msg.c_str(), msg.size(), 0);
 }
 
@@ -281,4 +290,9 @@ bool ft::Server::isNickNameTaken(std::string nickname)
             return true;
     }
     return false;
+}
+
+std::string ft::Server::getVersion()
+{
+    return this->version;
 }
