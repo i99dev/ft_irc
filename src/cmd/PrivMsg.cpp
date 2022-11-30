@@ -24,6 +24,7 @@ bool	ft::PRIVMSG::check_cmd(std::string s){
 void	ft::PRIVMSG::getChannel(std::vector<ft::Channel *> channels){
 	for (int i = 0; i < int(channels.size()); i++){
 		if (channels[i]->getChName() == ChName){
+			//send to all clinet in channel
 			target = channels[i];
 			return ;
 		}

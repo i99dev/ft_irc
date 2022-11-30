@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 15:03:21 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:33:30 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "../incl/cmd/Cap.hpp"
 #include "../incl/cmd/Mode.hpp"
 #include "../incl/cmd/Ping.hpp"
+#include "../incl/cmd/PrivMsg.hpp"
 
 
 
@@ -222,6 +223,7 @@ void ft::Server::init_commands(void)
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();
+    _commands["PrivMsg"] = new ft::PRIVMSG();
 
 }
 
