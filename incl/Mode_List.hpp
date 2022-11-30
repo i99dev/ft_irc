@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 02:23:02 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:38:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
 #define USMODE_ENUM (User_Mode []){n_NO_MODE, o_OPERATOR_FLAG, i_INVISIBLE}
 
+// TODO: change the loop of checking the modes to start with the valid modes
 
 namespace ft
 {
