@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 08:08:30 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 08:24:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@
 #define HOST "127.0.0.1"
 #define CRLF "\r\n"
 
-// colors irc messages
-#define RED "\033[0;31m"
-#define GREEN "\033[0;32m"
-#define YELLOW "\033[0;33m"
-#define BLUE "\033[0;34m"
-#define MAGENTA "\033[0;35m"
-#define CYAN "\033[0;36m"
-#define WHITE "\033[0;37m"
-#define RESET "\033[0m"
 
 // Our Headers...
 #include "Client.hpp"
@@ -109,7 +100,7 @@ namespace ft
         bool isNickNameTaken(std::string nickName);
 
         // message functions
-        void sendReply(Client *client, std::string msg, MessageKind kind);
+        void sendReply(Client *client, std::string msg);
     };
 }
 

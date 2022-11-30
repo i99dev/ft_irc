@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 08:15:58 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 08:24:33 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ void ft::Nick::execute()
     {
         _client->setNickName(nickName);
         std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-        _server->sendReply(_client,msg, _server->NOTE);
+        _server->sendReply(_client,msg);
         msg = RPL_YOURHOST(_server->getServerName(),_client->getNickName(), _server->getVersion());
-        _server->sendReply(_client, msg, _server->NOTE);
+        _server->sendReply(_client, msg);
         msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
-        _server->sendReply(_client, msg, _server->NOTE);
+        _server->sendReply(_client, msg);
         msg = RPL_MYINFO(_server->getServerName(), _server->getVersion(), "iow", "o", "ov");
-        _server->sendReply(_client, msg, _server->NOTE);
+        _server->sendReply(_client, msg);
         return;
     }
     _client->setNickName(nickName);
     std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-    _server->sendReply(_client, msg, _server->NOTE);
+    _server->sendReply(_client, msg);
 }
