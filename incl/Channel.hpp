@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 09:19:32 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 09:45:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include "Server.hpp"
 #define CHNAME_LENGTH 50
 #define EXC_WRONG_CHNAME "Wrong Channel Name"
-#define	MODE_NUM 10
-#define MODE_CHAR (char []){'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l'}
-#define MODE_ENUM (Channel_Mode []){NO_MODE, O_CHANNEL_CREATOR, o_OPERATOR_PRIVILEGE, v_VOICE_PRIVILEGE,i_INVITE_ONLY_CHANNEL, m_MODERATED_CHANNEL, p_PRIVATE_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
+#define	MODE_NUM 11
+#define MODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l'}
+#define MODE_ENUM (Channel_Mode []){CLEAR_MODE, NO_MODE, O_CHANNEL_CREATOR, o_OPERATOR_PRIVILEGE, v_VOICE_PRIVILEGE,i_INVITE_ONLY_CHANNEL, m_MODERATED_CHANNEL, p_PRIVATE_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
 
 class Client;
 
@@ -31,6 +31,7 @@ namespace ft
 {
 	enum Channel_Mode
 	{
+		CLEAR_MODE,
 		NO_MODE,
 		O_CHANNEL_CREATOR,
 		o_OPERATOR_PRIVILEGE,
@@ -74,6 +75,7 @@ namespace ft
 			std::vector<ft::Channel_Member>		getMembers(void);
 			ft::Client							*getCreator(void);
 			std::string							getTopic(void);
+			ft::Channel_Mode					FindMode(char mode);
 			
 			// * Channel actions * //
 
@@ -86,7 +88,9 @@ namespace ft
 			
 			// ? MODE
 			void								setChannelMode(char mode);
+			void								setMemberMode(Client *user, char mode);
 			void								removeChannelMode(char mode);
+			void								removeMemberMode(Client *user, char mode);
 			void								makeMemberOperator(Client *user);
 			void								makeMemberVoice(Client *user);
 			void								setPassword(std::string &password);

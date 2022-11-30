@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 09:21:22 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 09:58:38 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ ft::Channel::Channel(Client *user, std::string &name)
 	Channel_Member creator;
 	creator.user = user;
 	creator.user_mode = O_CHANNEL_CREATOR;
+	this->members.push_back(creator);
 	this->_created_at = time(0);
 	this->_topic = "";
 	std::cout << "created channel:" << _name << std::endl;
@@ -89,7 +90,7 @@ void	ft::Channel::addUser(Client *user)
 	}
 	ft::Channel_Member new_member;
 	new_member.user = user;
-	new_member.user_mode = NO_MODE;
+	new_member.user_mode = CLEAR_MODE;
 	this->members.push_back(new_member);
 }
 
@@ -98,34 +99,47 @@ void	ft::Channel::addUser(Client *user)
 //! remove mode check for (- and +)
 void	ft::Channel::setChannelMode(char mode)
 {
+	this->_mode.push_back(this->FindMode(mode));
+}
+
+void	ft::Channel::removeChannelMode(char mode)
+{
 	for (int i = -1; i < MODE_NUM; ++i)
 	{
-		if (MODE_CHAR[i] == mode)
+		if (this->_mode[i] == this->FindMode(mode))
 		{
-			this->_mode.push_back(MODE_ENUM[i]);
+			this->_mode.erase(this->_mode.begin() + i);
 			return ;
 		}
 	}
 }
 
-void	ft::Channel::removeChannelMode(char mode)
+//! check if the user was already in channel
+//! remove mode check for (- and +)
+void	ft::Channel::setMemberMode(Client *user, char mode)
 {
-	int	index = -1;
-	for (int i = -1; i < MODE_NUM; ++i)
+	if (this->FindMode(mode) != NO_MODE)
 	{
-		if (MODE_CHAR[i] == mode)
+		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			index = i;
-			break;
+			if (this->members[i].user->fd == user->fd)
+			{
+				this->members[i].user_mode = this->FindMode(mode);
+				return ;
+			}	
 		}
 	}
-	if (index != -1)
+}
+
+void	ft::Channel::removeMemberMode(Client *user, char mode)
+{
+	if (this->FindMode(mode) != NO_MODE)
 	{
-		for (int i = -1; i < MODE_NUM; ++i)
+		for (long unsigned int i = 0; i < MODE_NUM; i++)
 		{
-			if (this->_mode[i] == MODE_ENUM[index])
+			if (this->members[i].user->fd == user->fd)
 			{
-				this->_mode.erase(this->_mode.begin() + i);
+				this->members[i].user_mode = this->FindMode(mode);
 				return ;
 			}
 		}
@@ -165,7 +179,6 @@ void	ft::Channel::makeMemberVoice(Client *user)
 	*/
 }
 
-// mode tools
 void	ft::Channel::setPassword(std::string &password)
 {
 	this->_password = password;
@@ -174,6 +187,17 @@ void	ft::Channel::setPassword(std::string &password)
 void	ft::Channel::setTopic(std::string &topic)
 {
 	this->_topic = topic;
+}
+
+// mode tools
+ft::Channel_Mode ft::Channel::FindMode(char mode)
+{
+	for (int i = -1; i < MODE_NUM; ++i)
+	{
+		if (MODE_CHAR[i] == mode)
+			return (MODE_ENUM[i]);
+	}
+	return (CLEAR_MODE);
 }
 
 // ? PRIVMSG
