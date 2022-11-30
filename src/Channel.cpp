@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 09:58:38 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:06:58 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,36 @@ ft::Channel_Mode ft::Channel::FindMode(char mode)
 			return (MODE_ENUM[i]);
 	}
 	return (CLEAR_MODE);
+}
+
+bool	ft::Channel::isChannelModerated(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == m_MODERATED_CHANNEL)
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isChannelPrivate(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == p_PRIVATE_CHANNEL)
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isChannelInvitedOnly(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == i_INVITE_ONLY_CHANNEL)
+			return (true);
+	}
+	return (false);
 }
 
 // ? PRIVMSG

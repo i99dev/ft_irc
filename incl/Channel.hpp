@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 09:45:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:03:33 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ namespace ft
 			void								makeMemberVoice(Client *user);
 			void								setPassword(std::string &password);
 			void								setTopic(std::string &topic);
+			bool								isChannelModerated(void);
+			bool								isChannelInvitedOnly(void);
+			bool								isChannelPrivate(void);
 			
 			// ? PART
 			void								removeUser(int userFD);
