@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 08:24:33 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:11:31 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ ft::Nick::Nick(void)
 void ft::Nick::execute()
 {
     //get nick name and clean it from \r 
-    std::string nickName =_message->getParameter()[0].substr(0, _message->getParameter()[0].size() - 1);
+    std::string nickName =_message->getParameter()[0];
     //check if nick name is valid
     if (nickName.size() > 9)
     {

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 10:06:26 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:28:06 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
     std::string item;
     while (std::getline(ss, item, delim))
     {
-        ft::Message *message = new ft::Message(item, fd);
+        ft::Message *message = new ft::Message(item.substr(0, item.size() - 1), fd);
         messages.push_back(message);
     }
     return messages;
