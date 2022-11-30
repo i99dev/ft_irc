@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 07:07:59 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 07:12:50 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
-                                                                           servername("ft_irc"),
+                                                                           servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
                                                                            password(password)
@@ -290,4 +290,9 @@ bool ft::Server::isNickNameTaken(std::string nickname)
             return true;
     }
     return false;
+}
+
+std::string ft::Server::getVersion()
+{
+    return this->version;
 }
