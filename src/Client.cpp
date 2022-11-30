@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 20:18:15 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 07:16:33 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,12 @@ void ft::Client::sendReply(std::string reply)
 
 ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 {
+	(void)servername;  //TODO: remove this later
 	this->fd = fd;
 	this->_is_authenticated = false;
 	this->_is_ope = false;
 	this->_attempts = 0;
 	this->_client_ip = clinet_ip;
-	std::cout << "New client connected from " << this->_client_ip << std::endl;
-	std::string msg = RPL_WELCOME(servername, this->_client_ip);
-	send(this->fd, msg.c_str(), msg.length(), 0);
 }
 
 ft::Client::~Client() {}
