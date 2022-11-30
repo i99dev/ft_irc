@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 20:26:43 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 08:08:30 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,23 @@
 #include <netdb.h>
 #include <sstream>
 
-
 #define HOST "127.0.0.1"
 #define CRLF "\r\n"
+
+// colors irc messages
+#define RED "\033[0;31m"
+#define GREEN "\033[0;32m"
+#define YELLOW "\033[0;33m"
+#define BLUE "\033[0;34m"
+#define MAGENTA "\033[0;35m"
+#define CYAN "\033[0;36m"
+#define WHITE "\033[0;37m"
+#define RESET "\033[0m"
 
 // Our Headers...
 #include "Client.hpp"
 #include "Message.hpp"
 #include "Channel.hpp"
-
 
 namespace ft
 {
@@ -72,28 +80,36 @@ namespace ft
             CLOSED
         } status;
 
+        enum MessageKind
+        {
+            ERROR,
+            NOTE,
+            WARNING,
+            INFO,
+            DEBUG
+        };
+
         void create_socket();
         void createPoll();
         void setfd(int fd);
         void init_commands(void);
         std::vector<ft::Message *> splitMessage(std::string msg, char delim, int fd);
 
-        //channel functions
+        // channel functions
         std::vector<Channel *> getChannels();
 
-        //server functions
+        // server functions
         std::string getHost();
         std::string getServerName();
         std::string getVersion();
         std::string getPort();
 
-        //client functions
+        // client functions
         std::vector<Client *> getClients();
         bool isNickNameTaken(std::string nickName);
 
-        //message functions
-        void sendReply(Client *client, std::string msg);
-
+        // message functions
+        void sendReply(Client *client, std::string msg, MessageKind kind);
     };
 }
 
