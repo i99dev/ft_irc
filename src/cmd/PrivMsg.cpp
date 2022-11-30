@@ -14,7 +14,7 @@ void	ft::Privmsg::execute(){
 	{
 		if ((*it)->getChName() == channelName)
 		{
-			std::vector<Client *> clients = (*it)->getMe();
+			std::vector<Client *> clients = (*it)->getUsers();
 			std::vector<Client *>::iterator it2 = clients.begin();
 			for (; it2 != clients.end(); it2++)
 			{
