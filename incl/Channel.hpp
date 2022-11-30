@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 15:30:41 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:51:08 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ namespace ft
 			
 			// ? PART
 			void								removeUser(int userFD);
-			
+			std::vector<ft::Client *>			getMe(void);
 	};
 
 class WrongChannelNameRequir : public std::exception

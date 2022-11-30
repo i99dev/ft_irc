@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 15:26:54 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:51:12 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,4 +247,13 @@ void	ft::Channel::removeUser(int userFD)
 			return ;
 		}	
 	}
+}
+
+
+std::vector<ft::Client *>	ft::Channel::getMe(void)
+{
+	std::vector<ft::Client *>	members;
+	for (long unsigned int i = 0; i < this->members.size(); i++)
+		members.push_back(this->members[i].user);
+	return (members);
 }
