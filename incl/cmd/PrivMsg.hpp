@@ -2,29 +2,14 @@
 
 #define PRIVMSG_HPP
 
-#include "../Channel.hpp"
-#include "../Client.hpp"
+#include "./Command.hpp"
 
 namespace ft{
-	class PRIVMSG{
-		private:
-			std::vector<std::string>	cmd; // full cmd array
-			std::string					ChName; // name of channel string
-			std::string					msg; // pure message to send to channel
-			ft::Channel					*target; // target channel to send message on
-			int							cmdCount; // helper for my functions
+	class Privmsg: public ft::Command{
 		public:
-			PRIVMSG(std::vector<ft::Channel *> channels, Client *client);
+			Privmsg();
+			void	execute();
 
-			void	execute(Client *client);
-
-			bool	check_cmd(ft::Client *client);
-
-			void	getChName(Client *client);
-
-			void	getChannel(std::vector<ft::Channel *> channels);
-
-			void	getMsg();
 	};
 }
 

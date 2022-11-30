@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 10:14:53 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:36:46 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ namespace ft
         t_TOPIC, // ? topic;
         k_CAHNNEL_PASSWORD, //? set/remove(+/-) the channel key (password);
 		l_USER_LIMIT, //? set/remove(+/-) the user limit to channel;
-		
  	};
 	struct Channel_Member
 	{
@@ -79,10 +78,6 @@ namespace ft
 			
 			// * Channel actions * //
 
-			// ? PRIVMSG
-			void								sendMsgtoChannel(Message *message);
-			std::string							sendMsgFormat(Message *message);
-
 			// ? JOIN
 			void								addUser(ft::Client *user);
 			
@@ -101,18 +96,16 @@ namespace ft
 			
 			// ? PART
 			void								removeUser(int userFD);
-			
+			std::vector<ft::Client *>			getUsers(void);
 	};
-
-class WrongChannelNameRequir : public std::exception
-{
-	public:
-		const char* what() const throw()
-		{
-			return (EXC_WRONG_CHNAME);
-		}
-};
-
+	class WrongChannelNameRequir : public std::exception
+	{
+		public:
+			const char* what() const throw()
+			{
+				return (EXC_WRONG_CHNAME);
+			}
+	};
 }
 
 
