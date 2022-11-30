@@ -6,21 +6,35 @@
 #    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/11/29 00:17:15 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/11/30 07:41:14 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FT_NAME = ircserv
 
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+CYAN = \033[0;36m
+WHITE = \033[0;37m
+RESET = \033[0m
+
+
 SRC =	main.cpp \
 		./src/Server.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
+		./src/Channel.cpp  \
 		./src/cmd/Join.cpp \
 		./src/cmd/User.cpp \
 		./src/cmd/Nick.cpp \
 		./src/cmd/PrivMsg.cpp \
-		./src/Channel.cpp
+		./src/cmd/Cap.cpp \
+		./src/cmd/Whois.cpp \
+		./src/cmd/Mode.cpp \
+		./src/cmd/Ping.cpp \
 
 
 OBJ_DIR = obj

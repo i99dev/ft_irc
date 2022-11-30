@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 13:40:51 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:43:31 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ft::Channel::Channel(Client *user, std::string &name)
 	creator.user_mode = O_CHANNEL_CREATOR;
 	this->members.push_back(creator);
 	this->_created_at = time(0);
-	this->_topic = "";
+	this->_topic = "SET TOPIC";
 	std::cout << "created channel:" << _name << std::endl;
 }
 
@@ -252,9 +252,9 @@ ft::Client	*ft::Channel::_getClientinfo(int ownerFD)
 
 std::string		ft::Channel::sendMsgFormat(Message *message)
 {
-	// (void)message;
+	(void)message;
 	// Client *sender = this->_getClientinfo(message->gerOwnerFd());
-	// return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
+	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
 	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " :" + message->getParameter()[1] + CRLF);
 }
 
