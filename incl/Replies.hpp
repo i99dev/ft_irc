@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 06:34:54 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:45:10 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #define REPLIES_HPP
 
 #define RPL_WELCOME(servername, nick) \
-	":" + servername + " 001 " + nick + " :Welcome to the Internet Relay Network " + nick + "\n"
+":" + servername + " 001 " + nick + " :Welcome to the Internet Relay Network " + nick + "\n"
 #define RPL_YOURHOST(servername, nick, version) \
-	":" + servername + " 002 " + nick + " :Your host is " + servername + ", running version " + version + "\n"
+":" + servername + " 002 " + nick + " :Your host is " + servername + ", running version " + version + "\n"
 #define RPL_CREATED(servername, nick) \
-	":" + servername + " 003 " + nick + " :This server was created January 1st, 1970\n"
+":" + servername + " 003 " + nick + " :This server was created January 1st, 1970\n"
 #define RPL_MYINFO(servername, nick, version, usermodes, chanmodes) \
-	":" + servername + " 004 " + nick + " " + servername + " " + version + " " + usermodes + " " + chanmodes + " :" + servername + " server\n"
+":" + servername + " 004 " + nick + " " + servername + " " + version + " " + usermodes + " " + chanmodes + " :" + servername + " server\n"
 #define RPL_ISUPPORT 005
 #define RPL_BOUNCE 010
 #define RPL_UMODEIS 221
