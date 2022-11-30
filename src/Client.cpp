@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 07:16:33 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:02:33 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,18 @@ ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 	this->fd = fd;
 	this->_is_authenticated = false;
 	this->_is_ope = false;
-	this->_attempts = 0;
+	this->_ping = 0;
 	this->_client_ip = clinet_ip;
+}
+
+void ft::Client::setPing(int ping)
+{
+	this->_ping = ping;
+}
+
+int ft::Client::getPing(void) const
+{
+	return (this->_ping);
 }
 
 ft::Client::~Client() {}
