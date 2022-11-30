@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 08:14:58 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 08:23:46 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,32 +275,9 @@ std::string ft::Server::getPort()
 {
     return this->port;
 }
-//enum message kind
 
-void ft::Server::sendReply(Client *client, std::string reply, MessageKind kind)
+void ft::Server::sendReply(Client *client, std::string reply)
 {
-    std::string kind_str;
-    switch (kind)
-    {
-    case ERROR:
-        kind_str = RED + reply + RESET;
-        break;
-    case NOTE:
-        kind_str = GREEN + reply;
-        break;
-    case WARNING:
-        kind_str = YELLOW + reply + RESET;
-        break;
-    case INFO:
-        kind_str = BLUE + reply + RESET;
-        break;
-    case DEBUG:
-        kind_str = MAGENTA + reply + RESET;
-        break;
-    default:
-        kind_str = reply;
-        break;
-    }
     std::string msg = reply;
     send(client->fd, msg.c_str(), msg.size(), 0);
 }
