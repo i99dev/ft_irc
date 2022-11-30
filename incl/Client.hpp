@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 13:25:24 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:21:08 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,22 @@
 
 #include <fstream>
 #include <vector>
-
+#include "Mode_List.hpp"
 
 namespace ft
 {
 	class Client
 	{
 		private:
-			std::string				_nickName;
-			std::string				_userName;
-			std::vector <Message *>	_msgSend;
-			std::vector <Message *>	_msgRecv;
-			std::string				_client_ip;
-			bool                 	_is_authenticated;
-			bool                 	_is_ope;
-			int                  	_ping;
+			std::string					_nickName;
+			std::string					_userName;
+			std::vector <Message *>		_msgSend;
+			std::vector <Message *>		_msgRecv;
+			std::string					_client_ip;
+			bool                 		_is_authenticated;
+			bool                 		_is_ope;
+			int                  		_ping;
+			std::vector <ft::User_Mode>	_mode;
 			//ip 
 			 
 			
@@ -72,6 +73,13 @@ namespace ft
 			int						getPing(void)const;
 			void 					setPing(int ping);
 			
+			// user mode
+			bool					isOperator(void);
+			bool					isInvisible(void);
+			void					setUserMode(char mode);
+			void					removeUserMode(char mode);
+			ft::User_Mode			findMode(char mode);
+
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();
 	};

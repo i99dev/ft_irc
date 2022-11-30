@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 17:36:46 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:33:13 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,14 @@
 #include <iostream>
 #include "Client.hpp"
 #include "Server.hpp"
+#include "Mode_List.hpp"
 #define CHNAME_LENGTH 50
 #define EXC_WRONG_CHNAME "Wrong Channel Name"
-#define	MODE_NUM 11
-#define MODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l'}
-#define MODE_ENUM (Channel_Mode []){CLEAR_MODE, NO_MODE, O_CHANNEL_CREATOR, o_OPERATOR_PRIVILEGE, v_VOICE_PRIVILEGE,i_INVITE_ONLY_CHANNEL, m_MODERATED_CHANNEL, p_PRIVATE_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
 
 class Client;
 
 namespace ft
 {
-	enum Channel_Mode
-	{
-		CLEAR_MODE, // ? used to state that the channel and member doesn't have a mode 
-		NO_MODE,
-		O_CHANNEL_CREATOR, // ? "channel creator" status
-		o_OPERATOR_PRIVILEGE, 
-		v_VOICE_PRIVILEGE, 
-        i_INVITE_ONLY_CHANNEL, //? invite-only channel flag;
-		m_MODERATED_CHANNEL, //? moderated channel flag;
-        p_PRIVATE_CHANNEL, //? private channel flag;
-        t_TOPIC, // ? topic;
-        k_CAHNNEL_PASSWORD, //? set/remove(+/-) the channel key (password);
-		l_USER_LIMIT, //? set/remove(+/-) the user limit to channel;
- 	};
 	struct Channel_Member
 	{
 		ft::Client								*user;
@@ -74,7 +58,7 @@ namespace ft
 			std::vector<ft::Channel_Member>		getMembers(void);
 			ft::Client							*getCreator(void);
 			std::string							getTopic(void);
-			ft::Channel_Mode					FindMode(char mode);
+			std::vector<ft::Client *>			getUsers(void);
 			
 			// * Channel actions * //
 
@@ -90,13 +74,13 @@ namespace ft
 			void								makeMemberVoice(Client *user);
 			void								setPassword(std::string &password);
 			void								setTopic(std::string &topic);
+			ft::Channel_Mode					findMode(char mode);
 			bool								isChannelModerated(void);
 			bool								isChannelInvitedOnly(void);
 			bool								isChannelPrivate(void);
 			
 			// ? PART
 			void								removeUser(int userFD);
-			std::vector<ft::Client *>			getUsers(void);
 	};
 	class WrongChannelNameRequir : public std::exception
 	{

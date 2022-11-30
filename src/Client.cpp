@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 15:03:50 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:28:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,54 @@ void ft::Client::setPing(int ping)
 int ft::Client::getPing(void) const
 {
 	return (this->_ping);
+}
+
+bool	ft::Client::isInvisible(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == i_INVISIBLE)
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Client::isOperator(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == o_OPERATOR_FLAG)
+			return (true);
+	}
+	return (false);
+}
+
+ft::User_Mode	ft::Client::findMode(char mode)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (USMODE_CHAR[i] == mode)
+			return (USMODE_ENUM[i]);
+	}
+	return (n_NO_MODE);
+}
+
+void	ft::Client::setUserMode(char mode)
+{
+	if (this->findMode(mode) != n_NO_MODE)
+		this->_mode.push_back(this->findMode(mode));
+}
+
+void	ft::Client::removeUserMode(char mode)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == this->findMode(mode))
+		{
+			this->_mode.erase(this->_mode.begin() + i);
+			return ;
+		}
+	}
 }
 
 ft::Client::~Client() {}
