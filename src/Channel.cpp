@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 13:43:31 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:56:16 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,10 +252,10 @@ ft::Client	*ft::Channel::_getClientinfo(int ownerFD)
 
 std::string		ft::Channel::sendMsgFormat(Message *message)
 {
-	(void)message;
-	// Client *sender = this->_getClientinfo(message->gerOwnerFd());
-	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
-	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " :" + message->getParameter()[1] + CRLF);
+	// (void)message;
+	Client *sender = this->_getClientinfo(message->gerOwnerFd());
+	// return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
+	return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " :" + message->getParameter()[1] + CRLF);
 }
 
 void	ft::Channel::sendMsgtoChannel(Message *message)
@@ -266,7 +266,7 @@ void	ft::Channel::sendMsgtoChannel(Message *message)
 		send(this->members[i].user->fd, msg.c_str(), msg.length(), 0);
 }
 
-// // ? PART
+// ? PART
 void	ft::Channel::removeUser(int userFD)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
