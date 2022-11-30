@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 08:59:29 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 09:21:22 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ ft::Channel::Channel(Client *user, std::string &name)
 	Channel_Member creator;
 	creator.user = user;
 	creator.user_mode = O_CHANNEL_CREATOR;
-	// this->_creator = user;
 	this->_created_at = time(0);
 	this->_topic = "";
 	std::cout << "created channel:" << _name << std::endl;
@@ -42,12 +41,12 @@ std::string	ft::Channel::getpassword(void)
 	return (this->_password);
 }
 
-ft::Channel_Member	*ft::Channel::getCreator(void)
+ft::Client	*ft::Channel::getCreator(void)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
 		if (this->members[i].user_mode == O_CHANNEL_CREATOR)
-			return (&this->members[i]);
+			return (this->members[i].user);
 	}
 	return (NULL);
 }
@@ -200,10 +199,9 @@ ft::Client	*ft::Channel::_getClientinfo(int ownerFD)
 std::string		ft::Channel::sendMsgFormat(Message *message)
 {
 	(void)message;
-	// Client *sender = this->_getSenderinfo(message->gerOwnerFd());
-	// printf("")
+	// Client *sender = this->_getClientinfo(message->gerOwnerFd());
 	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
-	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand()[2] + " " + this->_name + " " + message->getCommand()[2] + CRLF);
+	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " " + message->getParameter() + CRLF);
 }
 
 void	ft::Channel::sendMsgtoChannel(Message *message)
@@ -226,4 +224,3 @@ void	ft::Channel::removeUser(int userFD)
 		}	
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 08:57:05 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 09:19:32 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ namespace ft
 			std::string							getChName(void);
 			std::string							getpassword(void);
 			std::vector<ft::Channel_Member>		getMembers(void);
-			ft::Channel_Member					*getCreator(void);
+			ft::Client							*getCreator(void);
 			std::string							getTopic(void);
 			
 			// * Channel actions * //
