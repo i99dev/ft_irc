@@ -51,7 +51,7 @@ void ft::Join::execute()
 	j = 0;
 	start = 0;
 	size = 0;
-	if (_message->getParameter()[1].size() > 1){
+	if (_message->getParameter().size() > 1){
 		cmd = _message->getParameter()[1];
 		// loop to get all the passwords one by one
 		for(int i = 0; i < Count; i++){
@@ -81,7 +81,7 @@ void ft::Join::execute()
 	    std::string channelName = chName[i];
 	    // get channel key from message
 	    std::string channelKey = "";
-	    if (_message->getParameter()[1].size() > 1)
+	    if (_message->getParameter().size() > 1)
 	    {
 			if (!passwords[i].empty()){
 		        channelKey = passwords[i];
