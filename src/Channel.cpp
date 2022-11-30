@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 09:58:38 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:46:46 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ft::Channel::Channel(Client *user, std::string &name)
 	creator.user_mode = O_CHANNEL_CREATOR;
 	this->members.push_back(creator);
 	this->_created_at = time(0);
-	this->_topic = "";
+	this->_topic = "SET TOPIC";
 	std::cout << "created channel:" << _name << std::endl;
 }
 
@@ -247,4 +247,13 @@ void	ft::Channel::removeUser(int userFD)
 			return ;
 		}	
 	}
+}
+
+
+std::vector<ft::Client *>	ft::Channel::getUsers(void)
+{
+	std::vector<ft::Client *>	members;
+	for (long unsigned int i = 0; i < this->members.size(); i++)
+		members.push_back(this->members[i].user);
+	return (members);
 }

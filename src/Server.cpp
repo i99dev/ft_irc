@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 10:06:26 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:22:26 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "../incl/cmd/Cap.hpp"
 #include "../incl/cmd/Mode.hpp"
 #include "../incl/cmd/Ping.hpp"
+#include "../incl/cmd/PrivMsg.hpp"
 
 
 
@@ -222,6 +223,7 @@ void ft::Server::init_commands(void)
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();
+    _commands["PRIVMSG"] = new ft::Privmsg();
 
 }
 
@@ -236,7 +238,7 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
     std::string item;
     while (std::getline(ss, item, delim))
     {
-        ft::Message *message = new ft::Message(item, fd);
+        ft::Message *message = new ft::Message(item.substr(0, item.size() - 1), fd);
         messages.push_back(message);
     }
     return messages;
