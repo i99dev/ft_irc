@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 07:06:48 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 07:07:22 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:04:05 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ ft::Ping::Ping()
 void ft::Ping::execute()
 {
     std::cout << "Ping executed" << std::endl;
+    _client->setPing(true);
 }

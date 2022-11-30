@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 08:23:46 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:06:26 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,4 +295,20 @@ bool ft::Server::isNickNameTaken(std::string nickname)
 std::string ft::Server::getVersion()
 {
     return this->version;
+}
+
+void ft::Server::checkConnection()
+{
+    for (size_t i = 0; i < this->clients.size(); i++)
+    {
+        if (this->clients[i]->getPing() == 0)
+        {
+            this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getIp() + " (Ping timeout: 120 seconds)\r \n");
+            this->clients.erase(this->clients.begin() + i);
+        }
+        else
+        {
+            this->clients[i]->setPing(this->clients[i]->getPing() - 1);
+        }
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 06:39:53 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 09:55:23 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ namespace ft
 			std::string				_client_ip;
 			bool                 	_is_authenticated;
 			bool                 	_is_ope;
-			int                  	_attempts;
+			int                  	_ping;
 			//ip 
 			 
 			
@@ -67,6 +67,10 @@ namespace ft
 			std::vector <Message *>	getMsgRecv(void)const;
 			void 					setMsgRecv(Message *msgRecv);
 			void 					sendReply(std::string reply);
+
+			//ping 
+			int						getPing(void)const;
+			void 					setPing(int ping);
 			
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 08:24:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/11/30 09:43:44 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ namespace ft
         // client functions
         std::vector<Client *> getClients();
         bool isNickNameTaken(std::string nickName);
+        // Connection 'Liveness' Functions
+        void checkConnection();
 
         // message functions
         void sendReply(Client *client, std::string msg);
