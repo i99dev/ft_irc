@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 10:03:33 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:14:53 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ namespace ft
 {
 	enum Channel_Mode
 	{
-		CLEAR_MODE,
+		CLEAR_MODE, // ? used to state that the channel and member doesn't have a mode 
 		NO_MODE,
-		O_CHANNEL_CREATOR,
-		o_OPERATOR_PRIVILEGE,
-		v_VOICE_PRIVILEGE,
+		O_CHANNEL_CREATOR, // ? "channel creator" status
+		o_OPERATOR_PRIVILEGE, 
+		v_VOICE_PRIVILEGE, 
         i_INVITE_ONLY_CHANNEL, //? invite-only channel flag;
 		m_MODERATED_CHANNEL, //? moderated channel flag;
         p_PRIVATE_CHANNEL, //? private channel flag;

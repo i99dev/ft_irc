@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 10:06:58 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:40:51 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,10 +252,10 @@ ft::Client	*ft::Channel::_getClientinfo(int ownerFD)
 
 std::string		ft::Channel::sendMsgFormat(Message *message)
 {
-	(void)message;
+	// (void)message;
 	// Client *sender = this->_getClientinfo(message->gerOwnerFd());
-	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
-	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " " + message->getParameter() + CRLF);
+	// return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
+	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " :" + message->getParameter()[1] + CRLF);
 }
 
 void	ft::Channel::sendMsgtoChannel(Message *message)
