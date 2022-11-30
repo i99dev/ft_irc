@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 11:27:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:26:43 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@ namespace ft
 
         //client functions
         std::vector<Client *> getClients();
+        bool isNickNameTaken(std::string nickName);
+
+        //message functions
+        void sendReply(Client *client, std::string msg);
 
     };
 }

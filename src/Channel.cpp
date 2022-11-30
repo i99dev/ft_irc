@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 14:32:19 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:27:39 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ std::string	ft::Channel::getChName(void)
 std::string	ft::Channel::getpassword(void)
 {
 	return (this->_password);
+}
+
+ft::Client	*ft::Channel::getCreator(void)
+{
+	return (this->_creator);
+}
+
+std::vector<ft::Client *>	ft::Channel::getUsers(void)
+{
+	return (this->users);
+}
+
+std::vector<ft::Client *>	ft::Channel::getOperators(void)
+{
+	return (this->operators);
+}
+
+std::string	ft::Channel::getTopic(void)
+{
+	return (this->_topic);
 }
 
 // * Channel actions * //
@@ -83,6 +103,30 @@ void	ft::Channel::setChannelMode(char mode)
 	}
 }
 
+void	ft::Channel::removeChannelMode(char mode)
+{
+	int	index = -1;
+	for (int i = -1; i < MODE_NUM; ++i)
+	{
+		if (MODE_CHAR[i] == mode)
+		{
+			index = i;
+			break;
+		}
+	}
+	if (index != -1)
+	{
+		for (int i = -1; i < MODE_NUM; ++i)
+		{
+			if (this->_mode[i] == MODE_ENUM[index])
+			{
+				this->_mode.erase(this->_mode.begin() + i);
+				return ;
+			}
+		}
+	}
+}
+
 void	ft::Channel::addChannelOperators(Client *user)
 {
 	for (long unsigned int i = 0; i < this->users.size(); i++)
@@ -100,9 +144,15 @@ void	ft::Channel::addChannelOperators(Client *user)
 	*/
 }
 
+// mode tools
 void	ft::Channel::setPassword(std::string &password)
 {
 	this->_password = password;
+}
+
+void	ft::Channel::setTopic(std::string &topic)
+{
+	this->_topic = topic;
 }
 
 // ? PRIVMSG
@@ -139,4 +189,17 @@ void	ft::Channel::sendMsgtoChannel(Message *message)
 	printf("here\n");
 	for (long unsigned int i = 0; i < this->users.size(); i++)
 		send(this->users[i]->fd, msg.c_str(), msg.length(), 0);
+}
+
+// ? PART
+void	ft::Channel::removeUser(int userFD)
+{
+	for (long unsigned int i = 0; i < this->users.size(); i++)
+	{
+		if (this->users[i]->fd == userFD)
+		{
+			this->users.erase(this->users.begin() + i);
+			return ;
+		}	
+	}
 }
