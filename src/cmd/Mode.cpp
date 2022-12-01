@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 18:07:43 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 03:17:29 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,6 @@ ft::Mode::Mode()
 void ft::Mode::execute()
 {
     std::cout << "Mode executed" << std::endl;
+	for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
+		std::cout << i << " " << this->_message->getParameter()[i] << std::endl; 
 }

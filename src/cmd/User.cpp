@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 00:10:48 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:10:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,7 @@ ft::User::User()
 void ft::User::execute()
 {
     std::cout << "User executed" << std::endl;
+	for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
+		std::cout << i << " " << this->_message->getParameter()[i] << std::endl; 
+
 }

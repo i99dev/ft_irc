@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 02:28:48 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:07:38 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int ft::Client::getPing(void) const
 {
 	return (this->_ping);
 }
+
+/******************* USER MODE *******************/
 
 bool	ft::Client::isInvisible(void)
 {
