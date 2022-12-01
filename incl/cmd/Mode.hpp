@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:47:44 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 18:31:20 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:13:05 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ namespace ft
     {
     public:
         Mode(void);
-        void execute();
+        void	execute();
+		void	ChannelMode(void);
+		void	UserMode(void);
     };
 }
 

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 02:21:08 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:02:06 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 #include <fstream>
 #include <vector>
 #include "Mode_List.hpp"
-
 namespace ft
 {
 	class Client

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 02:33:55 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:01:18 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ void	ft::Channel::addUser(Client *user)
 //! remove mode check for (- and +)
 void	ft::Channel::setChannelMode(char mode)
 {
-	this->_mode.push_back(this->findMode(mode));
+	this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
 }
 
 void	ft::Channel::removeChannelMode(char mode)
 {
 	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 	{
-		if (this->_mode[i] == this->findMode(mode))
+		if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
 		{
 			this->_mode.erase(this->_mode.begin() + i);
 			return ;
@@ -118,13 +118,13 @@ void	ft::Channel::removeChannelMode(char mode)
 //! remove mode check for (- and +)
 void	ft::Channel::setMemberMode(Client *user, char mode)
 {
-	if (this->findMode(mode) != NO_MODE)
+	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
 			if (this->members[i].user->fd == user->fd)
 			{
-				this->members[i].user_mode = this->findMode(mode);
+				this->members[i].user_mode = ft::ModeTools::findChannelMode(mode);
 				return ;
 			}	
 		}
@@ -133,7 +133,7 @@ void	ft::Channel::setMemberMode(Client *user, char mode)
 
 void	ft::Channel::removeMemberMode(Client *user, char mode)
 {
-	if (this->findMode(mode) != NO_MODE)
+	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
@@ -190,15 +190,15 @@ void	ft::Channel::setTopic(std::string &topic)
 }
 
 // mode tools
-ft::Channel_Mode ft::Channel::findMode(char mode)
-{
-	for (int i = -1; i < CHMODE_NUM; ++i)
-	{
-		if (CHMODE_CHAR[i] == mode)
-			return (CHMODE_ENUM[i]);
-	}
-	return (NO_MODE);
-}
+// ft::Channel_Mode ft::Channel::findMode(char mode)
+// {
+// 	for (int i = -1; i < CHMODE_NUM; ++i)
+// 	{
+// 		if (CHMODE_CHAR[i] == mode)
+// 			return (CHMODE_ENUM[i]);
+// 	}
+// 	return (NO_MODE);
+// }
 
 bool	ft::Channel::isChannelModerated(void)
 {
@@ -224,7 +224,7 @@ bool	ft::Channel::isChannelInvitedOnly(void)
 {
 	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 	{
-		if (this->_mode[i] == i_INVITE_ONLY_CHANNEL)
+		if (this->_mode[i] == ft::i_INVITE_ONLY_CHANNEL)
 			return (true);
 	}
 	return (false);
