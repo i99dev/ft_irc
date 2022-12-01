@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 23:02:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:55:16 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ namespace ft
 			bool					isInvisible(void);
 			void					setUserMode(char mode);
 			void					removeUserMode(char mode);
-			ft::User_Mode			findMode(char mode);
-
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();
 	};

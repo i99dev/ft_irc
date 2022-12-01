@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 23:01:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:54:47 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,17 +188,6 @@ void	ft::Channel::setTopic(std::string &topic)
 {
 	this->_topic = topic;
 }
-
-// mode tools
-// ft::Channel_Mode ft::Channel::findMode(char mode)
-// {
-// 	for (int i = -1; i < CHMODE_NUM; ++i)
-// 	{
-// 		if (CHMODE_CHAR[i] == mode)
-// 			return (CHMODE_ENUM[i]);
-// 	}
-// 	return (NO_MODE);
-// }
 
 bool	ft::Channel::isChannelModerated(void)
 {

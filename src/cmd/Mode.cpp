@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/01 23:05:40 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 03:04:55 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,46 @@ void	ft::Mode::ChannelMode(void)
 	
 }
 
-void	ft::Mode::UserMode(void)
+int	ft::Mode::nextMode(std::string mode, int begin)
 {
-	if (this->_message->getParameter()[0] == this->_client->getNickName())
+	char	action = mode[begin];
+	size_t i = begin;
+
+	while (++i < mode.length())
 	{
-		
+		std::cout << "here " << mode[i] << std::endl;
+		if (mode[i] == '-' || mode[i] == '+')
+			return (i - 1);
+		this->modes[0] += action;
+		this->modes[1] += mode[i];
+	}
+	return (i);
+}
+
+void	ft::Mode::initModes(std::string mode)
+{
+	this->modes.push_back("");
+	this->modes.push_back("");
+	for (size_t i = 0; i < mode.length(); i++)
+	{
+		if (mode[i] == '-' || mode[i] == '+')
+			i = nextMode(mode, i);
 	}
 }
 
-void ft::Mode::execute()
+
+void	ft::Mode::UserMode(void)
+{
+	std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
+	if (this->_message->getParameter()[0] == this->_client->getNickName())
+	{
+		initModes(this->_message->getParameter()[1]);
+		std::cout << "action " << modes[0] << std::endl;
+		std::cout << "mode " << modes[1] << std::endl;
+	}
+}
+
+void ft::Mode::execute(void)
 {
     std::cout << "Mode executed" << std::endl;
 	for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
@@ -41,5 +72,6 @@ void ft::Mode::execute()
 		ChannelMode();
 	else
 		UserMode();
+	this->modes.clear();
 }
 
