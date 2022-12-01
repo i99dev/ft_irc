@@ -91,7 +91,7 @@ void ft::Join::execute()
 	    // std::vector<Channel *>::iterator it;
 	    for (int i = 0; i < int(channels.size()); i++)
 	    {
-	        if (_message->getParameter()[1].size() > 1 && channels[i]->getChName() == channelName)
+	        if (channels[i]->getChName() == channelName)
 	        {
 						flag = 1;
 	            // check if channel has a key

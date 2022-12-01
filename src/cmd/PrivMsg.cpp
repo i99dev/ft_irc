@@ -20,7 +20,7 @@ void	ft::Privmsg::execute(){
 			{
 				if ((*it2)->fd != _client->fd)
 				{
-					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;;
+					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
 					(*it2)->sendReply(reply);
 				}
 			}
