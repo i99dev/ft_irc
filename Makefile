@@ -6,7 +6,7 @@
 #    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/01 01:41:21 by isaad            ###   ########.fr        #
+#    Updated: 2022/12/01 04:29:32 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC =	main.cpp \
 		./src/cmd/Mode.cpp \
 		./src/cmd/Ping.cpp \
 		./src/cmd/Part.cpp \
+		./src/cmd/Notice.cpp \
 
 
 OBJ_DIR = obj
