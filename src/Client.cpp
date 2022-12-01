@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 15:03:50 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/01 20:31:19 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,36 @@ std::string ft::Client::getUserName(void) const
 void ft::Client::setUserName(std::string userName)
 {
 	this->_userName = userName;
+}
+
+std::string ft::Client::getServerName(void) const
+{
+	return (this->_serverName);
+}
+
+void ft::Client::setServerName(std::string serverName)
+{
+	this->_serverName = serverName;
+}
+
+std::string ft::Client::getRealName(void) const
+{
+	return (this->_realName);
+}
+
+void ft::Client::setRealName(std::string realName)
+{
+	this->_realName = realName;
+}
+
+std::string ft::Client::getHostName(void) const
+{
+	return (this->_hostName);
+}
+
+void ft::Client::setHostName(std::string hostName)
+{
+	this->_hostName = hostName;
 }
 
 std::string ft::Client::getIp(void) const
