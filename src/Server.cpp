@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 17:10:26 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 06:32:03 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include "../incl/cmd/Mode.hpp"
 #include "../incl/cmd/Ping.hpp"
 #include "../incl/cmd/PrivMsg.hpp"
+#include "../incl/cmd/Part.hpp"
+#include "../incl/cmd/Notice.hpp"
 
 
 
@@ -223,7 +225,9 @@ void ft::Server::init_commands(void)
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();
+    _commands["PART"] = new ft::Part();
     _commands["PRIVMSG"] = new ft::Privmsg();
+    _commands["NOTICE"] = new ft::Notice();
 
 }
 
