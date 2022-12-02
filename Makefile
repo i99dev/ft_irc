@@ -6,7 +6,7 @@
 #    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/02 15:36:17 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/12/02 15:39:43 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,19 +43,19 @@ OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CXX = g++ -g  -std=c++98
-CFLAGS = -Wall -Wextra -Werror
+CXX = c++ -g  -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror
 
 all: $(FT_NAME)
 
 $(FT_NAME): $(OBJ)
-	@$(CXX) $(CXXFLAG) -o $@ $^
+	@$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/src
 	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAG) -o $@ -c $<
+	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 clean: 
 	@rm -rf $(OBJ_DIR)
