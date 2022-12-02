@@ -102,9 +102,16 @@ void ft::Join::execute()
 	                {
 	                    // add client to channel
 	                    channels[i]->addUser(_client);
-	                    // send message to client
-	                    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
-	                    _client->sendReply(joinMsg);
+	                    // send message to all clients in that channel
+						std::vector<Client *> clients = (channels[i])->getUsers();
+						std::vector<Client *>::iterator it2 = clients.begin();
+						for (; it2 != clients.end(); it2++)
+						{
+							// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
+	                    	std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
+							(*it2)->sendReply(joinMsg);
+						}
+	                    // _client->sendReply(joinMsg);
 	                }
 	                else
 	                {
@@ -117,9 +124,15 @@ void ft::Join::execute()
 	            {
 	                // add client to channel
 	                channels[i]->addUser(_client);
-	                // send message to client
-	                std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
-	                _client->sendReply(joinMsg);
+	                // send message to all clients in that channel
+					std::vector<Client *> clients = (channels[i])->getUsers();
+					std::vector<Client *>::iterator it2 = clients.begin();
+					for (; it2 != clients.end(); it2++)
+					{
+						// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
+                    	std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
+						(*it2)->sendReply(joinMsg);
+					}
 					std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channels[i]->getChName(), channels[i]->getTopic());
 					_client->sendReply(topicMsg);
 	            }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 00:10:48 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/01 20:34:10 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@ ft::User::User()
 
 void ft::User::execute()
 {
-    std::cout << "User executed" << std::endl;
+    _client->setUserName(_message->getParameter()[0]);
+    _client->setHostName(_message->getParameter()[1]);
+    _client->setServerName(_message->getParameter()[2]);
+    _client->setRealName(_message->getParameter()[3]);
 }
