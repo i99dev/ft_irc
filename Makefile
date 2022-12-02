@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/02 09:05:38 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/12/02 15:35:52 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,19 +43,19 @@ OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CC = g++ -g  -std=c++98
-CFLAGS = -Wall -Wextra -Werror
+CXX = g++ -g  -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror
 
 all: $(FT_NAME)
 
 $(FT_NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/src
 	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 clean: 
 	@rm -rf $(OBJ_DIR)
