@@ -108,8 +108,8 @@ void ft::Join::execute()
 						for (; it2 != clients.end(); it2++)
 						{
 							// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-	                    	std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
-							(*it2)->sendReply(joinMsg);
+	                    	// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channels[i]->getChName();
+							// (*it2)->sendReply(joinMsg);
 						}
 	                    // _client->sendReply(joinMsg);
 	                }
@@ -129,10 +129,11 @@ void ft::Join::execute()
 					std::vector<Client *>::iterator it2 = clients.begin();
 					for (; it2 != clients.end(); it2++)
 					{
-						// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-                    	std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channels[i]->getChName();
+						std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channels[i]->getChName();
 						(*it2)->sendReply(joinMsg);
 					}
+					// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + (channels[i])->getChName();
+					// _client->sendReply(joinMsg);
 					std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channels[i]->getChName(), channels[i]->getTopic());
 					_client->sendReply(topicMsg);
 	            }
@@ -144,7 +145,7 @@ void ft::Join::execute()
 		    // channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
 		    _server->channels.push_back(channel);
 		    // send message to client
-		    std::string joinMsg = ":" + _client->getNickName() + " JOIN :" + channel->getChName();
+		    std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channel->getChName();
 		    _client->sendReply(joinMsg);
 		}
 	}
