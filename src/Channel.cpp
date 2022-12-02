@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 23:54:47 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 23:57:11 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,19 @@ bool	ft::Channel::isChannelInvitedOnly(void)
 	return (false);
 }
 
+bool	ft::Channel::isCHModeSet(char mode)
+{
+	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
+	{
+		for (long unsigned int i = 0; i < this->_mode.size(); i++)
+		{
+			if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
+				return (true);
+		}
+	}
+	return (false);
+}
+
 // ? PRIVMSG
 /*
 ! be carefull about this null condition (Protection may needed)
@@ -259,3 +272,4 @@ std::vector<ft::Client *>	ft::Channel::getUsers(void)
 		members.push_back(this->members[i].user);
 	return (members);
 }
+

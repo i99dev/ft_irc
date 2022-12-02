@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 15:19:20 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:54:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,38 @@ void	ft::Mode::initModes(std::string mode)
 	}
 }
 
+void	ft::Mode::changeMode(void)
+{
+	
+}
+
 void	ft::Mode::UserMode(void)
 {
-	if (this->_message->getParameter().size() < 2)
+	if (this->_message->getParameter().size() < 1)
 	{
 		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
 		this->_client->sendReply(errMsg);
-		return ;
-	}
-	std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
-	if (this->_message->getParameter()[0] == this->_client->getNickName())
-	{
-		initModes(this->_message->getParameter()[1]);
-		std::cout << "action " << modes[0] << std::endl;
-		std::cout << "mode " << modes[1] << std::endl;
 	}
 	else
 	{
-		std::cout << "no match" << std::endl;
-		this->_client->sendReply(ERR_USERSDONTMATCH);
+		if (this->_message->getParameter().size() < 2)
+		{
+			// ! send the modes to client
+			return ;
+		}
+		std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
+		if (this->_message->getParameter()[0] == this->_client->getNickName())
+		{
+			this->initModes(this->_message->getParameter()[1]);
+			this->changeMode();
+			std::cout << "action " << modes[0] << std::endl;
+			std::cout << "mode " << modes[1] << std::endl;
+		}
+		else
+		{
+			std::cout << "no match" << std::endl;
+			this->_client->sendReply(ERR_USERSDONTMATCH);
+		}
 	}
 }
 

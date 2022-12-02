@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 15:15:20 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 23:45:26 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ namespace ft
 			// user mode
 			bool					isOperator(void);
 			bool					isInvisible(void);
+			bool					isUSModeSet(char mode);
 			void					setUserMode(char mode);
 			void					removeUserMode(char mode);
 			
