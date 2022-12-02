@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 07:06:48 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 10:14:52 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/03 00:44:56 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void ft::Ping::execute()
 {
     std::cout << "Ping executed" << std::endl;
     _client->setPing(1);
+    _client->sendReply(":" + _client->getNickName() + " PONG :" + _message->getParameter()[0]);
 }
