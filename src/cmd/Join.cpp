@@ -108,8 +108,8 @@ void ft::Join::execute()
 						for (; it2 != clients.end(); it2++)
 						{
 							// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-	                    	// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channels[i]->getChName();
-							// (*it2)->sendReply(joinMsg);
+	                    	std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channels[i]->getChName();
+							(*it2)->sendReply(joinMsg);
 						}
 	                    // _client->sendReply(joinMsg);
 	                }
