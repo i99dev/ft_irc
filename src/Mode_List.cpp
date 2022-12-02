@@ -1,35 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Mode.hpp                                           :+:      :+:    :+:   */
+/*   Mode_List.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/30 06:47:44 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 02:50:53 by aaljaber         ###   ########.fr       */
+/*   Created: 2022/12/02 00:55:38 by aaljaber          #+#    #+#             */
+/*   Updated: 2022/12/02 00:55:55 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MODE_HPP
+#include "Mode_List.hpp"
 
-#define MODE_HPP
-
-#include "./Command.hpp"
-
-namespace ft
-{
-    class Command;
-    class Mode : public Command
-    {
-    public:
-        Mode(void);
-		std::vector <std::string>	modes;
-        void						execute(void);
-		void						ChannelMode(void);
-		void						UserMode(void);
-		void						initModes(std::string mode);
-		int							nextMode(std::string mode, int begin);
-    };
-}
-
-#endif

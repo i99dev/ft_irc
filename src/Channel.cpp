@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 16:46:46 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:54:47 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ void	ft::Channel::addUser(Client *user)
 //! remove mode check for (- and +)
 void	ft::Channel::setChannelMode(char mode)
 {
-	this->_mode.push_back(this->FindMode(mode));
+	this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
 }
 
 void	ft::Channel::removeChannelMode(char mode)
 {
-	for (int i = -1; i < MODE_NUM; ++i)
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 	{
-		if (this->_mode[i] == this->FindMode(mode))
+		if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
 		{
 			this->_mode.erase(this->_mode.begin() + i);
 			return ;
@@ -118,13 +118,13 @@ void	ft::Channel::removeChannelMode(char mode)
 //! remove mode check for (- and +)
 void	ft::Channel::setMemberMode(Client *user, char mode)
 {
-	if (this->FindMode(mode) != NO_MODE)
+	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
 			if (this->members[i].user->fd == user->fd)
 			{
-				this->members[i].user_mode = this->FindMode(mode);
+				this->members[i].user_mode = ft::ModeTools::findChannelMode(mode);
 				return ;
 			}	
 		}
@@ -133,13 +133,13 @@ void	ft::Channel::setMemberMode(Client *user, char mode)
 
 void	ft::Channel::removeMemberMode(Client *user, char mode)
 {
-	if (this->FindMode(mode) != NO_MODE)
+	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
 	{
-		for (long unsigned int i = 0; i < MODE_NUM; i++)
+		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
 			if (this->members[i].user->fd == user->fd)
 			{
-				this->members[i].user_mode = this->FindMode(mode);
+				this->members[i].user_mode = CLEAR_MODE;
 				return ;
 			}
 		}
@@ -189,15 +189,34 @@ void	ft::Channel::setTopic(std::string &topic)
 	this->_topic = topic;
 }
 
-// mode tools
-ft::Channel_Mode ft::Channel::FindMode(char mode)
+bool	ft::Channel::isChannelModerated(void)
 {
-	for (int i = -1; i < MODE_NUM; ++i)
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 	{
-		if (MODE_CHAR[i] == mode)
-			return (MODE_ENUM[i]);
+		if (this->_mode[i] == m_MODERATED_CHANNEL)
+			return (true);
 	}
-	return (CLEAR_MODE);
+	return (false);
+}
+
+bool	ft::Channel::isChannelPrivate(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == p_PRIVATE_CHANNEL)
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isChannelInvitedOnly(void)
+{
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	{
+		if (this->_mode[i] == ft::i_INVITE_ONLY_CHANNEL)
+			return (true);
+	}
+	return (false);
 }
 
 // ? PRIVMSG
@@ -220,23 +239,7 @@ ft::Client	*ft::Channel::_getClientinfo(int ownerFD)
 	return (NULL);
 }
 
-std::string		ft::Channel::sendMsgFormat(Message *message)
-{
-	(void)message;
-	// Client *sender = this->_getClientinfo(message->gerOwnerFd());
-	return (":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n");
-	// return (":" + sender->getNickName() + "!" + sender->getUserName() + "@" + HOST + " " + message->getCommand() + " " + this->_name + " " + message->getParameter() + CRLF);
-}
-
-void	ft::Channel::sendMsgtoChannel(Message *message)
-{
-	std::string	msg = this->sendMsgFormat(message);
-	printf("here\n");
-	for (long unsigned int i = 0; i < this->members.size(); i++)
-		send(this->members[i].user->fd, msg.c_str(), msg.length(), 0);
-}
-
-// // ? PART
+// ? PART
 void	ft::Channel::removeUser(int userFD)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
@@ -248,7 +251,6 @@ void	ft::Channel::removeUser(int userFD)
 		}	
 	}
 }
-
 
 std::vector<ft::Client *>	ft::Channel::getUsers(void)
 {

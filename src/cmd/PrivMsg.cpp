@@ -20,10 +20,22 @@ void	ft::Privmsg::execute(){
 			{
 				if ((*it2)->fd != _client->fd)
 				{
-					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;;
+					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
 					(*it2)->sendReply(reply);
+					return;
 				}
 			}
+		}
+	}
+	//user to user
+	std::vector<Client *>::iterator it3 = _server->clients.begin();
+	for (; it3 != _server->clients.end(); it3++)
+	{
+		if ((*it3)->getNickName() == channelName)
+		{
+			std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
+			(*it3)->sendReply(reply);
+			return;
 		}
 	}
 }

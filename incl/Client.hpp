@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/30 13:25:24 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:15:20 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@
 
 #include <fstream>
 #include <vector>
-
-
+#include "Mode_List.hpp"
 namespace ft
 {
 	class Client
@@ -40,12 +39,16 @@ namespace ft
 		private:
 			std::string				_nickName;
 			std::string				_userName;
+			std::string				_serverName;
+			std::string				_realName;
+			std::string				_hostName;
 			std::vector <Message *>	_msgSend;
 			std::vector <Message *>	_msgRecv;
 			std::string				_client_ip;
 			bool                 	_is_authenticated;
 			bool                 	_is_ope;
 			int                  	_ping;
+			std::vector <ft::User_Mode>	_mode;
 			//ip 
 			 
 			
@@ -56,6 +59,12 @@ namespace ft
 			void 					setNickName(std::string nickName);
 			std::string				getUserName(void)const;
 			void 					setUserName(std::string userName);
+			std::string				getServerName(void)const;
+			void 					setServerName(std::string serverName);
+			std::string				getRealName(void)const;
+			void 					setRealName(std::string realName);
+			std::string				getHostName(void)const;
+			void 					setHostName(std::string hostName);
 			//user channels
 			std::string				getChannelsJoined(void)const;
 			void 					setChannelsJoined(std::string channelsJoined);
@@ -67,11 +76,19 @@ namespace ft
 			std::vector <Message *>	getMsgRecv(void)const;
 			void 					setMsgRecv(Message *msgRecv);
 			void 					sendReply(std::string reply);
+			void 					sendReply(int reply);
 
 			//ping 
 			int						getPing(void)const;
 			void 					setPing(int ping);
 			
+			// user mode
+			bool					isOperator(void);
+			bool					isInvisible(void);
+			void					setUserMode(char mode);
+			void					removeUserMode(char mode);
+			
+			std::string				intToString(int number);
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();
 	};
