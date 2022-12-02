@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 03:04:55 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 03:59:18 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,30 @@ void	ft::Mode::initModes(std::string mode)
 	}
 }
 
-
 void	ft::Mode::UserMode(void)
 {
+	if (this->_message->getParameter().size() < 2)
+	{
+		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
+		this->_client->sendReply(errMsg);
+		return ;
+	}
 	std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
 	if (this->_message->getParameter()[0] == this->_client->getNickName())
 	{
 		initModes(this->_message->getParameter()[1]);
 		std::cout << "action " << modes[0] << std::endl;
 		std::cout << "mode " << modes[1] << std::endl;
+	}
+	else
+	{
+		std::cout << "no match" << std::endl;
+		// std::stringstream stream;
+		// stream << ERR_USERSDONTMATCH;
+		// std::string errMsg;
+		// stream >> errMsg;
+		std::string errMsg = std::to_string(ERR_USERSDONTMATCH);
+		this->_client->sendReply(errMsg);
 	}
 }
 
