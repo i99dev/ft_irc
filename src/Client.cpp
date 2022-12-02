@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 08:45:46 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/02 09:40:01 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,15 @@ void ft::Client::sendReply(std::string reply)
 		std::cout << "Error sending reply" << std::endl;
 	}
 	sleep(1);
+}
+
+void ft::Client::sendReply(int reply)
+{
+	std::string replyToSend = reply + "\n";
+	if (send(fd, replyToSend.c_str(), replyToSend.size(), 0) == -1)
+	{
+		std::cout << "Error sending reply" << std::endl;
+	}
 }
 
 ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 08:45:30 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/02 09:37:13 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ namespace ft
 			std::vector <Message *>	getMsgRecv(void)const;
 			void 					setMsgRecv(Message *msgRecv);
 			void 					sendReply(std::string reply);
+			void 					sendReply(int reply);
 
 			//ping 
 			int						getPing(void)const;
