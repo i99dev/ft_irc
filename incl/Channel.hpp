@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 02:33:13 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:01:35 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "Client.hpp"
-#include "Server.hpp"
-#include "Mode_List.hpp"
+#include "./Client.hpp"
+// #include "./Mode_List.hpp"
 #define CHNAME_LENGTH 50
 #define EXC_WRONG_CHNAME "Wrong Channel Name"
 

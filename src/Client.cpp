@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 08:43:43 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/02 08:45:46 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int ft::Client::getPing(void) const
 	return (this->_ping);
 }
 
+/******************* USER MODE *******************/
+
 bool	ft::Client::isInvisible(void)
 {
 	for (long unsigned int i = 0; i < this->_mode.size(); i++)
@@ -144,27 +146,17 @@ bool	ft::Client::isOperator(void)
 	return (false);
 }
 
-ft::User_Mode	ft::Client::findMode(char mode)
-{
-	for (long unsigned int i = 0; i < this->_mode.size(); i++)
-	{
-		if (USMODE_CHAR[i] == mode)
-			return (USMODE_ENUM[i]);
-	}
-	return (n_NO_MODE);
-}
-
 void	ft::Client::setUserMode(char mode)
 {
-	if (this->findMode(mode) != n_NO_MODE)
-		this->_mode.push_back(this->findMode(mode));
+	if (ft::ModeTools::findUserMode(mode) != n_NO_MODE)
+		this->_mode.push_back(ft::ModeTools::findUserMode(mode));
 }
 
 void	ft::Client::removeUserMode(char mode)
 {
 	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 	{
-		if (this->_mode[i] == this->findMode(mode))
+		if (this->_mode[i] == ft::ModeTools::findUserMode(mode))
 		{
 			this->_mode.erase(this->_mode.begin() + i);
 			return ;

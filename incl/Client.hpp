@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 08:43:58 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/02 08:45:30 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 #include <fstream>
 #include <vector>
 #include "Mode_List.hpp"
-
 namespace ft
 {
 	class Client
@@ -49,6 +48,7 @@ namespace ft
 			bool                 	_is_authenticated;
 			bool                 	_is_ope;
 			int                  	_ping;
+			std::vector <ft::User_Mode>	_mode;
 			//ip 
 			 
 			
@@ -86,8 +86,6 @@ namespace ft
 			bool					isInvisible(void);
 			void					setUserMode(char mode);
 			void					removeUserMode(char mode);
-			ft::User_Mode			findMode(char mode);
-
 			Client(int &fd, std::string servername, std::string ip);
 			~Client();
 	};

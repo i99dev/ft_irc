@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 02:38:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 01:09:58 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #define MODE_LIST_HPP
 #define	CHMODE_NUM 11
 #define CHMODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l'}
-#define CHMODE_ENUM (Channel_Mode []){CLEAR_MODE, NO_MODE, O_CHANNEL_CREATOR, o_OPERATOR_PRIVILEGE, v_VOICE_PRIVILEGE,i_INVITE_ONLY_CHANNEL, m_MODERATED_CHANNEL, p_PRIVATE_CHANNEL, t_TOPIC, k_CAHNNEL_PASSWORD, l_USER_LIMIT}
+#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_PASSWORD, ft::l_USER_LIMIT}
 #define	USMODE_NUM 3
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
-#define USMODE_ENUM (User_Mode []){n_NO_MODE, o_OPERATOR_FLAG, i_INVISIBLE}
+#define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
 
 // TODO: change the loop of checking the modes to start with the valid modes
 
@@ -43,6 +43,40 @@ namespace ft
 		o_OPERATOR_FLAG, // ? operator Client (can be set using OPER);
 		i_INVISIBLE, //? invisible status (set by USER and MODE);
 	};
+	namespace	ModeTools
+	{
+		Channel_Mode				findChannelMode(char mode);
+		User_Mode					findUserMode(char mode);
+		// std::vector <std::string>	getModes(std::string mode);
+	}
 }
+
+inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
+{
+	for (int i = -1; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_CHAR[i] == mode)
+			return (CHMODE_ENUM[i]);
+	}
+	return (ft::NO_MODE);
+}
+
+inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
+{
+	for (long unsigned int i = 0; i < USMODE_NUM; i++)
+	{
+		if (USMODE_CHAR[i] == mode)
+			return (USMODE_ENUM[i]);
+	}
+	return (ft::n_NO_MODE);
+}
+
+// inline std::vector <std::string>	ft::ModeTools::getModes(std::string mode)
+// {
+// 	std::vector <std::string> mode;
+	
+// }
+
+
 
 #endif
