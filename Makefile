@@ -6,7 +6,7 @@
 #    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/02 08:51:40 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/12/02 09:05:38 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CC = g++ -g  -std=c++11
+CC = g++ -g  -std=c++98
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(FT_NAME)

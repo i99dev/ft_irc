@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 03:59:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 09:06:22 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	ft::Mode::UserMode(void)
 		// stream << ERR_USERSDONTMATCH;
 		// std::string errMsg;
 		// stream >> errMsg;
-		std::string errMsg = std::to_string(ERR_USERSDONTMATCH);
-		this->_client->sendReply(errMsg);
+		//std::string errMsg = std::to_string(ERR_USERSDONTMATCH); // TODO: fix this to work with 98
+		//this->_client->sendReply(errMsg);
 	}
 }
 
