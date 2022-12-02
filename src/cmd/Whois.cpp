@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Whois.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 07:04:44 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:42:47 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ ft::Whois::Whois()
 
 void ft::Whois::execute()
 {
+    // _client->sendReply(RPL_LISTSTART(_server->getServerName(), _message->getParameter()[0]));
+    // _client->sendReply(RPL_LIST(_client->getServerName(), _client->getNickName(), "smth", "many", "topic"));
     std::cout << "Whois executed" << std::endl;
 }
