@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 15:02:16 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:18:34 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void	ft::Mode::UserMode(void)
 	else
 	{
 		std::cout << "no match" << std::endl;
-		std::stringstream stream;
-		stream << ERR_USERSDONTMATCH;
-		std::string errMsg;
-		stream >> errMsg;
+		// std::stringstream stream;
+		// stream << ERR_USERSDONTMATCH;
+		// std::string errMsg;
+		// stream >> errMsg;
 		// std::string errMsg = std::to_string(ERR_USERSDONTMATCH);
-		this->_client->sendReply(errMsg);
+		this->_client->sendReply(ERR_USERSDONTMATCH);
 	}
 }
 
