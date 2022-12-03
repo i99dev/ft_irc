@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Replies.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 12:45:10 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/03 04:18:46 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 ":" + servername + " 004 " + nick + " " + servername + " " + version + " " + usermodes + " " + chanmodes + " :" + servername + " server\n"
 #define RPL_ISUPPORT 005
 #define RPL_BOUNCE 010
-#define RPL_UMODEIS 221
+#define RPL_UMODEIS(servername, nick, modes) \
+":" + servername + " 221 " + nick + " :+" + modes + "\n";
 #define RPL_LUSERCLIENT 251
 #define RPL_LUSEROP 252
 #define RPL_LUSERUNKNOWN 253

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 23:54:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/03 04:13:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,14 @@ bool	ft::Client::isUSModeSet(char mode)
 		}
 	}
 	return (false);
+}
+
+std::string	ft::Client::getUSMode(void)
+{
+	std::string mode = "";
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+		mode += ft::ModeTools::getUSModechar(this->_mode[i]);
+	return (mode);
 }
 
 ft::Client::~Client() {}

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 23:45:26 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/03 04:01:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ namespace ft
 			bool					isUSModeSet(char mode);
 			void					setUserMode(char mode);
 			void					removeUserMode(char mode);
+			std::string				getUSMode(void);
 			
 			std::string				intToString(int number);
 			Client(int &fd, std::string servername, std::string ip);

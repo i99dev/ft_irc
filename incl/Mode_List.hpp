@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/03 00:03:35 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/03 04:12:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #define	USMODE_NUM 3
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
-
+#define REMOVE '-'
+#define SET '+'
 // TODO: change the loop of checking the modes to start with the valid modes
 
 namespace ft
@@ -49,6 +50,8 @@ namespace ft
 		User_Mode					findUserMode(char mode);
 		bool						isCHMode(char mode);
 		bool						isUSMode(char mode);
+		char						getCHModechar(ft::Channel_Mode mode);
+		char						getUSModechar(ft::User_Mode mode);
 	}
 }
 inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
@@ -62,7 +65,8 @@ inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
 }
 
 inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
-{
+{                                                     
+	
 	for (int i = 0; i < USMODE_NUM; ++i)
 	{
 		if (USMODE_CHAR[i] == mode)
@@ -90,4 +94,24 @@ inline bool	ft::ModeTools::isUSMode(char mode)
 	}
 	return (false);	
 }
+inline char	ft::ModeTools::getCHModechar(ft::Channel_Mode mode)
+{
+	for (int i = 1; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_ENUM[i] == mode)
+			return (CHMODE_CHAR[i]);
+	}
+	return ('N');
+}
+
+inline char	ft::ModeTools::getUSModechar(ft::User_Mode mode)
+{
+	for (int i = 0; i < USMODE_NUM; ++i)
+	{
+		if (USMODE_ENUM[i] == mode)
+			return (USMODE_CHAR[i]);
+	}
+	return ('n');
+}
+
 #endif
