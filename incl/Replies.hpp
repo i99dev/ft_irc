@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Replies.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 12:45:10 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/03 05:23:53 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 ":" + servername + " 004 " + nick + " " + servername + " " + version + " " + usermodes + " " + chanmodes + " :" + servername + " server\n"
 #define RPL_ISUPPORT 005
 #define RPL_BOUNCE 010
-#define RPL_UMODEIS 221
+#define RPL_UMODEIS(servername, nick, modes) \
+":" + servername + " 221 " + nick + " :+" + modes + "\n";
 #define RPL_LUSERCLIENT 251
 #define RPL_LUSEROP 252
 #define RPL_LUSERUNKNOWN 253
@@ -135,8 +136,8 @@
 #define ERR_CHANOPRIVSNEEDED 482
 #define ERR_CANTKILLSERVER 483
 #define ERR_NOOPERHOST 491
-#define ERR_UMODEUNKNOWNFLAG 501
-#define ERR_USERSDONTMATCH 502
+#define ERR_UMODEUNKNOWNFLAG(servername, nick, modechar) ":" + servername + " 501 " + nick + " " + mode + " :is unknown mode\n"
+#define ERR_USERSDONTMATCH(servername, nick) ":" + servername + " 502 " + nick + " :Cant change mode for other users\n"
 #define ERR_HELPNOTFOUND 524
 #define ERR_INVALIDKEY 525
 #define RPL_STARTTLS 670

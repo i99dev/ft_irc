@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 01:09:58 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/03 04:12:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #define	USMODE_NUM 3
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
-
+#define REMOVE '-'
+#define SET '+'
 // TODO: change the loop of checking the modes to start with the valid modes
 
 namespace ft
@@ -47,13 +48,15 @@ namespace ft
 	{
 		Channel_Mode				findChannelMode(char mode);
 		User_Mode					findUserMode(char mode);
-		// std::vector <std::string>	getModes(std::string mode);
+		bool						isCHMode(char mode);
+		bool						isUSMode(char mode);
+		char						getCHModechar(ft::Channel_Mode mode);
+		char						getUSModechar(ft::User_Mode mode);
 	}
 }
-
 inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
 {
-	for (int i = -1; i < CHMODE_NUM; ++i)
+	for (int i = 1; i < CHMODE_NUM; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (CHMODE_ENUM[i]);
@@ -62,8 +65,9 @@ inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
 }
 
 inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
-{
-	for (long unsigned int i = 0; i < USMODE_NUM; i++)
+{                                                     
+	
+	for (int i = 0; i < USMODE_NUM; ++i)
 	{
 		if (USMODE_CHAR[i] == mode)
 			return (USMODE_ENUM[i]);
@@ -71,12 +75,43 @@ inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
 	return (ft::n_NO_MODE);
 }
 
-// inline std::vector <std::string>	ft::ModeTools::getModes(std::string mode)
-// {
-// 	std::vector <std::string> mode;
-	
-// }
+inline bool	ft::ModeTools::isCHMode(char mode)
+{
+	for (int i = 1; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_CHAR[i] == mode)
+			return (true);
+	}
+	return (false);
+}
 
+inline bool	ft::ModeTools::isUSMode(char mode)
+{
+	for (int i = 0; i < USMODE_NUM; ++i)
+	{
+		if (USMODE_CHAR[i] == mode)
+			return (true);
+	}
+	return (false);	
+}
+inline char	ft::ModeTools::getCHModechar(ft::Channel_Mode mode)
+{
+	for (int i = 1; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_ENUM[i] == mode)
+			return (CHMODE_CHAR[i]);
+	}
+	return ('N');
+}
 
+inline char	ft::ModeTools::getUSModechar(ft::User_Mode mode)
+{
+	for (int i = 0; i < USMODE_NUM; ++i)
+	{
+		if (USMODE_ENUM[i] == mode)
+			return (USMODE_CHAR[i]);
+	}
+	return ('n');
+}
 
 #endif

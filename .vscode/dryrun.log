@@ -1,18 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/abrar/Desktop/42-Devcontainer/42-Devcontainer/src/Cursus/ft_irc'
-c++ -Wall -Werror -Wextra -std=c++98   -c -o main.o main.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/Server.o src/Server.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/Client.o src/Client.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/Message.o src/Message.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/Channel.o src/Channel.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/Join.o src/cmd/Join.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/User.o src/cmd/User.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/Nick.o src/cmd/Nick.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/PrivMsg.o src/cmd/PrivMsg.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/Cap.o src/cmd/Cap.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/Whois.o src/cmd/Whois.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/Mode.o src/cmd/Mode.cpp
-c++ -Wall -Werror -Wextra -std=c++98   -c -o src/cmd/Ping.o src/cmd/Ping.cpp
-c++ -Wall -Werror -Wextra -std=c++98 main.o ./src/Server.o ./src/Client.o ./src/Message.o ./src/Channel.o ./src/cmd/Join.o ./src/cmd/User.o ./src/cmd/Nick.o ./src/cmd/PrivMsg.o ./src/cmd/Cap.o ./src/cmd/Whois.o ./src/cmd/Mode.o ./src/cmd/Ping.o -o ircserv
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o ircserv obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Part.o obj/./src/cmd/Notice.o
 make: Leaving directory `/Users/abrar/Desktop/42-Devcontainer/42-Devcontainer/src/Cursus/ft_irc'
  

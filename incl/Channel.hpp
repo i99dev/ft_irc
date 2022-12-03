@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/01 23:01:35 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/02 23:57:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ namespace ft
 			bool								isChannelModerated(void);
 			bool								isChannelInvitedOnly(void);
 			bool								isChannelPrivate(void);
+			bool								isCHModeSet(char mode);
 			
 			// ? PART
 			void								removeUser(int userFD);

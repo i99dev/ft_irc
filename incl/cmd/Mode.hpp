@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:47:44 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 02:50:53 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/03 02:54:29 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #define MODE_HPP
 
 #include "./Command.hpp"
+#define	ACTION 0
+#define	MODE 1
 
 namespace ft
 {
@@ -29,6 +31,7 @@ namespace ft
 		void						UserMode(void);
 		void						initModes(std::string mode);
 		int							nextMode(std::string mode, int begin);
+		void						changeUSMode(void);
     };
 }
 

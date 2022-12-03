@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 22:34:12 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/03 04:26:57 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,27 @@ void	ft::Client::removeUserMode(char mode)
 			return ;
 		}
 	}
+}
+
+bool	ft::Client::isUSModeSet(char mode)
+{
+	if (ft::ModeTools::findUserMode(mode) != n_NO_MODE)
+	{
+		for (long unsigned int i = 0; i < this->_mode.size(); i++)
+		{
+			if (this->_mode[i] == ft::ModeTools::findUserMode(mode))
+				return (true);
+		}
+	}
+	return (false);
+}
+
+std::string	ft::Client::getUSMode(void)
+{
+	std::string mode = "";
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+		mode += ft::ModeTools::getUSModechar(this->_mode[i]);
+	return (mode);
 }
 
 ft::Client::~Client() {}
