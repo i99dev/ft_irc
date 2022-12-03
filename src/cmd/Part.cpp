@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/01 03:01:53 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/02 11:47:08 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    ft::Part::execute(){
 	std::string cmd = _message->getParameter()[0];
 	std::string msg = "";
 	if (_message->getParameter()[1].size() > 1)
-		std::string msg = _message->getParameter()[1];
+		msg = _message->getParameter()[1];
 	int j = 0;
 	int size = 0;
 	int start = 0;
@@ -84,10 +84,7 @@ void    ft::Part::execute(){
 						std::vector<Client *>::iterator it2 = clients.begin();
 						for (; it2 != clients.end(); it2++)
 						{
-							if (msg == "")
-								joinMsg = ":" + _client->getNickName() + " PART :" + _server->getChannels()[i]->getChName();
-							else
-								joinMsg = ":" + _client->getNickName() + " PART :" + _server->getChannels()[i]->getChName() + " :" + msg;
+							joinMsg = ":" + _client->getNickName() + " PART " + _server->getChannels()[i]->getChName() + " :" + msg;
 							(*it2)->sendReply(joinMsg);
 						}
 					}
