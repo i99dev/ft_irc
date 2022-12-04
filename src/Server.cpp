@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/01 06:32:03 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/05 01:49:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,4 +317,24 @@ void ft::Server::checkConnection()
             this->clients[i]->setPing(this->clients[i]->getPing() - 1);
         }
     }
+}
+
+bool		ft::Server::isChannel(std::string CHname)
+{
+	for (long unsigned int i = 0; i < this->channels.size(); i++)
+	{
+		if (this->channels[i]->getChName() == CHname)
+			return (true);
+	}
+	return (false);
+}
+
+ft::Channel	*ft::Server::getChannel(std::string CHname)
+{
+	for (long unsigned int i = 0; i < this->channels.size(); i++)
+	{
+		if (this->channels[i]->getChName() == CHname)
+			return (this->channels[i]);
+	}
+	return (NULL);
 }

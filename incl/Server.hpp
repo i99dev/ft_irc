@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/04 07:31:11 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 01:47:02 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ namespace ft
         // channel functions
         std::vector<Channel *>	getChannels();
 		bool					isChannel(std::string CHname);
+		Channel					*getChannel(std::string CHname);
 
         // server functions
         std::string getHost();

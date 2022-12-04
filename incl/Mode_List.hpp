@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/03 04:12:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 02:11:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
 #define REMOVE '-'
 #define SET '+'
-// TODO: change the loop of checking the modes to start with the valid modes
+#define QUERY 1
+#define CHANGE 2
 
 namespace ft
 {

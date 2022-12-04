@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/04 07:30:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 02:14:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,9 @@ ft::Mode::Mode()
     _usage = "/mode <channel> <mode> [<mode> ...]";
 }
 
-void	ft::Mode::ChannelMode(void)
-{
-	// ? paramter check
-	if (this->_message->getParameter().size() < 1)
-	{
-		// ! send need more params
-		std::cout << "more params\n";
-		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
-		this->_client->sendReply(errMsg);
-	}
-	else
-	{
-		// ? check if this channel is available
-		if ()
-		{
-
-		}
-		else
-		{
-			std::cout << "no channel" << std::endl;
-			// ! send err channel doesn't exist
-		}
-	}
-}
-
+/*
+			* MODE INITIALIZATION *
+*/
 int	ft::Mode::nextMode(std::string mode, int begin)
 {
 	char	action = mode[begin];
@@ -70,7 +48,67 @@ void	ft::Mode::initModes(std::string mode)
 			i = nextMode(mode, i);
 	}
 }
+//******************************************
 
+/*
+			* CHANGE CHANNEL MODE
+*/
+
+void	ft::Mode::accessCHMode(int action)
+{
+	if (action == QUERY)
+	{
+		std::cout << "query about channel mode" << std::endl;
+	}
+	else if (action == CHANGE)
+	{
+		std::cout << "change the channel mode" << std::endl;
+	}
+}
+
+void	ft::Mode::ChannelMode(void)
+{
+	// ? paramter check
+	if (this->_message->getParameter().empty())
+	{
+		// ! send need more params
+		std::cout << "more params\n";
+		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
+		this->_client->sendReply(errMsg);
+	}
+	else
+	{
+		// ? check if this channel is available
+		if (this->_server->isChannel(this->_message->getParameter()[0]))
+		{
+			if (this->_message->getParameter().size() == 1)
+			{
+				Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+				// ! send the current mode of the channel
+				std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channel->getChName(), channel->getCHMode());
+				this->_client->sendReply(reply);
+			}
+			else
+			{
+				initModes(this->_message->getParameter()[1]);
+				if (this->modes[ACTION].empty())
+					accessCHMode(QUERY);
+				else
+					accessCHMode(CHANGE);
+			}
+		}
+		else
+		{
+			std::cout << "no channel" << std::endl;
+			// ! send err channel doesn't exist
+		}
+	}
+}
+//******************************************
+
+/*
+				* CHANGE USER MODE *
+*/
 void	ft::Mode::changeUSMode(void)
 {
 	for (size_t i = 0; i < this->modes[MODE].length(); i++)
@@ -150,6 +188,7 @@ void	ft::Mode::UserMode(void)
 		}
 	}
 }
+//******************************************
 
 void ft::Mode::execute(void)
 {
