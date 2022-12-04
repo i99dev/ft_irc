@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/02 23:57:11 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/04 05:32:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,3 +273,10 @@ std::vector<ft::Client *>	ft::Channel::getUsers(void)
 	return (members);
 }
 
+std::string	ft::Channel::getCHMode(void)
+{
+	std::string mode = "";
+	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+		mode += ft::ModeTools::getCHModechar(this->_mode[i]);
+	return (mode);
+}

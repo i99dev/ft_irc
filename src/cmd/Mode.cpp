@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/03 06:03:23 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/04 07:30:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,27 @@ ft::Mode::Mode()
 
 void	ft::Mode::ChannelMode(void)
 {
-	
+	// ? paramter check
+	if (this->_message->getParameter().size() < 1)
+	{
+		// ! send need more params
+		std::cout << "more params\n";
+		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
+		this->_client->sendReply(errMsg);
+	}
+	else
+	{
+		// ? check if this channel is available
+		if ()
+		{
+
+		}
+		else
+		{
+			std::cout << "no channel" << std::endl;
+			// ! send err channel doesn't exist
+		}
+	}
 }
 
 int	ft::Mode::nextMode(std::string mode, int begin)

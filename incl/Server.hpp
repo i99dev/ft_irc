@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/01 21:03:45 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/04 07:31:11 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ namespace ft
         std::vector<ft::Message *> splitMessage(std::string msg, char delim, int fd);
 
         // channel functions
-        std::vector<Channel *> getChannels();
+        std::vector<Channel *>	getChannels();
+		bool					isChannel(std::string CHname);
 
         // server functions
         std::string getHost();
