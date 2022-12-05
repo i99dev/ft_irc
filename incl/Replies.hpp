@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/03 05:23:53 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 02:22:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 #define RPL_LISTEND(servername, nick) \
 	":" + servername + " 323 " + nick + " :End of /LIST\n"
 #define RPL_CHANNELMODEIS(servername, nick, channel, modes) \
-	":" + servername + " 324 " + nick + " " + channel + " +" + modes + "\n"
+	":" + servername + " 324 " + nick + " " + channel + " :+" + modes + "\n"
 #define RPL_CREATIONTIME 329
 #define RPL_WHOISACCOUNT 330
 #define RPL_NOTOPIC 331
