@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 05:38:34 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 05:40:40 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	ft::Mode::accessCHMode(int action)
 			pM_count = 0
 			else if (ft::ModeTools::isParamMode(mode))
 			{
+				if (1 + pM_count > parm.size())
+					ErrMsg more param needed
 				param[1 + pM_count]
 				pM_count++;
 				do action (mode, param[1 + pM_count], action)
