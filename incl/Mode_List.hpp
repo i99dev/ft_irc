@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 05:29:19 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 06:03:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ namespace ft
 		Channel_Mode				findChannelMode(char mode);
 		User_Mode					findUserMode(char mode);
 		bool						isCHMode(char mode);
+		bool						isMEMode(char mode);
 		bool						isUSMode(char mode);
 		char						getCHModechar(ft::Channel_Mode mode);
 		char						getUSModechar(ft::User_Mode mode);
@@ -80,7 +81,17 @@ inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
 
 inline bool	ft::ModeTools::isCHMode(char mode)
 {
-	for (int i = 1; i < CHMODE_NUM; ++i)
+	for (int i = 3; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_CHAR[i] == mode)
+			return (true);
+	}
+	return (false);
+}
+
+inline bool	ft::ModeTools::isMEMode(char mode)
+{
+	for (int i = 1; i < 5; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (true);

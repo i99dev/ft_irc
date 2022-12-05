@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 05:40:40 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 06:04:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,22 @@ void	ft::Mode::initModes(std::string mode)
 /*
 	do action
 	{
+		Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 		if (action == SET)
 		{
-			if (!setChannelMode(mode, param))
-			Errmsg not a member
+			if ((ft::ModeTools::isMEMode() && !isMEModeSet) || (ft::ModeTools::isCHMode() && !isCHModeSet))
+			{
+				if (!setChannelMode(mode, param))
+				Errmsg not a member
+			}
 		}
 		else if (action == REMOVE)
 		{
-			if (!removeChannelMode(mode, param))
-			Errmsg not a member
+			if ((ft::ModeTools::isMEMode() && isMEModeSet) || (ft::ModeTools::isCHMode() && isCHModeSet))
+			{
+				if (!removeChannelMode(mode, param))
+				Errmsg not a member
+			}
 		}
 	}
 */

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 05:36:47 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 05:51:56 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,37 +50,38 @@ namespace ft
 			~Channel();
 		
 			// * Channel members * //
-			std::vector<ft::Channel_Member>		members;
+			std::vector<ft::Channel_Member>	members;
 
 			// * Getters * //
-			std::string							getChName(void);
-			std::string							getpassword(void);
-			std::vector<ft::Channel_Member>		getMembers(void);
-			ft::Client							*getCreator(void);
-			std::string							getTopic(void);
-			std::vector<ft::Client *>			getUsers(void);
-			ft::Client							*getMember(std::string nick);
+			std::string						getChName(void);
+			std::string						getpassword(void);
+			std::vector<ft::Channel_Member>	getMembers(void);
+			ft::Client						*getCreator(void);
+			std::string						getTopic(void);
+			std::vector<ft::Client *>		getUsers(void);
+			ft::Client						*getMember(std::string nick);
 			
 			// * Channel actions * //
 
 			// ? JOIN
-			void								addUser(ft::Client *user);
+			void							addUser(ft::Client *user);
 			
 			// ? MODE
 			int								setChannelMode(char mode, std::string param);
 			int								setMemberMode(Client *user, char mode);
 			int								removeChannelMode(char mode, std::string param);
 			int								removeMemberMode(Client *user, char mode);
-			void								setPassword(std::string &password);
-			void								setTopic(std::string &topic);
-			ft::Channel_Mode					findMode(char mode);
-			bool								isCHModeSet(char mode);
-			std::string							getCHMode(void);
-			bool								isMember(int OwnerFD);
-			bool								isMember(std::string nick);
-			bool								isMemberOperator(int OwnerFD);
+			void							setPassword(std::string &password);
+			void							setTopic(std::string &topic);
+			ft::Channel_Mode				findMode(char mode);
+			bool							isCHModeSet(char mode);
+			bool							isMEModeSet(Client *user, char mode);
+			std::string						getCHMode(void);
+			bool							isMember(int OwnerFD);
+			bool							isMember(std::string nick);
+			bool							isMemberOperator(int OwnerFD);
 			// ? PART
-			void								removeUser(int userFD);
+			void							removeUser(int userFD);
 	};
 	class WrongChannelNameRequir : public std::exception
 	{

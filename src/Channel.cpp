@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 05:36:31 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 05:57:29 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,22 @@ bool	ft::Channel::isCHModeSet(char mode)
 		{
 			if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
 				return (true);
+		}
+	}
+	return (false);
+}
+
+bool	ft::Channel::isMEModeSet(Client *user, char mode)
+{
+	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
+	{
+		for (long unsigned int i = 0; i < this->members.size(); i++)
+		{
+			if (this->members[i].user->fd == user->fd)
+			{
+				if (this->members[i].user_mode == ft::ModeTools::findChannelMode(mode))
+					return (true);
+			}
 		}
 	}
 	return (false);
