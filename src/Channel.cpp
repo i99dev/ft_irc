@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/04 05:32:04 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 05:36:31 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,47 @@ ft::Channel::Channel(Client *user, std::string &name)
 	creator.user_mode = O_CHANNEL_CREATOR;
 	this->members.push_back(creator);
 	this->_created_at = time(0);
+	this->_limit = 0;
 	this->_topic = "SET TOPIC";
 	std::cout << "created channel:" << _name << std::endl;
 }
 
 ft::Channel::~Channel(){}
+
+// * Channel Check * //
+
+bool	ft::Channel::isMember(int ownerFD)
+{
+	for (long unsigned int i = 0; i < this->members.size(); i++)
+	{
+		if (this->members[i].user->fd == ownerFD)
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isMember(std::string nick)
+{
+	for (long unsigned int i = 0; i < this->members.size(); i++)
+	{
+		if (this->members[i].user->getNickName() == nick)
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isMemberOperator(int OwnerFd)
+{
+	for (long unsigned int i = 0; i < this->members.size(); i++)
+	{
+		if (this->members[i].user->fd == OwnerFd)
+		{
+			if (this->members[i].user_mode == o_OPERATOR_PRIVILEGE || this->members[i].user_mode == O_CHANNEL_CREATOR)
+				return (true);
+		}
+	}
+	return (false);
+}
 
 // * Getters * //
 std::string	ft::Channel::getChName(void)
@@ -61,6 +97,18 @@ std::string	ft::Channel::getTopic(void)
 {
 	return (this->_topic);
 }
+
+ft::Client		*ft::Channel::getMember(std::string nick)
+{
+	for (long unsigned int i = 0; i < this->members.size(); i++)
+	{
+		if (this->members[i].user->getNickName() == nick)
+			return (this->members[i].user);
+	}
+	// ! if not a member
+	return (NULL);	
+}
+
 
 // * Channel actions * //
 // ? JOIN
@@ -97,26 +145,44 @@ void	ft::Channel::addUser(Client *user)
 // ? MODE
 //! check for duplicated mode, modes that can't be both set, 
 //! remove mode check for (- and +)
-void	ft::Channel::setChannelMode(char mode)
+int	ft::Channel::setChannelMode(char mode, std::string param)
 {
 	this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
+	if (mode == 'k')
+		setPassword(param);
+	else if (mode == 'l')
+		this->_limit = atoi(param.c_str());
+	else if (mode == 'o')
+		return (this->setMemberMode(this->getMember(param), 'o'));
+	else if (mode == 'v')
+		return (this->setMemberMode(this->getMember(param), 'v'));
+	return (1);
 }
 
-void	ft::Channel::removeChannelMode(char mode)
+int	ft::Channel::removeChannelMode(char mode, std::string param)
 {
 	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 	{
 		if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
 		{
 			this->_mode.erase(this->_mode.begin() + i);
-			return ;
+			if (mode == 'k')
+				_password = "";
+			else if (mode == 'l')
+				this->_limit = 0;
+			else if (mode == 'o')
+				return (this->removeMemberMode(this->getMember(param), 'o'));
+			else if (mode == 'v')
+				return (this->removeMemberMode(this->getMember(param), 'v'));
+			return (1);
 		}
 	}
+	return (0);
 }
 
 //! check if the user was already in channel
 //! remove mode check for (- and +)
-void	ft::Channel::setMemberMode(Client *user, char mode)
+int	ft::Channel::setMemberMode(Client *user, char mode)
 {
 	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
 	{
@@ -125,13 +191,14 @@ void	ft::Channel::setMemberMode(Client *user, char mode)
 			if (this->members[i].user->fd == user->fd)
 			{
 				this->members[i].user_mode = ft::ModeTools::findChannelMode(mode);
-				return ;
-			}	
+				return (1);
+			}
 		}
 	}
+	return (0);
 }
 
-void	ft::Channel::removeMemberMode(Client *user, char mode)
+int	ft::Channel::removeMemberMode(Client *user, char mode)
 {
 	if (ft::ModeTools::findChannelMode(mode) != NO_MODE)
 	{
@@ -140,43 +207,11 @@ void	ft::Channel::removeMemberMode(Client *user, char mode)
 			if (this->members[i].user->fd == user->fd)
 			{
 				this->members[i].user_mode = CLEAR_MODE;
-				return ;
+				return (1);
 			}
 		}
 	}
-}
-
-void	ft::Channel::makeMemberOperator(Client *user)
-{
-	for (long unsigned int i = 0; i < this->members.size(); i++)
-	{
-		if (this->members[i].user->fd == user->fd)
-		{
-			this->members[i].user_mode = o_OPERATOR_PRIVILEGE;
-			return ;
-		}
-	}
-	/* 
-		! need to make sure if the server will ignore
-		! it or error message will be sent if the client wasn't in the channel
-		! or already an operator 
-	*/
-}
-
-void	ft::Channel::makeMemberVoice(Client *user)
-{
-	for (long unsigned int i = 0; i < this->members.size(); i++)
-	{
-		if (this->members[i].user->fd == user->fd)
-		{
-			this->members[i].user_mode = v_VOICE_PRIVILEGE;
-			return ;
-		}
-	}
-	/* 
-		! need to make sure if the server will ignore
-		! it or error message will be sent
-	*/
+	return (0);
 }
 
 void	ft::Channel::setPassword(std::string &password)
@@ -187,36 +222,6 @@ void	ft::Channel::setPassword(std::string &password)
 void	ft::Channel::setTopic(std::string &topic)
 {
 	this->_topic = topic;
-}
-
-bool	ft::Channel::isChannelModerated(void)
-{
-	for (long unsigned int i = 0; i < this->_mode.size(); i++)
-	{
-		if (this->_mode[i] == m_MODERATED_CHANNEL)
-			return (true);
-	}
-	return (false);
-}
-
-bool	ft::Channel::isChannelPrivate(void)
-{
-	for (long unsigned int i = 0; i < this->_mode.size(); i++)
-	{
-		if (this->_mode[i] == p_PRIVATE_CHANNEL)
-			return (true);
-	}
-	return (false);
-}
-
-bool	ft::Channel::isChannelInvitedOnly(void)
-{
-	for (long unsigned int i = 0; i < this->_mode.size(); i++)
-	{
-		if (this->_mode[i] == ft::i_INVITE_ONLY_CHANNEL)
-			return (true);
-	}
-	return (false);
 }
 
 bool	ft::Channel::isCHModeSet(char mode)
@@ -230,26 +235,6 @@ bool	ft::Channel::isCHModeSet(char mode)
 		}
 	}
 	return (false);
-}
-
-// ? PRIVMSG
-/*
-! be carefull about this null condition (Protection may needed)
-		// if (message->getCommand() == "PRIVMSG" && message->getParameter() == "#lala")
-		// {
-		// 	send(fds[i].fd, ":sasori!sasori@127.0.0.1 PRIVMSG #lala :boo\r\n",168, 0);
-		// 	printf("here\n");
-		// }
-*/
-ft::Client	*ft::Channel::_getClientinfo(int ownerFD)
-{
-	for (long unsigned int i = 0; i < this->members.size(); i++)
-	{
-		if (this->members[i].user->fd == ownerFD)
-			return (this->members[i].user);
-	}
-	// ! if not a member
-	return (NULL);
 }
 
 // ? PART

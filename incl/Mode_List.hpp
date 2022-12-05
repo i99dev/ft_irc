@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 02:11:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 05:29:19 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #define SET '+'
 #define QUERY 1
 #define CHANGE 2
+#define	MODEPARAM 1
 
 namespace ft
 {
@@ -53,6 +54,7 @@ namespace ft
 		bool						isUSMode(char mode);
 		char						getCHModechar(ft::Channel_Mode mode);
 		char						getUSModechar(ft::User_Mode mode);
+		bool						isParamMode(char mode);
 	}
 }
 inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
@@ -113,6 +115,13 @@ inline char	ft::ModeTools::getUSModechar(ft::User_Mode mode)
 			return (USMODE_CHAR[i]);
 	}
 	return ('n');
+}
+
+inline bool	ft::ModeTools::isParamMode(char mode)
+{
+	if (mode == 'l' || mode == 'k' || mode == 'o' || mode == 'v')
+		return (true);
+	return (false);
 }
 
 #endif

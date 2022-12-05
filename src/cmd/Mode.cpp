@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 02:14:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 05:38:34 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,22 @@ void	ft::Mode::initModes(std::string mode)
 //******************************************
 
 /*
+	do action
+	{
+		if (action == SET)
+		{
+			if (!setChannelMode(mode, param))
+			Errmsg not a member
+		}
+		else if (action == REMOVE)
+		{
+			if (!removeChannelMode(mode, param))
+			Errmsg not a member
+		}
+	}
+*/
+
+/*
 			* CHANGE CHANNEL MODE
 */
 
@@ -62,6 +78,26 @@ void	ft::Mode::accessCHMode(int action)
 	}
 	else if (action == CHANGE)
 	{
+		/*
+		loop
+		{
+			if (!isCHmode(mode))
+			{
+				ErrMsg
+			}
+			pM_count = 0
+			else if (ft::ModeTools::isParamMode(mode))
+			{
+				param[1 + pM_count]
+				pM_count++;
+				do action (mode, param[1 + pM_count], action)
+			}
+			else
+			{
+				do action (mode, "", action)
+			}
+		}
+		*/
 		std::cout << "change the channel mode" << std::endl;
 	}
 }
@@ -81,9 +117,9 @@ void	ft::Mode::ChannelMode(void)
 		// ? check if this channel is available
 		if (this->_server->isChannel(this->_message->getParameter()[0]))
 		{
+			Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 			if (this->_message->getParameter().size() == 1)
 			{
-				Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 				// ! send the current mode of the channel
 				std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channel->getChName(), channel->getCHMode());
 				this->_client->sendReply(reply);
@@ -92,9 +128,25 @@ void	ft::Mode::ChannelMode(void)
 			{
 				initModes(this->_message->getParameter()[1]);
 				if (this->modes[ACTION].empty())
-					accessCHMode(QUERY);
+				{
+					// ! check if the client is channel member
+					if (channel->isMember(this->_client->fd))
+						accessCHMode(QUERY);
+					else
+					{
+						std::cout << "not a channel member\n";
+					}
+				}
 				else
-					accessCHMode(CHANGE);
+				{
+					// ! check if the client is channel operator
+					if (channel->isMemberOperator(this->_client->fd))
+						accessCHMode(CHANGE);
+					else
+					{
+						std::cout << "not a channel operator\n";
+					}
+				}
 			}
 		}
 		else
