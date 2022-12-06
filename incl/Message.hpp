@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/28 22:29:16 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/06 10:09:28 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ namespace ft
 			std::string 				_Prefix;
 			std::string 				_channel;
 			time_t						_time;
+			std::string 				_Mask; // used for the mask
+			char 						_type_mask; // used for the mask
 
 			//privet methods
 			void 		parseMessage(std::string const &msg);
@@ -48,6 +50,11 @@ namespace ft
 			bool 		isCommand();
 			bool 		isParameter();
 			bool 		isTrailing();
+			bool		is_wildCard(std::string const &str);
+			std::string getMask();
+			char		getTypeMask();
+			bool		match_wildCard(std::string const &str);
+			
 	};
 }
 
