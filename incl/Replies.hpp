@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 02:22:59 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 10:25:39 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@
 	":" + servername + " 475 " + nick + " " + channel + " :Bad channel key\n"
 #define ERR_BADCHANMASK(servername, nick) \
 	":" + servername + " 476 * " + nick + " :Bad Channel Mask\n"
-#define ERR_NOPRIVILEGES 481
-#define ERR_CHANOPRIVSNEEDED 482
+#define ERR_NOPRIVILEGES ":" + servername + " 481 " + nick + " :You need operator Privilege\n"
+#define ERR_CHANOPRIVSNEEDED ":" + servername + " 482 " + nick + " :You need operator Privilege\n"
 #define ERR_CANTKILLSERVER 483
 #define ERR_NOOPERHOST 491
 #define ERR_UMODEUNKNOWNFLAG(servername, nick, modechar) ":" + servername + " 501 " + nick + " " + mode + " :is unknown mode\n"

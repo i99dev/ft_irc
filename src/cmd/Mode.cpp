@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 06:04:59 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 10:26:02 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	ft::Mode::ChannelMode(void)
 		// ? check if this channel is available
 		if (this->_server->isChannel(this->_message->getParameter()[0]))
 		{
+			//TODO: check if the user need to be a member to check the channel mode
 			Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 			if (this->_message->getParameter().size() == 1)
 			{
@@ -136,25 +137,29 @@ void	ft::Mode::ChannelMode(void)
 			else
 			{
 				initModes(this->_message->getParameter()[1]);
-				if (this->modes[ACTION].empty())
+				// ! check if the client is channel member
+				if (channel->isMember(this->_client->fd))
 				{
-					// ! check if the client is channel member
-					if (channel->isMember(this->_client->fd))
+					if (this->modes[ACTION].empty())
 						accessCHMode(QUERY);
 					else
 					{
-						std::cout << "not a channel member\n";
+						// ! check if the client is channel operator
+						if (channel->isMemberOperator(this->_client->fd))
+							accessCHMode(CHANGE);
+						else
+						{
+							std::string	errmsg = ERR_USERNOTINCHANNEL(this->_server->getServerName(), this->_client->getNickName(), this->_message->getParameter()[0]);
+							this->_client->sendReply(errmsg);
+							std::cout << "not a channel member\n";
+						}
 					}
 				}
 				else
 				{
-					// ! check if the client is channel operator
-					if (channel->isMemberOperator(this->_client->fd))
-						accessCHMode(CHANGE);
-					else
-					{
-						std::cout << "not a channel operator\n";
-					}
+					std::string	errmsg = ERR_USERNOTINCHANNEL(this->_server->getServerName(), this->_client->getNickName(), this->_message->getParameter()[0]);
+					this->_client->sendReply(errmsg);
+					std::cout << "not a channel member\n";
 				}
 			}
 		}

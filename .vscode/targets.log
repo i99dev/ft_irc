@@ -6,8 +6,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
 
-# Make data base, printed on Sat Dec  3 20:58:34 2022
+# Make data base, printed on Mon Dec  5 08:22:21 2022
 
 # Variables
 
@@ -43,6 +44,8 @@ OBJ_DIR = obj
 CXXFLAGS = -Wall -Wextra -Werror
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
+# environment
+MallocSpaceEfficient = 0
 # environment
 VSCODE_CWD = /
 # environment
@@ -91,19 +94,22 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 1
-# makefile (from `Makefile', line 21)
-WHITE = \033[0;37m
+# environment
+BLOCKSIZE = 512
 # default
 MAKE_VERSION := 3.81
 # environment
 USER = abrar
 # makefile
 .DEFAULT_GOAL := all
+# makefile (from `Makefile', line 21)
+WHITE = \033[0;37m
 # environment
 LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
+ 
 MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
 # default
 .VARIABLES := 
@@ -164,9 +170,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1794
+VSCODE_PID = 53321
 # variable set hash-table stats:
-# Load=77/1024=8%, Rehash=0, Collisions=4/108=4%
+# Load=79/1024=8%, Rehash=0, Collisions=5/117=4%
 
 # Pattern-specific Variable Values
 
@@ -174,11 +180,9 @@ VSCODE_PID = 1794
 
 # Directories
 
-# src/cmd (device 16777231, inode 32476051): 12 files, no impossibilities so far.
-# . (device 16777231, inode 32050957): 14 files, no impossibilities.
-# src (device 16777231, inode 32051051): 9 files, no impossibilities so far.
+# . (device 16777231, inode 32050957): 12 files, no impossibilities.
 
-# 35 files, no impossibilities in 3 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -194,29 +198,11 @@ obj/%.o: %.cpp
 
 # Files
 
-obj/./src/Channel.o: src/Channel.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/Channel'
-#  Last modified 2022-12-03 06:57:01
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
-
 # Not a target:
-src/cmd/Whois.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:48
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+obj/./src/Channel.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 all: ircserv
 #  Phony target (prerequisite of .PHONY).
@@ -224,93 +210,63 @@ all: ircserv
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
 
-obj/./src/cmd/Ping.o: src/cmd/Ping.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Ping'
-#  Last modified 2022-12-03 06:57:03
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+# Not a target:
+obj/./src/cmd/Ping.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-obj/./src/cmd/Nick.o: src/cmd/Nick.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Nick'
-#  Last modified 2022-12-03 06:57:02
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
-
-obj/./src/cmd/Mode.o: src/cmd/Mode.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Mode'
-#  Last modified 2022-12-03 06:57:03
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+# Not a target:
+obj/./src/cmd/Nick.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/cmd/User.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-02 15:41:09
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+obj/./src/cmd/Mode.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-obj/./src/cmd/PrivMsg.o: src/cmd/PrivMsg.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/PrivMsg'
-#  Last modified 2022-12-03 06:57:02
- 
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+# Not a target:
+obj/./src/cmd/PrivMsg.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 obj/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `main'
-#  Last modified 2022-12-03 06:57:00
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := obj/main.o
+# automatic
+# % := 
+# automatic
+# * := main
+# automatic
+# + := main.cpp
+# automatic
+# | := 
+# automatic
+# < := main.cpp
+# automatic
+# ^ := main.cpp
+# automatic
+# ? := main.cpp
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+# Load=8/32=25%, Rehash=0, Collisions=1/17=6%
 #  commands to execute (from `Makefile', line 56):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/src
@@ -324,25 +280,16 @@ obj/main.o: main.cpp
 #  Modification time never checked.
 #  File has not been updated.
 
-obj/./src/cmd/Whois.o: src/cmd/Whois.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Whois'
-#  Last modified 2022-12-03 06:57:03
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+# Not a target:
+obj/./src/cmd/Whois.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:37
+#  Last modified 2022-12-04 07:56:44
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -350,23 +297,14 @@ Makefile:
 
 ircserv: obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Part.o obj/./src/cmd/Notice.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-12-03 06:57:04
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
 #  commands to execute (from `Makefile', line 53):
 	@$(CXX) $(CXXFLAGS) -o $@ $^
 	
-
-# Not a target:
-src/Client.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:57
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 main.cpp:
@@ -377,29 +315,11 @@ main.cpp:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-obj/./src/cmd/User.o: src/cmd/User.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/User'
-#  Last modified 2022-12-03 06:57:02
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
-
 # Not a target:
-src/cmd/Part.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:48
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+obj/./src/cmd/User.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 fclean:
 #  Phony target (prerequisite of .PHONY).
@@ -407,27 +327,10 @@ fclean:
 #  File does not exist.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 65):
+ 
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(FT_NAME)
 	
-
-# Not a target:
-src/Server.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-02 15:41:09
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-src/cmd/Join.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:48
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 .DEFAULT:
@@ -435,44 +338,17 @@ src/cmd/Join.cpp:
 #  Modification time never checked.
 #  File has not been updated.
 
-obj/./src/Client.o: src/Client.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/Client'
-#  Last modified 2022-12-03 06:57:01
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+# Not a target:
+obj/./src/Client.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-
-# Not a target:
-src/Message.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-11-30 08:05:02
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-src/cmd/Cap.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-11-30 13:42:33
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 clean:
 #  Phony target (prerequisite of .PHONY).
@@ -483,153 +359,44 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	
 
-obj/./src/cmd/Part.o: src/cmd/Part.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Part'
-#  Last modified 2022-12-03 06:57:03
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+# Not a target:
+obj/./src/cmd/Part.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/cmd/Notice.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-02 15:41:09
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+obj/./src/Server.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/Channel.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:37
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-obj/./src/Server.o: src/Server.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/Server'
-#  Last modified 2022-12-03 06:57:00
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
-
-obj/./src/cmd/Join.o: src/cmd/Join.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Join'
-#  Last modified 2022-12-03 06:57:01
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+obj/./src/cmd/Join.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/cmd/Ping.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 04:26:48
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+obj/./src/Message.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/cmd/Nick.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-02 15:01:04
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-obj/./src/Message.o: src/Message.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/Message'
-#  Last modified 2022-12-03 06:57:01
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
- 
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
-
-obj/./src/cmd/Cap.o: src/cmd/Cap.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Cap'
-#  Last modified 2022-12-03 06:57:02
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+obj/./src/cmd/Cap.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/cmd/Mode.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-03 06:03:23
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-obj/./src/cmd/Notice.o: src/cmd/Notice.cpp
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: `./src/cmd/Notice'
-#  Last modified 2022-12-03 06:57:03
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-#  commands to execute (from `Makefile', line 56):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/src
-	@mkdir -p $(OBJ_DIR)/src/cmd
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
-
-# Not a target:
-src/cmd/PrivMsg.cpp:
-#  Implicit rule search has been done.
-#  Last modified 2022-12-02 15:41:09
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+obj/./src/cmd/Notice.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=39/1024=4%, Rehash=0, Collisions=0/119=0%
+# Load=25/1024=2%, Rehash=0, Collisions=0/63=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -641,6 +408,6 @@ src/cmd/PrivMsg.cpp:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Dec  3 20:58:34 2022
+# Finished Make data base on Mon Dec  5 08:22:21 2022
 
  
