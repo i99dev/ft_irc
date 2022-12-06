@@ -7,7 +7,7 @@ ft::Privmsg::Privmsg(){
 }
 
 void	ft::Privmsg::execute(){
-	if (_message->getMask().size() > 0)
+	if (!_message->getMask().empty())
 	{
 		//wildcard
 		std::cout << "wildcard" << std::endl;
