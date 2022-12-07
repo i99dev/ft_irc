@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
+#    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/03 00:03:20 by aaljaber         ###   ########.fr        #
+#    Updated: 2022/12/06 15:23:29 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC =	main.cpp \
 		./src/cmd/PrivMsg.cpp \
 		./src/cmd/Cap.cpp \
 		./src/cmd/Whois.cpp \
+		./src/cmd/Who.cpp \
 		./src/cmd/Mode.cpp \
 		./src/cmd/Ping.cpp \
 		./src/cmd/Part.cpp \
