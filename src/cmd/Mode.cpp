@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 10:26:02 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:41:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft::Mode::nextMode(std::string mode, int begin)
 
 	while (++i < mode.length())
 	{
-		std::cout << "here " << mode[i] << std::endl;
+		// std::cout << "here " << mode[i] << std::endl;
 		if (mode[i] == '-' || mode[i] == '+')
 			return (i - 1);
 		this->modes[0] += action;
@@ -50,124 +50,139 @@ void	ft::Mode::initModes(std::string mode)
 }
 //******************************************
 
-/*
-	do action
-	{
-		Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
-		if (action == SET)
-		{
-			if ((ft::ModeTools::isMEMode() && !isMEModeSet) || (ft::ModeTools::isCHMode() && !isCHModeSet))
-			{
-				if (!setChannelMode(mode, param))
-				Errmsg not a member
-			}
-		}
-		else if (action == REMOVE)
-		{
-			if ((ft::ModeTools::isMEMode() && isMEModeSet) || (ft::ModeTools::isCHMode() && isCHModeSet))
-			{
-				if (!removeChannelMode(mode, param))
-				Errmsg not a member
-			}
-		}
-	}
-*/
 
 /*
 			* CHANGE CHANNEL MODE
 */
-
-void	ft::Mode::accessCHMode(int action)
+void	ft::Mode::actionToChangeCHMode(char mode, std::string param, char action)
 {
-	if (action == QUERY)
+	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+	if (action == SET)
 	{
-		std::cout << "query about channel mode" << std::endl;
-	}
-	else if (action == CHANGE)
-	{
-		/*
-		loop
+		if ((ft::ModeTools::isMEMode(mode) && !channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && !channel->isCHModeSet(mode)))
 		{
-			if (!isCHmode(mode))
+			std::cout << "set the channel mode" << std::endl;
+			if (!channel->setChannelMode(mode, param))
 			{
-				ErrMsg
-			}
-			pM_count = 0
-			else if (ft::ModeTools::isParamMode(mode))
-			{
-				if (1 + pM_count > parm.size())
-					ErrMsg more param needed
-				param[1 + pM_count]
-				pM_count++;
-				do action (mode, param[1 + pM_count], action)
-			}
-			else
-			{
-				do action (mode, "", action)
+				std::string errmsg = ERR_USERNOTINCHANNEL(this->_server->getServerName(), param, channel->getChName());
+				this->_client->sendReply(errmsg);
+				std::cout << "Errmsg not a member" << std::endl;
 			}
 		}
-		*/
-		std::cout << "change the channel mode" << std::endl;
+	}
+	else if (action == REMOVE)
+	{
+		if ((ft::ModeTools::isMEMode(mode) && channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && channel->isCHModeSet(mode)))
+		{
+			std::cout << "remove the channel mode" << std::endl;
+			if (!channel->removeChannelMode(mode, param))
+			{
+				std::string errmsg = ERR_USERNOTINCHANNEL(this->_server->getServerName(), param, channel->getChName());
+				this->_client->sendReply(errmsg);
+				std::cout << "Errmsg not a member" << std::endl;
+			}
+		}
+	}
+}
+
+void	ft::Mode::changeCHMode(void)
+{
+	int pM_count = 0;
+	std::cout << "change the channel mode" << std::endl;
+	for (long unsigned int i = 0; i < this->modes[MODE].size(); i++)
+	{
+		std::cout << "here " << i << std::endl;
+		std::cout << "is channel mode " << ft::ModeTools::isCHMode(this->modes[MODE][i]) << std::endl;
+		std::cout << "is member mode " << ft::ModeTools::isMEMode(this->modes[MODE][i]) << std::endl;
+		std::cout << "is param mode " << ft::ModeTools::isParamMode(this->modes[MODE][i]) << std::endl;
+		if (!ft::ModeTools::isCHMode(this->modes[MODE][i]) && !ft::ModeTools::isMEMode(this->modes[MODE][i]))
+		{
+			// ! ErrMsg unknown channel mode
+			std::string mode = "";
+			mode += this->modes[MODE][i];
+			std::string errmsg = ERR_UNKNOWNMODE(this->_server->getServerName(), this->_client->getNickName(), mode, _message->getParameter()[0]);
+			this->_client->sendReply(errmsg);
+			std::cout << "not a channel mode" << std::endl;
+		}
+		else if (ft::ModeTools::isParamMode(this->modes[MODE][i]) && this->modes[ACTION][i] == SET)
+		{
+			/*
+				? this meant for modes that need param like (o, v, k, l)
+				? if there were more than one param mode in required pM_count will increment
+				? so that it can point at the next position for the paramter
+			*/
+			// ! this meant to protect accesseing the array + check if the param of the next mode is available
+			std::cout << "size of mode param " << this->_message->getParameter().size() << std::endl;
+			if ((size_t)(MODEPARAMPOS + pM_count) >= this->_message->getParameter().size())
+			{ 
+				// ! ErrMsg more param needed for mode
+				std::string errmsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
+				this->_client->sendReply(errmsg);
+				std::cout << "errmsg NMP " << i << std::endl;
+				continue ;
+			}
+			std::cout << "get mode param " << i << std::endl;
+			std::string param = this->_message->getParameter()[MODEPARAMPOS + pM_count];
+			pM_count++;
+			std::cout << "here " << i << std::endl;
+			std::cout << "param " << param << std::endl;
+			actionToChangeCHMode(this->modes[MODE][i], param, this->modes[ACTION][i]);
+			std::cout << "a param CHMode" << std::endl;
+		}
+		else
+		{
+			actionToChangeCHMode(this->modes[MODE][i], "", this->modes[ACTION][i]);
+			std::cout << "not a param CHMode" << std::endl;
+		}
+	}
+}
+
+/*
+? irssi doesn't support the channel mode query
+? it keeps adding the + before the mode
+ex. /mode #lala O -> MODE #lala +O
+
+*/
+void	ft::Mode::checkCHModeCases(ft::Channel *channel)
+{
+	// ! check if the client is channel operator
+	if (channel->isMemberOperator(this->_client->fd))
+		changeCHMode();
+	else
+	{
+		std::string	errmsg = ERR_CHANOPRIVSNEEDED(this->_server->getServerName(), this->_client->getNickName());
+		this->_client->sendReply(errmsg);
+		std::cout << "not a channel operator\n";
 	}
 }
 
 void	ft::Mode::ChannelMode(void)
 {
-	// ? paramter check
-	if (this->_message->getParameter().empty())
+	// ? check if this channel is available
+	if (this->_server->isChannel(this->_message->getParameter()[0]))
 	{
-		// ! send need more params
-		std::cout << "more params\n";
-		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
-		this->_client->sendReply(errMsg);
-	}
-	else
-	{
-		// ? check if this channel is available
-		if (this->_server->isChannel(this->_message->getParameter()[0]))
+		Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+		if (this->_message->getParameter().size() == 1)
 		{
-			//TODO: check if the user need to be a member to check the channel mode
-			Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
-			if (this->_message->getParameter().size() == 1)
-			{
-				// ! send the current mode of the channel
-				std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channel->getChName(), channel->getCHMode());
-				this->_client->sendReply(reply);
-			}
-			else
-			{
-				initModes(this->_message->getParameter()[1]);
-				// ! check if the client is channel member
-				if (channel->isMember(this->_client->fd))
-				{
-					if (this->modes[ACTION].empty())
-						accessCHMode(QUERY);
-					else
-					{
-						// ! check if the client is channel operator
-						if (channel->isMemberOperator(this->_client->fd))
-							accessCHMode(CHANGE);
-						else
-						{
-							std::string	errmsg = ERR_USERNOTINCHANNEL(this->_server->getServerName(), this->_client->getNickName(), this->_message->getParameter()[0]);
-							this->_client->sendReply(errmsg);
-							std::cout << "not a channel member\n";
-						}
-					}
-				}
-				else
-				{
-					std::string	errmsg = ERR_USERNOTINCHANNEL(this->_server->getServerName(), this->_client->getNickName(), this->_message->getParameter()[0]);
-					this->_client->sendReply(errmsg);
-					std::cout << "not a channel member\n";
-				}
-			}
+			// ! send the current mode of the channel
+			std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channel->getChName(), channel->getCHMode());
+			this->_client->sendReply(reply);
 		}
 		else
 		{
-			std::cout << "no channel" << std::endl;
-			// ! send err channel doesn't exist
+			// ! asking to change the mode or query about the mode
+			this->initModes(this->_message->getParameter()[1]);
+			std::cout << "action " << modes[0] << std::endl;
+			std::cout << "mode " << modes[1] << std::endl;
+			this->checkCHModeCases(channel);
 		}
+	}
+	else
+	{
+		// ! send err channel doesn't exist
+		std::string errMsg = ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), this->_message->getParameter()[0]);
+		this->_client->sendReply(errMsg);
+		std::cout << "no channel" << std::endl;
 	}
 }
 //******************************************
@@ -207,51 +222,49 @@ void	ft::Mode::changeUSMode(void)
 			// ! send not an available mode
 			std::string mode = "";
 			mode += this->modes[MODE][i];
-			std::string errmsg = ERR_UNKNOWNMODE(this->_server->getServerName(), this->_client->getNickName(), mode);
+			std::string errmsg = ERR_UMODEUNKNOWNFLAG(this->_server->getServerName(), this->_client->getNickName(), mode);
 			this->_client->sendReply(errmsg);
 		}
 	}
 }
-
+/*
+	? irssi does that check for the parameter already
+	// if (this->_message->getParameter().size() < 1)
+	// {
+	// 	// ! send need more params
+	// 	std::cout << "more params\n";
+	// 	std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
+	// 	this->_client->sendReply(errMsg);
+	// }
+*/
 void	ft::Mode::UserMode(void)
 {
-	// ? paramter check
-	if (this->_message->getParameter().size() < 1)
+	// ? mode command only applied on the same client
+	std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
+	if (this->_message->getParameter()[0] == this->_client->getNickName())
 	{
-		// ! send need more params
-		std::cout << "more params\n";
-		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
-		this->_client->sendReply(errMsg);
-	}
-	else
-	{
-		// ? mode command only applied on the same client
-		std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
-		if (this->_message->getParameter()[0] == this->_client->getNickName())
+		// ? if one param then it's asking about the mode
+		if (this->_message->getParameter().size() < 2)
 		{
-			// ? if one param then it's asking about the mode
-			if (this->_message->getParameter().size() < 2)
-			{
-				// ! send the modes to client
-				std::string reply = RPL_UMODEIS(this->_server->getServerName(), this->_client->getNickName(), this->_client->getUSMode());
-				this->_client->sendReply(reply);
-			}
-			else
-			{
-				// ? more than one param then it's changing the mode
-				this->initModes(this->_message->getParameter()[1]);
-				this->changeUSMode();
-				std::cout << "action " << modes[0] << std::endl;
-				std::cout << "mode " << modes[1] << std::endl;
-			}
+			// ! send the modes to client
+			std::string reply = RPL_UMODEIS(this->_server->getServerName(), this->_client->getNickName(), this->_client->getUSMode());
+			this->_client->sendReply(reply);
 		}
 		else
 		{
-			std::cout << "no match" << std::endl;
-			// ! send err user didn't match
-			std::string errMsg = ERR_USERSDONTMATCH(this->_server->getServerName(), this->_client->getNickName());
-			this->_client->sendReply(errMsg);
+			// ? more than one param then it's changing the mode
+			this->initModes(this->_message->getParameter()[1]);
+			this->changeUSMode();
+			std::cout << "action " << modes[0] << std::endl;
+			std::cout << "mode " << modes[1] << std::endl;
 		}
+	}
+	else
+	{
+		std::cout << "no match" << std::endl;
+		// ! send err user didn't match
+		std::string errMsg = ERR_USERSDONTMATCH(this->_server->getServerName(), this->_client->getNickName());
+		this->_client->sendReply(errMsg);
 	}
 }
 //******************************************

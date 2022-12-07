@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 10:25:39 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:20:47 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@
 #define ERR_NICKNAMEINUSE(servername, nick) \
 	":" + servername + " 433 * " + nick + " :Nickname is already in use\n"
 #define ERR_USERNOTINCHANNEL(servername, nick, channel) \
-	":" + servername + " 441 * " + nick + " :They aren't on that channel\n"
+	":" + servername + " 441 * <" + nick + "> isn't on " + channel + "\n"
 #define ERR_NOTONCHANNEL(servername, nick, channel) \
-	":" + servername + " 442 * " + nick + " :You're not on that channel\n"
+	":" + servername + " 442 * " + nick + " :You're not on " + channel + "\n"
 #define ERR_USERONCHANNEL(servername, nick) \
 	":" + servername + " 443 * " + nick + " :You're already member of that channel\n"
 #define ERR_NOTREGISTERED 451
@@ -124,8 +124,8 @@
 	":" + servername + " 465 " + nick + " :You are banned from this server\n"
 #define ERR_CHANNELISFULL(servername, nick, channel) \
 	":" + servername + " 471 " + nick + " " + channel + " :Cannot join channel , channel is full(+l)\n"
-#define ERR_UNKNOWNMODE(servername, nick, mode) \
-	":" + servername + " 472 " + nick + " " + mode + " :is unknown mode char to me for that channel\n"
+#define ERR_UNKNOWNMODE(servername, nick, mode, channel) \
+	":" + servername + " 472 " + nick + " " + mode + " :is unknown mode char to me for that " + channel + "\n"
 #define ERR_INVITEONLYCHAN 473
 #define ERR_BANNEDFROMCHAN 474
 #define ERR_BADCHANNELKEY(servername, nick, channel) \
@@ -133,7 +133,7 @@
 #define ERR_BADCHANMASK(servername, nick) \
 	":" + servername + " 476 * " + nick + " :Bad Channel Mask\n"
 #define ERR_NOPRIVILEGES ":" + servername + " 481 " + nick + " :You need operator Privilege\n"
-#define ERR_CHANOPRIVSNEEDED ":" + servername + " 482 " + nick + " :You need operator Privilege\n"
+#define ERR_CHANOPRIVSNEEDED(servername, nick) ":" + servername + " 482 " + nick + " :You need operator Privilege\n"
 #define ERR_CANTKILLSERVER 483
 #define ERR_NOOPERHOST 491
 #define ERR_UMODEUNKNOWNFLAG(servername, nick, modechar) ":" + servername + " 501 " + nick + " " + mode + " :is unknown mode\n"

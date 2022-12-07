@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:47:44 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 02:11:42 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/07 09:49:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ namespace ft
 		void						initModes(std::string mode);
 		int							nextMode(std::string mode, int begin);
 		void						changeUSMode(void);
-		void						accessCHMode(int action);
+		void						actionToChangeCHMode(char mode, std::string param, char action);
+		void						checkCHModeCases(ft::Channel *channel);
+		void						changeCHMode(void);
     };
 }
 
