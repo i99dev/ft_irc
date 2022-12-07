@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/03 06:03:23 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 06:04:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ ft::Mode::Mode()
     _usage = "/mode <channel> <mode> [<mode> ...]";
 }
 
-void	ft::Mode::ChannelMode(void)
-{
-	
-}
-
+/*
+			* MODE INITIALIZATION *
+*/
 int	ft::Mode::nextMode(std::string mode, int begin)
 {
 	char	action = mode[begin];
@@ -50,7 +48,128 @@ void	ft::Mode::initModes(std::string mode)
 			i = nextMode(mode, i);
 	}
 }
+//******************************************
 
+/*
+	do action
+	{
+		Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+		if (action == SET)
+		{
+			if ((ft::ModeTools::isMEMode() && !isMEModeSet) || (ft::ModeTools::isCHMode() && !isCHModeSet))
+			{
+				if (!setChannelMode(mode, param))
+				Errmsg not a member
+			}
+		}
+		else if (action == REMOVE)
+		{
+			if ((ft::ModeTools::isMEMode() && isMEModeSet) || (ft::ModeTools::isCHMode() && isCHModeSet))
+			{
+				if (!removeChannelMode(mode, param))
+				Errmsg not a member
+			}
+		}
+	}
+*/
+
+/*
+			* CHANGE CHANNEL MODE
+*/
+
+void	ft::Mode::accessCHMode(int action)
+{
+	if (action == QUERY)
+	{
+		std::cout << "query about channel mode" << std::endl;
+	}
+	else if (action == CHANGE)
+	{
+		/*
+		loop
+		{
+			if (!isCHmode(mode))
+			{
+				ErrMsg
+			}
+			pM_count = 0
+			else if (ft::ModeTools::isParamMode(mode))
+			{
+				if (1 + pM_count > parm.size())
+					ErrMsg more param needed
+				param[1 + pM_count]
+				pM_count++;
+				do action (mode, param[1 + pM_count], action)
+			}
+			else
+			{
+				do action (mode, "", action)
+			}
+		}
+		*/
+		std::cout << "change the channel mode" << std::endl;
+	}
+}
+
+void	ft::Mode::ChannelMode(void)
+{
+	// ? paramter check
+	if (this->_message->getParameter().empty())
+	{
+		// ! send need more params
+		std::cout << "more params\n";
+		std::string errMsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
+		this->_client->sendReply(errMsg);
+	}
+	else
+	{
+		// ? check if this channel is available
+		if (this->_server->isChannel(this->_message->getParameter()[0]))
+		{
+			Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+			if (this->_message->getParameter().size() == 1)
+			{
+				// ! send the current mode of the channel
+				std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channel->getChName(), channel->getCHMode());
+				this->_client->sendReply(reply);
+			}
+			else
+			{
+				initModes(this->_message->getParameter()[1]);
+				if (this->modes[ACTION].empty())
+				{
+					// ! check if the client is channel member
+					if (channel->isMember(this->_client->fd))
+						accessCHMode(QUERY);
+					else
+					{
+						std::cout << "not a channel member\n";
+					}
+				}
+				else
+				{
+					// ! check if the client is channel operator
+					if (channel->isMemberOperator(this->_client->fd))
+						accessCHMode(CHANGE);
+					else
+					{
+						std::cout << "not a channel operator\n";
+					}
+				}
+			}
+		}
+		else
+		{
+			std::cout << "no channel" << std::endl;
+			// ! send err channel doesn't exist
+		}
+	}
+}
+//******************************************
+
+/*
+				* CHANGE USER MODE *
+*/
 void	ft::Mode::changeUSMode(void)
 {
 	for (size_t i = 0; i < this->modes[MODE].length(); i++)
@@ -130,6 +249,7 @@ void	ft::Mode::UserMode(void)
 		}
 	}
 }
+//******************************************
 
 void ft::Mode::execute(void)
 {

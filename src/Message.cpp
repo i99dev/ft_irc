@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/11/29 00:12:06 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:38:51 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ void ft::Message::parseMessage(std::string const &msg)
 			_Parameter.push_back(tmp);
 			break;
 		}
-		_Parameter.push_back(it->second);
+		//check wildcard
+		if (is_wildCard(it->second))
+			_Mask = it->second;
+		else
+			_Parameter.push_back(it->second);
 		it++;
 	}
 
@@ -84,6 +88,8 @@ void ft::Message::parseMessage(std::string const &msg)
 ft::Message::Message(std::string msg,int owner_fd){
 	this->_owner_fd = owner_fd;
 	this->_msg = msg;
+	this->_Mask = "";
+	this->_type_mask = ' ';
 	parseMessage(msg);
 }
 
@@ -122,5 +128,50 @@ bool ft::Message::isParameter(){
 	return true;
 }
 
+/**
+ * @brief Check if the  parameter is a wildcard
+*/
+bool ft::Message::is_wildCard(std::string const &str){
+	if (str.find('*') != std::string::npos)
+	{
+		_type_mask = '*';
+		return true;
+	}
+	else if (str.find('?') != std::string::npos)
+	{
+		_type_mask = '?';
+		return true;
+	}
+	return false;
+}
 
+std::string ft::Message::getMask(){
+	return _Mask;
+}
 
+char ft::Message::getTypeMask(){
+	return _type_mask;
+}
+
+/**
+ * @brief Check if the parameter match the wildcard
+*/
+bool ft::Message::match_wildCard(std::string const &str){
+	if (_type_mask == '*')
+	{
+		if (str.find(_Mask.substr(0, _Mask.find('*'))) != std::string::npos)
+		{
+			if (str.find(_Mask.substr(_Mask.find('*') + 1)) != std::string::npos)
+				return true;
+		}
+	}
+	else if (_type_mask == '?')
+	{
+		if (str.find(_Mask.substr(0, _Mask.find('?'))) != std::string::npos)
+		{
+			if (str.find(_Mask.substr(_Mask.find('?') + 1)) != std::string::npos)
+				return true;
+		}
+	}
+	return false;
+}

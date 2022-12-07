@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/30 15:03:06 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:27:52 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,8 @@ void ft::Nick::execute()
     //get nick name and clean it from \r 
     std::string nickName =_message->getParameter()[0];
     //check if nick name is valid
-    if (nickName.size() > 9)
-    {
-        std::string err = "432 " + _message->getParameter()[0] + " :Erroneus nickname";
-        _client->sendReply(err);
-        return ;
-    }
-    //check if nick name is already taken
-    if (_server->isNickNameTaken(nickName))
-    {
-        std::string errNickNameUse = ERR_NICKNAMEINUSE(_server->getServerName(), nickName);
-        _client->sendReply(errNickNameUse);
-        return ;
-    }
+    if(!ft::Nick::isvalid())
+        return;
     if (_client->getNickName() == "")
     {
         _client->setNickName(nickName);
@@ -54,4 +43,36 @@ void ft::Nick::execute()
     _client->setNickName(nickName);
     std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
     _server->sendReply(_client, msg);
+}
+
+bool ft::Nick::isvalid()
+{
+    if (_message->getParameter().size() != 1)
+    {
+        std::string err = "461 " + _message->getCommand() + " :Not enough parameters";
+        _client->sendReply(err);
+        return false;
+    }
+    //check if nick name is valid
+    if (_message->getParameter()[0].size() > 9)
+    {
+        std::string err = "432 " + _message->getParameter()[0] + " :Erroneus nickname";
+        _client->sendReply(err);
+        return false;
+    }
+    //check if nick name is already taken
+    if (_server->isNickNameTaken(_message->getParameter()[0]))
+    {
+        std::string errNickNameUse = ERR_NICKNAMEINUSE(_server->getServerName(), _message->getParameter()[0]);
+        _client->sendReply(errNickNameUse);
+        return false;
+    }
+    //check if nick name not contain special char
+    if (_message->getParameter()[0].find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_[]\\`^{}|") != std::string::npos)
+    {
+        std::string err = "432 " + _message->getParameter()[0] + " :Erroneus nickname";
+        _client->sendReply(err);
+        return false;
+    }
+    return true;
 }

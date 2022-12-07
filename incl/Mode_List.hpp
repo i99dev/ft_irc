@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/03 04:12:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 06:03:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
 #define REMOVE '-'
 #define SET '+'
-// TODO: change the loop of checking the modes to start with the valid modes
+#define QUERY 1
+#define CHANGE 2
+#define	MODEPARAM 1
 
 namespace ft
 {
@@ -49,9 +51,11 @@ namespace ft
 		Channel_Mode				findChannelMode(char mode);
 		User_Mode					findUserMode(char mode);
 		bool						isCHMode(char mode);
+		bool						isMEMode(char mode);
 		bool						isUSMode(char mode);
 		char						getCHModechar(ft::Channel_Mode mode);
 		char						getUSModechar(ft::User_Mode mode);
+		bool						isParamMode(char mode);
 	}
 }
 inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
@@ -77,7 +81,17 @@ inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
 
 inline bool	ft::ModeTools::isCHMode(char mode)
 {
-	for (int i = 1; i < CHMODE_NUM; ++i)
+	for (int i = 3; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_CHAR[i] == mode)
+			return (true);
+	}
+	return (false);
+}
+
+inline bool	ft::ModeTools::isMEMode(char mode)
+{
+	for (int i = 1; i < 5; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (true);
@@ -112,6 +126,13 @@ inline char	ft::ModeTools::getUSModechar(ft::User_Mode mode)
 			return (USMODE_CHAR[i]);
 	}
 	return ('n');
+}
+
+inline bool	ft::ModeTools::isParamMode(char mode)
+{
+	if (mode == 'l' || mode == 'k' || mode == 'o' || mode == 'v')
+		return (true);
+	return (false);
 }
 
 #endif
