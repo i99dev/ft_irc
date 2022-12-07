@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/06 15:23:12 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/07 23:50:55 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void ft::Server::create_socket()
 
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_CANONNAME;
+    hints.ai_flags = AI_PASSIVE;
 
     if (getaddrinfo(host.c_str(), this->port.c_str(), &hints, &servinfo) != 0)
     {
@@ -319,4 +319,24 @@ void ft::Server::checkConnection()
             this->clients[i]->setPing(this->clients[i]->getPing() - 1);
         }
     }
+}
+
+bool		ft::Server::isChannel(std::string CHname)
+{
+	for (long unsigned int i = 0; i < this->channels.size(); i++)
+	{
+		if (this->channels[i]->getChName() == CHname)
+			return (true);
+	}
+	return (false);
+}
+
+ft::Channel	*ft::Server::getChannel(std::string CHname)
+{
+	for (long unsigned int i = 0; i < this->channels.size(); i++)
+	{
+		if (this->channels[i]->getChName() == CHname)
+			return (this->channels[i]);
+	}
+	return (NULL);
 }

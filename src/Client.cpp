@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/03 04:26:57 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:41:45 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void ft::Client::sendReply(std::string reply)
 	{
 		std::cout << "Error sending reply" << std::endl;
 	}
-	sleep(1);
 }
 
 std::string ft::Client::intToString(int number)

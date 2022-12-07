@@ -1,5 +1,65 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/abrar/Desktop/42-Devcontainer/42-Devcontainer/src/Cursus/ft_irc'
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/main.o -c main.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/Server.o -c src/Server.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/Client.o -c src/Client.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/Message.o -c src/Message.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/Channel.o -c src/Channel.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Join.o -c src/cmd/Join.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/User.o -c src/cmd/User.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Nick.o -c src/cmd/Nick.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/PrivMsg.o -c src/cmd/PrivMsg.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Cap.o -c src/cmd/Cap.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Whois.o -c src/cmd/Whois.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Mode.o -c src/cmd/Mode.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Ping.o -c src/cmd/Ping.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Part.o -c src/cmd/Part.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g  -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Notice.o -c src/cmd/Notice.cpp
 c++ -g  -std=c++98 -Wall -Wextra -Werror -o ircserv obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Part.o obj/./src/cmd/Notice.o
 make: Leaving directory `/Users/abrar/Desktop/42-Devcontainer/42-Devcontainer/src/Cursus/ft_irc'
  
