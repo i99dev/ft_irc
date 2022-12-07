@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/07 11:41:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:47:06 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ void	ft::Mode::changeCHMode(void)
 	std::cout << "change the channel mode" << std::endl;
 	for (long unsigned int i = 0; i < this->modes[MODE].size(); i++)
 	{
-		std::cout << "here " << i << std::endl;
-		std::cout << "is channel mode " << ft::ModeTools::isCHMode(this->modes[MODE][i]) << std::endl;
-		std::cout << "is member mode " << ft::ModeTools::isMEMode(this->modes[MODE][i]) << std::endl;
-		std::cout << "is param mode " << ft::ModeTools::isParamMode(this->modes[MODE][i]) << std::endl;
+		// std::cout << "is channel mode " << ft::ModeTools::isCHMode(this->modes[MODE][i]) << std::endl;
+		// std::cout << "is member mode " << ft::ModeTools::isMEMode(this->modes[MODE][i]) << std::endl;
+		// std::cout << "is param mode " << ft::ModeTools::isParamMode(this->modes[MODE][i]) << std::endl;
 		if (!ft::ModeTools::isCHMode(this->modes[MODE][i]) && !ft::ModeTools::isMEMode(this->modes[MODE][i]))
 		{
 			// ! ErrMsg unknown channel mode
@@ -121,11 +120,10 @@ void	ft::Mode::changeCHMode(void)
 				std::cout << "errmsg NMP " << i << std::endl;
 				continue ;
 			}
-			std::cout << "get mode param " << i << std::endl;
+			// std::cout << "get mode param " << i << std::endl;
 			std::string param = this->_message->getParameter()[MODEPARAMPOS + pM_count];
 			pM_count++;
-			std::cout << "here " << i << std::endl;
-			std::cout << "param " << param << std::endl;
+			// std::cout << "param " << param << std::endl;
 			actionToChangeCHMode(this->modes[MODE][i], param, this->modes[ACTION][i]);
 			std::cout << "a param CHMode" << std::endl;
 		}
