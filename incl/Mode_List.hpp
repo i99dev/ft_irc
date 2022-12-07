@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 06:03:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:36:06 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #define SET '+'
 #define QUERY 1
 #define CHANGE 2
-#define	MODEPARAM 1
+#define	MODEPARAMPOS 2
 
 namespace ft
 {
@@ -81,7 +81,7 @@ inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
 
 inline bool	ft::ModeTools::isCHMode(char mode)
 {
-	for (int i = 3; i < CHMODE_NUM; ++i)
+	for (int i = 4; i < CHMODE_NUM; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (true);
