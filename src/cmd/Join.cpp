@@ -134,7 +134,11 @@ void ft::Join::execute()
 					}
 					// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + (channels[i])->getChName();
 					// _client->sendReply(joinMsg);
-					std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channels[i]->getChName(), channels[i]->getTopic());
+					std::string topicMsg;
+					if (channels[i]->getTopic() != "SET TOPIC")
+						topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channels[i]->getChName(), channels[i]->getTopic());
+					else
+						topicMsg = ":" + _client->getServerName() + " 331 " + _client->getNickName() + " " + _client->getNickName() + " :No topic is set";
 					_client->sendReply(topicMsg);
 	            }
 	        }
