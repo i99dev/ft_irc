@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/07 00:18:25 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/08 12:58:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,19 @@ void ft::Who::execute()
 		_client->sendReply(ERR_NOSUCHNICK(_server->getServerName(), _message->getParameter()[0]));
 		return ;
 	}
-    // <channel> <user name> <hostname> <server> <nick> <status> :<hops> <realname>
-    // ":" + target->getServerName() + " 318 " + target->getNickName() + " "
-    _client->sendReply(":" + target->getServerName() + " 352 " + target->getNickName() + " " + "channel" + " " + target->getUserName() + " " + target->getHostName() + " " + target->getServerName() + target->getNickName() + " " + "offline" + " :" + "hops" + " " + target->getRealName() + "\n" +
-    ":" + target->getServerName() + " 315 " + target->getNickName() + " :" + "End of /WHO list.");
+    // // <channel> <user name> <hostname> <server> <nick> <status> :<hops> <realname>
+    // // ":" + target->getServerName() + " 318 " + target->getNickName() + " "
+    // _client->sendReply(":" + target->getServerName() + " 352 " + target->getNickName() + " " + "channel" + " " + target->getUserName() + " " + target->getHostName() + " " + target->getServerName() + target->getNickName() + " " + "offline" + " :" + "hops" + " " + target->getRealName() + "\n" +
+    // ":" + target->getServerName() + " 315 " + target->getNickName() + " :" + "End of /WHO list.");
+    std::string reply = "";
+    reply += target->getNickName() + " " +
+             target->getUserName() + " " +
+             target->getHostName() + " " +
+             "*" + " " +
+             target->getRealName();
+             //":" + serverName + " 352 " + clientNick + " * " + reply
+    // _client->sendReply(":" + target->getServerName() + " 352 " + target->getNickName() + reply + "\n" +
+    // ":" + target->getServerName() + " 315 " + target->getNickName() + " :" + "End of /WHO list.");
+    // _client->sendReply(RPL_ENDOFWHO(_server->getServerName(), _client->getNickName(), _message->getParameter()[0]));
     std::cout << "WHO executed" << std::endl;
 }

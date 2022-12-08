@@ -150,3 +150,6 @@ void ft::Join::execute()
 		}
 	}
 }
+
+
+// check the channel mode if it is invite only don't allow the user to join unless if it was from
