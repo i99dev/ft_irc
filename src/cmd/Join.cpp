@@ -138,7 +138,7 @@ void ft::Join::execute()
 					if (channels[i]->getTopic() != "SET TOPIC")
 						topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channels[i]->getChName(), channels[i]->getTopic());
 					else
-						topicMsg = ":" + _client->getServerName() + " 331 " + _client->getNickName() + " " + _client->getNickName() + " :No topic is set";
+						topicMsg = ":" + _client->getServerName() + " 331 " + _client->getNickName() + " " + _client->getNickName() + " " + channelName + " :No topic is set";
 					_client->sendReply(topicMsg);
 	            }
 	        }
