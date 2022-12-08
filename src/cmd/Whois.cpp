@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/06 14:51:08 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/08 16:45:55 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void ft::Whois::execute()
 		}
 		ch += "\n";
 	}
-	_client->sendReply(":" + target->getServerName() + " 311 " + target->getNickName() + " " + _message->getParameter()[0] + " " + target->getUserName() + " " + target->getHostName() + " * :" + target->getRealName() + "\n"
-	":" + target->getServerName() + " 378 " + target->getNickName() + " * :" + "is connecting from " + target->getNickName() + "@" + target->getIp() + " " + target->getIp() + "\n"
-	+ ch +
-	":" + target->getServerName() + " 312 " + target->getNickName() + " " + target->getNickName() + " " + target->getServerName() + " :" + target->getServerName() + " IRC Server" + "\n"
-	":" + target->getServerName() + " 379 " + target->getNickName() + " * :" + "is using modes " + target->getUSMode() + "\n"
-	":" + target->getServerName() + " 671 " + target->getNickName() + " " + target->getNickName() + " :" + "is not using a secure connection" + "\n"
-	":" + target->getServerName() + " 318 " + target->getNickName() + " " + target->getNickName() + " :");
+	_client->sendReply(":" + target->getServerName() + " 311 " + target->getNickName() + " " + _message->getParameter()[0] + " " + target->getUserName() + " " + target->getHostName() + " * :" + target->getRealName() + "\n" // whois user
+	":" + target->getServerName() + " 378 " + target->getNickName() + " * :" + "is connecting from " + target->getNickName() + "@" + target->getIp() + " " + target->getIp() + "\n" // whois host
+	+ ch + // whois channels
+	":" + target->getServerName() + " 312 " + target->getNickName() + " " + target->getNickName() + " " + target->getServerName() + " :" + target->getServerName() + " IRC Server" + "\n" // whois server
+	":" + target->getServerName() + " 379 " + target->getNickName() + " * :" + "is using modes " + target->getUSMode() + "\n" // whois modes
+	":" + target->getServerName() + " 671 " + target->getNickName() + " " + target->getNickName() + " :" + "is not using a secure connection" + "\n" // whois secure
+	":" + target->getServerName() + " 318 " + target->getNickName() + " " + target->getNickName() + " :"); // end of whois
 }
