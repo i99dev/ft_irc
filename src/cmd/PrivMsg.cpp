@@ -16,8 +16,11 @@ void ft::Privmsg::execute()
 		{
 			if (_message->match_client_mask(*it))
 			{
-				std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + (*it)->getNickName() + " :" + _message->getParameter()[0];
-				(*it)->sendReply(reply);
+				if((*it)->fd != _client->fd)
+				{
+					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + (*it)->getNickName() + " :" + _message->getParameter()[0];
+					(*it)->sendReply(reply);
+				}
 			}
 		}
 		return;
