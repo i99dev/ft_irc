@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 16:41:45 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:09:35 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,12 @@ ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 	this->_is_ope = false;
 	this->_ping = 0;
 	this->_client_ip = clinet_ip;
+	_nickName = "";
+	_userName = "";
+	_serverName = "";
+	_realName = "";
+	_hostName = "";
+	
 }
 
 void ft::Client::setPing(int ping)
