@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 10:54:30 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:22:31 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,36 +48,43 @@ void	ft::Topic::execute(void)
 				// ? check if operator to change the topic
 				if (channel->isMemberOperator(_client->fd))
 				{
-					channel->setTopic(_message->getParameter()[1]);
-					std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic());
-					_client->sendReply(topicMsg);
+					// ? if topic was empty it means need to clear the topic
+					if (_message->getParameter()[1].empty())
+					{
+						channel->setTopic(0);
+						_client->sendReply(RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), channel->getChName()));
+					}
+					else
+					{
+						channel->setTopic(_message->getParameter()[1]);
+						_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
+					}
 				}
 				else
 				{
 					// ! ErrMsg need operator PRIVELEGE
-					std::string errMsg = ERR_CHANOPRIVSNEEDED(_server->getServerName(), _client->getNickName());
-					_client->sendReply(errMsg);
+					_client->sendReply(ERR_CHANOPRIVSNEEDED(_server->getServerName(), _client->getNickName()));
 				}
 			}
 			else
 			{
 				// ? the mode is not set .. anyone can change the topic
 				channel->setTopic(_message->getParameter()[1]);
-				std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic());
-				_client->sendReply(topicMsg);
+				_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 			}
 		}
 		else
 		{
 			// ! ErrMsg not in channel
-			std::string errMsg = ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channel->getChName());
-			_client->sendReply(errMsg);
+			_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channel->getChName()));
 		}
 	}
 	else
 	{
 		// ? send the topic
-		std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic());
-		_client->sendReply(topicMsg);
+		if (channel->getTopic().empty())
+			_client->sendReply(RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), channel->getChName()));
+		else
+			_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 	}
 }
