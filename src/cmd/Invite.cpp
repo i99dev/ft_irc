@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/09 21:03:14 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/09 21:04:57 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void ft::Invite::execute()
 		return;
 	}
 	client->invites.push_back(channel->getChName()); // add channel to user invites
-	client->sendReply(":" + _client->getNickName() + " INVITE " + client->getNickName() + " " + channel->getChName() + " " + _client->getNickName());
-	_client->sendReply(":" + _server->getServerName() + " 341 " + client->getNickName() + " " + _client->getNickName() + " " + channel->getChName());
+	client->sendReply(":" + _client->getNickName() + " INVITE " + client->getNickName() + " " + channel->getChName() + " " + _client->getNickName()); // send invite to user
+	_client->sendReply(":" + _server->getServerName() + " 341 " + client->getNickName() + " " + _client->getNickName() + " " + channel->getChName()); // send msg to user inviting
 }
