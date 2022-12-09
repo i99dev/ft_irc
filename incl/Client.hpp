@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/03 04:01:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/09 20:19:50 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ namespace ft
 			 
 			
 		public:
-			int						fd;
+			int							fd;
+			std::vector <std::string>	invites;
 			//user info
 			std::string				getNickName(void)const;
 			void 					setNickName(std::string nickName);
