@@ -6,7 +6,7 @@
 #    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/06 15:23:29 by isaad            ###   ########.fr        #
+#    Updated: 2022/12/09 07:56:29 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC =	main.cpp \
 		./src/cmd/Mode.cpp \
 		./src/cmd/Ping.cpp \
 		./src/cmd/Part.cpp \
+		./src/cmd/Kick.cpp \
 		./src/cmd/Notice.cpp \
 		# ./src/Mode_List.cpp
 

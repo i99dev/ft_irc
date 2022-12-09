@@ -37,6 +37,11 @@ void	ft::Privmsg::execute(){
 		{
 			if ((*it)->getChName() == channelName)
 			{
+				if ((*it)->isMember(_client->fd) == false)
+				{
+					_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channelName));
+					return ;
+				}
 				if ((*it)->isMEModeSet(_client, 'v')){
 					":" + _client->getServerName() + " 404 " + _client->getNickName() + " " + channelName + " :Cannot send to channel, you're on mode V";
 					return ;

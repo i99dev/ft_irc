@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/07 23:50:55 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/09 08:37:02 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "../incl/cmd/Ping.hpp"
 #include "../incl/cmd/PrivMsg.hpp"
 #include "../incl/cmd/Part.hpp"
+#include "../incl/cmd/Kick.hpp"
 #include "../incl/cmd/Notice.hpp"
 
 
@@ -222,6 +223,7 @@ void ft::Server::init_commands(void)
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
     _commands["NICK"] = new ft::Nick();
+    _commands["KICK"] = new ft::Kick();
     _commands["WHOIS"] = new ft::Whois();
     _commands["WHO"] = new ft::Who();
     _commands["CAP"] = new ft::Cap();
