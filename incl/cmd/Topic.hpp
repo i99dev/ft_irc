@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:32:13 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 07:33:14 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/10 07:44:46 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ namespace ft
 	{
 	public:
 		Topic(void);
-		void execute();
+		void	execute();
+		void	sendTopic(void);
+		void	changeTopic(void);
 	};
 
 }
