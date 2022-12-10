@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/07 11:20:47 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/10 08:01:37 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 	":" + servername + " 324 " + nick + " " + channel + " :+" + modes + "\n"
 #define RPL_CREATIONTIME 329
 #define RPL_WHOISACCOUNT 330
-#define RPL_NOTOPIC 331
+#define RPL_NOTOPIC(servername, nick, channel) ":" + servername + " 331 " + nick + " " + channel + " :No topic is set\n"
 #define RPL_TOPIC(servername, nick, channel, topic) \
 	":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\n"
 #define RPL_TOPICWHOTIME 333
