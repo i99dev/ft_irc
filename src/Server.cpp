@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 12:56:07 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/10 10:23:58 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void ft::Server::createPoll()
                 }
             }
         }
+		VALGRIND_DO_LEAK_CHECK ;
     }
 }
 
