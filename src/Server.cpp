@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 23:50:18 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/11 02:23:22 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@
 #include "../incl/cmd/Topic.hpp"
 #include "../incl/cmd/List.hpp"
 
+std::string storage = "";
 
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
-                                                                           password(password)
+                                                                           password(password),
+																		   storage("")
 {
     std::cout << "Server created" << std::endl;
     std::cout << "Host: " << host << std::endl;
@@ -201,24 +203,35 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-        std::vector <Message *> args = ft::Server::splitMessage(buf, '\n', fds[i].fd);
-        for (size_t k = 0; k < args.size(); k++)
-        {
-            this->clients[i - 1]->setMsgSend(args[k]);
-            std::map<std::string, Command *>::iterator it;
-            if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
-            {
-                Command *cmd = it->second;
-                cmd->setClient(this->clients[i - 1]);
-                cmd->setServer(this);
-                cmd->setMessage(args[k]);
-                cmd->execute();
-            }
-            else
-            {
-                this->clients[i - 1]->sendReply("ERROR :Unknown command\r \n");
-            }
-        }
+		std::string buff = buf;
+		if (!strchr(buf, '\n'))
+		{
+			storage += buff;
+		}
+		else
+		{
+			storage += buff;
+			// std::cout << "/" << storage << std::endl;
+			std::vector <Message *> args = ft::Server::splitMessage(storage, '\n', fds[i].fd);
+			for (size_t k = 0; k < args.size(); k++)
+			{
+			    this->clients[i - 1]->setMsgSend(args[k]);
+			    std::map<std::string, Command *>::iterator it;
+			    if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
+			    {
+			        Command *cmd = it->second;
+			        cmd->setClient(this->clients[i - 1]);
+			        cmd->setServer(this);
+			        cmd->setMessage(args[k]);
+			        cmd->execute();
+			    }
+			    else
+			    {
+			        this->clients[i - 1]->sendReply("ERROR :Unknown command\r \n");
+			    }
+			}
+			storage = "";
+		}
     }
 }
 

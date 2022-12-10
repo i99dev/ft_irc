@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 23:44:59 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/11 02:23:12 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ namespace ft
         std::string const password;
         int master_fd;     // file descriptor
         int master_socket; // new socket
+		std::string storage;
 
     public:
         Server(std::string const &port, std::string const &password);
