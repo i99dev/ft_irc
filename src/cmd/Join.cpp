@@ -96,7 +96,7 @@ void ft::Join::execute()
 	        {
 				flag = 1;
 				if (channels[i]->isCHModeSet('i')){
-					for (int y = 0; y < _client->invites.size(); y++){
+					for (int y = 0; y < int(_client->invites.size()); y++){
 						if (_client->invites[y] == channelName){
 							ok = true;
 						}
