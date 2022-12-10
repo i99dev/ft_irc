@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/09 20:23:01 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/10 12:56:07 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "../incl/cmd/Part.hpp"
 #include "../incl/cmd/Kick.hpp"
 #include "../incl/cmd/Notice.hpp"
+#include "../incl/cmd/Topic.hpp"
 
 
 
@@ -234,6 +235,7 @@ void ft::Server::init_commands(void)
     _commands["PRIVMSG"] = new ft::Privmsg();
     _commands["NOTICE"] = new ft::Notice();
     _commands["INVITE"] = new ft::Invite();
+    _commands["TOPIC"] = new ft::Topic();
 
 }
 
