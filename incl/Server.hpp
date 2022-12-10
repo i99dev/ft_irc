@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/05 01:47:02 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/10 17:16:46 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ namespace ft
         std::string const password;
         int master_fd;     // file descriptor
         int master_socket; // new socket
+		std::string storage;
 
     public:
         Server(std::string const &port, std::string const &password);
