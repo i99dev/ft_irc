@@ -147,6 +147,9 @@ void ft::Join::execute()
 		    // send message to client
 		    std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channel->getChName();
 		    _client->sendReply(joinMsg);
+			std::cout << "3 channel name " << channel->getChName() << std::endl;
+			std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic());
+		    _client->sendReply(topicMsg);
 		}
 	}
 }

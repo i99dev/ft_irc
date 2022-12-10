@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/05 05:51:56 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:18:22 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ namespace ft
 			int								removeMemberMode(Client *user, char mode);
 			void							setPassword(std::string &password);
 			void							setTopic(std::string &topic);
+			void							setTopic(int num);
 			ft::Channel_Mode				findMode(char mode);
 			bool							isCHModeSet(char mode);
 			bool							isMEModeSet(Client *user, char mode);

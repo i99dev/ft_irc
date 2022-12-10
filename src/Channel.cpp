@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/07 11:34:01 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:17:51 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ ft::Channel::Channel(Client *user, std::string &name)
 	this->members.push_back(creator);
 	this->_created_at = time(0);
 	this->_limit = 0;
-	this->_topic = "SET TOPIC";
+	this->_topic = "";
 	std::cout << "created channel:" << _name << std::endl;
 }
 
@@ -227,6 +227,12 @@ void	ft::Channel::setPassword(std::string &password)
 void	ft::Channel::setTopic(std::string &topic)
 {
 	this->_topic = topic;
+}
+
+void	ft::Channel::setTopic(int num)
+{
+	if (num == 0)
+		this->_topic = "";
 }
 
 bool	ft::Channel::isCHModeSet(char mode)
