@@ -77,6 +77,7 @@ void ft::Join::execute()
 
 	for (int i = 0; i < Count; i++){
 		flag = 0;
+		bool ok = false;
 	    // get channel name from message
 	    std::string channelName = chName[i];
 	    // get channel key from message
@@ -93,7 +94,18 @@ void ft::Join::execute()
 	    {
 	        if (channels[i]->getChName() == channelName)
 	        {
-						flag = 1;
+				flag = 1;
+				if (channels[i]->isCHModeSet('i')){
+					for (int y = 0; y < _client->invites.size(); y++){
+						if (_client->invites[y] == channelName){
+							ok = true;
+						}
+					}
+					if (!ok){
+						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+i) - invite only");
+						return ;
+					}
+				}
 	            // check if channel has a key
 	            if (channels[i]->getpassword() != "")
 	            {
