@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 13:58:06 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/11 01:44:14 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +25,30 @@ void    ft::Part::execute(){
 	std::string msg = "";
 	if (_message->getParameter()[1].size() > 1)
 		msg = _message->getParameter()[1];
-	int j = 0;
-	int size = 0;
-	int start = 0;
-	char *s;
 	std::vector<std::string> channels;
-	int count = 1;
-	// loop to get number of channels to part
-	for(int i = 0; i < int(cmd.size()); i++){
-		if (cmd[i] == ',')
-			count++;
-	}
-	if (count == 1)
-		channels.push_back(cmd);
-	else{
-		// loop to store each channel in the vector
-		for(int i = 0; i < count; i++){
-			size = 0;
-			if (cmd[j] != ',' && cmd[j])
-				start = j;
-			while(j < int(cmd.size())){
-				if (cmd[j] == ',')
-					break ;
-				j++;
-				size++;
-			}
-			s = new char[size + 1];
-			cmd.copy(s, size, start);
-			s[size] = 0;
-			channels.push_back(std::string(s));
-			delete [] s;
-			j++;
+	std::string s;
+	int i = 0;
+	while(_message->getParameter()[0][i] != '\0')
+	{
+		if(_message->getParameter()[0][i] != ',')
+		{
+			s += _message->getParameter()[0][i];   // append the char array to the temp string
 		}
+		else{
+			channels.push_back(s);
+			s.clear();
+		}
+		i++;
+ 
 	}
+	channels.push_back(s);
+	i = 0;
 	int flag = 0;
 	int flag2 = 0;
 
 
 	// loop across channels to part or incase of error return a msg
-	for (int i = 0; i < count; i++){
+	for (int i = 0; i < int(channels.size()); i++){
 		flag = 0; // to check if channel exists or not
 		flag2 = 0; // to check if user is in that channel or not
 	    // get channel name from message

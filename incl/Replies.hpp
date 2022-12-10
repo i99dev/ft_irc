@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Replies.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 08:01:37 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/11 00:11:15 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@
 #define RPL_WHOISSPECIAL 320
 #define RPL_LISTSTART(servername, nick) \
 	":" + servername + " 321 " + nick + " Channel :Users Name\n"
-#define RPL_LIST(servername, nick, channel, users, topic) \
-	":" + servername + " 322 " + nick + " " + channel + " " + users + " :" + topic + "\n"
+#define RPL_LIST(servername, nick, channel, users, mode, topic) \
+	":" + servername + " 322 " + nick + " " + channel + " " + users + " " + mode + " :" + topic + "\n"
 #define RPL_LISTEND(servername, nick) \
 	":" + servername + " 323 " + nick + " :End of /LIST\n"
 #define RPL_CHANNELMODEIS(servername, nick, channel, modes) \

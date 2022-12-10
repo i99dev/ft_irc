@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 10:23:58 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:50:18 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include "../incl/cmd/Kick.hpp"
 #include "../incl/cmd/Notice.hpp"
 #include "../incl/cmd/Topic.hpp"
+#include "../incl/cmd/List.hpp"
 
 
 
@@ -134,7 +135,7 @@ void ft::Server::createPoll()
                 }
             }
         }
-		VALGRIND_DO_LEAK_CHECK ;
+		// VALGRIND_DO_LEAK_CHECK ;
     }
 }
 
@@ -237,6 +238,7 @@ void ft::Server::init_commands(void)
     _commands["NOTICE"] = new ft::Notice();
     _commands["INVITE"] = new ft::Invite();
     _commands["TOPIC"] = new ft::Topic();
+    _commands["LIST"] = new ft::List();
 
 }
 

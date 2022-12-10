@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/09 08:53:47 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/11 01:41:48 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,27 @@ ft::Kick::Kick(void)
 void ft::Kick::execute(){
 	if (_client->getNickName() == _message->getParameter()[1])
 		return;
-	int Count = 1;
-	char *s;
-	std::string cmd = _message->getParameter()[0];
 	std::vector<std::string> chName; // to store all channel names
 
-	int j = 0;
-	int size = 0;
-	int start = 0;
-	// count the number of channels written in one command
-	for(int i = 0; i < int(cmd.size()); i++){
-		if (cmd[i] == ',')
-			Count++;
-	}
 	// loop to get all the channel names one by one
-	for(int i = 0; i < Count; i++){
-		size = 0;
-		if (cmd[j] != ',' && cmd[j])
-			start = j;
-		while(j < int(cmd.size())){
-			if (cmd[j] == ',')
-				break ;
-			j++;
-			size++;
+	std::string s;
+	int i = 0;
+	while(_message->getParameter()[0][i] != '\0')
+	{
+		if(_message->getParameter()[0][i] != ',')
+		{
+			s += _message->getParameter()[0][i];   // append the char array to the temp string
 		}
-		s = new char[size + 1];
-		cmd.copy(s, size, start);
-		s[size] = 0;
-		chName.push_back(std::string(s));
-		delete [] s;
-		j++;
+		else{
+			chName.push_back(s);
+			s.clear();
+		}
+		i++;
+ 
 	}
+	chName.push_back(s);
+	i = 0;
+
 	bool ok = false;
 
 	ft::Client *target;
@@ -67,7 +57,7 @@ void ft::Kick::execute(){
 		return ;
 	}
 
-	for (int i = 0; i < Count; i++){
+	for (int i = 0; i < int(chName.size()); i++){
 		ok = false;
 		for (int j = 0; j < int(_server->channels.size()); j++){
 			if (_server->channels[j]->getChName() == chName[i]){ // to check if channel exists and get the channel
