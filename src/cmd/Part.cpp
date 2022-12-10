@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 11:47:08 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/10 13:58:06 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,27 @@ void    ft::Part::execute(){
 		if (cmd[i] == ',')
 			count++;
 	}
-	// loop to store each channel in the vector
-	for(int i = 0; i < count; i++){
-		size = 0;
-		if (cmd[j] != ',' && cmd[j])
-			start = j;
-		while(j < int(cmd.size())){
-			if (cmd[j] == ',')
-				break ;
+	if (count == 1)
+		channels.push_back(cmd);
+	else{
+		// loop to store each channel in the vector
+		for(int i = 0; i < count; i++){
+			size = 0;
+			if (cmd[j] != ',' && cmd[j])
+				start = j;
+			while(j < int(cmd.size())){
+				if (cmd[j] == ',')
+					break ;
+				j++;
+				size++;
+			}
+			s = new char[size + 1];
+			cmd.copy(s, size, start);
+			s[size] = 0;
+			channels.push_back(std::string(s));
+			delete [] s;
 			j++;
-			size++;
 		}
-		s = new char[size + 1];
-		cmd.copy(s, size, start);
-		s[size] = 0;
-		channels.push_back(std::string(s));
-		delete [] s;
-		j++;
 	}
 	int flag = 0;
 	int flag2 = 0;
