@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/11 12:52:03 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/11 13:17:13 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void    ft::List::execute(){
 	_client->sendReply(RPL_LISTSTART(_server->getServerName(), _client->getNickName()));
 	if (_message->getParameter().size() == 0){
 		for (int i = 0; i < int(_server->channels.size()); i++){
-			_client->sendReply(RPL_LIST(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName(), std::to_string(_server->channels[i]->getUsers().size()), _server->channels[i]->getCHMode(), _server->channels[i]->getTopic()));
+			std::stringstream s;
+			std::string ss = "";
+			s << _server->channels[i]->getUsers().size();
+			s >> ss;
+			_client->sendReply(RPL_LIST(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName(), ss, _server->channels[i]->getCHMode(), _server->channels[i]->getTopic()));
 		}
 	}
 	else{
