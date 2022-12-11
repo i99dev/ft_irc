@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/10 17:17:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/11 02:23:22 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
 #include "../incl/cmd/Nick.hpp"
+#include "../incl/cmd/Invite.hpp"
 #include "../incl/cmd/Whois.hpp"
+#include "../incl/cmd/Who.hpp"
 #include "../incl/cmd/Cap.hpp"
 #include "../incl/cmd/Mode.hpp"
 #include "../incl/cmd/Ping.hpp"
 #include "../incl/cmd/PrivMsg.hpp"
 #include "../incl/cmd/Part.hpp"
+#include "../incl/cmd/Kick.hpp"
 #include "../incl/cmd/Notice.hpp"
 #include "../incl/cmd/Topic.hpp"
+#include "../incl/cmd/List.hpp"
 
 std::string storage = "";
 
@@ -133,6 +137,7 @@ void ft::Server::createPoll()
                 }
             }
         }
+		// VALGRIND_DO_LEAK_CHECK ;
     }
 }
 
@@ -235,14 +240,18 @@ void ft::Server::init_commands(void)
     _commands["JOIN"] = new ft::Join();
     _commands["USER"] = new ft::User();
     _commands["NICK"] = new ft::Nick();
+    _commands["KICK"] = new ft::Kick();
     _commands["WHOIS"] = new ft::Whois();
+    _commands["WHO"] = new ft::Who();
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();
     _commands["PART"] = new ft::Part();
     _commands["PRIVMSG"] = new ft::Privmsg();
     _commands["NOTICE"] = new ft::Notice();
+    _commands["INVITE"] = new ft::Invite();
     _commands["TOPIC"] = new ft::Topic();
+    _commands["LIST"] = new ft::List();
 
 }
 

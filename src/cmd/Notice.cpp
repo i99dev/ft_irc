@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/01 14:53:19 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/08 15:12:20 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void ft::Notice::execute(){
 	std::string target = _message->getParameter()[0];
 	std::string msg = _message->getParameter()[1];
 	std::string joinMsg = "";
+	bool ok = false;
 	int flag = 0;
 
 	for (int i = 0; i < int(_server->channels.size()); i++){
@@ -31,19 +32,29 @@ void ft::Notice::execute(){
 			std::vector<Client *>::iterator it2 = clients.begin();
 			for (; it2 != clients.end(); it2++)
 			{
-				joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-				(*it2)->sendReply(joinMsg);
+				if ((*it2)->getNickName() == _client->getNickName() && !ok){
+					ok = true;
+					it2 = clients.begin();
+				}
+				if (ok){
+					joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
+					(*it2)->sendReply(joinMsg);
+				}
 			}
 		}
 	}
 	for (int i = 0; i < int(_server->clients.size()); i++){
 		if (_server->clients[i]->getNickName() == target){
-			flag = 1;
 			joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;;
 			_server->clients[i]->sendReply(joinMsg);
+			return ;
 		}
 	}
 	if (flag == 0){
 		_client->sendReply(ERR_NOSUCHNICK(_server->getServerName(), target));
+		return ;
+	}
+	if (!ok){
+		_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), _message->getParameter()[0]));
 	}
 }

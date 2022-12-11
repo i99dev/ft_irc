@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
+#    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/08 07:45:33 by aaljaber         ###   ########.fr        #
+#    Updated: 2022/12/10 23:50:51 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,15 @@ SRC =	main.cpp \
 		./src/cmd/PrivMsg.cpp \
 		./src/cmd/Cap.cpp \
 		./src/cmd/Whois.cpp \
+		./src/cmd/Who.cpp \
 		./src/cmd/Mode.cpp \
 		./src/cmd/Ping.cpp \
 		./src/cmd/Part.cpp \
+		./src/cmd/Kick.cpp \
 		./src/cmd/Notice.cpp \
-		./src/cmd/Topic.cpp
+		./src/cmd/Invite.cpp \
+		./src/cmd/Topic.cpp \
+		./src/cmd/List.cpp
 
 
 OBJ_DIR = obj
