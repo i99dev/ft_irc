@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/13 07:23:11 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/13 16:04:21 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,215 @@ void ft::Bot::generateNickName(){
 	this->_nickname = nickName;
 }
 
+void ft::Bot::getMsgRecv(int start){
+	this->msgRecv = "";
+	std::string tmp = "";
+	while (this->msg[start] != ':' && this->msg[start])
+		start++;
+	if (this->msg[start] == ':'){
+		start++;
+		while (this->msg[start] != '\n' && this->msg[start])
+		{
+			this->msgRecv += this->msg[start];
+			start++;
+		}
+	}
+	for (int i = 0; i < int(this->msgRecv.size()); i++){
+		tmp += tolower(this->msgRecv[i]);
+	}
+	this->msgRecv = tmp;
+	std::cout << "____" << this->msgRecv << "____" << std::endl;
+}
+
+bool help(std::string msgRecv){
+	if (msgRecv.find("help") != std::string::npos ||
+		msgRecv.find("Help") != std::string::npos)
+		return true;
+	return false;
+}
+
+bool commands(std::string msgRecv){
+	if ((msgRecv.find("commands") != std::string::npos && (msgRecv.find("tell") != std::string::npos || msgRecv.find("available") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool greeting(std::string msgRecv){
+	if (msgRecv.find("hello") != std::string::npos ||
+		msgRecv.find("hey") != std::string::npos ||
+		msgRecv.find("hi") != std::string::npos)
+		return true;
+	return false;
+}
+
+bool syntaxUser(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("user") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxNick(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("nick") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxPing(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("ping") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxQuit(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("quit") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxKill(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("kill") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxJoin(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("join") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxPart(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("part") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxPrivmsg(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("privmsg") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxNotice(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("notice") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxInvite(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("invite") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxKick(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("kick") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxTopic(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("topic") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxMode(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("mode") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxWhois(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("whois") != std::string::npos)))
+		return true;
+	return false;
+}
+
+bool syntaxList(std::string msgRecv){
+	if ((msgRecv.find("syntax") != std::string::npos && (msgRecv.find("list") != std::string::npos)))
+		return true;
+	return false;
+}
+
 void ft::Bot::reply(){
+	this->toSend = "";
+	this->toSend += format;
+	if (greeting(this->msgRecv))
+		this->toSend += WLCM;
+	if (help(this->msgRecv))
+		this->toSend += HELP(this->format);
+	if (commands(this->msgRecv))
+		this->toSend += CMDLIST(this->format);
+	while (1){
+		int i = 0;
+		if(syntaxUser(this->msgRecv) && i < 3){
+			this->toSend += USER(this->format);
+			i++;
+		}
+		if (syntaxNick(this->msgRecv) && i < 3){
+			this->toSend += NICK(this->format);
+			i++;
+		}
+		if (syntaxPing(this->msgRecv) && i < 3){
+			this->toSend += PING(this->format);
+			i++;
+		}
+		if (syntaxQuit(this->msgRecv) && i < 3){
+			this->toSend += QUIT(this->format);
+			i++;
+		}
+		if (syntaxKill(this->msgRecv) && i < 3){
+			this->toSend += KILL(this->format);
+			i++;
+		}
+		if (syntaxJoin(this->msgRecv) && i < 3){
+			this->toSend += JOIN(this->format);
+			i++;
+		}
+		if (syntaxPart(this->msgRecv) && i < 3){
+			this->toSend += PART(this->format);
+			i++;
+		}
+		if (syntaxPrivmsg(this->msgRecv) && i < 3){
+			this->toSend += PRIVMSG(this->format);
+			i++;
+		}
+		if (syntaxNotice(this->msgRecv) && i < 3){
+			this->toSend += NOTICE(this->format);
+			i++;
+		}
+		if (syntaxInvite(this->msgRecv) && i < 3){
+			this->toSend += INVITE(this->format);
+			i++;
+		}
+		if (syntaxKick(this->msgRecv) && i < 3){
+			this->toSend += KICK(this->format);
+			i++;
+		}
+		if (syntaxTopic(this->msgRecv) && i < 3){
+			this->toSend += TOPIC(this->format);
+			i++;
+		}
+		if (syntaxMode(this->msgRecv) && i < 3){
+			this->toSend += MODE(this->format);
+			i++;
+		}
+		if (syntaxWhois(this->msgRecv) && i < 3){
+			this->toSend += WHOIS(this->format);
+			i++;
+		}
+		if (syntaxList(this->msgRecv) && i < 3){
+			this->toSend += LIST(this->format);
+			i++;
+		}
+		break ;
+	}
+	this->toSend += "\r";
+	sendToServer(this->toSend);
+}
+
+void ft::Bot::getSender(){
 	std::string checker = "";
 	int i = 0;
 	int j = 1;
@@ -100,20 +308,29 @@ void ft::Bot::reply(){
 		j++;
 	}
 	std::cout << "____" << this->sender << "____" << std::endl;
-	sendToServer("NOTICE " + this->sender + " :hello! how can I help you?");
 }
 
 void ft::Bot::loop(){
+	int i = 0;
 	while (1){
 		this->msg = receiveFromServer();
-		if (this->msg.size() > 1 && this->msg.find("NOTICE") != std::string::npos)
+		if (this->msg.size() > 1 && ((i = this->msg.find("NOTICE") != std::string::npos) || (i = this->msg.find("PRIVMSG") != std::string::npos))){
+			getSender();
+			if (this->msg.find("NOTICE") != std::string::npos)
+				this->format = "NOTICE " + this->sender + " :";
+			else
+				this->format = "PRIVMSG " + this->sender + " :";
+			// sendToServer(format + "Hello\r");
+			getMsgRecv(i);
 			reply();
+		}
 		std::cout << this->msg << std::endl;
 	}
 }
 
 void ft::Bot::doProcess(){
 	this->msg = "";
+	this->msgRecv = "";
 	sendToServer("CAP LS\r");
 	generateNickName();
 	sendToServer("USER " + this->_nickname + " " + this->_nickname + " 127.0.0.1 :bot\r");
