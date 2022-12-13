@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/13 16:04:21 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/13 21:49:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ void ft::Bot::getMsgRecv(int start){
 }
 
 bool help(std::string msgRecv){
-	if (msgRecv.find("help") != std::string::npos ||
-		msgRecv.find("Help") != std::string::npos)
+	if (msgRecv.find("help") != std::string::npos)
 		return true;
 	return false;
 }
@@ -212,6 +211,12 @@ bool syntaxList(std::string msgRecv){
 	return false;
 }
 
+bool syntaxJoke(std::string msgRecv){
+	if (msgRecv.find("joke") != std::string::npos)
+		return true;
+	return false;
+}
+
 void ft::Bot::reply(){
 	this->toSend = "";
 	this->toSend += format;
@@ -285,6 +290,8 @@ void ft::Bot::reply(){
 		}
 		break ;
 	}
+	if (syntaxJoke(this->msgRecv))
+		this->toSend += getJoke();
 	this->toSend += "\r";
 	sendToServer(this->toSend);
 }
@@ -320,7 +327,6 @@ void ft::Bot::loop(){
 				this->format = "NOTICE " + this->sender + " :";
 			else
 				this->format = "PRIVMSG " + this->sender + " :";
-			// sendToServer(format + "Hello\r");
 			getMsgRecv(i);
 			reply();
 		}
@@ -335,4 +341,9 @@ void ft::Bot::doProcess(){
 	generateNickName();
 	sendToServer("USER " + this->_nickname + " " + this->_nickname + " 127.0.0.1 :bot\r");
 	loop();
+}
+
+std::string ft::Bot::getJoke(){
+	std::srand(time(0));
+	return this->jokes[std::rand() % 105];
 }

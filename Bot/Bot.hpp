@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/13 16:04:12 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/13 21:44:23 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ namespace ft
 			std::string format;
 			int			sockfd;
 			char *		host;
+			static const int i = 105;
+			static std::string jokes[i];
 		public:
 			Bot(std::string, char *);
 			void		generateNickName();
@@ -67,8 +69,9 @@ namespace ft
 			void		sendToServer(std::string);
 			std::string receiveFromServer();
 			void		loop();
+			std::string getJoke();
 			~Bot();
 	};
-} 
+}
 
 #endif

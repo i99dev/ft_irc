@@ -6,11 +6,11 @@
 #    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/12 21:20:55 by isaad            ###   ########.fr        #
+#    Updated: 2022/12/13 21:51:33 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= Bot.cpp
+SRCS		= Bot.cpp jokes.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
