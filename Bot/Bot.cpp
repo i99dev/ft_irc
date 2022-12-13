@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/13 00:05:14 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/13 07:23:11 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ void ft::Bot::sendToServer(std::string msg){
 
 std::string ft::Bot::receiveFromServer(){
 	char recv_buffer[1024] = {0};
-	recv(sockfd, recv_buffer, sizeof(recv_buffer), 0);
+	if (recv(sockfd, recv_buffer, sizeof(recv_buffer), 0) <= 0){
+		std::cerr << "Error receiving message from the server" << std::endl;
+		close(this->sockfd);
+		exit(1);
+	}
 	return std::string(recv_buffer);
 }
 
@@ -77,18 +81,39 @@ void ft::Bot::generateNickName(){
 	this->_nickname = nickName;
 }
 
+void ft::Bot::reply(){
+	std::string checker = "";
+	int i = 0;
+	int j = 1;
+	this->sender = "";
+	checker += this->msg[0];
+	if (this->msg[0] == ':'){
+		checker += this->msg[1];
+		j++;
+		i++;
+	}
+	while (checker[i] != ' ' && checker[i] != '!' && checker[i])
+	{
+		this->sender += this->msg[i];
+		checker += this->msg[j];
+		i++;
+		j++;
+	}
+	std::cout << "____" << this->sender << "____" << std::endl;
+	sendToServer("NOTICE " + this->sender + " :hello! how can I help you?");
+}
+
 void ft::Bot::loop(){
-	std::string reply = "";
 	while (1){
-		reply = receiveFromServer();
-		std::cout << reply << std::endl;
-		if (reply.find("PING") != std::string::npos){
-			sendToServer("PONG " + reply.substr(5) + "\r");
-		}
+		this->msg = receiveFromServer();
+		if (this->msg.size() > 1 && this->msg.find("NOTICE") != std::string::npos)
+			reply();
+		std::cout << this->msg << std::endl;
 	}
 }
 
 void ft::Bot::doProcess(){
+	this->msg = "";
 	sendToServer("CAP LS\r");
 	generateNickName();
 	sendToServer("USER " + this->_nickname + " " + this->_nickname + " 127.0.0.1 :bot\r");

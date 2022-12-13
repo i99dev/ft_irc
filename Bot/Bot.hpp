@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/12 23:57:12 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/13 06:34:05 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ namespace ft
 		private:
 			std::string _nickname;
 			std::string	port;
+			std::string msg;
 			int			sockfd;
 			char *		host;
+			std::string	sender;
 		public:
 			Bot(std::string, char *);
 			void		generateNickName();
 			void		doProcess();
+			void		reply();
 			void		sendToServer(std::string);
 			std::string receiveFromServer();
 			void		loop();
