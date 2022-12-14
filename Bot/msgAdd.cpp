@@ -1,9 +1,100 @@
 #include "Bot.hpp"
 
+std::string create(std::string &msgRecv, std::string &toSend, std::string &sender){
+	int i = 0;
+	std::string tmp = "";
+	if ((msgRecv.find("create")) != std::string::npos){
+		i = msgRecv.find("create");
+		i += 6;
+		while (msgRecv[i] == ' ')
+			i++;
+		int j = 0;
+		if (msgRecv[i] != '#' && msgRecv[i] != '&'){
+			j++;
+			tmp += "#";
+		}
+		while (msgRecv[i] != ' ' && msgRecv[i]){
+			j++;
+			tmp += msgRecv[i++];
+		}
+		if (j <= 1)
+			return toSend;
+		return toSend + "JOIN " + tmp + "\r\n" + "INVITE " + sender + " " + tmp;
+	}
+	return toSend;
+}
+
+std::string shout(std::string &msgRecv, std::string &toSend, std::string &sender){
+	int i = 0;
+	(void)sender;
+	std::string tmp = "";
+	std::string tmp2 = "";
+	if ((msgRecv.find("shout")) != std::string::npos){
+		i = msgRecv.find("shout");
+		i += 5;
+		while (msgRecv[i] == ' ')
+			i++;
+		int j = 0;
+		while (msgRecv[i] != ' ' && msgRecv[i]){
+			j++;
+			tmp += msgRecv[i++];
+		}
+		if (j == 0)
+			return toSend;
+		while (msgRecv[i] == ' ')
+			i++;
+		j = 0;
+		while (msgRecv[i] != ';' && msgRecv[i]){
+			j++;
+			tmp2 += msgRecv[i++];
+		}
+		if (j == 0)
+			return toSend;
+		return toSend + "PRIVMSG " + tmp + " :" + tmp2;
+	}
+	return toSend;
+}
+
+std::string invite(std::string &msgRecv, std::string &toSend, std::string &sender){
+	int i = 0;
+	(void)sender;
+	std::string tmp = "";
+	std::string tmp2 = "";
+	if ((msgRecv.find("invite")) != std::string::npos){
+		i = msgRecv.find("invite");
+		i += 6;
+		while (msgRecv[i] == ' ')
+			i++;
+		int j = 0;
+		while (msgRecv[i] != ' ' && msgRecv[i]){
+			j++;
+			tmp += msgRecv[i++];
+		}
+		if (j == 0)
+			return toSend;
+		while (msgRecv[i] == ' ')
+			i++;
+		j = 0;
+		while (msgRecv[i] != ' ' && msgRecv[i]){
+			j++;
+			tmp2 += msgRecv[i++];
+		}
+		if (j == 0)
+			return toSend;
+		return toSend + "INVITE " + tmp + " " + tmp2;
+	}
+	return toSend;
+}
 
 std::string help(std::string &msgRecv, std::string &toSend, std::string &format){
 	if (msgRecv.find("help") != std::string::npos)
 		return toSend + HELP(format);
+	return toSend;
+}
+
+std::string ehelp(std::string &msgRecv, std::string &toSend, std::string &format){
+	if (msgRecv.find("ehelp") != std::string::npos)
+		return toSend + EHELP(format);
 	return toSend;
 }
 

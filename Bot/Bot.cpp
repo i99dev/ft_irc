@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/14 04:52:00 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/14 06:34:11 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,16 @@ void ft::Bot::reply(){
 	int j = 0;
 	this->toSend = "";
 	std::string tmp = "";
+	for (int i = 0; i < int(ctrl.size()); i++){
+		tmp = this->toSend;
+		if (j < 5)
+			this->toSend = ctrl[i](this->msgRecv, this->toSend, this->sender);
+		if (tmp != this->toSend){
+			this->toSend += "\r\n";
+			j++;
+		}
+	}
+	tmp = "";
 	for (int i = 0; i < int(func.size()); i++){
 		tmp = this->toSend;
 		if (j < 5)
@@ -168,8 +178,15 @@ void ft::Bot::loop(){
 	}
 }
 
+void ft::Bot::initCtrl(){
+	ctrl.push_back(create);
+	ctrl.push_back(invite);
+	ctrl.push_back(shout);
+}
+
 void ft::Bot::initFunc(){
 	func.push_back(help);
+	func.push_back(ehelp);
 	func.push_back(commands);
 	func.push_back(greeting);
 	func.push_back(syntaxUser);
@@ -193,6 +210,7 @@ void ft::Bot::doProcess(){
 	this->msg = "";
 	this->msgRecv = "";
 	initFunc();
+	initCtrl();
 	sendToServer("CAP LS\r\n");
 	generateNickName();
 	sendToServer("USER " + this->_nickname + " " + this->_nickname + " 127.0.0.1 :bot\r\n");
