@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 02:56:26 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/15 03:16:30 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,17 @@ void ft::Join::execute()
 		{
 			if (channels[i]->getChName() == channelName)
 			{
+				int gg = 0;
 				flag = 1;
 				for (int j = 0; j < int(channels[i]->getUsers().size()); j++){
 					if (channels[i]->getUsers()[j]->getNickName() == _client->getNickName()){
 						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
-						return ;
+						gg = 1;
+						break ;
 					}
+				}
+				if (gg == 1){
+					break ;
 				}
 				if (channels[i]->isCHModeSet('i')){
 					for (int y = 0; y < int(_client->invites.size()); y++){
