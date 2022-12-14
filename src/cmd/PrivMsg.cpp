@@ -7,6 +7,11 @@ ft::Privmsg::Privmsg(){
 }
 
 void	ft::Privmsg::execute(){
+	if (_message->getParameter().size() != 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	// _server->channels[0]->isMEModeSet()
 	if (_message->is_mask())
 	{

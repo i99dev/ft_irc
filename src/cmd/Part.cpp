@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/11 01:44:14 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/15 00:20:47 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ ft::Part::Part(void)
 }
 
 void    ft::Part::execute(){
+	if (_message->getParameter().size() != 1)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	std::string cmd = _message->getParameter()[0];
 	std::string msg = "";
 	if (_message->getParameter()[1].size() > 1)

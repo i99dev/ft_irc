@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/02 08:46:00 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/15 00:28:09 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ ft::User::User()
 
 void ft::User::execute()
 {
+    if (_message->getParameter().size() != 4)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
     _client->setUserName(_message->getParameter()[0]);
     _client->setHostName(_message->getParameter()[1]);
     _client->setServerName(_message->getParameter()[2]);

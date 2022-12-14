@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/11 01:41:48 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/15 00:27:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ ft::Kick::Kick(void)
 }
 
 void ft::Kick::execute(){
+	if (_message->getParameter().size() > 3 || _message->getParameter().size() < 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	if (_client->getNickName() == _message->getParameter()[1])
 		return;
 	std::vector<std::string> chName; // to store all channel names
