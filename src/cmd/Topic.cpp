@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/10 08:43:30 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/15 02:51:30 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ TODO: check if the client need to be a member to check the TOPIC
 */
 void	ft::Topic::execute(void)
 {
+	if (_message->getParameter().size() < 1 || _message->getParameter().size() > 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	std::cout << "topic executed" << std::endl;
 	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 	if (!channel)
