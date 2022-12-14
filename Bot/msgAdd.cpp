@@ -35,6 +35,8 @@ std::string shout(std::string &msgRecv, std::string &toSend, std::string &sender
 		while (msgRecv[i] == ' ')
 			i++;
 		int j = 0;
+		if (msgRecv[i] != '#' && msgRecv[i] != '&')
+			return toSend;
 		while (msgRecv[i] != ' ' && msgRecv[i]){
 			j++;
 			tmp += msgRecv[i++];
