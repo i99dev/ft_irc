@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/14 04:40:31 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/14 04:52:00 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,8 @@ void ft::Bot::reply(){
 	std::string tmp = "";
 	for (int i = 0; i < int(func.size()); i++){
 		tmp = this->toSend;
-		if (j < 5){
+		if (j < 5)
 			this->toSend = func[i](this->msgRecv, this->toSend, this->format);
-		}
 		if (tmp != this->toSend){
 			this->toSend += "\r\n";
 			j++;
@@ -124,7 +123,10 @@ void ft::Bot::reply(){
 	}
 	if (syntaxJoke(this->msgRecv)){
 		this->toSend += getJoke();
+		j++;
 	}
+	if (j == 0)
+		this->toSend += DEFAULT(this->format) + "\r\n";
 	sendToServer(this->toSend);
 }
 

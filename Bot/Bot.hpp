@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/14 04:20:39 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/14 04:47:12 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #define WLCM(format) format + "Hello! how you doing?"
 #define HELP(format) format + "if you want to know the commands available, type commands available or tell commands! If you want the syntax with the description for the commands include the word syntax with the name of the command! NOTE: up to 3 commands at once only"
 #define CMDLIST(format) format + "sure! USER-NICK-PING-PONG-QUIT-KILL-JOIN-PART-PRIVMSG-NOTICE-INVITE-KICK-MODE-WHOIS-LIST"
-
+#define DEFAULT(format) format + "I'm sorry, I don't understand what you mean. Type help to see the commands available"
 #define USER(format) format + "USER->Used to identify the user to the server and provide additional information about the user. This command is typically used when connecting to an IRC server for the first time. Syntax is /user <username> <hostname> <servername> <realname>"
 #define NICK(format) format + "NICK->used to set or change a user's nickname. This command allows users to identify themselves on the network. Syntax is /nick [new_nickname]"
 #define PING(format) format + "PING->used to check if the client is still connected to the server. Syntax is /ping <server>"
