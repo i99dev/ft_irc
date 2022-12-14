@@ -62,7 +62,7 @@ void ft::Join::execute()
 	for (int i = 0; i < int(chName.size()); i++){
 		if (chName[i][0] != '#' && chName[i][0] != '&'){
 			_client->sendReply(":" + _server->getServerName() + " 403 " + _client->getNickName() + " " + chName[i] + " :Bad channel name\n");
-			return ;
+			continue ;
 		}
 		flag = 0;
 		bool ok = false;
