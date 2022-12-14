@@ -9,6 +9,11 @@ ft::Join::Join(void)
 
 void ft::Join::execute()
 {
+	if (_message->getParameter().size() > 2 || _message->getParameter().size() < 1)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	int flag = 0;
 		// get channel ;ist from server
 	std::vector<Channel *> channels = _server->getChannels();
@@ -55,6 +60,10 @@ void ft::Join::execute()
 	}
 
 	for (int i = 0; i < int(chName.size()); i++){
+		if (chName[i][0] != '#' && chName[i][0] != '&'){
+			_client->sendReply(":" + _server->getServerName() + " 403 " + _client->getNickName() + " " + chName[i] + " :Bad channel name\n");
+			return ;
+		}
 		flag = 0;
 		bool ok = false;
 		// get channel name from message
@@ -68,12 +77,17 @@ void ft::Join::execute()
 			}
 		}
 		// check if channel exists
-		// std::vector<Channel *>::iterator it;
 		for (int i = 0; i < int(channels.size()); i++)
 		{
 			if (channels[i]->getChName() == channelName)
 			{
 				flag = 1;
+				for (int j = 0; j < int(channels[i]->getUsers().size()); j++){
+					if (channels[i]->getUsers()[j]->getNickName() == _client->getNickName()){
+						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
+						return ;
+					}
+				}
 				if (channels[i]->isCHModeSet('i')){
 					for (int y = 0; y < int(_client->invites.size()); y++){
 						if (_client->invites[y] == channelName){
