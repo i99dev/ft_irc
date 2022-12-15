@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/14 06:34:11 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/16 03:07:02 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void ft::Bot::getMsgRecv(int start){
 		tmp += tolower(this->msgRecv[i]);
 	}
 	this->msgRecv = tmp;
-	std::cout << "____" << this->msgRecv << "____" << std::endl;
 }
 
 bool syntaxJoke(std::string &msgRecv){
@@ -158,7 +157,15 @@ void ft::Bot::getSender(){
 		i++;
 		j++;
 	}
-	std::cout << "____" << this->sender << "____" << std::endl;
+}
+
+void ft::Bot::header(int i, std::string s){
+	std::string msg = "";
+	while (s[i] != ':' && s[i])
+		i++;
+	while (s[++i])
+		msg += s[i];
+	std::cout << "\033[0;32m" << msg << "\033[0;00m" << std::endl;
 }
 
 void ft::Bot::loop(){
@@ -174,7 +181,25 @@ void ft::Bot::loop(){
 			getMsgRecv(i);
 			reply();
 		}
-		std::cout << this->msg << std::endl;
+		if ((this->msg.find(" 004 ") != std::string::npos) || (this->msg.find(" 003 ") != std::string::npos) || (this->msg.find(" 002 ") != std::string::npos)){
+			std::string s = "";
+			std::string tmp = this->msg;
+			i = 0;
+			while(tmp[i] != '\0')
+			{
+				if(tmp[i] != '\n')
+				{
+					s += tmp[i];
+				}
+				else{
+					int j = 0;
+					if ((j = s.find(" 004 ") != std::string::npos) || (j = s.find(" 003 ") != std::string::npos) || (j = s.find(" 002 ") != std::string::npos))
+						header(j, s);
+					s.clear();
+				}
+				i++;
+			}
+		}
 	}
 }
 

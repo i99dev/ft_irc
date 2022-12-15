@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/14 06:31:05 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/16 02:26:51 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ namespace ft
 			void		sendToServer(std::string);
 			std::string receiveFromServer();
 			void		loop();
+			void		header(int, std::string);
 			void		initFunc();
 			void		initCtrl();
 			std::vector<std::string (*)(std::string&, std::string&, std::string&)> func;
