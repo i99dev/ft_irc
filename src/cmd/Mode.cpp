@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/07 11:47:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/15 02:47:52 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,11 @@ void	ft::Mode::checkCHModeCases(ft::Channel *channel)
 
 void	ft::Mode::ChannelMode(void)
 {
+	if (_message->getParameter().size() < 2 || _message->getParameter().size() > 5)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	// ? check if this channel is available
 	if (this->_server->isChannel(this->_message->getParameter()[0]))
 	{
@@ -237,6 +242,11 @@ void	ft::Mode::changeUSMode(void)
 */
 void	ft::Mode::UserMode(void)
 {
+	if (_message->getParameter().size() != 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	// ? mode command only applied on the same client
 	std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
 	if (this->_message->getParameter()[0] == this->_client->getNickName())

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PrivMsg.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
+/*   Updated: 2022/12/15 02:56:46 by isaad            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/cmd/PrivMsg.hpp"
 #include <iterator>
 ft::Privmsg::Privmsg(){
@@ -7,6 +19,11 @@ ft::Privmsg::Privmsg(){
 }
 
 void	ft::Privmsg::execute(){
+	if (_message->getParameter().size() != 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	// _server->channels[0]->isMEModeSet()
 	if (_message->is_mask())
 	{

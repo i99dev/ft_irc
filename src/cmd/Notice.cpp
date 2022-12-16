@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/08 15:12:20 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/15 00:24:05 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ ft::Notice::Notice(){
 }
 
 void ft::Notice::execute(){
+	if (_message->getParameter().size() != 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	std::string target = _message->getParameter()[0];
 	std::string msg = _message->getParameter()[1];
 	std::string joinMsg = "";

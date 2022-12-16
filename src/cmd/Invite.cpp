@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/09 21:04:57 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/15 00:27:36 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ ft::Invite::Invite()
 
 void ft::Invite::execute()
 {
+	if (_message->getParameter().size() != 2)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	bool ok = false;
 	ft::Channel *channel;
 	ft::Client *client;
