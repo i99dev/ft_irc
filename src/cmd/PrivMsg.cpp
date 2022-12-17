@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 02:56:46 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/17 14:46:02 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@ ft::Privmsg::Privmsg(){
 }
 
 void	ft::Privmsg::execute(){
+	WildCard *wildcard = new WildCard(_message->getParameter()[0]);
 	if (_message->getParameter().size() != 2)
 	{
 		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 		return;
 	}
 	// _server->channels[0]->isMEModeSet()
-	if (_message->is_mask())
+	if (wildcard->is_mask())
 	{
 		std::vector<ft::Client *>::iterator it = _server->clients.begin();
 		for (; it != _server->clients.end(); it++)
 		{
-			if (_message->match_client_mask(*it))
+			if (wildcard->match_client_mask(*it))
 			{
 				if((*it)->fd != _client->fd)
 				{

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 17:53:46 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/17 13:54:39 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-struct _mask
-{
-	std::string nick;
-	std::string user;
-	std::string host;
-	std::string wildcard; //use ex : general* or *general
-} typedef t_mask;
+#include "WildCard.hpp"
 
 /*
 ! used for message parsing
@@ -39,7 +33,6 @@ namespace ft
 			std::string 				_Prefix;
 			std::string 				_channel;
 			time_t						_time;
-			std::vector<t_mask *>		_masks;
 
 			//privet methods
 			void 		parseMessage(std::string const &msg);
@@ -57,11 +50,6 @@ namespace ft
 			bool 		isCommand();
 			bool 		isParameter();
 			bool 		isTrailing();
-			bool		is_wildCard(std::string const &str);
-			bool		match_wildCard(std::string const &str, std::string const &wildcard);
-			void		split_mask(std::string &str);
-			bool		is_mask();
-			bool		match_client_mask(ft::Client *client);
 	};
 }
 

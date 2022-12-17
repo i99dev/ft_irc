@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 18:02:19 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:40:42 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::map<size_t, std::string>::iterator ite = tokens.end();
 	std::string tmp;
 
+	
 	if (it->first == 0)
 	{
 		// if (it->second[0] == ':')
@@ -67,9 +68,6 @@ void ft::Message::parseMessage(std::string const &msg)
 			break;
 		}
 		//check wildcard
-		if (is_wildCard(it->second))
-			split_mask(it->second);
-		else
 		_Parameter.push_back(it->second);
 		it++;
 	}
@@ -126,122 +124,3 @@ bool ft::Message::isParameter(){
 	return true;
 }
 
-/**
- * @brief Check if the  parameter is a wildcard
-*/
-bool ft::Message::is_wildCard(std::string const &str){
-	if (str.find('*') != std::string::npos || str.find('?') != std::string::npos)
-		return true;
-	return false;
-}
-
-/**
- * @brief Check if the parameter match the wildcard
-*/
-bool ft::Message::match_wildCard(std::string const &str, std::string const &wildcard){
-	if (wildcard.find('*') != std::string::npos)
-	{
-		if (wildcard.find('*') == 0)
-		{
-			if (str.find(wildcard.substr(1)) != std::string::npos)
-				return true;
-		}
-		else if (wildcard.find('*') == wildcard.size() - 1)
-		{
-			if (str.find(wildcard.substr(0, wildcard.size() - 1)) != std::string::npos)
-				return true;
-		}
-		else
-		{
-			if (str.find(wildcard.substr(0, wildcard.find('*'))) != std::string::npos && str.find(wildcard.substr(wildcard.find('*') + 1)) != std::string::npos)
-				return true;
-		}
-	}
-	else if (wildcard.find('?') != std::string::npos)
-	{
-		if (wildcard.find('?') == 0)
-		{
-			if (str.find(wildcard.substr(1)) != std::string::npos)
-				return true;
-		}
-		else if (wildcard.find('?') == wildcard.size() - 1)
-		{
-			if (str.find(wildcard.substr(0, wildcard.size() - 1)) != std::string::npos)
-				return true;
-		}
-		else
-		{
-			if (str.find(wildcard.substr(0, wildcard.find('?'))) != std::string::npos && str.find(wildcard.substr(wildcard.find('?') + 1)) != std::string::npos)
-				return true;
-		}
-	}
-	return false;
-}
-
-void	ft::Message::split_mask(std::string &str)
-{
-	t_mask *mask;
-
-	mask = new t_mask;
-	if (str.find_first_of('!') != std::string::npos && str.find_last_of('@') != std::string::npos)
-	{
-		mask->nick = str.substr(0, str.find('!'));
-		mask->user = str.substr(str.find('!') + 1 , str.find('@') - 2);
-		mask->host = str.substr(str.find('@') + 1);
-		_masks.push_back(mask);
-		return;
-	}
-	else if (str.find_first_of('!')  != std::string::npos && str.find_last_not_of('@') != std::string::npos)
-	{
-		mask->nick = str.substr(0, str.find('!'));
-		mask->user = str.substr(str.find('!') + 1);
-		_masks.push_back(mask);
-		return;
-	}
-	else if (str.find_first_of('@') != std::string::npos)
-	{
-		mask->nick = str.substr(0, str.find('@'));
-		mask->host = str.substr(str.find('@') + 1);
-		_masks.push_back(mask);
-		return;
-	}
-	else if (str.find_first_of('*') != std::string::npos || str.find_first_of('?') != std::string::npos)
-	{
-		mask->wildcard = str;
-		_masks.push_back(mask);
-		return;
-	}
-	else
-	{
-		mask->nick = str;
-		_masks.push_back(mask);
-		return;
-	}
-}
-
-bool	ft::Message::is_mask(void)
-{
-	if (_masks.empty())
-		return false;
-	return true;
-}
-
-bool	ft::Message::match_client_mask(ft::Client *client)
-{
-	std::vector<t_mask *>::iterator it = _masks.begin();
-	std::vector<t_mask *>::iterator ite = _masks.end();
-
-	while (it != ite)
-	{
-		if ((*it)->nick != "" && (*it)->nick.size() > 1 && match_wildCard(client->getNickName(), (*it)->nick) == false)
-			return false;
-		if ((*it)->user != "" && (*it)->user.size() > 1 && match_wildCard(client->getUserName(), (*it)->user) == false)
-			return false;
-		if ((*it)->host != "" && (*it)->host.size() > 1 && match_wildCard(client->getHostName(), (*it)->host) == false)
-			return false;
-		if ((*it)->wildcard != "" && (*it)->wildcard.size() > 1 && !match_wildCard(client->getNickName(), (*it)->wildcard))
-			return false;
-		it++;
-	}
-	return true;
-}
