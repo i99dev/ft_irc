@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/17 14:02:10 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:40:42 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::map<size_t, std::string>::iterator it = tokens.begin();
 	std::map<size_t, std::string>::iterator ite = tokens.end();
 	std::string tmp;
-	WildCard wc = WildCard();
 
+	
 	if (it->first == 0)
 	{
 		// if (it->second[0] == ':')
@@ -68,9 +68,6 @@ void ft::Message::parseMessage(std::string const &msg)
 			break;
 		}
 		//check wildcard
-		if (wc.is_wildCard(it->second))
-			wc.WildCard::split_mask(it->second);
-		else
 		_Parameter.push_back(it->second);
 		it++;
 	}

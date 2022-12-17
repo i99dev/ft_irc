@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:40:30 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/17 14:03:34 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:45:02 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,25 @@ bool ft::WildCard::match_client_mask(ft::Client *client)
     return true;
 }
 
-ft::WildCard::WildCard(void)
+ft::WildCard::WildCard(std::string const &str)
 {
+    std::string tmp = str;
+    //check if the parameter is a mask
+    if (is_wildCard(str))
+    {
+        split_mask(tmp);
+    }
 }
+
 
 ft::WildCard::~WildCard(void)
 {
+    std::vector<t_mask *>::iterator it = _masks.begin();
+    std::vector<t_mask *>::iterator ite = _masks.end();
+
+    while (it != ite)
+    {
+        delete (*it);
+        it++;
+    }
 }

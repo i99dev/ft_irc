@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/17 14:01:28 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:46:02 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ ft::Privmsg::Privmsg(){
 }
 
 void	ft::Privmsg::execute(){
-	WildCard *wildcard = new WildCard();
+	WildCard *wildcard = new WildCard(_message->getParameter()[0]);
 	if (_message->getParameter().size() != 2)
 	{
 		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));

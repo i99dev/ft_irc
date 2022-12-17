@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:36:40 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/17 13:55:19 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:43:20 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ namespace ft
         std::vector<t_mask *> _masks;
 
     public:
-        WildCard();
+        WildCard(std::string const &str);
         ~WildCard();
         bool is_wildCard(std::string const &str);
         bool match_wildCard(std::string const &str, std::string const &wildcard);
-        void split_mask(std::string &str);
+        void split_mask(std::string  &str);
         bool is_mask();
         bool match_client_mask(ft::Client *client);
     };
