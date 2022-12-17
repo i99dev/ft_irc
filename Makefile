@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
+#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/10 23:50:51 by isaad            ###   ########.fr        #
+#    Updated: 2022/12/17 13:51:09 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC =	main.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
 		./src/Channel.cpp  \
+		./src/WildCard.cpp \
 		./src/cmd/Join.cpp \
 		./src/cmd/User.cpp \
 		./src/cmd/Nick.cpp \
@@ -41,7 +42,7 @@ SRC =	main.cpp \
 		./src/cmd/Notice.cpp \
 		./src/cmd/Invite.cpp \
 		./src/cmd/Topic.cpp \
-		./src/cmd/List.cpp
+		./src/cmd/List.cpp 
 
 
 OBJ_DIR = obj
