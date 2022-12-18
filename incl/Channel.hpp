@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 17:18:22 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/19 00:30:36 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ namespace ft
 			std::string							_topic;
 			int									_limit;
 			bool								_ChName_parse(std::string &name);
+			std::vector<ft::WildCard *>			_banList;
+			std::vector<ft::WildCard *>			_invitedList;
+			std::vector<ft::WildCard *>			_exceptionList;
 
 		public:
 

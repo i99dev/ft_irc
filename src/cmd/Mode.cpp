@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 02:47:52 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/19 01:59:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft::Mode::actionToChangeCHMode(char mode, std::string param, char action)
 	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 	if (action == SET)
 	{
-		if ((ft::ModeTools::isMEMode(mode) && !channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && !channel->isCHModeSet(mode)))
+		if ((ft::ModeTools::isMEMode(mode) && !channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && !channel->isCHModeSet(mode)) || (ft::ModeTools::isCHflag(mode)))
 		{
 			std::cout << "set the channel mode" << std::endl;
 			if (!channel->setChannelMode(mode, param))
@@ -72,7 +72,7 @@ void	ft::Mode::actionToChangeCHMode(char mode, std::string param, char action)
 	}
 	else if (action == REMOVE)
 	{
-		if ((ft::ModeTools::isMEMode(mode) && channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && channel->isCHModeSet(mode)))
+		if ((ft::ModeTools::isMEMode(mode) && channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && channel->isCHModeSet(mode)) || (ft::ModeTools::isCHflag(mode)))
 		{
 			std::cout << "remove the channel mode" << std::endl;
 			if (!channel->removeChannelMode(mode, param))
@@ -94,16 +94,16 @@ void	ft::Mode::changeCHMode(void)
 		// std::cout << "is channel mode " << ft::ModeTools::isCHMode(this->modes[MODE][i]) << std::endl;
 		// std::cout << "is member mode " << ft::ModeTools::isMEMode(this->modes[MODE][i]) << std::endl;
 		// std::cout << "is param mode " << ft::ModeTools::isParamMode(this->modes[MODE][i]) << std::endl;
-		if (!ft::ModeTools::isCHMode(this->modes[MODE][i]) && !ft::ModeTools::isMEMode(this->modes[MODE][i]))
+		if (!ft::ModeTools::isCHMode(this->modes[MODE][i]) && !ft::ModeTools::isMEMode(this->modes[MODE][i]) && !ft::ModeTools::isCHflag(this->modes[MODE][i]))
 		{
 			// ! ErrMsg unknown channel mode
 			std::string mode = "";
 			mode += this->modes[MODE][i];
 			std::string errmsg = ERR_UNKNOWNMODE(this->_server->getServerName(), this->_client->getNickName(), mode, _message->getParameter()[0]);
 			this->_client->sendReply(errmsg);
-			std::cout << "not a channel mode" << std::endl;
+			std::cout << this->modes[MODE][i] << " not a channel mode" << std::endl;
 		}
-		else if (ft::ModeTools::isParamMode(this->modes[MODE][i]) && this->modes[ACTION][i] == SET)
+		else if (ft::ModeTools::isParamMode(this->modes[MODE][i]) && (this->modes[MODE][i] != 'l' || this->modes[MODE][i] != 'k'))
 		{
 			/*
 				? this meant for modes that need param like (o, v, k, l)
@@ -117,7 +117,7 @@ void	ft::Mode::changeCHMode(void)
 				// ! ErrMsg more param needed for mode
 				std::string errmsg = ERR_NEEDMOREPARAMS(this->_server->getServerName(), this->_client->getNickName(), this->_message->getCommand());
 				this->_client->sendReply(errmsg);
-				std::cout << "errmsg NMP " << i << std::endl;
+				std::cout << this->modes[MODE][i] << " errmsg NMP " << i << std::endl;
 				continue ;
 			}
 			// std::cout << "get mode param " << i << std::endl;
@@ -125,12 +125,12 @@ void	ft::Mode::changeCHMode(void)
 			pM_count++;
 			// std::cout << "param " << param << std::endl;
 			actionToChangeCHMode(this->modes[MODE][i], param, this->modes[ACTION][i]);
-			std::cout << "a param CHMode" << std::endl;
+			std::cout << this->modes[MODE][i] << " a param CHMode" << std::endl;
 		}
 		else
 		{
 			actionToChangeCHMode(this->modes[MODE][i], "", this->modes[ACTION][i]);
-			std::cout << "not a param CHMode" << std::endl;
+			std::cout << this->modes[MODE][i] << " not a param CHMode" << std::endl;
 		}
 	}
 }
@@ -178,6 +178,7 @@ void	ft::Mode::ChannelMode(void)
 			std::cout << "action " << modes[0] << std::endl;
 			std::cout << "mode " << modes[1] << std::endl;
 			this->checkCHModeCases(channel);
+			std::cout << "the channel mode now is " << channel->getCHMode() << std::endl;
 		}
 	}
 	else

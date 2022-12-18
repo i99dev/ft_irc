@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 17:17:51 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/19 02:24:25 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,10 @@ void	ft::Channel::addUser(Client *user)
 int	ft::Channel::setChannelMode(char mode, std::string param)
 {
 	if (ft::ModeTools::isCHMode(mode))
+	{
+		std::cout << mode << " yes add the channel mode" << std::endl;
 		this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
+	}
 	if (mode == 'k')
 		setPassword(param);
 	else if (mode == 'l')
@@ -157,26 +160,73 @@ int	ft::Channel::setChannelMode(char mode, std::string param)
 		return (this->setMemberMode(this->getMember(param), 'o'));
 	else if (mode == 'v')
 		return (this->setMemberMode(this->getMember(param), 'v'));
+	else if (ft::ModeTools::isCHflag(mode))
+	{
+		WildCard *wildcard = new WildCard(param);
+		if (mode == 'I')
+		{
+			if (!this->isCHModeSet('i'))
+				this->_mode.push_back(ft::ModeTools::findChannelMode('i'));
+			this->_invitedList.push_back(wildcard);
+			std::cout << "set i into channel mode if it was I and i was not set" << std::endl;
+			std::cout << "add to the invited list" << std::endl;
+		}
+		else if (mode == 'b')
+		{
+			this->_banList.push_back(wildcard);
+			std::cout << "add to the ban list" << std::endl;
+		}
+		else if (mode == 'e')
+		{
+			this->_exceptionList.push_back(wildcard);
+			std::cout << "add to the exception list" << std::endl;
+		}
+	}
 	return (1);
 }
 
 int	ft::Channel::removeChannelMode(char mode, std::string param)
 {
-	for (long unsigned int i = 0; i < this->_mode.size(); i++)
+	if (ft::ModeTools::isCHMode(mode))
 	{
-		if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
+		for (long unsigned int i = 0; i < this->_mode.size(); i++)
 		{
-			this->_mode.erase(this->_mode.begin() + i);
-			if (mode == 'k')
-				_password = "";
-			else if (mode == 'l')
-				this->_limit = 0;
-			else if (mode == 'o')
-				return (this->removeMemberMode(this->getMember(param), 'o'));
-			else if (mode == 'v')
-				return (this->removeMemberMode(this->getMember(param), 'v'));
-			return (1);
+			if (this->_mode[i] == ft::ModeTools::findChannelMode(mode))
+			{
+				this->_mode.erase(this->_mode.begin() + i);
+				if (mode == 'k')
+					_password = "";
+				else if (mode == 'l')
+					this->_limit = 0;
+				else if (mode == 'i')
+				{
+					std::cout << "clear the invitation list" << std::endl;
+				}
+				return (1);
+			}
 		}
+	}
+	else if (ft::ModeTools::isMEMode(mode))
+	{
+		std::cout << mode << " yes it's a member mode" << std::endl;
+		if (mode == 'o')
+			return (this->removeMemberMode(this->getMember(param), 'o'));
+		else if (mode == 'v')
+			return (this->removeMemberMode(this->getMember(param), 'v'));
+		return (1);
+	}
+	else if (mode == 'I')
+	{
+		// std::cout << "delete i frm channel mode" << std::endl;
+		std::cout << "delete " << param << " from the invite list" << std::endl;
+	}
+	else if (mode == 'b')
+	{
+		std::cout << "delete " << param << " from the ban list" << std::endl;
+	}
+	else if (mode == 'e')
+	{
+		std::cout << "delete " << param << " from the exception list" << std::endl;
 	}
 	return (0);
 }

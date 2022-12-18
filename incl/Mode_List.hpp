@@ -6,15 +6,15 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/18 01:17:43 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/19 01:49:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MODE_LIST_HPP
 #define MODE_LIST_HPP
-#define	CHMODE_NUM 11
-#define CHMODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l', 'b', 'I', 'e'}
-#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_PASSWORD, ft::l_USER_LIMIT, ft::b_BAN_MASK, ft::I_INVITATION_MASK, ft::e_EXCEPTION_MASK}
+#define	CHMODE_NUM 14
+#define CHMODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'b', 'I', 'e', 'i', 'm', 'p', 't', 'k', 'l'}
+#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::b_BAN_MASK, ft::I_INVITATION_MASK, ft::e_EXCEPTION_MASK, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_PASSWORD, ft::l_USER_LIMIT}
 #define	USMODE_NUM 3
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
@@ -33,15 +33,15 @@ namespace ft
 		O_CHANNEL_CREATOR, // ? "channel creator" status (first join);
 		o_OPERATOR_PRIVILEGE, // ? give/take(+/-) operator privelege to a member;
 		v_VOICE_PRIVILEGE, // ? give/take(+/-) speak privelege to a member;
+		b_BAN_MASK, // ? to keep users out
+		I_INVITATION_MASK, // ? to automatically override the invite-only flag
+		e_EXCEPTION_MASK, // ? to override a ban mask
 		i_INVITE_ONLY_CHANNEL, //? invite-only channel flag;
 		m_MODERATED_CHANNEL, //? moderated channel (only operators and voice memebers speak) flag;
 		p_PRIVATE_CHANNEL, //? private channel (invited & correct password) flag;
 		t_TOPIC, // ? topic (only set by operators);
 		k_CAHNNEL_PASSWORD, //? set/remove(+/-) the channel key (password);
 		l_USER_LIMIT, //? set/remove(+/-) the user limit to channel;
-		b_BAN_MASK, // ? to keep users out
-		I_INVITATION_MASK, // ? to automatically override the invite-only flag
-		e_EXCEPTION_MASK, // ? to override a ban mask
 	};
 	enum User_Mode
 	{
@@ -56,6 +56,7 @@ namespace ft
 		bool						isCHMode(char mode);
 		bool						isMEMode(char mode);
 		bool						isUSMode(char mode);
+		bool						isCHflag(char mode);
 		char						getCHModechar(ft::Channel_Mode mode);
 		char						getUSModechar(ft::User_Mode mode);
 		bool						isParamMode(char mode);
@@ -85,7 +86,17 @@ inline ft::User_Mode	ft::ModeTools::findUserMode(char mode)
 
 inline bool	ft::ModeTools::isCHMode(char mode)
 {
-	for (int i = 4; i < CHMODE_NUM; ++i)
+	for (int i = 8; i < CHMODE_NUM; ++i)
+	{
+		if (CHMODE_CHAR[i] == mode)
+			return (true);
+	}
+	return (false);
+}
+
+inline bool	ft::ModeTools::isCHflag(char mode)
+{
+	for (int i = 5; i < 8; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (true);
@@ -95,7 +106,7 @@ inline bool	ft::ModeTools::isCHMode(char mode)
 
 inline bool	ft::ModeTools::isMEMode(char mode)
 {
-	for (int i = 1; i < 5; ++i)
+	for (int i = 2; i < 5; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (true);
@@ -115,7 +126,7 @@ inline bool	ft::ModeTools::isUSMode(char mode)
 
 inline char	ft::ModeTools::getCHModechar(ft::Channel_Mode mode)
 {
-	for (int i = 1; i < CHMODE_NUM; ++i)
+	for (int i = 2; i < CHMODE_NUM; ++i)
 	{
 		if (CHMODE_ENUM[i] == mode)
 			return (CHMODE_CHAR[i]);
