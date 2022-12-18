@@ -6,15 +6,15 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/07 11:36:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:17:43 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MODE_LIST_HPP
 #define MODE_LIST_HPP
 #define	CHMODE_NUM 11
-#define CHMODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l'}
-#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_PASSWORD, ft::l_USER_LIMIT}
+#define CHMODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'i', 'm', 'p', 't', 'k', 'l', 'b', 'I', 'e'}
+#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_PASSWORD, ft::l_USER_LIMIT, ft::b_BAN_MASK, ft::I_INVITATION_MASK, ft::e_EXCEPTION_MASK}
 #define	USMODE_NUM 3
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
@@ -39,6 +39,9 @@ namespace ft
 		t_TOPIC, // ? topic (only set by operators);
 		k_CAHNNEL_PASSWORD, //? set/remove(+/-) the channel key (password);
 		l_USER_LIMIT, //? set/remove(+/-) the user limit to channel;
+		b_BAN_MASK, // ? to keep users out
+		I_INVITATION_MASK, // ? to automatically override the invite-only flag
+		e_EXCEPTION_MASK, // ? to override a ban mask
 	};
 	enum User_Mode
 	{
@@ -58,6 +61,7 @@ namespace ft
 		bool						isParamMode(char mode);
 	}
 }
+
 inline ft::Channel_Mode	ft::ModeTools::findChannelMode(char mode)
 {
 	for (int i = 1; i < CHMODE_NUM; ++i)
@@ -108,6 +112,7 @@ inline bool	ft::ModeTools::isUSMode(char mode)
 	}
 	return (false);	
 }
+
 inline char	ft::ModeTools::getCHModechar(ft::Channel_Mode mode)
 {
 	for (int i = 1; i < CHMODE_NUM; ++i)
@@ -130,7 +135,7 @@ inline char	ft::ModeTools::getUSModechar(ft::User_Mode mode)
 
 inline bool	ft::ModeTools::isParamMode(char mode)
 {
-	if (mode == 'l' || mode == 'k' || mode == 'o' || mode == 'v')
+	if (mode == 'l' || mode == 'k' || mode == 'o' || mode == 'v' || mode == 'b' || mode == 'I' || mode == 'e')
 		return (true);
 	return (false);
 }
