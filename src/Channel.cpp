@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/19 02:24:25 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/19 02:33:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,20 @@ ft::Client		*ft::Channel::getMember(std::string nick)
 	return (NULL);	
 }
 
+std::vector<ft::WildCard *>		ft::Channel::getExceptionList(void)
+{
+	return (_exceptionList);
+}
+
+std::vector<ft::WildCard *>		ft::Channel::getInvitedList(void)
+{
+	return (_invitedList);
+}
+
+std::vector<ft::WildCard *>		ft::Channel::getBannedList(void)
+{
+	return(_banList);
+}
 
 // * Channel actions * //
 // ? JOIN

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/19 00:30:36 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/19 02:31:25 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ namespace ft
 			std::string						getTopic(void);
 			std::vector<ft::Client *>		getUsers(void);
 			ft::Client						*getMember(std::string nick);
+			std::vector<ft::WildCard *>		getExceptionList(void);
+			std::vector<ft::WildCard *>		getInvitedList(void);
+			std::vector<ft::WildCard *>		getBannedList(void);
 			
 			// * Channel actions * //
 
