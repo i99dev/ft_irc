@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:36:40 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/17 14:43:20 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:25:18 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace ft
     class WildCard
     {
     private:
-        std::vector<t_mask *> _masks;
+        t_mask *_masks;
 
     public:
         WildCard(std::string const &str);

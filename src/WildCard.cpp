@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:40:30 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/17 14:45:02 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:31:10 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,91 +69,71 @@ bool ft::WildCard::match_wildCard(std::string const &str, std::string const &wil
 
 void ft::WildCard::split_mask(std::string &str)
 {
-    t_mask *mask;
-
-    mask = new t_mask;
+    _masks = new t_mask;
     if (str.find_first_of('!') != std::string::npos && str.find_last_of('@') != std::string::npos)
     {
-        mask->nick = str.substr(0, str.find('!'));
-        mask->user = str.substr(str.find('!') + 1, str.find('@') - 2);
-        mask->host = str.substr(str.find('@') + 1);
-        _masks.push_back(mask);
-        return;
+        _masks->nick = str.substr(0, str.find('!'));
+        _masks->user = str.substr(str.find('!') + 1, str.find('@') - 2);
+        _masks->host = str.substr(str.find('@') + 1);
     }
-    else if (str.find_first_of('!') != std::string::npos && str.find_last_not_of('@') != std::string::npos)
+    else if (str.find('!') != std::string::npos && str.find_last_not_of('@') != std::string::npos)
     {
-        mask->nick = str.substr(0, str.find('!'));
-        mask->user = str.substr(str.find('!') + 1);
-        _masks.push_back(mask);
+        _masks->nick = str.substr(0, str.find('!'));
+        _masks->user = str.substr(str.find('!') + 1);
         return;
     }
     else if (str.find_first_of('@') != std::string::npos)
     {
-        mask->nick = str.substr(0, str.find('@'));
-        mask->host = str.substr(str.find('@') + 1);
-        _masks.push_back(mask);
+        _masks->nick = str.substr(0, str.find('@'));
+        _masks->host = str.substr(str.find('@') + 1);
         return;
     }
     else if (str.find_first_of('*') != std::string::npos || str.find_first_of('?') != std::string::npos)
     {
-        mask->wildcard = str;
-        _masks.push_back(mask);
+        _masks->wildcard = str;
         return;
     }
     else
     {
-        mask->nick = str;
-        _masks.push_back(mask);
+        _masks->nick = str;
         return;
     }
 }
 
 bool ft::WildCard::is_mask(void)
 {
-    if (_masks.empty())
-        return false;
+    // if (_masks->user )
+    //     return false;
     return true;
 }
 
 bool ft::WildCard::match_client_mask(ft::Client *client)
 {
-    std::vector<t_mask *>::iterator it = _masks.begin();
-    std::vector<t_mask *>::iterator ite = _masks.end();
 
-    while (it != ite)
-    {
-        if ((*it)->nick != "" && (*it)->nick.size() > 1 && match_wildCard(client->getNickName(), (*it)->nick) == false)
-            return false;
-        if ((*it)->user != "" && (*it)->user.size() > 1 && match_wildCard(client->getUserName(), (*it)->user) == false)
-            return false;
-        if ((*it)->host != "" && (*it)->host.size() > 1 && match_wildCard(client->getHostName(), (*it)->host) == false)
-            return false;
-        if ((*it)->wildcard != "" && (*it)->wildcard.size() > 1 && !match_wildCard(client->getNickName(), (*it)->wildcard))
-            return false;
-        it++;
-    }
+    if (_masks->nick != "" && _masks->nick.size() > 1 && match_wildCard(client->getNickName(), _masks->nick) == false)
+        return false;
+    if (_masks->user != "" && _masks->user.size() > 1 && match_wildCard(client->getUserName(), _masks->user) == false)
+        return false;
+    if (_masks->host != "" && _masks->host.size() > 1 && match_wildCard(client->getHostName(), _masks->host) == false)
+        return false;
+    if (_masks->wildcard != "" && _masks->wildcard.size() > 1 && !match_wildCard(client->getNickName(), _masks->wildcard))
+        return false;
+
     return true;
 }
 
 ft::WildCard::WildCard(std::string const &str)
 {
     std::string tmp = str;
-    //check if the parameter is a mask
+    // check if the parameter is a mask
     if (is_wildCard(str))
     {
         split_mask(tmp);
     }
 }
 
-
 ft::WildCard::~WildCard(void)
 {
-    std::vector<t_mask *>::iterator it = _masks.begin();
-    std::vector<t_mask *>::iterator ite = _masks.end();
 
-    while (it != ite)
-    {
-        delete (*it);
-        it++;
-    }
+    delete _masks;
 }
