@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 00:37:07 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/20 01:26:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,36 +86,3 @@ bool ft::Nick::isvalid()
     }
     return true;
 }
-
-// check if user have nickname connected to server or not bu send and wait for reply
-// void ft::Nick::isNickNameAvailable(std::string nickname)
-// {
-//     size_t i;
-//     for (i = 0; i < _server->clients.size(); i++)
-//     {
-//         std::cout << "nickname: " << nickname << std::endl;
-//         if (_server->getClients()[i]->getNickName() == nickname)
-//         {
-//             std::cout << "send ping to socket: " << _server->getClients()[i]->getSocket() << std::endl;
-//             std::string ping = "PING " + nickname + "\r";
-//             send(_server->getClients()[i]->getSocket(), ping.c_str(), ping.size(), 0);
-//             // wait for recv pong
-//             int bytes = 0;
-//             char buffer[1024];
-//             bytes = recv(_server->getClients()[i]->getSocket(), buffer, 1024, 0);
-//             std::cout << "===================================" << std::endl;
-//             std::cout << "recv bytes: " << bytes << std::endl;
-//             std::cout << "===================================" << std::endl;
-//             if (bytes <= 0)
-//             {
-//                 struct timeval tv;
-//                 tv.tv_sec = 5;
-//                 tv.tv_usec = 0;
-//                 setsockopt(_server->getClients()[i]->getSocket(), SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
-//             }
-            
-
-//         }
-
-//     }
-// }
