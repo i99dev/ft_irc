@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/08 17:09:35 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:20:34 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,11 @@ std::string	ft::Client::getUSMode(void)
 	for (long unsigned int i = 0; i < this->_mode.size(); i++)
 		mode += ft::ModeTools::getUSModechar(this->_mode[i]);
 	return (mode);
+}
+
+int ft::Client::getSocket(void) const
+{
+	return (this->fd);
 }
 
 ft::Client::~Client() {}

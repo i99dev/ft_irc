@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/09 20:19:50 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/19 22:19:47 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ namespace ft
 			void 					setRealName(std::string realName);
 			std::string				getHostName(void)const;
 			void 					setHostName(std::string hostName);
+			int						getSocket(void)const;
 			//user channels
 			std::string				getChannelsJoined(void)const;
 			void 					setChannelsJoined(std::string channelsJoined);
