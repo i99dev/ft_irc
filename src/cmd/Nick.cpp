@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 02:49:52 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/19 21:27:03 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ bool ft::Nick::isvalid()
     //check if nick name is already taken
     if (_server->isNickNameTaken(_message->getParameter()[0]))
     {
-        std::string errNickNameUse = ERR_NICKNAMEINUSE(_server->getServerName(), _message->getParameter()[0]);
-        _client->sendReply(errNickNameUse);
+        std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
+        _client->sendReply(err);
         return false;
     }
     //check if nick name not contain special char
