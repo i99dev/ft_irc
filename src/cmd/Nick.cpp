@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 02:49:52 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/20 01:26:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,34 @@
 
 ft::Nick::Nick(void)
 {
-    _name =  "Nick";
+    _name = "Nick";
     _description = "Change your nickname or set it if you don't have one";
     _usage = "/nick <nickname>";
 }
 
-//TODO: i have error still need some work on it
+// TODO: i have error still need some work on it
 void ft::Nick::execute()
 {
     if (_message->getParameter().size() != 1)
-	{
-		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
-		return;
-	}
-    //get nick name and clean it from \r 
-    std::string nickName =_message->getParameter()[0];
-    //check if nick name is valid
-    if(!ft::Nick::isvalid())
+    {
+        _client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
         return;
+    }
+    // get nick name and clean it from \r
+    std::string nickName = _message->getParameter()[0];
+    // check if nick name is valid
+    if (!ft::Nick::isvalid())
+     {
+        //close socket
+        close(_client->getSocket());
+        return;
+     }
     if (_client->getNickName() == "")
     {
         _client->setNickName(nickName);
         std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-        _server->sendReply(_client,msg);
-        msg = RPL_YOURHOST(_server->getServerName(),_client->getNickName(), _server->getVersion());
+        _server->sendReply(_client, msg);
+        msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
         _server->sendReply(_client, msg);
         msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
         _server->sendReply(_client, msg);
@@ -58,21 +62,22 @@ bool ft::Nick::isvalid()
         _client->sendReply(err);
         return false;
     }
-    //check if nick name is valid
+    // check if nick name is valid
     if (_message->getParameter()[0].size() > 9)
     {
         std::string err = "432 " + _message->getParameter()[0] + " :Erroneus nickname";
         _client->sendReply(err);
         return false;
     }
-    //check if nick name is already taken
+    // check if nick name is already taken
     if (_server->isNickNameTaken(_message->getParameter()[0]))
     {
-        std::string errNickNameUse = ERR_NICKNAMEINUSE(_server->getServerName(), _message->getParameter()[0]);
-        _client->sendReply(errNickNameUse);
+        std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
+        // std::string err = ERR_NICKNAMEINUSE(_server->getServerName(), _client->getNickName());
+        _client->sendReply(err);
         return false;
     }
-    //check if nick name not contain special char
+    // check if nick name not contain special char
     if (_message->getParameter()[0].find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_[]\\`^{}|") != std::string::npos)
     {
         std::string err = "432 " + _message->getParameter()[0] + " :Erroneus nickname";
