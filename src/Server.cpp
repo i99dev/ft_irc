@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/11 02:23:22 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/20 16:32:36 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
 
-//command functions
+// command functions
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
 #include "../incl/cmd/Nick.hpp"
@@ -28,16 +28,16 @@
 #include "../incl/cmd/Notice.hpp"
 #include "../incl/cmd/Topic.hpp"
 #include "../incl/cmd/List.hpp"
+#include "../incl/cmd/Pong.hpp"
 
 std::string storage = "";
-
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
                                                                            password(password),
-																		   storage("")
+                                                                           storage("")
 {
     std::cout << "Server created" << std::endl;
     std::cout << "Host: " << host << std::endl;
@@ -57,7 +57,7 @@ ft::Server::~Server()
 
 /**
  * @brief Create a socket object
-*/
+ */
 void ft::Server::create_socket()
 {
     int yes = 1;
@@ -79,13 +79,11 @@ void ft::Server::create_socket()
         std::cerr << "socket" << std::endl;
         exit(1);
     }
-
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
         std::cerr << "setsockopt" << std::endl;
         exit(1);
     }
-
     if (bind(this->master_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
     {
         std::cerr << "bind" << std::endl;
@@ -102,7 +100,7 @@ void ft::Server::create_socket()
 
 /**
  * @brief Create a Poll object
-*/
+ */
 void ft::Server::createPoll()
 {
     pollfd pfd;
@@ -110,15 +108,22 @@ void ft::Server::createPoll()
     pfd.events = POLLIN;
     this->fds.push_back(pfd);
 
+    // set timeout to 120 seconds
+    const int timeout = 5 * 1000;
     std::cout << "Server is online" << std::endl;
 
     while (1)
     {
-        int ret = poll(&this->fds[0], this->fds.size(), -1);
+        int ret = poll(&this->fds[0], this->fds.size(), timeout);
         if (ret == -1)
         {
             std::cerr << "poll" << std::endl;
             exit(1);
+        }
+        else if (ret == 0)
+        {
+            std::cout << "|timeout|" << std::endl;
+            checkConnection();
         }
         else if (ret > 0)
         {
@@ -137,13 +142,13 @@ void ft::Server::createPoll()
                 }
             }
         }
-		// VALGRIND_DO_LEAK_CHECK ;
+        // VALGRIND_DO_LEAK_CHECK ;
     }
 }
 
 /**
  * @brief tools to get the client's ip address
-*/
+ */
 void *get_in_addr(struct sockaddr *sa)
 {
     if (sa->sa_family == AF_INET)
@@ -153,7 +158,7 @@ void *get_in_addr(struct sockaddr *sa)
 
 /**
  * @brief Accept a new connection
-*/
+ */
 void ft::Server::acceptConnection()
 {
     int new_fd;
@@ -181,57 +186,62 @@ void ft::Server::acceptConnection()
 
 /**
  * @brief Receive message from client
-*/
+ */
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
     char buf[1024];
     nbytes = recv(fds[i].fd, buf, 1024, 0);
-    if (nbytes <= 0)
+    if (nbytes < 0)
     {
-        if (nbytes == 0)
+        // Check for the timeout error
+        if (errno == EAGAIN || errno == EWOULDBLOCK || errno == ETIMEDOUT || errno == ECONNRESET || errno == EPIPE || errno == ECONNABORTED || errno == EINTR || errno == ESHUTDOWN)
         {
-            std::cout << "socket " << fds[i].fd << " hung up" << std::endl;
+            std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
+
+            // close connection
+            close(fds[i].fd);
+            fds.erase(fds.begin() + i);
+            clients.erase(clients.begin() + i - 1);
         }
         else
         {
             std::cerr << "recv" << std::endl;
+            exit(1);
         }
-        close(fds[i].fd);
-        fds.erase(fds.begin() + i);
     }
     else
     {
         buf[nbytes] = '\0';
-		std::string buff = buf;
-		if (!strchr(buf, '\n'))
-		{
-			storage += buff;
-		}
-		else
-		{
-			storage += buff;
-			// std::cout << "/" << storage << std::endl;
-			std::vector <Message *> args = ft::Server::splitMessage(storage, '\n', fds[i].fd);
-			for (size_t k = 0; k < args.size(); k++)
-			{
-			    this->clients[i - 1]->setMsgSend(args[k]);
-			    std::map<std::string, Command *>::iterator it;
-			    if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
-			    {
-			        Command *cmd = it->second;
-			        cmd->setClient(this->clients[i - 1]);
-			        cmd->setServer(this);
-			        cmd->setMessage(args[k]);
-			        cmd->execute();
-			    }
-			    else
-			    {
-			        this->clients[i - 1]->sendReply("ERROR :Unknown command\r \n");
-			    }
-			}
-			storage = "";
-		}
+        std::string buff = buf;
+        if (!strchr(buf, '\n'))
+        {
+            storage += buff;
+        }
+        else
+        {
+            storage += buff;
+            // std::cout << "/" << storage << std::endl;
+            std::vector<Message *> args = ft::Server::splitMessage(storage, '\n', fds[i].fd);
+            for (size_t k = 0; k < args.size(); k++)
+            {
+                this->clients[i - 1]->setMsgSend(args[k]);
+                std::map<std::string, Command *>::iterator it;
+                if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
+                {
+                    Command *cmd = it->second;
+                    cmd->setClient(this->clients[i - 1]);
+                    cmd->setServer(this);
+                    cmd->setMessage(args[k]);
+                    cmd->execute();
+                }
+                else
+                {
+                    this->clients[i - 1]->sendReply("ERROR :Unknown command\r");
+                }
+            }
+            storage = "";
+        }
     }
 }
 
@@ -246,18 +256,18 @@ void ft::Server::init_commands(void)
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();
+    _commands["PONG"] = new ft::Pong();
     _commands["PART"] = new ft::Part();
     _commands["PRIVMSG"] = new ft::Privmsg();
     _commands["NOTICE"] = new ft::Notice();
     _commands["INVITE"] = new ft::Invite();
     _commands["TOPIC"] = new ft::Topic();
     _commands["LIST"] = new ft::List();
-
 }
 
 /**
  * @brief split Message by newlines to to be multiple messages
-*/
+ */
 
 std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
 {
@@ -274,7 +284,7 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
 
 /**
  * @brief get Channels list
-*/
+ */
 
 std::vector<ft::Channel *> ft::Server::getChannels()
 {
@@ -283,7 +293,7 @@ std::vector<ft::Channel *> ft::Server::getChannels()
 
 /**
  * @brief get Clients list
-*/
+ */
 std::vector<ft::Client *> ft::Server::getClients()
 {
     return this->clients;
@@ -291,7 +301,7 @@ std::vector<ft::Client *> ft::Server::getClients()
 
 /**
  * @brief get Server name
-*/
+ */
 std::string ft::Server::getServerName()
 {
     return this->servername;
@@ -299,7 +309,7 @@ std::string ft::Server::getServerName()
 
 /**
  * @brief get Server port
-*/
+ */
 
 std::string ft::Server::getPort()
 {
@@ -317,48 +327,61 @@ bool ft::Server::isNickNameTaken(std::string nickname)
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i]->getNickName() == nickname)
-            return true;
+            return (true);
     }
-    return false;
+    return (false);
 }
 
 std::string ft::Server::getVersion()
 {
     return this->version;
 }
-
+// check if the client is connected by send a ping
 void ft::Server::checkConnection()
 {
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i]->getPing() == 0)
         {
-            this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getIp() + " (Ping timeout: 120 seconds)\r \n");
+            this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getServerName() + " (Ping timeout: 5 seconds)\r");
+            // close connection
+            close(this->clients[i]->fd);
             this->clients.erase(this->clients.begin() + i);
+            // remove from fds
+            for (size_t j = 0; j < this->fds.size(); j++)
+            {
+                if (this->fds[j].fd == this->clients[i]->fd)
+                {
+                    this->fds.erase(this->fds.begin() + j);
+                    break;
+                }
+            }
         }
         else
         {
-            this->clients[i]->setPing(this->clients[i]->getPing() - 1);
+            this->clients[i]->setPing(0);
+            // send ping
+            this->clients[i]->sendReply("PING :" + this->clients[i]->getNickName() + "\r");
         }
     }
 }
 
-bool		ft::Server::isChannel(std::string CHname)
+bool ft::Server::isChannel(std::string CHname)
 {
-	for (long unsigned int i = 0; i < this->channels.size(); i++)
-	{
-		if (this->channels[i]->getChName() == CHname)
-			return (true);
-	}
-	return (false);
+    for (long unsigned int i = 0; i < this->channels.size(); i++)
+    {
+        if (this->channels[i]->getChName() == CHname)
+            return (true);
+    }
+    return (false);
 }
 
-ft::Channel	*ft::Server::getChannel(std::string CHname)
+ft::Channel *ft::Server::getChannel(std::string CHname)
 {
-	for (long unsigned int i = 0; i < this->channels.size(); i++)
-	{
-		if (this->channels[i]->getChName() == CHname)
-			return (this->channels[i]);
-	}
-	return (NULL);
+    for (long unsigned int i = 0; i < this->channels.size(); i++)
+    {
+        if (this->channels[i]->getChName() == CHname)
+            return (this->channels[i]);
+    }
+    return (NULL);
 }

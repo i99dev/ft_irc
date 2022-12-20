@@ -14,7 +14,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${/Users/isaad/Desktop/ft_irc}/ircserv",
-            "args": ["6667", "88"],
+            "args": ["6668", "88"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -64,18 +64,18 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ircserv", //path to your programs exe and exe name
-            "args": ["6667", "123456"],
+            "args": ["6665", "123456"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true,
-                },
+                // {
+                //     "description": "Enable pretty-printing for gdb",
+                //     "text": "-enable-pretty-printing",
+                //     "ignoreFailures": true,
+                // },
                 // {
                 //     "description": "Enable Follow Fork Proccess for gdb",
                 //     "text": "-gdb-set follow-fork-mode child",
