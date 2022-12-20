@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 06:49:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:21:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void ft::Mask::split_mask(std::string &str)
 		{
 			if (str.find('!') < str.find('@'))
 			{
-				std::cout << "1 here" << std::endl;
-				std::cout << "first of @ " << str.find_first_of('@') << str.find('@') << std::endl;
 				_masks->nick = str.substr(0, str.find('!'));
 				if (str[str.find('!') + 1] != '@')
 					_masks->user = str.substr(str.find('!') + 1, str.find('@') - (str.find('!') + 1));
@@ -37,7 +35,7 @@ void ft::Mask::split_mask(std::string &str)
 	std::cout << "ignore this case .. it's not a mask" << std::endl;
 }
 
-bool ft::Mask::match_Mask(std::string const &str, std::string const &Mask)
+bool ft::Mask::match_wildCard(std::string const &str, std::string const &Mask)
 {
     if (Mask.find('*') != std::string::npos)
     {
@@ -62,14 +60,14 @@ bool ft::Mask::match_Mask(std::string const &str, std::string const &Mask)
     return false;
 }
 
-ft::Mask::Mask(std::string const &str): is_Mask(false), is_mask(false)
+ft::Mask::Mask(std::string const &str): is_WildCard(false), is_mask(false)
 {
     std::string tmp = str;
     split_mask(tmp);
     if (str.find('*') != std::string::npos)
 	{
 		if (str.find_first_of('*') == str.find_last_of('*'))
-			is_Mask = true;
+			is_WildCard = true;
 	}
 }
 
