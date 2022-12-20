@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 11:09:28 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/21 01:36:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ namespace ft
 			std::string								_topic;
 			int										_limit;
 			bool									_ChName_parse(std::string &name);
-			std::vector<ft::Mask *>					_banList;
+			std::vector<ft::Mask *>					_bannedList;
 			std::vector<ft::Mask *>					_invitedList;
-			std::vector<ft::Mask *>					_exceptionList;
+			std::vector<ft::Mask *>					_exceptedList;
 
 		public:
 
@@ -74,9 +74,11 @@ namespace ft
 			
 			// ? MODE
 			int										setChannelMode(char mode, std::string param);
+			int										setChannelFlag(char mode, std::string param);
 			int										setMemberMode(Client *user, char mode);
 			int										removeChannelMode(char mode, std::string param);
 			int										removeMemberMode(Client *user, char mode);
+			int										removeChannelFlag(char mode, std::string param);
 			void									setPassword(std::string &password);
 			void									setTopic(std::string &topic);
 			void									setTopic(int num);
@@ -91,6 +93,9 @@ namespace ft
 			std::vector<ft::Mask *>::const_iterator	findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask);
 			// ? PART
 			void									removeUser(int userFD);
+			bool									isUserBanned(ft::Client *client);
+			bool									isUserInvited(ft::Client *client);
+			bool									isUserExcepted(ft::Client *client);
 	};
 	class WrongChannelNameRequir : public std::exception
 	{

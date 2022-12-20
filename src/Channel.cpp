@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 11:11:29 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/21 01:50:36 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ ft::Client		*ft::Channel::getMember(std::string nick)
 
 std::vector<ft::Mask *>		ft::Channel::getExceptionList(void)
 {
-	return (_exceptionList);
+	return (_exceptedList);
 }
 
 std::vector<ft::Mask *>		ft::Channel::getInvitedList(void)
@@ -121,7 +121,7 @@ std::vector<ft::Mask *>		ft::Channel::getInvitedList(void)
 
 std::vector<ft::Mask *>		ft::Channel::getBannedList(void)
 {
-	return(_banList);
+	return(_bannedList);
 }
 
 // * Channel actions * //
@@ -168,37 +168,23 @@ int	ft::Channel::setChannelMode(char mode, std::string param)
 	if (mode == 'k')
 		setPassword(param);
 	else if (mode == 'l')
+	{
+		for (size_t i = 0; i < param.size(); i++)
+		{
+			if (!std::isdigit(param[i]))
+			{
+				this->_mode.pop_back();
+				return (1);
+			}
+		}
 		this->_limit = atoi(param.c_str());
+	}
 	else if (mode == 'o')
 		return (this->setMemberMode(this->getMember(param), 'o'));
 	else if (mode == 'v')
 		return (this->setMemberMode(this->getMember(param), 'v'));
 	else if (ft::ModeTools::isCHflag(mode))
-	{
-		Mask *mask = new Mask(param);
-		if (mask->is_mask)
-		{
-			if (mode == 'I' && !this->isRepeatedMask(this->getInvitedList(), mask->getMask()))
-			{
-				if (!this->isCHModeSet('i'))
-					this->_mode.push_back(ft::ModeTools::findChannelMode('i'));
-				this->_invitedList.push_back(mask);
-				std::cout << "set i into channel mode if it was I and i was not set" << std::endl;
-				std::cout << "add to the invited list" << std::endl;
-			}
-			else if (mode == 'b' && !this->isRepeatedMask(this->getBannedList(), mask->getMask()))
-			{
-				this->_banList.push_back(mask);
-				std::cout << "add to the ban list" << std::endl;
-			}
-			else if (mode == 'e' && !this->isRepeatedMask(this->getExceptionList(), mask->getMask()))
-			{
-				this->_exceptionList.push_back(mask);
-				std::cout << "add to the exception list" << std::endl;
-			}
-		}
-		delete mask;
-	}
+		return(setChannelFlag(mode, param));
 	return (1);
 }
 
@@ -215,10 +201,8 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 					_password = "";
 				else if (mode == 'l')
 					this->_limit = 0;
-				else if (mode == 'i')
-				{
-					std::cout << "clear the invitation list" << std::endl;
-				}
+				else if (mode == 'i' && !_invitedList.empty())
+					_invitedList.clear();
 				return (1);
 			}
 		}
@@ -232,21 +216,69 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 			return (this->removeMemberMode(this->getMember(param), 'v'));
 		return (1);
 	}
-	else if (mode == 'I')
-	{
-		//  TODO: check if the mask was there using isrepeated function then delete it using findMask
-		// std::cout << "delete i frm channel mode" << std::endl;
-		std::cout << "delete " << param << " from the invite list" << std::endl;
-	}
-	else if (mode == 'b')
-	{
-		std::cout << "delete " << param << " from the ban list" << std::endl;
-	}
-	else if (mode == 'e')
-	{
-		std::cout << "delete " << param << " from the exception list" << std::endl;
-	}
+	else if (ft::ModeTools::isCHflag(mode))
+		return (removeChannelFlag(mode, param));
 	return (0);
+}
+
+int	ft::Channel::setChannelFlag(char mode, std::string param)
+{
+	Mask *mask = new Mask(param);
+	if (mask->is_mask)
+	{
+		if (mode == 'I' && !this->isRepeatedMask(this->getInvitedList(), mask->getMask()))
+		{
+			if (!this->isCHModeSet('i') && !isRepeatedMask(_invitedList, mask->getMask()))
+				this->_mode.push_back(ft::ModeTools::findChannelMode('i'));
+			this->_invitedList.push_back(mask);
+			std::cout << "set i into channel mode if it was I and i was not set" << std::endl;
+			std::cout << "add to the invited list" << std::endl;
+		}
+		else if (mode == 'b' && !this->isRepeatedMask(this->getBannedList(), mask->getMask()))
+		{
+			this->_bannedList.push_back(mask);
+			std::cout << "add to the ban list" << std::endl;
+		}
+		else if (mode == 'e' && !this->isRepeatedMask(this->getExceptionList(), mask->getMask()))
+		{
+			this->_exceptedList.push_back(mask);
+			std::cout << "add to the exception list" << std::endl;
+		}
+		else
+			delete mask;
+		return (1);
+	}
+	delete mask;
+	return (1);
+}
+
+int	ft::Channel::removeChannelFlag(char mode, std::string param)
+{
+	Mask *mask = new Mask(param);
+	if (mask->is_mask)
+	{
+		if (mode == 'I')
+		{
+			//  TODO: check if the mask was there using isrepeated function then delete it using findMask
+			if (isRepeatedMask(_invitedList, mask->getMask()) && !_invitedList.empty())
+				_invitedList.erase(findMask(_invitedList, mask->getMask()));
+			std::cout << "delete " << param << " from the invite list" << std::endl;
+		}
+		else if (mode == 'b')
+		{
+			if (isRepeatedMask(_bannedList, mask->getMask()) && !_bannedList.empty())
+				_bannedList.erase(findMask(_bannedList, mask->getMask()));
+			std::cout << "delete " << param << " from the ban list" << std::endl;
+		}
+		else if (mode == 'e')
+		{
+			if (isRepeatedMask(_exceptedList, mask->getMask()) && !_exceptedList.empty())
+				_exceptedList.erase(findMask(_exceptedList, mask->getMask()));
+			std::cout << "delete " << param << " from the exception list" << std::endl;
+		}
+	}
+	delete mask;
+	return (1);	
 }
 
 //! check if the user was already in channel
@@ -350,6 +382,36 @@ bool	ft::Channel::isMEModeSet(Client *user, char mode)
 					return (true);
 			}
 		}
+	}
+	return (false);
+}
+
+bool	ft::Channel::isUserBanned(ft::Client *client)
+{
+	for (long unsigned int i = 0; i < this->_bannedList.size(); i++)
+	{
+		if (this->_bannedList[i]->match_client_mask(client))
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isUserInvited(ft::Client *client)
+{
+	for (long unsigned int i = 0; i < this->_invitedList.size(); i++)
+	{
+		if (this->_invitedList[i]->match_client_mask(client))
+			return (true);
+	}
+	return (false);
+}
+
+bool	ft::Channel::isUserExcepted(ft::Client *client)
+{
+	for (long unsigned int i = 0; i < this->_exceptedList.size(); i++)
+	{
+		if (this->_exceptedList[i]->match_client_mask(client))
+			return (true);
 	}
 	return (false);
 }
