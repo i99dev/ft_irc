@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 01:21:53 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:49:45 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include "../incl/cmd/Notice.hpp"
 #include "../incl/cmd/Topic.hpp"
 #include "../incl/cmd/List.hpp"
+#include "../incl/cmd/Pong.hpp"
 
 std::string storage = "";
 
@@ -78,13 +79,11 @@ void ft::Server::create_socket()
         std::cerr << "socket" << std::endl;
         exit(1);
     }
-
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
         std::cerr << "setsockopt" << std::endl;
         exit(1);
     }
-
     if (bind(this->master_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
     {
         std::cerr << "bind" << std::endl;
@@ -109,15 +108,22 @@ void ft::Server::createPoll()
     pfd.events = POLLIN;
     this->fds.push_back(pfd);
 
+    // set timeout to 120 seconds
+    const int timeout = 5 * 1000;
     std::cout << "Server is online" << std::endl;
 
     while (1)
     {
-        int ret = poll(&this->fds[0], this->fds.size(), -1);
+        int ret = poll(&this->fds[0], this->fds.size(), timeout);
         if (ret == -1)
         {
             std::cerr << "poll" << std::endl;
             exit(1);
+        }
+        else if (ret == 0)
+        {
+            std::cout << "|timeout|" << std::endl;
+            checkConnection();
         }
         else if (ret > 0)
         {
@@ -186,19 +192,23 @@ void ft::Server::receiveMessage(int i)
     int nbytes;
     char buf[1024];
     nbytes = recv(fds[i].fd, buf, 1024, 0);
-    if (nbytes <= 0)
+    if (nbytes < 0)
     {
-        if (nbytes == 0)
+        // Check for the timeout error
+        if (errno == EAGAIN || errno == EWOULDBLOCK || errno == ETIMEDOUT || errno == ECONNRESET || errno == EPIPE || errno == ECONNABORTED || errno == EINTR || errno == ESHUTDOWN)
         {
-            std::cout << "socket " << fds[i].fd << " hung up" << std::endl;
+            std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
+
+            // close connection
+            close(fds[i].fd);
+            fds.erase(fds.begin() + i);
+            clients.erase(clients.begin() + i - 1);
         }
         else
         {
             std::cerr << "recv" << std::endl;
+            exit(1);
         }
-        close(fds[i].fd);
-        fds.erase(fds.begin() + i);
-        clients.erase(clients.begin() + i - 1);
     }
     else
     {
@@ -227,7 +237,7 @@ void ft::Server::receiveMessage(int i)
                 }
                 else
                 {
-                    this->clients[i - 1]->sendReply("ERROR :Unknown command\r \n");
+                    this->clients[i - 1]->sendReply("ERROR :Unknown command\r");
                 }
             }
             storage = "";
@@ -246,6 +256,7 @@ void ft::Server::init_commands(void)
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();
+    _commands["PONG"] = new ft::Pong();
     _commands["PART"] = new ft::Part();
     _commands["PRIVMSG"] = new ft::Privmsg();
     _commands["NOTICE"] = new ft::Notice();
@@ -316,57 +327,41 @@ bool ft::Server::isNickNameTaken(std::string nickname)
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i]->getNickName() == nickname)
-        {
-            // irc ping format
-            std::string ping = "PING :" + this->servername + "\r \n";
-            send(this->clients[i]->fd, ping.c_str(), ping.size(), 0);
-            struct timeval tv;
-            tv.tv_sec = 5;
-            tv.tv_usec = 0;
-            setsockopt(this->clients[i]->fd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
-            char buf[1024];
-            int nbytes = recv(this->clients[i]->fd, buf, 1024, 0);
-            if (nbytes <= 0)
-            {
-                std::cout << "socket " << this->clients[i]->fd << " hung up" << std::endl;
-                close(this->clients[i]->fd);
-                this->clients.erase(this->clients.begin() + i);
-                //fds
-                for (size_t j = 0; j < this->fds.size(); j++)
-                {
-                    if (this->fds[j].fd == this->clients[i]->fd)
-                    {
-                        this->fds.erase(this->fds.begin() + j);
-                    }
-                }
-                return false;
-            }
-            else
-            {
-             return true;  
-            }
-        }
+            return (true);
     }
-    return false;
+    return (false);
 }
 
 std::string ft::Server::getVersion()
 {
     return this->version;
 }
-
+// check if the client is connected by send a ping
 void ft::Server::checkConnection()
 {
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i]->getPing() == 0)
         {
-            this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getIp() + " (Ping timeout: 120 seconds)\r \n");
+            this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getServerName() + " (Ping timeout: 5 seconds)\r");
+            // close connection
+            close(this->clients[i]->fd);
             this->clients.erase(this->clients.begin() + i);
+            // remove from fds
+            for (size_t j = 0; j < this->fds.size(); j++)
+            {
+                if (this->fds[j].fd == this->clients[i]->fd)
+                {
+                    this->fds.erase(this->fds.begin() + j);
+                    break;
+                }
+            }
         }
         else
         {
-            this->clients[i]->setPing(this->clients[i]->getPing() - 1);
+            this->clients[i]->setPing(0);
+            // send ping
+            this->clients[i]->sendReply("PING :" + this->clients[i]->getNickName() + "\r");
         }
     }
 }

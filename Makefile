@@ -6,7 +6,7 @@
 #    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr        #
+#    Updated: 2022/12/21 01:54:00 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC =	main.cpp \
 		./src/cmd/Who.cpp \
 		./src/cmd/Mode.cpp \
 		./src/cmd/Ping.cpp \
+		./src/cmd/Pong.cpp \
 		./src/cmd/Part.cpp \
 		./src/cmd/Kick.cpp \
 		./src/cmd/Notice.cpp \
