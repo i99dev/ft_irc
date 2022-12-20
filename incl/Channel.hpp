@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/21 01:36:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 23:14:15 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ namespace ft
 			bool									isMember(std::string nick);
 			bool									isMemberOperator(int OwnerFD);
 			bool									isRepeatedMask(const std::vector<ft::Mask *> &MasksList, t_mask *mask);
-			std::vector<ft::Mask *>::const_iterator	findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask);
+			int										findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask);
 			// ? PART
 			void									removeUser(int userFD);
 			bool									isUserBanned(ft::Client *client);

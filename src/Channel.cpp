@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/21 02:29:24 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 23:16:36 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,8 +279,8 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 			//  TODO: check if the mask was there using isrepeated function then delete it using findMask
 			if (isRepeatedMask(_invitedList, mask->getMask()) && !_invitedList.empty())
 			{
-				delete *findMask(_invitedList, mask->getMask());
-				_invitedList.erase(findMask(_invitedList, mask->getMask()));
+				delete _invitedList[findMask(_invitedList, mask->getMask())];
+				_invitedList.erase(_invitedList.begin() + findMask(_invitedList, mask->getMask()));
 			}
 			std::cout << "delete " << param << " from the invite list" << std::endl;
 		}
@@ -288,8 +288,8 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 		{
 			if (isRepeatedMask(_bannedList, mask->getMask()) && !_bannedList.empty())
 			{
-				delete *findMask(_bannedList, mask->getMask());
-				_bannedList.erase(findMask(_bannedList, mask->getMask()));
+				delete _bannedList[findMask(_bannedList, mask->getMask())];
+				_bannedList.erase(_bannedList.begin() + findMask(_bannedList, mask->getMask()));
 			}
 			std::cout << "delete " << param << " from the ban list" << std::endl;
 		}
@@ -297,8 +297,8 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 		{
 			if (isRepeatedMask(_exceptedList, mask->getMask()) && !_exceptedList.empty())
 			{
-				delete *findMask(_exceptedList, mask->getMask());
-				_exceptedList.erase(findMask(_exceptedList, mask->getMask()));
+				delete _exceptedList[findMask(_exceptedList, mask->getMask())];
+				_exceptedList.erase(_exceptedList.begin() + findMask(_exceptedList, mask->getMask()));
 			}
 			std::cout << "delete " << param << " from the exception list" << std::endl;
 		}
@@ -371,14 +371,14 @@ bool	ft::Channel::isRepeatedMask(const std::vector<ft::Mask *>	&MasksList, t_mas
 	return (false);
 }
 
-std::vector<ft::Mask *>::const_iterator	ft::Channel::findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask)
+int	ft::Channel::findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask)
 {
 	for (long unsigned int i = 0; i < MasksList.size(); i++)
 	{
 		if (MasksList[i]->is_SameMask(mask))
-			return (MasksList.begin() + i);
+			return (i);
 	}
-	return (MasksList.end());
+	return (MasksList.size());
 }
 
 bool	ft::Channel::isCHModeSet(char mode)
