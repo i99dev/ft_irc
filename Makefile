@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/17 13:51:09 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRC =	main.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
 		./src/Channel.cpp  \
-		./src/WildCard.cpp \
+		./src/Mask.cpp \
 		./src/cmd/Join.cpp \
 		./src/cmd/User.cpp \
 		./src/cmd/Nick.cpp \

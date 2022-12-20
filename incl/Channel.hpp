@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/19 02:31:25 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ namespace ft
 			std::string							_topic;
 			int									_limit;
 			bool								_ChName_parse(std::string &name);
-			std::vector<ft::WildCard *>			_banList;
-			std::vector<ft::WildCard *>			_invitedList;
-			std::vector<ft::WildCard *>			_exceptionList;
+			std::vector<ft::Mask *>			_banList;
+			std::vector<ft::Mask *>			_invitedList;
+			std::vector<ft::Mask *>			_exceptionList;
 
 		public:
 
@@ -63,9 +63,9 @@ namespace ft
 			std::string						getTopic(void);
 			std::vector<ft::Client *>		getUsers(void);
 			ft::Client						*getMember(std::string nick);
-			std::vector<ft::WildCard *>		getExceptionList(void);
-			std::vector<ft::WildCard *>		getInvitedList(void);
-			std::vector<ft::WildCard *>		getBannedList(void);
+			std::vector<ft::Mask *>		getExceptionList(void);
+			std::vector<ft::Mask *>		getInvitedList(void);
+			std::vector<ft::Mask *>		getBannedList(void);
 			
 			// * Channel actions * //
 

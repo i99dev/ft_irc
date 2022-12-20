@@ -6,15 +6,15 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 06:49:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 07:14:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/WildCard.hpp"
+#include "../incl/Mask.hpp"
 #include <iostream>
 
 
-void ft::WildCard::split_mask(std::string &str)
+void ft::Mask::split_mask(std::string &str)
 {
     _masks = new t_mask;
     if (str.find('!') != std::string::npos && str.find('@') != std::string::npos)
@@ -29,63 +29,73 @@ void ft::WildCard::split_mask(std::string &str)
 				if (str[str.find('!') + 1] != '@')
 					_masks->user = str.substr(str.find('!') + 1, str.find('@') - (str.find('!') + 1));
 				_masks->host = str.substr(str.find('@') + 1);
+				is_mask = true;
 				return ;
 			}
 		}
     }
-    // else if (str.find('!') != std::string::npos && str.find_last_not_of('@') != std::string::npos)
-    // {
-	// 	std::cout << "2 here" << std::endl;
-    //     _masks->nick = str.substr(0, str.find('!'));
-    //     _masks->user = str.substr(str.find('!') + 1);
-    //     return;
-    // }
-    // else if (str.find_first_of('@') != std::string::npos)
-    // {
-	// 	std::cout << "3 here" << std::endl;
-    //     _masks->nick = str.substr(0, str.find('@'));
-    //     _masks->host = str.substr(str.find('@') + 1);
-    //     return;
-    // }
-    // else if (str.find_first_of('*') != std::string::npos)
-    // {
-	// 	std::cout << "4 here" << std::endl;
-    //     _masks->wildcard = str;
-    //     return;
-    // }
-    // else
-    // {
-	// 	std::cout << "5 here" << std::endl;
-    //     _masks->nick = str;
-    //     return;
-    // }
 	std::cout << "ignore this case .. it's not a mask" << std::endl;
 }
 
-ft::WildCard::WildCard(std::string const &str)
+bool ft::Mask::match_Mask(std::string const &str, std::string const &Mask)
 {
-    std::string tmp = str;
-    // check if the parameter is a mask
-    // if (is_wildCard(str))
-    // {
-        split_mask(tmp);
-    // }
+    if (Mask.find('*') != std::string::npos)
+    {
+        if (Mask.find('*') == 0)
+        {
+            if (str.find(Mask.substr(1)) != std::string::npos)
+                return true;
+        }
+        else if (Mask.find('*') == Mask.size() - 1)
+        {
+            if (str.find(Mask.substr(0, Mask.size() - 1)) != std::string::npos)
+                return true;
+        }
+        else
+        {
+            if (str.find(Mask.substr(0, Mask.find('*'))) != std::string::npos && str.find(Mask.substr(Mask.find('*') + 1)) != std::string::npos)
+                return true;
+        }
+    }
+	else if (str == Mask)
+		return (true);
+    return false;
 }
 
-ft::WildCard::~WildCard(void)
+ft::Mask::Mask(std::string const &str): is_Mask(false), is_mask(false)
+{
+    std::string tmp = str;
+    split_mask(tmp);
+    if (str.find('*') != std::string::npos)
+	{
+		if (str.find_first_of('*') == str.find_last_of('*'))
+			is_Mask = true;
+	}
+}
+
+ft::Mask::~Mask(void)
 {
     delete _masks;
 }
 
-t_mask	*ft::WildCard::getMask(void)
+t_mask	*ft::Mask::getMask(void)
 {
 	return (this->_masks);
 }
 
+/*
+* nick!user@host
+? *!*@*
+? nic*!user@host
+? nick!@
+? !@host
+*/
 int main ()
 {
-	ft::WildCard wild ("m*!m@*l");
+	ft::Mask wild ("la*!@m*l");
 	std::cout << "nick " << wild.getMask()->nick << std::endl;
 	std::cout << "user " << wild.getMask()->user << std::endl;
 	std::cout << "host " << wild.getMask()->host << std::endl;
+	std::string nick = "lala";
+	std::cout << "does it match " << nick << " " << wild.match_Mask(nick, "*") << std::endl;
 }

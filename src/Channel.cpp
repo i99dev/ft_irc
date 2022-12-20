@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/19 02:33:03 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,17 @@ ft::Client		*ft::Channel::getMember(std::string nick)
 	return (NULL);	
 }
 
-std::vector<ft::WildCard *>		ft::Channel::getExceptionList(void)
+std::vector<ft::Mask *>		ft::Channel::getExceptionList(void)
 {
 	return (_exceptionList);
 }
 
-std::vector<ft::WildCard *>		ft::Channel::getInvitedList(void)
+std::vector<ft::Mask *>		ft::Channel::getInvitedList(void)
 {
 	return (_invitedList);
 }
 
-std::vector<ft::WildCard *>		ft::Channel::getBannedList(void)
+std::vector<ft::Mask *>		ft::Channel::getBannedList(void)
 {
 	return(_banList);
 }
@@ -176,23 +176,23 @@ int	ft::Channel::setChannelMode(char mode, std::string param)
 		return (this->setMemberMode(this->getMember(param), 'v'));
 	else if (ft::ModeTools::isCHflag(mode))
 	{
-		WildCard *wildcard = new WildCard(param);
+		Mask *Mask = new Mask(param);
 		if (mode == 'I')
 		{
 			if (!this->isCHModeSet('i'))
 				this->_mode.push_back(ft::ModeTools::findChannelMode('i'));
-			this->_invitedList.push_back(wildcard);
+			this->_invitedList.push_back(Mask);
 			std::cout << "set i into channel mode if it was I and i was not set" << std::endl;
 			std::cout << "add to the invited list" << std::endl;
 		}
 		else if (mode == 'b')
 		{
-			this->_banList.push_back(wildcard);
+			this->_banList.push_back(Mask);
 			std::cout << "add to the ban list" << std::endl;
 		}
 		else if (mode == 'e')
 		{
-			this->_exceptionList.push_back(wildcard);
+			this->_exceptionList.push_back(Mask);
 			std::cout << "add to the exception list" << std::endl;
 		}
 	}

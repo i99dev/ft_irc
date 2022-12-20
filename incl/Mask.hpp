@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WildCard.hpp                                       :+:      :+:    :+:   */
+/*   Mask.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:36:40 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 06:52:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:01:25 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WILDCARD_HPP
-#define WILDCARD_HPP
+#ifndef Mask_HPP
+#define Mask_HPP
 #include <string>
 #include <vector>
 
@@ -20,25 +20,24 @@ struct _mask
     std::string nick;
     std::string user;
     std::string host;
-    std::string wildcard; // use ex : general* or *general
 } typedef t_mask;
 
 namespace ft
 {
     class Client;
     
-    class WildCard
+    class Mask
     {
     private:
         t_mask *_masks;
+		bool	is_WildCard;
+		bool	is_mask;
 
     public:
-        WildCard(std::string const &str);
-        ~WildCard();
-        bool is_wildCard(std::string const &str);
+        Mask(std::string const &str);
+        ~Mask();
         bool match_wildCard(std::string const &str, std::string const &wildcard);
         void split_mask(std::string  &str);
-        bool is_mask();
         bool match_client_mask(ft::Client *client);
 		t_mask	*getMask();
     };

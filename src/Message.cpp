@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/17 14:40:42 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void ft::Message::parseMessage(std::string const &msg)
 			_Parameter.push_back(tmp);
 			break;
 		}
-		//check wildcard
+		//check Mask
 		_Parameter.push_back(it->second);
 		it++;
 	}
