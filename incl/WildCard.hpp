@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WildCard.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:36:40 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/19 17:25:18 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/20 06:52:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ namespace ft
         void split_mask(std::string  &str);
         bool is_mask();
         bool match_client_mask(ft::Client *client);
+		t_mask	*getMask();
     };
 }
 

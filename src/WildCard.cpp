@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WildCard.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:40:30 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/19 17:31:10 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/20 06:53:50 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@
  */
 bool ft::WildCard::is_wildCard(std::string const &str)
 {
-    if (str.find('*') != std::string::npos || str.find('?') != std::string::npos)
+    if (str.find('*') != std::string::npos)
         return true;
     return false;
 }
+
+t_mask	*ft::WildCard::getMask(void)
+{
+	return (this->_masks);
+}
+
 
 /**
  * @brief Check if the parameter match the wildcard
@@ -43,24 +49,6 @@ bool ft::WildCard::match_wildCard(std::string const &str, std::string const &wil
         else
         {
             if (str.find(wildcard.substr(0, wildcard.find('*'))) != std::string::npos && str.find(wildcard.substr(wildcard.find('*') + 1)) != std::string::npos)
-                return true;
-        }
-    }
-    else if (wildcard.find('?') != std::string::npos)
-    {
-        if (wildcard.find('?') == 0)
-        {
-            if (str.find(wildcard.substr(1)) != std::string::npos)
-                return true;
-        }
-        else if (wildcard.find('?') == wildcard.size() - 1)
-        {
-            if (str.find(wildcard.substr(0, wildcard.size() - 1)) != std::string::npos)
-                return true;
-        }
-        else
-        {
-            if (str.find(wildcard.substr(0, wildcard.find('?'))) != std::string::npos && str.find(wildcard.substr(wildcard.find('?') + 1)) != std::string::npos)
                 return true;
         }
     }
@@ -88,7 +76,7 @@ void ft::WildCard::split_mask(std::string &str)
         _masks->host = str.substr(str.find('@') + 1);
         return;
     }
-    else if (str.find_first_of('*') != std::string::npos || str.find_first_of('?') != std::string::npos)
+    else if (str.find_first_of('*') != std::string::npos)
     {
         _masks->wildcard = str;
         return;
@@ -109,7 +97,6 @@ bool ft::WildCard::is_mask(void)
 
 bool ft::WildCard::match_client_mask(ft::Client *client)
 {
-
     if (_masks->nick != "" && _masks->nick.size() > 1 && match_wildCard(client->getNickName(), _masks->nick) == false)
         return false;
     if (_masks->user != "" && _masks->user.size() > 1 && match_wildCard(client->getUserName(), _masks->user) == false)
@@ -118,7 +105,6 @@ bool ft::WildCard::match_client_mask(ft::Client *client)
         return false;
     if (_masks->wildcard != "" && _masks->wildcard.size() > 1 && !match_wildCard(client->getNickName(), _masks->wildcard))
         return false;
-
     return true;
 }
 
@@ -126,14 +112,13 @@ ft::WildCard::WildCard(std::string const &str)
 {
     std::string tmp = str;
     // check if the parameter is a mask
-    if (is_wildCard(str))
-    {
+    // if (is_wildCard(str))
+    // {
         split_mask(tmp);
-    }
+    // }
 }
 
 ft::WildCard::~WildCard(void)
 {
-
     delete _masks;
 }
