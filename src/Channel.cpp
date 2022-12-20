@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/21 01:50:36 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/21 02:29:24 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,24 @@ ft::Channel::Channel(Client *user, std::string &name)
 	std::cout << "created channel:" << _name << std::endl;
 }
 
-ft::Channel::~Channel(){}
+ft::Channel::~Channel()
+{
+	if (!_bannedList.empty())
+	{
+		for (long unsigned int i = 0; i < _bannedList.size(); i++)
+			delete _bannedList[i];
+	}
+	else if (!_invitedList.empty())
+	{
+		for (long unsigned int i = 0; i < _invitedList.size(); i++)
+			delete _invitedList[i];
+	}
+	else if (!_exceptedList.empty())
+	{
+		for (long unsigned int i = 0; i < _exceptedList.size(); i++)
+			delete _exceptedList[i];	
+	}
+}
 
 // * Channel Check * //
 
@@ -261,19 +278,28 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 		{
 			//  TODO: check if the mask was there using isrepeated function then delete it using findMask
 			if (isRepeatedMask(_invitedList, mask->getMask()) && !_invitedList.empty())
+			{
+				delete *findMask(_invitedList, mask->getMask());
 				_invitedList.erase(findMask(_invitedList, mask->getMask()));
+			}
 			std::cout << "delete " << param << " from the invite list" << std::endl;
 		}
 		else if (mode == 'b')
 		{
 			if (isRepeatedMask(_bannedList, mask->getMask()) && !_bannedList.empty())
+			{
+				delete *findMask(_bannedList, mask->getMask());
 				_bannedList.erase(findMask(_bannedList, mask->getMask()));
+			}
 			std::cout << "delete " << param << " from the ban list" << std::endl;
 		}
 		else if (mode == 'e')
 		{
 			if (isRepeatedMask(_exceptedList, mask->getMask()) && !_exceptedList.empty())
+			{
+				delete *findMask(_exceptedList, mask->getMask());
 				_exceptedList.erase(findMask(_exceptedList, mask->getMask()));
+			}
 			std::cout << "delete " << param << " from the exception list" << std::endl;
 		}
 	}

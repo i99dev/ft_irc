@@ -53,6 +53,7 @@ mkdir -p obj
 mkdir -p obj/src
 mkdir -p obj/src/cmd
 c++ -g -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Who.o -c src/cmd/Who.cpp
+ 
 mkdir -p obj
 mkdir -p obj/src
 mkdir -p obj/src/cmd
@@ -61,6 +62,10 @@ mkdir -p obj
 mkdir -p obj/src
 mkdir -p obj/src/cmd
 c++ -g -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Ping.o -c src/cmd/Ping.cpp
+mkdir -p obj
+mkdir -p obj/src
+mkdir -p obj/src/cmd
+c++ -g -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/Pong.o -c src/cmd/Pong.cpp
 mkdir -p obj
 mkdir -p obj/src
 mkdir -p obj/src/cmd
@@ -85,6 +90,6 @@ mkdir -p obj
 mkdir -p obj/src
 mkdir -p obj/src/cmd
 c++ -g -std=c++98 -Wall -Wextra -Werror -o obj/./src/cmd/List.o -c src/cmd/List.cpp
-c++ -g -std=c++98 -Wall -Wextra -Werror -o ircserv obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/Mask.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Who.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Part.o obj/./src/cmd/Kick.o obj/./src/cmd/Notice.o obj/./src/cmd/Invite.o obj/./src/cmd/Topic.o obj/./src/cmd/List.o
+c++ -g -std=c++98 -Wall -Wextra -Werror -o ircserv obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/Mask.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Who.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Pong.o obj/./src/cmd/Part.o obj/./src/cmd/Kick.o obj/./src/cmd/Notice.o obj/./src/cmd/Invite.o obj/./src/cmd/Topic.o obj/./src/cmd/List.o
 make: Leaving directory `/Users/abrar/Desktop/42-Devcontainer/42-Devcontainer/src/Cursus/ft_irc'
  

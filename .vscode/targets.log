@@ -8,19 +8,19 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Tue Dec 20 09:13:58 2022
+# Make data base, printed on Wed Dec 21 02:18:09 2022
 
 # Variables
 
- 
 # automatic
+ 
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
-# makefile (from `Makefile', line 50)
+# makefile (from `Makefile', line 51)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 # makefile (from `Makefile', line 25)
-SRC = main.cpp ./src/Server.cpp ./src/Client.cpp ./src/Message.cpp ./src/Channel.cpp ./src/Mask.cpp ./src/cmd/Join.cpp ./src/cmd/User.cpp ./src/cmd/Nick.cpp ./src/cmd/PrivMsg.cpp ./src/cmd/Cap.cpp ./src/cmd/Whois.cpp ./src/cmd/Who.cpp ./src/cmd/Mode.cpp ./src/cmd/Ping.cpp ./src/cmd/Part.cpp ./src/cmd/Kick.cpp ./src/cmd/Notice.cpp ./src/cmd/Invite.cpp ./src/cmd/Topic.cpp ./src/cmd/List.cpp 
+SRC = main.cpp ./src/Server.cpp ./src/Client.cpp ./src/Message.cpp ./src/Channel.cpp ./src/Mask.cpp ./src/cmd/Join.cpp ./src/cmd/User.cpp ./src/cmd/Nick.cpp ./src/cmd/PrivMsg.cpp ./src/cmd/Cap.cpp ./src/cmd/Whois.cpp ./src/cmd/Who.cpp ./src/cmd/Mode.cpp ./src/cmd/Ping.cpp ./src/cmd/Pong.cpp ./src/cmd/Part.cpp ./src/cmd/Kick.cpp ./src/cmd/Notice.cpp ./src/cmd/Invite.cpp ./src/cmd/Topic.cpp ./src/cmd/List.cpp 
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -39,9 +39,9 @@ _ = /usr/bin/make
 BLUE = \033[0;34m
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# makefile (from `Makefile', line 48)
+# makefile (from `Makefile', line 49)
 OBJ_DIR = obj
-# makefile (from `Makefile', line 53)
+# makefile (from `Makefile', line 54)
 CXXFLAGS = -Wall -Wextra -Werror
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
@@ -140,6 +140,7 @@ CYAN = \033[0;36m
 # automatic
 +F = $(notdir $+)
 # environment
+ 
 __CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
 # environment
 COMMAND_MODE = unix2003
@@ -147,7 +148,7 @@ COMMAND_MODE = unix2003
 MAKEFILES := 
 # automatic
 <F = $(notdir $<)
-# makefile (from `Makefile', line 52)
+# makefile (from `Makefile', line 53)
 CXX = c++ -g -std=c++98
 # environment
 PAGER = less
@@ -163,7 +164,7 @@ SECURITYSESSIONID = 186b1
 SUFFIXES := 
 # default
 .INCLUDE_DIRS = /usr/local/include
-# makefile (from `Makefile', line 49)
+# makefile (from `Makefile', line 50)
 OBJ_NAME = $(SRC:.cpp=.o)
 # environment
 MAKELEVEL := 0
@@ -187,7 +188,7 @@ VSCODE_PID = 545
 # Implicit Rules
 
 obj/%.o: %.cpp
-#  commands to execute (from `Makefile', line 61):
+#  commands to execute (from `Makefile', line 62):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/src
 	@mkdir -p $(OBJ_DIR)/src/cmd
@@ -273,7 +274,7 @@ obj/main.o: main.cpp
 # ? := main.cpp
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/17=6%
-#  commands to execute (from `Makefile', line 61):
+#  commands to execute (from `Makefile', line 62):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/src
 	@mkdir -p $(OBJ_DIR)/src/cmd
@@ -295,24 +296,23 @@ obj/./src/cmd/Whois.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-20 09:13:54
+#  Last modified 2022-12-21 01:54:00
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-ircserv: obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/Mask.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Who.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Part.o obj/./src/cmd/Kick.o obj/./src/cmd/Notice.o obj/./src/cmd/Invite.o obj/./src/cmd/Topic.o obj/./src/cmd/List.o
+ircserv: obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/Mask.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Who.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Pong.o obj/./src/cmd/Part.o obj/./src/cmd/Kick.o obj/./src/cmd/Notice.o obj/./src/cmd/Invite.o obj/./src/cmd/Topic.o obj/./src/cmd/List.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/7=0%
-#  commands to execute (from `Makefile', line 58):
+#  commands to execute (from `Makefile', line 59):
 	@$(CXX) $(CXXFLAGS) -o $@ $^
 	
 
- 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
@@ -333,7 +333,7 @@ fclean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 70):
+#  commands to execute (from `Makefile', line 71):
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(FT_NAME)
 	
@@ -356,6 +356,13 @@ obj/./src/cmd/Kick.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
+# Not a target:
+obj/./src/cmd/Pong.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -367,7 +374,7 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 67):
+#  commands to execute (from `Makefile', line 68):
 	@rm -rf $(OBJ_DIR)
 	
 
@@ -432,7 +439,7 @@ obj/./src/cmd/Topic.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=31/1024=3%, Rehash=0, Collisions=0/75=0%
+# Load=32/1024=3%, Rehash=0, Collisions=2/77=3%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -444,6 +451,6 @@ obj/./src/cmd/Topic.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Dec 20 09:13:58 2022
+# Finished Make data base on Wed Dec 21 02:18:09 2022
 
  
