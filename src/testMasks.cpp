@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 06:49:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 09:21:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/20 09:25:40 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ int main ()
 	std::cout << "user " << wild.getMask()->user << std::endl;
 	std::cout << "host " << wild.getMask()->host << std::endl;
 	std::string nick = "lala";
-	std::cout << "does it match " << nick << " " << wild.match_Mask(nick, "*") << std::endl;
+	std::cout << "does it match " << nick << " " << wild.match_wildCard(nick, "*") << std::endl;
 }
