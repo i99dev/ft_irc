@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 08:07:19 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 08:12:40 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,30 +98,42 @@ void ft::Server::create_socket()
     if (getaddrinfo(host.c_str(), this->port.c_str(), &hints, &servinfo) != 0)
     {
         std::cerr << "getaddrinfo" << std::endl;
+		if (servinfo)
+			freeaddrinfo(servinfo);
         exit(1);
     }
 
     if ((this->master_fd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1)
     {
         std::cerr << "socket" << std::endl;
+		if (servinfo)
+			freeaddrinfo(servinfo);
         exit(1);
     }
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
         std::cerr << "setsockopt" << std::endl;
+		if (servinfo)
+			freeaddrinfo(servinfo);
         exit(1);
     }
     if (bind(this->master_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
     {
         std::cerr << "bind" << std::endl;
+		if (servinfo)
+				freeaddrinfo(servinfo);
         exit(1);
     }
 
     if (listen(this->master_fd, 10) == -1)
     {
         std::cerr << "listen" << std::endl;
-        exit(1);
+        if (servinfo)
+			freeaddrinfo(servinfo);
+		exit(1);
     }
+	if (servinfo)
+			freeaddrinfo(servinfo);
     std::cout << "Server listening on " << std::endl;
 }
 

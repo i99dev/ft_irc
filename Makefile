@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
+#    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/20 16:14:27 by oal-tena         ###   ########.fr        #
+#    Updated: 2022/12/21 06:48:28 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,16 @@ CYAN = \033[0;36m
 WHITE = \033[0;37m
 RESET = \033[0m
 
+SANITIZE = -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
+
+
 
 SRC =	main.cpp \
 		./src/Server.cpp \
 		./src/Client.cpp \
 		./src/Message.cpp \
 		./src/Channel.cpp  \
-		./src/WildCard.cpp \
+		./src/Mask.cpp \
 		./src/cmd/Join.cpp \
 		./src/cmd/User.cpp \
 		./src/cmd/Nick.cpp \
@@ -50,8 +53,8 @@ OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CXX = c++ -g -std=c++98
-CXXFLAGS = -Wall -Wextra -Werror
+CXX = g++  
+CXXFLAGS = -Wall -Wextra -Werror ${SANITIZE} -std=c++98 -g
 
 all: $(FT_NAME)
 
