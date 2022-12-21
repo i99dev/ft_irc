@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 22:53:12 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 23:07:06 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ std::string storage = "";
 
 #include <signal.h>
 bool closeServer = false;
-//close app by ctrl+c or ctrl+d
-void    sig_handler(int signo)
+// close app by ctrl+c or ctrl+d
+void sig_handler(int signo)
 {
     if (signo == SIGINT)
     {
@@ -43,7 +43,6 @@ void    sig_handler(int signo)
         closeServer = true;
     }
 }
-
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("42_irc"),
@@ -66,7 +65,7 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
 ft::Server::~Server()
 {
     std::cout << "Server destroyed" << std::endl;
-    //close all sockets
+    // close all sockets
     for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
     {
         close((*it)->getSocket());
@@ -74,25 +73,23 @@ ft::Server::~Server()
     }
     close(master_fd);
 
-    //delete all channels
+    // delete all channels
     for (std::vector<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
     {
         delete (*it);
     }
 
-    //delete all commands
-    for (std::map<std::string, ft::Command*>::iterator it = _commands.begin(); it != _commands.end(); it++)
+    // delete all commands
+    for (std::map<std::string, ft::Command *>::iterator it = _commands.begin(); it != _commands.end(); it++)
     {
         delete it->second;
     }
 
-    //delete all messages
+    // delete all messages
     for (std::vector<Message *>::iterator it = messages.begin(); it != messages.end(); it++)
     {
         delete (*it);
     }
-   
-
 }
 
 /**
@@ -110,30 +107,30 @@ void ft::Server::create_socket()
     if (getaddrinfo(host.c_str(), this->port.c_str(), &hints, &servinfo) != 0)
     {
         std::cerr << "getaddrinfo" << std::endl;
-		if (servinfo)
-			freeaddrinfo(servinfo);
+        if (servinfo)
+            freeaddrinfo(servinfo);
         exit(1);
     }
 
     if ((this->master_fd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1)
     {
         std::cerr << "socket" << std::endl;
-		if (servinfo)
-			freeaddrinfo(servinfo);
+        if (servinfo)
+            freeaddrinfo(servinfo);
         exit(1);
     }
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
         std::cerr << "setsockopt" << std::endl;
-		if (servinfo)
-			freeaddrinfo(servinfo);
+        if (servinfo)
+            freeaddrinfo(servinfo);
         exit(1);
     }
     if (bind(this->master_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
     {
         std::cerr << "bind" << std::endl;
-		if (servinfo)
-				freeaddrinfo(servinfo);
+        if (servinfo)
+            freeaddrinfo(servinfo);
         exit(1);
     }
 
@@ -141,11 +138,11 @@ void ft::Server::create_socket()
     {
         std::cerr << "listen" << std::endl;
         if (servinfo)
-			freeaddrinfo(servinfo);
-		exit(1);
+            freeaddrinfo(servinfo);
+        exit(1);
     }
-	if (servinfo)
-			freeaddrinfo(servinfo);
+    if (servinfo)
+        freeaddrinfo(servinfo);
     std::cout << "Server listening on " << std::endl;
 }
 
@@ -249,21 +246,13 @@ void ft::Server::receiveMessage(int i)
     nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes < 0)
     {
-        // Check for the timeout error
-        if (errno == EAGAIN || errno == EWOULDBLOCK || errno == ETIMEDOUT || errno == ECONNRESET || errno == EPIPE || errno == ECONNABORTED || errno == EINTR || errno == ESHUTDOWN)
-        {
-            std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
+        std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
 
-            // close connection
-            close(fds[i].fd);
-            fds.erase(fds.begin() + i);
-            clients.erase(clients.begin() + i - 1);
-        }
-        else
-        {
-            std::cerr << "recv" << std::endl;
-            exit(1);
-        }
+        // close connection
+        close(fds[i].fd);
+        fds.erase(fds.begin() + i);
+        clients.erase(clients.begin() + i - 1);
+        return;
     }
     else
     {

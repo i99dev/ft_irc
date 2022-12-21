@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 07:06:48 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 16:48:41 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 22:59:48 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void ft::Ping::execute()
     _client->setPing(1);
     std::string pong =  "PONG :" + _client->getServerName() + "\r\n";
     if (send(_client->getSocket(), pong.c_str(), pong.size(), 0) == -1)
-        throw std::runtime_error("Error sending PONG");
+        std::cout << "Error: send" << std::endl;
     else
     {
         std::cout << "ping sent count = " << _client->getPing() << std::endl;
