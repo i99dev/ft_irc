@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 03:16:30 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/21 20:56:39 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,15 @@ void ft::Join::execute()
 					break ;
 				}
 				if (channels[i]->isCHModeSet('i')){
-					for (int y = 0; y < int(_client->invites.size()); y++){
-						if (_client->invites[y] == channelName){
-							ok = true;
-						}
-					}
-					if (!ok){
+					if (!channels[i]->isUserInvited(_client)){
 						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+i) - invite only");
-						return ;
+						break ;
+					}
+				}
+				if (!channels[i]->isUserExcepted(_client)){
+					if (channels[i]->isUserBanned(_client)){
+						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+b) - banned");
+						break ;
 					}
 				}
 				// check if channel has a key
