@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 08:12:40 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 08:15:38 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,6 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
 /**
  * @brief get Channels list
  */
-
 std::vector<ft::Channel *> ft::Server::getChannels()
 {
     return this->channels;
