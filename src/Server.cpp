@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 08:19:29 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 22:53:12 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@
 #include "../incl/cmd/Pong.hpp"
 
 std::string storage = "";
+
+#include <signal.h>
+bool closeServer = false;
+//close app by ctrl+c or ctrl+d
+void    sig_handler(int signo)
+{
+    if (signo == SIGINT)
+    {
+        std::cout << "Closing server from ctrl+C" << std::endl;
+        closeServer = true;
+    }
+}
+
 
 ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("42_irc"),
@@ -73,13 +86,12 @@ ft::Server::~Server()
         delete it->second;
     }
 
-    //delete all users
-    for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
+    //delete all messages
+    for (std::vector<Message *>::iterator it = messages.begin(); it != messages.end(); it++)
     {
         delete (*it);
     }
-    freeaddrinfo(servinfo);
-    //fds still reachable how fix it ?
+   
 
 }
 
@@ -150,12 +162,17 @@ void ft::Server::createPoll()
     // set timeout to 120 seconds
     const int timeout = 5 * 1000;
     std::cout << "Server is online" << std::endl;
-
+    signal(SIGINT, sig_handler);
     while (1)
     {
         int ret = poll(&this->fds[0], this->fds.size(), timeout);
         if (ret == -1)
         {
+            if (closeServer)
+            {
+                std::cout << "Closing server" << std::endl;
+                break;
+            }
             std::cerr << "poll" << std::endl;
             exit(1);
         }
@@ -181,7 +198,6 @@ void ft::Server::createPoll()
                 }
             }
         }
-        // VALGRIND_DO_LEAK_CHECK ;
     }
 }
 
@@ -310,7 +326,6 @@ void ft::Server::init_commands(void)
 
 std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
 {
-    std::vector<ft::Message *> messages;
     std::stringstream ss(msg);
     std::string item;
     while (std::getline(ss, item, delim))

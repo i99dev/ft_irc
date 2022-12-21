@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 16:51:09 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 22:47:40 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,4 +214,8 @@ std::string	ft::Client::getUSMode(void)
 }
 
 
-ft::Client::~Client() {}
+ft::Client::~Client() {
+	// clear all the messages
+	_msgRecv.clear();
+	_msgSend.clear();
+}
