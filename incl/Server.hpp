@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 08:12:19 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 22:37:40 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ namespace ft
         std::vector<pollfd> fds;
         std::vector<Channel *> channels;
         std::map<std::string, ft::Command *> _commands;
+        std::vector<ft::Message *> messages;
 
         enum Status
         {
