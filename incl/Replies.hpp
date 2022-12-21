@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 01:01:43 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/21 08:11:10 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@
 	":" + servername + " 353 " + nick + " " + symbol + " #" + channel + " :" + users + "\n"
 #define RPL_ENDOFNAMES(servername, nick, channel) \
 	":" + servername + " 366 " + nick + " " + channel + " :End of /NAMES list\n"
-#define RPL_bannedList 367
+#define RPL_BANLIST 367
 #define RPL_ENDOFBANLIST 368
 #define RPL_ENDOFWHOWAS 369
 #define RPL_INFO 371
