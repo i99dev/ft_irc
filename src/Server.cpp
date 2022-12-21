@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 16:49:45 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 05:20:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void ft::Server::create_socket()
 {
     int yes = 1;
     addrinfo hints, *servinfo;
+	servinfo = NULL;
     std::memset(&hints, 0, sizeof(addrinfo));
 
     hints.ai_family = AF_UNSPEC;
@@ -71,30 +72,42 @@ void ft::Server::create_socket()
     if (getaddrinfo(host.c_str(), this->port.c_str(), &hints, &servinfo) != 0)
     {
         std::cerr << "getaddrinfo" << std::endl;
+		if (servinfo)
+			freeaddrinfo(servinfo);
         exit(1);
     }
 
     if ((this->master_fd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1)
     {
         std::cerr << "socket" << std::endl;
+		if (servinfo)
+			freeaddrinfo(servinfo);
         exit(1);
     }
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
         std::cerr << "setsockopt" << std::endl;
+		if (servinfo)
+			freeaddrinfo(servinfo);
         exit(1);
     }
     if (bind(this->master_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
     {
         std::cerr << "bind" << std::endl;
+		if (servinfo)
+				freeaddrinfo(servinfo);
         exit(1);
     }
 
     if (listen(this->master_fd, 10) == -1)
     {
         std::cerr << "listen" << std::endl;
-        exit(1);
+        if (servinfo)
+			freeaddrinfo(servinfo);
+		exit(1);
     }
+	if (servinfo)
+			freeaddrinfo(servinfo);
     std::cout << "Server listening on " << std::endl;
 }
 

@@ -6,7 +6,7 @@
 #    By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/21 01:54:00 by aaljaber         ###   ########.fr        #
+#    Updated: 2022/12/21 06:48:28 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ PURPLE = \033[0;35m
 CYAN = \033[0;36m
 WHITE = \033[0;37m
 RESET = \033[0m
+
+SANITIZE = -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
+
 
 
 SRC =	main.cpp \
@@ -50,8 +53,8 @@ OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CXX = c++ -g -std=c++98
-CXXFLAGS = -Wall -Wextra -Werror
+CXX = g++  
+CXXFLAGS = -Wall -Wextra -Werror ${SANITIZE} -std=c++98 -g
 
 all: $(FT_NAME)
 

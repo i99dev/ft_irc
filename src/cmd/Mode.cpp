@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/19 01:59:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/21 05:45:44 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,11 +156,6 @@ void	ft::Mode::checkCHModeCases(ft::Channel *channel)
 
 void	ft::Mode::ChannelMode(void)
 {
-	if (_message->getParameter().size() < 2 || _message->getParameter().size() > 5)
-	{
-		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
-		return;
-	}
 	// ? check if this channel is available
 	if (this->_server->isChannel(this->_message->getParameter()[0]))
 	{
