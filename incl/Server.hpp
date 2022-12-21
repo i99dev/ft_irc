@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/11 02:23:12 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/21 07:40:30 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ namespace ft
         int master_fd;     // file descriptor
         int master_socket; // new socket
 		std::string storage;
+        addrinfo hints, *servinfo;
 
     public:
         Server(std::string const &port, std::string const &password);

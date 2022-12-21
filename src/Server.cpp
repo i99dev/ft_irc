@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 16:49:45 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 08:07:19 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,34 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
 ft::Server::~Server()
 {
     std::cout << "Server destroyed" << std::endl;
+    //close all sockets
+    for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
+    {
+        close((*it)->getSocket());
+        delete (*it);
+    }
+    close(master_fd);
+
+    //delete all channels
+    for (std::vector<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
+    {
+        delete (*it);
+    }
+
+    //delete all commands
+    for (std::map<std::string, ft::Command*>::iterator it = _commands.begin(); it != _commands.end(); it++)
+    {
+        delete it->second;
+    }
+
+    //delete all users
+    for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
+    {
+        delete (*it);
+    }
+    freeaddrinfo(servinfo);
+    //fds still reachable how fix it ?
+
 }
 
 /**
@@ -61,7 +89,6 @@ ft::Server::~Server()
 void ft::Server::create_socket()
 {
     int yes = 1;
-    addrinfo hints, *servinfo;
     std::memset(&hints, 0, sizeof(addrinfo));
 
     hints.ai_family = AF_UNSPEC;
@@ -247,22 +274,22 @@ void ft::Server::receiveMessage(int i)
 
 void ft::Server::init_commands(void)
 {
-    _commands["JOIN"] = new ft::Join();
-    _commands["USER"] = new ft::User();
-    _commands["NICK"] = new ft::Nick();
-    _commands["KICK"] = new ft::Kick();
-    _commands["WHOIS"] = new ft::Whois();
-    _commands["WHO"] = new ft::Who();
-    _commands["CAP"] = new ft::Cap();
-    _commands["MODE"] = new ft::Mode();
-    _commands["PING"] = new ft::Ping();
-    _commands["PONG"] = new ft::Pong();
-    _commands["PART"] = new ft::Part();
-    _commands["PRIVMSG"] = new ft::Privmsg();
-    _commands["NOTICE"] = new ft::Notice();
-    _commands["INVITE"] = new ft::Invite();
-    _commands["TOPIC"] = new ft::Topic();
-    _commands["LIST"] = new ft::List();
+    // _commands["JOIN"] = new ft::Join();
+    // _commands["USER"] = new ft::User();
+    // _commands["NICK"] = new ft::Nick();
+    // _commands["KICK"] = new ft::Kick();
+    // _commands["WHOIS"] = new ft::Whois();
+    // _commands["WHO"] = new ft::Who();
+    // _commands["CAP"] = new ft::Cap();
+    // _commands["MODE"] = new ft::Mode();
+    // _commands["PING"] = new ft::Ping();
+    // _commands["PONG"] = new ft::Pong();
+    // _commands["PART"] = new ft::Part();
+    // _commands["PRIVMSG"] = new ft::Privmsg();
+    // _commands["NOTICE"] = new ft::Notice();
+    // _commands["INVITE"] = new ft::Invite();
+    // _commands["TOPIC"] = new ft::Topic();
+    // _commands["LIST"] = new ft::List();
 }
 
 /**
