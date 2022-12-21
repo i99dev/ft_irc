@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 08:15:38 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/21 08:19:29 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,22 +286,22 @@ void ft::Server::receiveMessage(int i)
 
 void ft::Server::init_commands(void)
 {
-    // _commands["JOIN"] = new ft::Join();
-    // _commands["USER"] = new ft::User();
-    // _commands["NICK"] = new ft::Nick();
-    // _commands["KICK"] = new ft::Kick();
-    // _commands["WHOIS"] = new ft::Whois();
-    // _commands["WHO"] = new ft::Who();
-    // _commands["CAP"] = new ft::Cap();
-    // _commands["MODE"] = new ft::Mode();
-    // _commands["PING"] = new ft::Ping();
-    // _commands["PONG"] = new ft::Pong();
-    // _commands["PART"] = new ft::Part();
-    // _commands["PRIVMSG"] = new ft::Privmsg();
-    // _commands["NOTICE"] = new ft::Notice();
-    // _commands["INVITE"] = new ft::Invite();
-    // _commands["TOPIC"] = new ft::Topic();
-    // _commands["LIST"] = new ft::List();
+    _commands["JOIN"] = new ft::Join();
+    _commands["USER"] = new ft::User();
+    _commands["NICK"] = new ft::Nick();
+    _commands["KICK"] = new ft::Kick();
+    _commands["WHOIS"] = new ft::Whois();
+    _commands["WHO"] = new ft::Who();
+    _commands["CAP"] = new ft::Cap();
+    _commands["MODE"] = new ft::Mode();
+    _commands["PING"] = new ft::Ping();
+    _commands["PONG"] = new ft::Pong();
+    _commands["PART"] = new ft::Part();
+    _commands["PRIVMSG"] = new ft::Privmsg();
+    _commands["NOTICE"] = new ft::Notice();
+    _commands["INVITE"] = new ft::Invite();
+    _commands["TOPIC"] = new ft::Topic();
+    _commands["LIST"] = new ft::List();
 }
 
 /**
