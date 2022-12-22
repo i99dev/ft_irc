@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/22 03:15:34 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/22 04:22:52 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ ft::Server::~Server()
 {
     std::cout << "Server destroyed" << std::endl;
     // close all sockets
-    for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
+    for (size_t i = 0; i < clients.size(); i++)
     {
-        close((*it)->getSocket());
-        delete (*it);
+		std::cout << "free this client " << clients[i]->getSocket() << std::endl;
+        close(clients[i]->getSocket());
+        delete clients[i];
     }
     close(master_fd);
 
@@ -200,6 +201,7 @@ void ft::Server::createPoll()
 			std::cout << "Closing server" << std::endl;
 			break;
 		}
+		// VALGRIND_DO_LEAK_CHECK;
     }
 }
 
@@ -212,6 +214,12 @@ void *get_in_addr(struct sockaddr *sa)
         return &(((struct sockaddr_in *)sa)->sin_addr);
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
+
+// ft::Client	*createClient(int new_fd, std::string servername, char *ip_client)
+// {
+//     // ft::Client *client = new ft::Client(new_fd, servername, ip_client);
+// 	return (new ft::Client(new_fd, servername, ip_client));
+// }
 
 /**
  * @brief Accept a new connection
@@ -232,8 +240,13 @@ void ft::Server::acceptConnection()
     }
 
     inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
-    Client *client = new Client(new_fd, servername, ip_client);
-    this->clients.push_back(client);
+    // Client *client = new Client(new_fd, servername, ip_client);
+	std::cout << "create this client " << new_fd << std::endl;
+    this->clients.push_back(new ft::Client(new_fd, servername, ip_client));
+	for (size_t i = 0; i < clients.size(); i++)
+    {
+		std::cout << "This client is " << clients[i]->getSocket() << std::endl;
+    }
     pollfd pfd;
     pfd.fd = new_fd;
     pfd.events = POLLIN;
@@ -256,6 +269,7 @@ void ft::Server::receiveMessage(int i)
         // close connection
         close(fds[i].fd);
         fds.erase(fds.begin() + i);
+		delete clients[i - 1];
         clients.erase(clients.begin() + i - 1);
         return;
     }
