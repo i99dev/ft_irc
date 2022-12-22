@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/22 04:22:52 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/22 04:31:47 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,6 +407,7 @@ void ft::Server::checkConnection()
             this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getServerName() + " (Ping timeout: 5 seconds)\r");
             // close connection
             close(this->clients[i]->fd);
+			delete clients[i];
             this->clients.erase(this->clients.begin() + i);
             // remove from fds
             for (size_t j = 0; j < this->fds.size(); j++)
