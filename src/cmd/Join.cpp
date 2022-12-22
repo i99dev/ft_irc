@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 20:56:39 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/22 03:16:08 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void ft::Join::execute()
 			continue ;
 		}
 		flag = 0;
-		bool ok = false;
+		// bool ok = false;
 		// get channel name from message
 		std::string channelName = chName[i];
 		// get channel key from message
