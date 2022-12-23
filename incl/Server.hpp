@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/23 11:14:56 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/23 11:16:22 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ namespace ft
         int master_fd;     // file descriptor
         int master_socket; // new socket
 		std::string storage;
-        addrinfo hints, *servinfo;
 
     public:
         Server(std::string const &port, std::string const &password);
