@@ -6,13 +6,13 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 23:07:06 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/23 11:15:08 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
 
-// command functions
+//command functions
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
 #include "../incl/cmd/Nick.hpp"
@@ -84,20 +84,15 @@ ft::Server::~Server()
     {
         delete it->second;
     }
-
-    // delete all messages
-    for (std::vector<Message *>::iterator it = messages.begin(); it != messages.end(); it++)
-    {
-        delete (*it);
-    }
 }
 
 /**
  * @brief Create a socket object
- */
+*/
 void ft::Server::create_socket()
 {
     int yes = 1;
+    addrinfo hints, *servinfo;
     std::memset(&hints, 0, sizeof(addrinfo));
 
     hints.ai_family = AF_UNSPEC;
@@ -126,6 +121,7 @@ void ft::Server::create_socket()
             freeaddrinfo(servinfo);
         exit(1);
     }
+
     if (bind(this->master_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
     {
         std::cerr << "bind" << std::endl;
@@ -148,7 +144,7 @@ void ft::Server::create_socket()
 
 /**
  * @brief Create a Poll object
- */
+*/
 void ft::Server::createPoll()
 {
     pollfd pfd;
@@ -200,7 +196,7 @@ void ft::Server::createPoll()
 
 /**
  * @brief tools to get the client's ip address
- */
+*/
 void *get_in_addr(struct sockaddr *sa)
 {
     if (sa->sa_family == AF_INET)
@@ -210,7 +206,7 @@ void *get_in_addr(struct sockaddr *sa)
 
 /**
  * @brief Accept a new connection
- */
+*/
 void ft::Server::acceptConnection()
 {
     int new_fd;
@@ -238,7 +234,7 @@ void ft::Server::acceptConnection()
 
 /**
  * @brief Receive message from client
- */
+*/
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
@@ -311,10 +307,11 @@ void ft::Server::init_commands(void)
 
 /**
  * @brief split Message by newlines to to be multiple messages
- */
+*/
 
 std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
 {
+    std::vector<ft::Message *> messages;
     std::stringstream ss(msg);
     std::string item;
     while (std::getline(ss, item, delim))
@@ -327,7 +324,8 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
 
 /**
  * @brief get Channels list
- */
+*/
+
 std::vector<ft::Channel *> ft::Server::getChannels()
 {
     return this->channels;
@@ -335,7 +333,7 @@ std::vector<ft::Channel *> ft::Server::getChannels()
 
 /**
  * @brief get Clients list
- */
+*/
 std::vector<ft::Client *> ft::Server::getClients()
 {
     return this->clients;
@@ -343,7 +341,7 @@ std::vector<ft::Client *> ft::Server::getClients()
 
 /**
  * @brief get Server name
- */
+*/
 std::string ft::Server::getServerName()
 {
     return this->servername;
@@ -351,7 +349,7 @@ std::string ft::Server::getServerName()
 
 /**
  * @brief get Server port
- */
+*/
 
 std::string ft::Server::getPort()
 {
@@ -369,9 +367,9 @@ bool ft::Server::isNickNameTaken(std::string nickname)
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i]->getNickName() == nickname)
-            return (true);
+            return true;
     }
-    return (false);
+    return false;
 }
 
 std::string ft::Server::getVersion()
