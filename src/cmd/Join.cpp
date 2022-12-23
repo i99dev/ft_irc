@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/22 02:59:31 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:51:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void ft::Join::execute()
 			continue ;
 		}
 		flag = 0;
-		// bool ok = false;
 		// get channel name from message
 		std::string channelName = chName[i];
 		// get channel key from message
