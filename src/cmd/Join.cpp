@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/23 21:43:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/24 04:01:58 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,10 @@ void ft::Join::execute()
 					}
 				}
 				// check if channel has a key
-				if (channels[i]->getpassword() != "")
+				if (channels[i]->getkey() != "")
 				{
 					// check if key is correct
-					if (_message->getParameter()[1].size() > 0 && channels[i]->getpassword() == channelKey)
+					if (_message->getParameter()[1].size() > 0 && channels[i]->getkey() == channelKey)
 					{
 						// add client to channel
 						channels[i]->addUser(_client);
@@ -169,7 +169,7 @@ void ft::Join::execute()
 			//if channel does not exist create 
 			Channel *channel = new Channel(_client,channelName);
 			if (channelKey != "" || channelKey != "x"){
-				channel->setPassword(channelKey);
+				channel->setKey(channelKey);
 			}
 			// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
 			_server->channels.push_back(channel);

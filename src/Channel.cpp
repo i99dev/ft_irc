@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/21 07:46:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/24 04:24:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ ft::Channel::Channel(Client *user, std::string &name)
 	this->members.push_back(creator);
 	this->_created_at = time(0);
 	this->_limit = 0;
+	this->_totalMem = 1;
 	this->_topic = "";
 	std::cout << "created channel:" << _name << std::endl;
 }
@@ -90,9 +91,9 @@ std::string	ft::Channel::getChName(void)
 	return (this->_name);
 }
 
-std::string	ft::Channel::getpassword(void)
+std::string	ft::Channel::getkey(void)
 {
-	return (this->_password);
+	return (this->_key);
 }
 
 ft::Client	*ft::Channel::getCreator(void)
@@ -159,7 +160,21 @@ bool	ft::Channel::_ChName_parse(std::string &name)
 	return(false);
 }
 
-void	ft::Channel::addUser(Client *user)
+bool	ft::Channel::isChannelFull()
+{
+	if (isCHModeSet('l') && _totalMem >= _limit)
+		return (true);
+	return (false);
+}
+
+bool	ft::Channel::isCorrectKey(std::string &key)
+{
+	if (key == _key)
+		return (true);
+	return (false);
+}
+
+void	ft::Channel::_addMembertoChannel(Client *user)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
@@ -170,6 +185,24 @@ void	ft::Channel::addUser(Client *user)
 	new_member.user = user;
 	new_member.user_mode = CLEAR_MODE;
 	this->members.push_back(new_member);
+}
+
+void	ft::Channel::addUser(Client *user)
+{
+	if (isCHModeSet('l'))
+	{
+		if (_totalMem < _limit)
+		{
+			_totalMem++;
+			std::cout << user->getNickName() << " has been added to channel" <<std::endl;
+		}
+		else
+		{
+			std::cout << "Can't add " << user->getNickName() << " .. due to the limit" <<std::endl;
+			return ;
+		}
+	}
+	_addMembertoChannel(user);
 }
 
 // ? MODE
@@ -183,7 +216,7 @@ int	ft::Channel::setChannelMode(char mode, std::string param)
 		this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
 	}
 	if (mode == 'k')
-		setPassword(param);
+		setKey(param);
 	else if (mode == 'l')
 	{
 		for (size_t i = 0; i < param.size(); i++)
@@ -215,7 +248,7 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 			{
 				this->_mode.erase(this->_mode.begin() + i);
 				if (mode == 'k')
-					_password = "";
+					_key = "";
 				else if (mode == 'l')
 					this->_limit = 0;
 				else if (mode == 'i' && !_invitedList.empty())
@@ -282,9 +315,9 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 			//  TODO: check if the mask was there using isrepeated function then delete it using findMask
 			if (isRepeatedMask(_invitedList, mask->getMask()) && !_invitedList.empty())
 			{
-				std::cout << "pos " << findMask(_invitedList, mask->getMask()) << std::endl;
+				std::cout << "pos " << _findMask(_invitedList, mask->getMask()) << std::endl;
 				std::cout << _invitedList[0]->getMask()->nick << std::endl;
-				int i = findMask(_invitedList, mask->getMask());
+				int i = _findMask(_invitedList, mask->getMask());
 				delete _invitedList[i];
 				_invitedList.erase(_invitedList.begin() + i);
 				std::cout << "delete " << param << " from the invite list" << std::endl;
@@ -294,7 +327,7 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 		{
 			if (isRepeatedMask(_bannedList, mask->getMask()) && !_bannedList.empty())
 			{
-				int i = findMask(_bannedList, mask->getMask());
+				int i = _findMask(_bannedList, mask->getMask());
 				delete _bannedList[i];
 				_bannedList.erase(_bannedList.begin() + i);
 				std::cout << "delete " << param << " from the ban list" << std::endl;
@@ -304,7 +337,7 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 		{
 			if (isRepeatedMask(_exceptedList, mask->getMask()) && !_exceptedList.empty())
 			{
-				int i = findMask(_exceptedList, mask->getMask());
+				int i = _findMask(_exceptedList, mask->getMask());
 				delete _exceptedList[i];
 				_exceptedList.erase(_exceptedList.begin() + i);
 				std::cout << "delete " << param << " from the exception list" << std::endl;
@@ -327,7 +360,9 @@ int	ft::Channel::setMemberMode(Client *user, char mode)
 		{
 			if (this->members[i].user->fd == user->fd)
 			{
-				this->members[i].user_mode = ft::ModeTools::findChannelMode(mode);
+				// ? if not an operatot not creator .. the user can be set to whatever voice priv or oper ptiv
+				if (this->members[i].user_mode != O_CHANNEL_CREATOR && this->members[i].user_mode != o_OPERATOR_PRIVILEGE)
+					this->members[i].user_mode = ft::ModeTools::findChannelMode(mode);
 				return (1);
 			}
 		}
@@ -353,9 +388,9 @@ int	ft::Channel::removeMemberMode(Client *user, char mode)
 	return (0);
 }
 
-void	ft::Channel::setPassword(std::string &password)
+void	ft::Channel::setKey(std::string &key)
 {
-	this->_password = password;
+	this->_key = key;
 }
 
 void	ft::Channel::setTopic(std::string &topic)
@@ -379,7 +414,7 @@ bool	ft::Channel::isRepeatedMask(const std::vector<ft::Mask *>	&MasksList, t_mas
 	return (false);
 }
 
-int	ft::Channel::findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask)
+int	ft::Channel::_findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask)
 {
 	for (long unsigned int i = 0; i < MasksList.size(); i++)
 	{

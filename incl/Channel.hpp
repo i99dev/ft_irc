@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 23:14:15 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/24 04:03:00 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ namespace ft
 			std::string								_name;
 			std::vector<ft::Channel_Mode>			_mode;
 			time_t									_created_at;
-			std::string								_password;
+			std::string								_key;
 			std::string								_topic;
 			int										_limit;
-			bool									_ChName_parse(std::string &name);
+			int										_totalMem;
 			std::vector<ft::Mask *>					_bannedList;
 			std::vector<ft::Mask *>					_invitedList;
 			std::vector<ft::Mask *>					_exceptedList;
+			bool									_ChName_parse(std::string &name);
+			void									_addMembertoChannel(Client *user);
+			int										_findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask);
+			
 
 		public:
 
@@ -57,7 +61,7 @@ namespace ft
 		
 			// * Getters * //
 			std::string								getChName(void);
-			std::string								getpassword(void);
+			std::string								getkey(void);
 			std::vector<ft::Channel_Member>			getMembers(void);
 			ft::Client								*getCreator(void);
 			std::string								getTopic(void);
@@ -71,6 +75,11 @@ namespace ft
 
 			// ? JOIN
 			void									addUser(ft::Client *user);
+			bool									isUserBanned(ft::Client *client);
+			bool									isUserInvited(ft::Client *client);
+			bool									isUserExcepted(ft::Client *client);
+			bool									isChannelFull();
+			bool									isCorrectKey(std::string &key);
 			
 			// ? MODE
 			int										setChannelMode(char mode, std::string param);
@@ -79,7 +88,7 @@ namespace ft
 			int										removeChannelMode(char mode, std::string param);
 			int										removeMemberMode(Client *user, char mode);
 			int										removeChannelFlag(char mode, std::string param);
-			void									setPassword(std::string &password);
+			void									setKey(std::string &key);
 			void									setTopic(std::string &topic);
 			void									setTopic(int num);
 			ft::Channel_Mode						findMode(char mode);
@@ -90,12 +99,8 @@ namespace ft
 			bool									isMember(std::string nick);
 			bool									isMemberOperator(int OwnerFD);
 			bool									isRepeatedMask(const std::vector<ft::Mask *> &MasksList, t_mask *mask);
-			int										findMask(const std::vector<ft::Mask *>	&MasksList, t_mask *mask);
 			// ? PART
 			void									removeUser(int userFD);
-			bool									isUserBanned(ft::Client *client);
-			bool									isUserInvited(ft::Client *client);
-			bool									isUserExcepted(ft::Client *client);
 	};
 	class WrongChannelNameRequir : public std::exception
 	{

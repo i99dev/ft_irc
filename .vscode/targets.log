@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Wed Dec 21 07:26:57 2022
+# Make data base, printed on Sat Dec 24 03:26:18 2022
 
 # Variables
 
@@ -17,6 +17,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # makefile (from `Makefile', line 54)
+ 
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 # makefile (from `Makefile', line 28)
 SRC = main.cpp ./src/Server.cpp ./src/Client.cpp ./src/Message.cpp ./src/Channel.cpp ./src/Mask.cpp ./src/cmd/Join.cpp ./src/cmd/User.cpp ./src/cmd/Nick.cpp ./src/cmd/PrivMsg.cpp ./src/cmd/Cap.cpp ./src/cmd/Whois.cpp ./src/cmd/Who.cpp ./src/cmd/Mode.cpp ./src/cmd/Ping.cpp ./src/cmd/Pong.cpp ./src/cmd/Part.cpp ./src/cmd/Kick.cpp ./src/cmd/Notice.cpp ./src/cmd/Invite.cpp ./src/cmd/Topic.cpp ./src/cmd/List.cpp 
@@ -41,7 +42,7 @@ MAKEFILE_LIST :=  Makefile
 # makefile (from `Makefile', line 52)
 OBJ_DIR = obj
 # makefile (from `Makefile', line 57)
-CXXFLAGS = -Wall -Wextra -Werror ${SANITIZE} -std=c++98 -g
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 # makefile (from `Makefile', line 24)
 SANITIZE = -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 # environment
@@ -129,6 +130,7 @@ FT_NAME = ircserv
 # environment
 MFLAGS = -Rrqp
 # automatic
+ 
 *D = $(patsubst %/,%,$(dir $*))
 # environment
 XPC_SERVICE_NAME = application.com.microsoft.VSCode.31315930.31315936
@@ -181,11 +183,11 @@ VSCODE_PID = 545
 
 # Directories
 
-# src/cmd (device 16777233, inode 32476051): 18 files, no impossibilities so far.
-# . (device 16777233, inode 32050957): 15 files, no impossibilities.
-# src (device 16777233, inode 32051051): 12 files, no impossibilities so far.
+# src/cmd (device 16777233, inode 33936669): 18 files, no impossibilities so far.
+# . (device 16777233, inode 33936536): 16 files, no impossibilities.
+# src (device 16777233, inode 33936662): 12 files, no impossibilities so far.
 
-# 45 files, no impossibilities in 3 directories.
+# 46 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -204,7 +206,7 @@ obj/%.o: %.cpp
 obj/./src/Channel.o: src/Channel.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/Channel'
-#  Last modified 2022-12-21 07:25:51
+#  Last modified 2022-12-24 01:45:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -219,7 +221,7 @@ obj/./src/Channel.o: src/Channel.cpp
 # Not a target:
 src/cmd/Whois.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-15 13:11:09
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -238,7 +240,7 @@ all: ircserv
 # Not a target:
 src/cmd/Pong.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:23:01
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -247,7 +249,7 @@ src/cmd/Pong.cpp:
 obj/./src/cmd/Ping.o: src/cmd/Ping.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Ping'
-#  Last modified 2022-12-21 07:25:53
+#  Last modified 2022-12-24 01:45:21
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -267,7 +269,7 @@ obj/./src/cmd/Ping.o: src/cmd/Ping.cpp
 obj/./src/cmd/Nick.o: src/cmd/Nick.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Nick'
-#  Last modified 2022-12-21 07:25:52
+#  Last modified 2022-12-24 01:45:19
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -282,7 +284,7 @@ obj/./src/cmd/Nick.o: src/cmd/Nick.cpp
 obj/./src/Mask.o: src/Mask.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/Mask'
-#  Last modified 2022-12-21 07:25:51
+#  Last modified 2022-12-24 01:45:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -296,9 +298,8 @@ obj/./src/Mask.o: src/Mask.cpp
 
 obj/./src/cmd/Mode.o: src/cmd/Mode.cpp
 #  Implicit rule search has been done.
- 
 #  Implicit/static pattern stem: `./src/cmd/Mode'
-#  Last modified 2022-12-21 07:25:53
+#  Last modified 2022-12-24 01:45:20
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -313,7 +314,7 @@ obj/./src/cmd/Mode.o: src/cmd/Mode.cpp
 # Not a target:
 src/cmd/User.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-22 06:58:44
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -322,7 +323,7 @@ src/cmd/User.cpp:
 obj/./src/cmd/PrivMsg.o: src/cmd/PrivMsg.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/PrivMsg'
-#  Last modified 2022-12-21 07:25:52
+#  Last modified 2022-12-24 01:45:19
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -337,7 +338,7 @@ obj/./src/cmd/PrivMsg.o: src/cmd/PrivMsg.cpp
 obj/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `main'
-#  Last modified 2022-12-21 07:25:49
+#  Last modified 2022-12-24 01:45:16
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -358,7 +359,7 @@ obj/main.o: main.cpp
 # Not a target:
 src/cmd/Mode.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 05:45:44
+#  Last modified 2022-12-23 06:55:01
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -367,7 +368,7 @@ src/cmd/Mode.cpp:
 obj/./src/cmd/Whois.o: src/cmd/Whois.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Whois'
-#  Last modified 2022-12-21 07:25:53
+#  Last modified 2022-12-24 01:45:20
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -382,7 +383,7 @@ obj/./src/cmd/Whois.o: src/cmd/Whois.cpp
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 06:48:28
+#  Last modified 2022-12-23 07:11:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -391,7 +392,7 @@ Makefile:
 # Not a target:
 src/cmd/PrivMsg.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:23:01
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -399,7 +400,7 @@ src/cmd/PrivMsg.cpp:
 
 ircserv: obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o obj/./src/Channel.o obj/./src/Mask.o obj/./src/cmd/Join.o obj/./src/cmd/User.o obj/./src/cmd/Nick.o obj/./src/cmd/PrivMsg.o obj/./src/cmd/Cap.o obj/./src/cmd/Whois.o obj/./src/cmd/Who.o obj/./src/cmd/Mode.o obj/./src/cmd/Ping.o obj/./src/cmd/Pong.o obj/./src/cmd/Part.o obj/./src/cmd/Kick.o obj/./src/cmd/Notice.o obj/./src/cmd/Invite.o obj/./src/cmd/Topic.o obj/./src/cmd/List.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-12-21 07:25:55
+#  Last modified 2022-12-24 01:45:24
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -411,16 +412,17 @@ ircserv: obj/main.o obj/./src/Server.o obj/./src/Client.o obj/./src/Message.o ob
 # Not a target:
 src/Client.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:23:01
+#  Last modified 2022-12-23 07:11:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+ 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-15 13:11:09
+#  Last modified 2022-12-23 07:11:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -429,7 +431,7 @@ main.cpp:
 # Not a target:
 src/cmd/Kick.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -438,7 +440,7 @@ src/cmd/Kick.cpp:
 obj/./src/cmd/User.o: src/cmd/User.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/User'
-#  Last modified 2022-12-21 07:25:52
+#  Last modified 2022-12-24 01:45:19
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -453,7 +455,7 @@ obj/./src/cmd/User.o: src/cmd/User.cpp
 # Not a target:
 src/cmd/Part.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -472,7 +474,7 @@ fclean:
 # Not a target:
 src/Server.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 05:20:04
+#  Last modified 2022-12-24 01:43:02
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -481,7 +483,7 @@ src/Server.cpp:
 # Not a target:
 src/cmd/Join.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-24 01:43:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -496,7 +498,7 @@ src/cmd/Join.cpp:
 obj/./src/Client.o: src/Client.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/Client'
-#  Last modified 2022-12-21 07:25:50
+#  Last modified 2022-12-24 01:45:17
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -511,7 +513,7 @@ obj/./src/Client.o: src/Client.cpp
 obj/./src/cmd/Kick.o: src/cmd/Kick.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Kick'
-#  Last modified 2022-12-21 07:25:54
+#  Last modified 2022-12-24 01:45:21
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -526,7 +528,7 @@ obj/./src/cmd/Kick.o: src/cmd/Kick.cpp
 obj/./src/cmd/Pong.o: src/cmd/Pong.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Pong'
-#  Last modified 2022-12-21 07:25:54
+#  Last modified 2022-12-24 01:45:21
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -547,7 +549,7 @@ re: fclean all
 # Not a target:
 src/Message.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:23:01
+#  Last modified 2022-12-22 06:58:44
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -556,7 +558,7 @@ src/Message.cpp:
 # Not a target:
 src/cmd/Cap.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:23:01
+#  Last modified 2022-12-23 07:11:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -574,8 +576,7 @@ clean:
 obj/./src/cmd/Part.o: src/cmd/Part.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Part'
- 
-#  Last modified 2022-12-21 07:25:54
+#  Last modified 2022-12-24 01:45:21
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -590,7 +591,7 @@ obj/./src/cmd/Part.o: src/cmd/Part.cpp
 # Not a target:
 src/cmd/List.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -599,7 +600,7 @@ src/cmd/List.cpp:
 # Not a target:
 src/cmd/Who.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-15 13:11:09
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -608,7 +609,7 @@ src/cmd/Who.cpp:
 # Not a target:
 src/cmd/Invite.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-22 06:58:56
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -617,7 +618,7 @@ src/cmd/Invite.cpp:
 # Not a target:
 src/cmd/Notice.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -626,7 +627,7 @@ src/cmd/Notice.cpp:
 # Not a target:
 src/cmd/Topic.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-17 23:10:51
+#  Last modified 2022-12-21 09:36:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -635,7 +636,7 @@ src/cmd/Topic.cpp:
 # Not a target:
 src/Channel.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 05:33:23
+#  Last modified 2022-12-24 01:40:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -644,7 +645,7 @@ src/Channel.cpp:
 obj/./src/Server.o: src/Server.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/Server'
-#  Last modified 2022-12-21 07:25:50
+#  Last modified 2022-12-24 01:45:17
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -659,7 +660,7 @@ obj/./src/Server.o: src/Server.cpp
 obj/./src/cmd/Join.o: src/cmd/Join.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Join'
-#  Last modified 2022-12-21 07:25:51
+#  Last modified 2022-12-24 01:45:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -674,7 +675,7 @@ obj/./src/cmd/Join.o: src/cmd/Join.cpp
 # Not a target:
 src/cmd/Ping.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:27:20
+#  Last modified 2022-12-23 07:11:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -683,7 +684,7 @@ src/cmd/Ping.cpp:
 # Not a target:
 src/cmd/Nick.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 04:23:01
+#  Last modified 2022-12-23 06:55:01
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -692,7 +693,7 @@ src/cmd/Nick.cpp:
 obj/./src/Message.o: src/Message.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/Message'
-#  Last modified 2022-12-21 07:25:50
+#  Last modified 2022-12-24 01:45:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -707,12 +708,12 @@ obj/./src/Message.o: src/Message.cpp
 obj/./src/cmd/Cap.o: src/cmd/Cap.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Cap'
-#  Last modified 2022-12-21 07:25:52
+#  Last modified 2022-12-24 01:45:19
 #  File has been updated.
 #  Successfully updated.
+ 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
- 
 #  commands to execute (from `Makefile', line 65):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/src
@@ -723,7 +724,7 @@ obj/./src/cmd/Cap.o: src/cmd/Cap.cpp
 # Not a target:
 src/Mask.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-12-21 05:38:45
+#  Last modified 2022-12-21 09:36:22
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -732,7 +733,7 @@ src/Mask.cpp:
 obj/./src/cmd/List.o: src/cmd/List.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/List'
-#  Last modified 2022-12-21 07:25:55
+#  Last modified 2022-12-24 01:45:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -747,7 +748,7 @@ obj/./src/cmd/List.o: src/cmd/List.cpp
 obj/./src/cmd/Who.o: src/cmd/Who.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Who'
-#  Last modified 2022-12-21 07:25:53
+#  Last modified 2022-12-24 01:45:20
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -762,7 +763,7 @@ obj/./src/cmd/Who.o: src/cmd/Who.cpp
 obj/./src/cmd/Invite.o: src/cmd/Invite.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Invite'
-#  Last modified 2022-12-21 07:25:55
+#  Last modified 2022-12-24 01:45:22
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -777,7 +778,7 @@ obj/./src/cmd/Invite.o: src/cmd/Invite.cpp
 obj/./src/cmd/Notice.o: src/cmd/Notice.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Notice'
-#  Last modified 2022-12-21 07:25:55
+#  Last modified 2022-12-24 01:45:22
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -792,7 +793,7 @@ obj/./src/cmd/Notice.o: src/cmd/Notice.cpp
 obj/./src/cmd/Topic.o: src/cmd/Topic.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `./src/cmd/Topic'
-#  Last modified 2022-12-21 07:25:55
+#  Last modified 2022-12-24 01:45:22
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -817,6 +818,6 @@ obj/./src/cmd/Topic.o: src/cmd/Topic.cpp
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Dec 21 07:26:57 2022
+# Finished Make data base on Sat Dec 24 03:26:18 2022
 
  

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/21 05:30:35 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/24 03:59:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define MODE_LIST_HPP
 #define	CHMODE_NUM 14
 #define CHMODE_CHAR (char []){'C', 'N', 'O', 'o', 'v', 'b', 'I', 'e', 'i', 'm', 'p', 't', 'k', 'l'}
-#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::b_BAN_MASK, ft::I_INVITATION_MASK, ft::e_EXCEPTION_MASK, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_PASSWORD, ft::l_USER_LIMIT}
+#define CHMODE_ENUM (ft::Channel_Mode []){ft::CLEAR_MODE, ft::NO_MODE, ft::O_CHANNEL_CREATOR, ft::o_OPERATOR_PRIVILEGE, ft::v_VOICE_PRIVILEGE, ft::b_BAN_MASK, ft::I_INVITATION_MASK, ft::e_EXCEPTION_MASK, ft::i_INVITE_ONLY_CHANNEL, ft::m_MODERATED_CHANNEL, ft::p_PRIVATE_CHANNEL, ft::t_TOPIC, ft::k_CAHNNEL_KEY, ft::l_USER_LIMIT}
 #define	USMODE_NUM 3
 #define USMODE_CHAR (char []){'n', 'o', 'i'}
 #define USMODE_ENUM (ft::User_Mode []){ft::n_NO_MODE, ft::o_OPERATOR_FLAG, ft::i_INVISIBLE}
@@ -40,7 +40,7 @@ namespace ft
 		m_MODERATED_CHANNEL, //? moderated channel (only operators and voice memebers speak) flag;
 		p_PRIVATE_CHANNEL, //? private channel (invited & correct password) flag;
 		t_TOPIC, // ? topic (only set by operators);
-		k_CAHNNEL_PASSWORD, //? set/remove(+/-) the channel key (password);
+		k_CAHNNEL_KEY, //? set/remove(+/-) the channel key (password);
 		l_USER_LIMIT, //? set/remove(+/-) the user limit to channel;
 	};
 	enum User_Mode
