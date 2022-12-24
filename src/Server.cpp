@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/24 07:31:28 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:41:16 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,14 +418,13 @@ void ft::Server::checkConnection()
             // close connection
             close(this->clients[i]->fd);
 			delete clients[i];
-            this->clients.erase(this->clients.begin() + i);
-            // remove from fds
+            // // remove from fds
             for (size_t j = 0; j < this->clients.size(); j++)
             {
                 if (this->fds[j].fd == this->clients[i]->fd)
                 {
+                    //remove from fds by index
                     this->fds.erase(this->fds.begin() + j);
-                    break;
                 }
             }
         }
