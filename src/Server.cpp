@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/24 00:59:08 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/24 07:31:28 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void ft::Server::createPoll()
 			std::cout << "Closing server" << std::endl;
 			break;
 		}
-		// VALGRIND_DO_LEAK_CHECK;
+		VALGRIND_DO_LEAK_CHECK;
     }
 }
 
@@ -420,7 +420,7 @@ void ft::Server::checkConnection()
 			delete clients[i];
             this->clients.erase(this->clients.begin() + i);
             // remove from fds
-            for (size_t j = 0; j < this->fds.size(); j++)
+            for (size_t j = 0; j < this->clients.size(); j++)
             {
                 if (this->fds[j].fd == this->clients[i]->fd)
                 {
