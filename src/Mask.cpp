@@ -86,12 +86,17 @@ ft::Mask::Mask(std::string const &str):_mask(NULL), is_WildCard(false)
 {
     std::string tmp = str;
     this->_mask = split_mask(tmp);
-	this->is_mask = this->_mask->is_mask;
-	std::cout << "is mask? " << this->is_mask << std::endl;
-    if (str.find('*') != std::string::npos)
+	if (!this->_mask)
+		this->is_mask = false;
+	else
 	{
-		if (str.find_first_of('*') == str.find_last_of('*'))
-			is_WildCard = true;
+		this->is_mask = this->_mask->is_mask;
+		std::cout << "is mask? " << this->is_mask << std::endl;
+		if (str.find('*') != std::string::npos)
+		{
+			if (str.find_first_of('*') == str.find_last_of('*'))
+				is_WildCard = true;
+		}
 	}
 }
 
