@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 17:17:42 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:35:54 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,19 @@ ft::Channel::~Channel()
 {
 	if (!_bannedList.empty())
 	{
+		std::cout << "free _bannedList" << std::endl;
 		for (long unsigned int i = 0; i < _bannedList.size(); i++)
 			delete _bannedList[i];
 	}
-	else if (!_invitedList.empty())
+	if (!_invitedList.empty())
 	{
+		std::cout << "free _invitedList" << std::endl;
 		for (long unsigned int i = 0; i < _invitedList.size(); i++)
 			delete _invitedList[i];
 	}
-	else if (!_exceptedList.empty())
+	if (!_exceptedList.empty())
 	{
+		std::cout << "free _exceptedList" << std::endl;
 		for (long unsigned int i = 0; i < _exceptedList.size(); i++)
 			delete _exceptedList[i];	
 	}

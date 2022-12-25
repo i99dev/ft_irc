@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 17:30:02 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:36:22 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,12 +194,12 @@ void ft::Server::createPoll()
                 }
             }
         }
-        if (closeServer)
-        {
-            std::cout << "Closing server" << std::endl;
-            break;
-        }
-        VALGRIND_DO_LEAK_CHECK;
+		if (closeServer)
+		{
+			std::cout << "Closing server" << std::endl;
+			break;
+		}
+		// VALGRIND_DO_LEAK_CHECK;
     }
 }
 
