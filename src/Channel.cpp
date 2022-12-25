@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 13:22:37 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:17:42 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ ft::Channel::Channel(Client *user, std::string &name)
 		throw WrongChannelNameRequir();
 	else
 		this->_name = name;
-	Channel_Member creator;
-	creator.user = user;
-	creator.user_mode = O_CHANNEL_CREATOR;
+	Channel_Member *creator = new Channel_Member;
+	creator->user = user;
+	creator->user_mode = O_CHANNEL_CREATOR;
 	this->members.push_back(creator);
 	this->_created_at = time(0);
 	this->_limit = 0;
@@ -56,7 +56,7 @@ bool	ft::Channel::isMember(int ownerFD)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user->fd == ownerFD)
+		if (this->members[i]->user->fd == ownerFD)
 			return (true);
 	}
 	return (false);
@@ -66,7 +66,7 @@ bool	ft::Channel::isMember(std::string nick)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user->getNickName() == nick)
+		if (this->members[i]->user->getNickName() == nick)
 			return (true);
 	}
 	return (false);
@@ -76,9 +76,9 @@ bool	ft::Channel::isMemberOperator(int OwnerFd)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user->fd == OwnerFd)
+		if (this->members[i]->user->fd == OwnerFd)
 		{
-			if (this->members[i].user_mode == o_OPERATOR_PRIVILEGE || this->members[i].user_mode == O_CHANNEL_CREATOR)
+			if (this->members[i]->user_mode == o_OPERATOR_PRIVILEGE || this->members[i]->user_mode == O_CHANNEL_CREATOR)
 				return (true);
 		}
 	}
@@ -100,13 +100,13 @@ ft::Client	*ft::Channel::getCreator(void)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user_mode == O_CHANNEL_CREATOR)
-			return (this->members[i].user);
+		if (this->members[i]->user_mode == O_CHANNEL_CREATOR)
+			return (this->members[i]->user);
 	}
 	return (NULL);
 }
 
-std::vector<ft::Channel_Member>	ft::Channel::getMembers(void)
+std::vector<ft::Channel_Member *>	ft::Channel::getMembers(void)
 {
 	return (this->members);
 }
@@ -120,8 +120,8 @@ ft::Client		*ft::Channel::getMember(std::string nick)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user->getNickName() == nick)
-			return (this->members[i].user);
+		if (this->members[i]->user->getNickName() == nick)
+			return (this->members[i]->user);
 	}
 	// ! if not a member
 	return (NULL);	
@@ -179,12 +179,13 @@ void	ft::Channel::_addMembertoChannel(Client *user)
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
 		// TODO: Check later 
-		if (this->members[i].user->getNickName() == user->getNickName())
+		if (this->members.at(i)->user->getNickName() == user->getNickName())
 			return ;
 	}
-	ft::Channel_Member new_member;
-	new_member.user = user;
-	new_member.user_mode = CLEAR_MODE;
+	ft::Channel_Member *new_member = new ft::Channel_Member;
+	new_member->user = user;
+	new_member->user_mode = CLEAR_MODE;
+	//push 
 	this->members.push_back(new_member);
 }
 
@@ -359,11 +360,11 @@ int	ft::Channel::setMemberMode(Client *user, char mode)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			if (this->members[i].user->fd == user->fd)
+			if (this->members[i]->user->fd == user->fd)
 			{
 				// ? if not an operatot not creator .. the user can be set to whatever voice priv or oper ptiv
-				if (this->members[i].user_mode != O_CHANNEL_CREATOR && this->members[i].user_mode != o_OPERATOR_PRIVILEGE)
-					this->members[i].user_mode = ft::ModeTools::findChannelMode(mode);
+				if (this->members[i]->user_mode != O_CHANNEL_CREATOR && this->members[i]->user_mode != o_OPERATOR_PRIVILEGE)
+					this->members[i]->user_mode = ft::ModeTools::findChannelMode(mode);
 				return (1);
 			}
 		}
@@ -379,9 +380,9 @@ int	ft::Channel::removeMemberMode(Client *user, char mode)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			if (this->members[i].user->fd == user->fd)
+			if (this->members[i]->user->fd == user->fd)
 			{
-				this->members[i].user_mode = CLEAR_MODE;
+				this->members[i]->user_mode = CLEAR_MODE;
 				return (1);
 			}
 		}
@@ -446,9 +447,9 @@ bool	ft::Channel::isMEModeSet(Client *user, char mode)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			if (this->members[i].user->fd == user->fd)
+			if (this->members[i]->user->fd == user->fd)
 			{
-				if (this->members[i].user_mode == ft::ModeTools::findChannelMode(mode))
+				if (this->members[i]->user_mode == ft::ModeTools::findChannelMode(mode))
 					return (true);
 			}
 		}
@@ -491,7 +492,7 @@ void	ft::Channel::removeUser(int userFD)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user->fd == userFD)
+		if (this->members[i]->user->fd == userFD)
 		{
 			this->members.erase(this->members.begin() + i);
 			return ;
@@ -503,7 +504,7 @@ std::vector<ft::Client *>	ft::Channel::getUsers(void)
 {
 	std::vector<ft::Client *>	members;
 	for (long unsigned int i = 0; i < this->members.size(); i++)
-		members.push_back(this->members[i].user);
+		members.push_back(this->members[i]->user);
 	return (members);
 }
 

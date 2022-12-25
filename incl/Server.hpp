@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 08:33:49 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:30:19 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ namespace ft
         void checkConnection();
         void removeClient(Client *client);
         void remove_fds(int fd);
-        void assignClient_fd(Client *clinet_disconnect, Client *clinet_Back);
 
         // message functions
         void sendReply(Client *client, std::string msg);

@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 13:31:16 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:26:59 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void ft::Join::execute()
 	}
 	int flag = 0;
 		// get channel ;ist from server
-	std::vector<Channel *> channels = _server->getChannels();
+	// std::vector<Channel *> channels = _server->getChannels();
 
 	std::string cmd = _message->getParameter()[0];
 	std::vector<std::string> chName; // to store all channel names
@@ -88,14 +88,14 @@ void ft::Join::execute()
 			}
 		}
 		// check if channel exists
-		for (int i = 0; i < int(channels.size()); i++)
+		for (int i = 0; i < int(_server->getChannels().size()); i++)
 		{
-			if (channels[i]->getChName() == channelName)
+			if (_server->getChannels()[i]->getChName() == channelName)
 			{
 				int gg = 0;
 				flag = 1;
-				for (int j = 0; j < int(channels[i]->getUsers().size()); j++){
-					if (channels[i]->getUsers()[j]->getNickName() == _client->getNickName()  && channels[i]->getUsers()[j]->fd == _client->fd ){
+				for (int j = 0; j < int(_server->getChannels()[i]->getUsers().size()); j++){
+					if (_server->getChannels()[i]->getUsers()[j]->getNickName() == _client->getNickName()  && _server->getChannels()[i]->getUsers()[j]->fd == _client->fd ){
 						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
 						gg = 1;
 						break ;
@@ -104,33 +104,33 @@ void ft::Join::execute()
 				if (gg == 1){
 					break ;
 				}
-				if (channels[i]->isCHModeSet('i')){
-					if (!channels[i]->isUserInvited(_client)){
+				if (_server->getChannels()[i]->isCHModeSet('i')){
+					if (!_server->getChannels()[i]->isUserInvited(_client)){
 						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+i) - invite only");
 						break ;
 					}
 				}
-				if (!channels[i]->isUserExcepted(_client)){
-					if (channels[i]->isUserBanned(_client)){
+				if (!_server->getChannels()[i]->isUserExcepted(_client)){
+					if (_server->getChannels()[i]->isUserBanned(_client)){
 						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+b) - banned");
 						break ;
 					}
 				}
 				// check if channel has a key
-				if (channels[i]->getkey() != "")
+				if (_server->getChannels()[i]->getkey() != "")
 				{
 					// check if key is correct
-					if (_message->getParameter()[1].size() > 0 && channels[i]->getkey() == channelKey)
+					if (_message->getParameter()[1].size() > 0 && _server->getChannels()[i]->getkey() == channelKey)
 					{
 						// add client to channel
-						channels[i]->addUser(_client);
+						_server->getChannels()[i]->addUser(_client);
 						// send message to all clients in that channel
-						std::vector<Client *> clients = (channels[i])->getUsers();
+						std::vector<Client *> clients = (_server->getChannels()[i])->getUsers();
 						std::vector<Client *>::iterator it2 = clients.begin();
 						for (; it2 != clients.end(); it2++)
 						{
 							// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-							std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channels[i]->getChName();
+							std::string joinMsg = ":" + _client->getNickName() + " JOIN " + _server->getChannels()[i]->getChName();
 							(*it2)->sendReply(joinMsg);
 						}
 						// _client->sendReply(joinMsg);
@@ -145,20 +145,20 @@ void ft::Join::execute()
 				else
 				{
 					// add client to channel
-					channels[i]->addUser(_client);
+					_server->getChannels()[i]->addUser(_client);
 					// send message to all clients in that channel
-					std::vector<Client *> clients = (channels[i])->getUsers();
+					std::vector<Client *> clients = (_server->getChannels()[i])->getUsers();
 					std::vector<Client *>::iterator it2 = clients.begin();
 					for (; it2 != clients.end(); it2++)
 					{
-						std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channels[i]->getChName();
+						std::string joinMsg = ":" + _client->getNickName() + " JOIN " + _server->getChannels()[i]->getChName();
 						(*it2)->sendReply(joinMsg);
 					}
-					// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + (channels[i])->getChName();
+					// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + (_server->getChannels()[i])->getChName();
 					// _client->sendReply(joinMsg);
 					std::string topicMsg;
-					if (channels[i]->getTopic() != "SET TOPIC")
-						topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channels[i]->getChName(), channels[i]->getTopic());
+					if (_server->getChannels()[i]->getTopic() != "SET TOPIC")
+						topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), _server->getChannels()[i]->getChName(), _server->getChannels()[i]->getTopic());
 					else
 						topicMsg = ":" + _client->getServerName() + " 331 " + _client->getNickName() + " " + _client->getNickName() + " " + channelName + " :No topic is set";
 					_client->sendReply(topicMsg);
@@ -172,7 +172,7 @@ void ft::Join::execute()
 				channel->setKey(channelKey);
 			}
 			// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
-			_server->channels.push_back(channel);
+			_server->getChannels().push_back(channel);
 			// send message to client
 			std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channel->getChName();
 			_client->sendReply(joinMsg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/24 04:03:00 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:17:39 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ namespace ft
 			~Channel();
 		
 			// * Channel members * //
-			std::vector<ft::Channel_Member>			members;
+			std::vector<ft::Channel_Member *>			members;
 		
 			// * Getters * //
 			std::string								getChName(void);
 			std::string								getkey(void);
-			std::vector<ft::Channel_Member>			getMembers(void);
+			std::vector<ft::Channel_Member *>			getMembers(void);
 			ft::Client								*getCreator(void);
 			std::string								getTopic(void);
 			std::vector<ft::Client *>				getUsers(void);

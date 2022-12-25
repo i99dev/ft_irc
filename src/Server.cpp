@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 13:29:38 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:30:02 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,24 +411,7 @@ std::string ft::Server::getVersion()
 {
     return this->version;
 }
-// check if the client is connected by send a ping
-// void ft::Server::checkConnection()
-// {
-//     for (size_t i = 0; i < this->clients.size(); i++)
-//     {
-//         if (this->clients[i]->getPing() == 0)
-//         {
-//             remove_fds(this->clients[i]->getSocket());
-//             removeClient(this->clients[i]);
-//             std::cout << "Client " << this->clients[i]->getNickName() << " disconnected" << std::endl;
-//         }
-//         else
-//         {
-//             this->clients[i]->setPing(0);
-//             this->clients[i]->sendReply("PING :" + this->clients[i]->getNickName() + "\r");
-//         }
-//     }
-// }
+
 
 bool ft::Server::isChannel(std::string CHname)
 {
@@ -473,15 +456,4 @@ void ft::Server::remove_fds(int fd)
             this->fds.erase(this->fds.begin() + i);
         }
     }
-}
-
-// search fd and assign it to the client
-void ft::Server::assignClient_fd(Client *clinet_disconnect, Client *clinet_Back)
-{
-    (void)clinet_Back;
-    clinet_Back->setSocket(clinet_disconnect->getSocket());
-    removeClient(clinet_disconnect);
-    // clinet_disconnect->setSocket(clinet_Back->getSocket());
-    // clinet_disconnect->setPing(1);
-    // removeClient(clinet_Back);
 }
