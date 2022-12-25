@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 00:43:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/25 00:53:12 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,14 +418,13 @@ void ft::Server::checkConnection()
             // close connection
             close(this->clients[i]->fd);
 			delete clients[i];
-            this->clients.erase(this->clients.begin() + i);
-            // remove from fds
+            // // remove from fds
             for (size_t j = 0; j < this->clients.size(); j++)
             {
                 if (this->fds[j].fd == this->clients[i]->fd)
                 {
+                    //remove from fds by index
                     this->fds.erase(this->fds.begin() + j);
-                    break;
                 }
             }
         }
