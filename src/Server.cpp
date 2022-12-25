@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/24 07:31:28 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/25 00:43:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void ft::Server::createPoll()
 			std::cout << "Closing server" << std::endl;
 			break;
 		}
-		VALGRIND_DO_LEAK_CHECK;
+		// VALGRIND_DO_LEAK_CHECK;
     }
 }
 

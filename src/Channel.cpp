@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/24 04:24:09 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/25 00:44:22 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,19 @@ ft::Channel::~Channel()
 {
 	if (!_bannedList.empty())
 	{
+		std::cout << "free _bannedList" << std::endl;
 		for (long unsigned int i = 0; i < _bannedList.size(); i++)
 			delete _bannedList[i];
 	}
-	else if (!_invitedList.empty())
+	if (!_invitedList.empty())
 	{
+		std::cout << "free _invitedList" << std::endl;
 		for (long unsigned int i = 0; i < _invitedList.size(); i++)
 			delete _invitedList[i];
 	}
-	else if (!_exceptedList.empty())
+	if (!_exceptedList.empty())
 	{
+		std::cout << "free _exceptedList" << std::endl;
 		for (long unsigned int i = 0; i < _exceptedList.size(); i++)
 			delete _exceptedList[i];	
 	}
