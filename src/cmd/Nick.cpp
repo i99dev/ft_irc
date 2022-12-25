@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/20 01:26:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 08:27:38 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void ft::Nick::execute()
     // check if nick name is valid
     if (!ft::Nick::isvalid())
      {
-        //close socket
-        close(_client->getSocket());
+        _server->remove_fds(_client->getSocket());
+        _server->removeClient(_client);
         return;
      }
     if (_client->getNickName() == "")
@@ -70,7 +70,7 @@ bool ft::Nick::isvalid()
         return false;
     }
     // check if nick name is already taken
-    if (_server->isNickNameTaken(_message->getParameter()[0]))
+    if (_server->isNickNameTaken(_message->getParameter()[0],_client))
     {
         std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
         // std::string err = ERR_NICKNAMEINUSE(_server->getServerName(), _client->getNickName());

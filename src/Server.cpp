@@ -6,13 +6,13 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/24 16:41:16 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 13:29:38 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/Server.hpp"
 
-//command functions
+// command functions
 #include "../incl/cmd/User.hpp"
 #include "../incl/cmd/Join.hpp"
 #include "../incl/cmd/Nick.hpp"
@@ -68,7 +68,7 @@ ft::Server::~Server()
     // close all sockets
     for (size_t i = 0; i < clients.size(); i++)
     {
-		std::cout << "free this client " << clients[i]->getSocket() << std::endl;
+        std::cout << "free this client " << clients[i]->getSocket() << std::endl;
         close(clients[i]->getSocket());
         delete clients[i];
     }
@@ -89,7 +89,7 @@ ft::Server::~Server()
 
 /**
  * @brief Create a socket object
-*/
+ */
 void ft::Server::create_socket()
 {
     int yes = 1;
@@ -98,7 +98,7 @@ void ft::Server::create_socket()
 
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
+    hints.ai_flags = AI_CANONNAME;
 
     if (getaddrinfo(host.c_str(), this->port.c_str(), &hints, &servinfo) != 0)
     {
@@ -115,6 +115,8 @@ void ft::Server::create_socket()
             freeaddrinfo(servinfo);
         exit(1);
     }
+    // set SO_KEEPALIVE
+
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
         std::cerr << "setsockopt" << std::endl;
@@ -145,7 +147,7 @@ void ft::Server::create_socket()
 
 /**
  * @brief Create a Poll object
-*/
+ */
 void ft::Server::createPoll()
 {
     pollfd pfd;
@@ -173,7 +175,7 @@ void ft::Server::createPoll()
         else if (ret == 0)
         {
             std::cout << "|timeout|" << std::endl;
-            checkConnection();
+            // checkConnection();
         }
         else if (ret > 0)
         {
@@ -192,18 +194,18 @@ void ft::Server::createPoll()
                 }
             }
         }
-		if (closeServer)
-		{
-			std::cout << "Closing server" << std::endl;
-			break;
-		}
-		VALGRIND_DO_LEAK_CHECK;
+        if (closeServer)
+        {
+            std::cout << "Closing server" << std::endl;
+            break;
+        }
+        VALGRIND_DO_LEAK_CHECK;
     }
 }
 
 /**
  * @brief tools to get the client's ip address
-*/
+ */
 void *get_in_addr(struct sockaddr *sa)
 {
     if (sa->sa_family == AF_INET)
@@ -211,15 +213,9 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
 
-// ft::Client	*createClient(int new_fd, std::string servername, char *ip_client)
-// {
-//     // ft::Client *client = new ft::Client(new_fd, servername, ip_client);
-// 	return (new ft::Client(new_fd, servername, ip_client));
-// }
-
 /**
  * @brief Accept a new connection
-*/
+ */
 void ft::Server::acceptConnection()
 {
     int new_fd;
@@ -228,31 +224,22 @@ void ft::Server::acceptConnection()
     their_addr.__ss_align = 0;
     socklen_t addr_size = sizeof(their_addr);
     char ip_client[INET6_ADDRSTRLEN];
-
     if ((new_fd = accept(master_fd, (sockaddr *)&their_addr, &addr_size)) == -1)
     {
-        std::cerr << "accept" << std::endl;
+        std::cerr << "accept error" << std::endl;
         exit(1);
     }
-
     inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
-    // Client *client = new Client(new_fd, servername, ip_client);
-	std::cout << "create this client " << new_fd << std::endl;
+    std::cout << "create this client " << new_fd << std::endl;
     this->clients.push_back(new ft::Client(new_fd, servername, ip_client));
-	for (size_t i = 0; i < clients.size(); i++)
-    {
-		std::cout << "This client is " << clients[i]->getSocket() << std::endl;
-    }
-    pollfd pfd;
-    pfd.fd = new_fd;
-    pfd.events = POLLIN;
-    pfd.revents = 0;
+    pollfd pfd = {new_fd, POLLIN, 0};
     fds.push_back(pfd);
+    std::cout << "New connection from " << ip_client << " on socket " << new_fd << std::endl;
 }
 
 /**
  * @brief Receive message from client
-*/
+ */
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
@@ -260,13 +247,9 @@ void ft::Server::receiveMessage(int i)
     nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes < 0)
     {
+        remove_fds(fds[i].fd);
+        removeClient(clients[i - 1]);
         std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
-
-        // close connection
-        close(fds[i].fd);
-        fds.erase(fds.begin() + i);
-		delete clients[i - 1];
-        clients.erase(clients.begin() + i - 1);
         return;
     }
     else
@@ -293,25 +276,25 @@ void ft::Server::receiveMessage(int i)
                     cmd->setServer(this);
                     cmd->setMessage(args[k]);
                     cmd->execute();
-					delete args[k];
-					args[k] = NULL;
-					std::cout << "free message " << std::endl;
+                    delete args[k];
+                    args[k] = NULL;
+                    std::cout << "free message One " << std::endl;
                 }
                 else
                 {
                     this->clients[i - 1]->sendReply("ERROR :Unknown command\r");
-					delete args[k];
-					args[k] = NULL;
-					std::cout << "free message " << std::endl;
+                    delete args[k];
+                    args[k] = NULL;
+                    std::cout << "free message Two" << std::endl;
                 }
             }
             storage = "";
-			for (size_t k = 0; k < args.size(); k++)
-			{
-				if (args[k] != NULL)
-					delete args[k];
-				args.erase(args.begin() + k);
-			}
+            for (size_t k = 0; k < args.size(); k++)
+            {
+                if (args[k] != NULL)
+                    delete args[k];
+                args.erase(args.begin() + k);
+            }
         }
     }
 }
@@ -338,7 +321,7 @@ void ft::Server::init_commands(void)
 
 /**
  * @brief split Message by newlines to to be multiple messages
-*/
+ */
 
 std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim, int fd)
 {
@@ -355,7 +338,7 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
 
 /**
  * @brief get Channels list
-*/
+ */
 
 std::vector<ft::Channel *> ft::Server::getChannels()
 {
@@ -364,7 +347,7 @@ std::vector<ft::Channel *> ft::Server::getChannels()
 
 /**
  * @brief get Clients list
-*/
+ */
 std::vector<ft::Client *> ft::Server::getClients()
 {
     return this->clients;
@@ -372,7 +355,7 @@ std::vector<ft::Client *> ft::Server::getClients()
 
 /**
  * @brief get Server name
-*/
+ */
 std::string ft::Server::getServerName()
 {
     return this->servername;
@@ -380,7 +363,7 @@ std::string ft::Server::getServerName()
 
 /**
  * @brief get Server port
-*/
+ */
 
 std::string ft::Server::getPort()
 {
@@ -393,12 +376,33 @@ void ft::Server::sendReply(Client *client, std::string reply)
     send(client->fd, msg.c_str(), msg.size(), 0);
 }
 
-bool ft::Server::isNickNameTaken(std::string nickname)
+bool ft::Server::isNickNameTaken(std::string nickname, Client *clinet)
 {
+    (void)clinet;
     for (size_t i = 0; i < this->clients.size(); i++)
     {
+        //send pong to the client
         if (this->clients[i]->getNickName() == nickname)
-            return true;
+        {
+            this->clients[i]->sendReply("PING :" + this->clients[i]->getNickName() + "\r");
+            //set timeout
+            struct timeval tv;
+            tv.tv_sec = 3;
+            tv.tv_usec = 0;
+            setsockopt(this->clients[i]->getSocket(), SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv));
+            char buf[1024];
+            int nybtes = recv(this->clients[i]->getSocket(), buf, sizeof(buf), 0);
+            if (nybtes <= 0)
+            {
+                remove_fds(this->clients[i]->getSocket());
+                removeClient(this->clients[i]);
+                std::cout << "Client " << this->clients[i]->getNickName() << " disconnected" << std::endl;
+                return false;
+            }
+            {
+                return true;
+            }
+        }
     }
     return false;
 }
@@ -408,34 +412,23 @@ std::string ft::Server::getVersion()
     return this->version;
 }
 // check if the client is connected by send a ping
-void ft::Server::checkConnection()
-{
-    for (size_t i = 0; i < this->clients.size(); i++)
-    {
-        if (this->clients[i]->getPing() == 0)
-        {
-            this->clients[i]->sendReply("ERROR :Closing Link: " + this->clients[i]->getServerName() + " (Ping timeout: 5 seconds)\r");
-            // close connection
-            close(this->clients[i]->fd);
-			delete clients[i];
-            // // remove from fds
-            for (size_t j = 0; j < this->clients.size(); j++)
-            {
-                if (this->fds[j].fd == this->clients[i]->fd)
-                {
-                    //remove from fds by index
-                    this->fds.erase(this->fds.begin() + j);
-                }
-            }
-        }
-        else
-        {
-            this->clients[i]->setPing(0);
-            // send ping
-            this->clients[i]->sendReply("PING :" + this->clients[i]->getNickName() + "\r");
-        }
-    }
-}
+// void ft::Server::checkConnection()
+// {
+//     for (size_t i = 0; i < this->clients.size(); i++)
+//     {
+//         if (this->clients[i]->getPing() == 0)
+//         {
+//             remove_fds(this->clients[i]->getSocket());
+//             removeClient(this->clients[i]);
+//             std::cout << "Client " << this->clients[i]->getNickName() << " disconnected" << std::endl;
+//         }
+//         else
+//         {
+//             this->clients[i]->setPing(0);
+//             this->clients[i]->sendReply("PING :" + this->clients[i]->getNickName() + "\r");
+//         }
+//     }
+// }
 
 bool ft::Server::isChannel(std::string CHname)
 {
@@ -455,4 +448,40 @@ ft::Channel *ft::Server::getChannel(std::string CHname)
             return (this->channels[i]);
     }
     return (NULL);
+}
+
+void ft::Server::removeClient(Client *client)
+{
+    for (size_t i = 0; i < this->clients.size(); i++)
+    {
+        if (this->clients[i] == client)
+        {
+            // delete this->clients[i];
+            this->clients.erase(this->clients.begin() + i);
+            //TODO: reomve from channel
+        }
+    }
+}
+
+void ft::Server::remove_fds(int fd)
+{
+    close(fd);
+    for (size_t i = 0; i < this->fds.size(); i++)
+    {
+        if (this->fds[i].fd == fd)
+        {
+            this->fds.erase(this->fds.begin() + i);
+        }
+    }
+}
+
+// search fd and assign it to the client
+void ft::Server::assignClient_fd(Client *clinet_disconnect, Client *clinet_Back)
+{
+    (void)clinet_Back;
+    clinet_Back->setSocket(clinet_disconnect->getSocket());
+    removeClient(clinet_disconnect);
+    // clinet_disconnect->setSocket(clinet_Back->getSocket());
+    // clinet_disconnect->setPing(1);
+    // removeClient(clinet_Back);
 }

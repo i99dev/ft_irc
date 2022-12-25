@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/24 04:01:58 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/25 13:31:16 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void ft::Join::execute()
 				int gg = 0;
 				flag = 1;
 				for (int j = 0; j < int(channels[i]->getUsers().size()); j++){
-					if (channels[i]->getUsers()[j]->getNickName() == _client->getNickName()){
+					if (channels[i]->getUsers()[j]->getNickName() == _client->getNickName()  && channels[i]->getUsers()[j]->fd == _client->fd ){
 						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
 						gg = 1;
 						break ;

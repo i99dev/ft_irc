@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/21 22:47:40 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 12:39:04 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,11 @@ bool	ft::Client::isUSModeSet(char mode)
 int ft::Client::getSocket(void) const
 {
 	return (this->fd);
+}
+
+void ft::Client::setSocket(int socket)
+{
+    this->fd = socket;
 }
 
 std::string	ft::Client::getUSMode(void)

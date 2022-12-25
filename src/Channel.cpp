@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/24 04:24:09 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/25 13:22:37 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,8 @@ void	ft::Channel::_addMembertoChannel(Client *user)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i].user->fd == user->fd)
+		// TODO: Check later 
+		if (this->members[i].user->getNickName() == user->getNickName())
 			return ;
 	}
 	ft::Channel_Member new_member;
