@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 02:56:00 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/25 03:09:43 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void ft::Join::execute()
 					}
 				}
 				// check if channel has a key
-				if (channels[i]->isCHModeSet('k'))
+				if (channels[i]->getkey() != "")
 				{
 					// check if key is correct
 					if (_message->getParameter()[1].size() > 0 && channels[i]->getkey() == channelKey)
