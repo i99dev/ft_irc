@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 03:09:43 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/25 17:40:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,13 @@ void ft::Join::execute()
 				}
 				if (!channels[i]->isUserExcepted(_client)){
 					if (channels[i]->isUserBanned(_client)){
-						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+b) - banned");
+						std::cout << "oh noooooo" << std::endl;
+						_client->sendReply(":" + _server->getServerName() + " 474 " + _client->getNickName() + channels[i]->getChName() + " :You are banned from this channel\n");
 						break ;
 					}
 				}
 				// check if channel has a key
-				if (channels[i]->getkey() != "")
+				if (channels[i]->isCHModeSet('k'))
 				{
 					// check if key is correct
 					if (_message->getParameter()[1].size() > 0 && channels[i]->getkey() == channelKey)
@@ -167,8 +168,18 @@ void ft::Join::execute()
 		}
 		if (flag == 0){
 			//if channel does not exist create 
-			Channel *channel = new Channel(_client,channelName);
-			if (channelKey != "" || channelKey != "x"){
+			Channel *channel;
+			try
+			{
+				channel = new Channel(_client,channelName);
+			}
+			catch(const std::exception& e)
+			{
+				std::cerr << e.what() << '\n';
+				break ;
+			}
+			if (channelKey != "" && channelKey != "x"){
+				channel->setChannelMode('k', channelKey);
 				channel->setKey(channelKey);
 			}
 			// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
