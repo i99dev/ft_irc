@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 13:35:52 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 13:48:26 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ void ft::Join::execute()
 					else
 						topicMsg = ":" + _client->getServerName() + " 331 " + _client->getNickName() + " " + _client->getNickName() + " " + channelName + " :No topic is set";
 					_client->sendReply(topicMsg);
+					std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channels[i]->getChName(), channels[i]->getCHMode());
+					this->_client->sendReply(reply);
 				}
 			}
 		}
@@ -189,6 +191,8 @@ void ft::Join::execute()
 			std::cout << "3 channel name " << channel->getChName() << std::endl;
 			std::string topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic());
 			_client->sendReply(topicMsg);
+			std::string reply = RPL_CHANNELMODEIS(this->_server->getServerName(), this->_client->getNickName(), channel->getChName(), channel->getCHMode());
+			this->_client->sendReply(reply);
 		}
 	}
 }
