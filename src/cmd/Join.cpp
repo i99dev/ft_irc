@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 14:02:46 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 14:21:15 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,12 @@ void ft::Join::execute()
 				if (!_server->channels[i]->isUserExcepted(_client)){
 					if (_server->channels[i]->isUserBanned(_client)){
 						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+b) - banned");
+						break ;
+					}
+				}
+				if (_server->channels[i]->isCHModeSet('l')){
+					if (_server->channels[i]->isChannelFull()){
+						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+l) - channel is full");
 						break ;
 					}
 				}
