@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 05:41:48 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 10:22:47 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ ft::Server::~Server()
     // close all sockets
     for (size_t i = 0; i < clients.size(); i++)
     {
-        std::cout << "free this client " << clients[i]->getSocket() << std::endl;
-        close(clients[i]->getSocket());
+        std::cout << "free this client " << clients[i]->fd << std::endl;
+        close(clients[i]->fd);
         delete clients[i];
     }
     close(master_fd);
@@ -174,7 +174,7 @@ void ft::Server::createPoll()
         }
         else if (ret == 0)
         {
-            std::cout << "|timeout|" << std::endl;
+            // std::cout << "|timeout|" << std::endl;
             // checkConnection();
         }
         else if (ret > 0)
@@ -389,14 +389,14 @@ bool ft::Server::isNickNameTaken(std::string nickname, Client *clinet)
             struct timeval tv;
             tv.tv_sec = 3;
             tv.tv_usec = 0;
-            setsockopt(this->clients[i]->getSocket(), SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv));
+            setsockopt(this->clients[i]->fd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv));
             char buf[1024];
-            int nybtes = recv(this->clients[i]->getSocket(), buf, sizeof(buf), 0);
+            int nybtes = recv(this->clients[i]->fd, buf, sizeof(buf), 0);
             if (nybtes <= 0)
             {
-                remove_fds(this->clients[i]->getSocket());
-                removeClient(this->clients[i]);
                 std::cout << "Client " << this->clients[i]->getNickName() << " disconnected" << std::endl;
+                remove_fds(this->clients[i]->fd);
+                removeClient(this->clients[i]);
                 return false;
             }
             {
@@ -437,11 +437,17 @@ ft::Channel *ft::Server::getChannel(std::string CHname)
 
 void ft::Server::removeClient(Client *client)
 {
+	std::cout << "REMOVE CLIENT" << std::endl;
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i] == client)
         {
-            // delete this->clients[i];
+			for (size_t k = 0; k < this->channels.size(); k++)
+			{
+				if (this->channels[k]->isMember(this->clients[i]->getNickName()))
+					this->channels[k]->removeUser(this->clients[i]->getNickName());
+			}
+            delete this->clients[i];
             this->clients.erase(this->clients.begin() + i);
             //TODO: reomve from channel
         }

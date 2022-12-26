@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 06:16:40 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:42:34 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,12 @@ void ft::Join::execute()
 			{
 				int gg = 0;
 				flag = 1;
-				for (int j = 0; j < int(_server->channels[i]->getUsers().size()); j++){
-					if (_server->channels[i]->getUsers()[j]->getNickName() == _client->getNickName()  && _server->channels[i]->getUsers()[j]->fd == _client->fd ){
+				for (int j = 0; j < int(_server->channels[i]->members.size()); j++)
+				{
+					std::cout << "NICK " << _server->channels[i]->members[j]->user->getNickName() << " " << _client->getNickName() << std::endl;
+					std::cout << "FD " << _server->channels[i]->members[j]->user->fd << " " << _client->fd << std::endl;
+					if (_server->channels[i]->members[j]->user->getNickName() == _client->getNickName() && _server->channels[i]->members[j]->user->fd == _client->fd)
+					{
 						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
 						gg = 1;
 						break ;
@@ -125,13 +129,11 @@ void ft::Join::execute()
 						// add client to channel
 						_server->channels[i]->addUser(_client);
 						// send message to all clients in that channel
-						std::vector<Client *> clients = (_server->channels[i])->getUsers();
-						std::vector<Client *>::iterator it2 = clients.begin();
-						for (; it2 != clients.end(); it2++)
+						for (size_t j = 0; j < _server->channels[i]->members.size(); j++)
 						{
 							// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
 							std::string joinMsg = ":" + _client->getNickName() + " JOIN " + _server->channels[i]->getChName();
-							(*it2)->sendReply(joinMsg);
+							_server->channels[i]->members[j]->user->sendReply(joinMsg);
 						}
 						// _client->sendReply(joinMsg);
 					}
@@ -147,12 +149,11 @@ void ft::Join::execute()
 					// add client to channel
 					_server->channels[i]->addUser(_client);
 					// send message to all clients in that channel
-					std::vector<Client *> clients = (_server->channels[i])->getUsers();
-					std::vector<Client *>::iterator it2 = clients.begin();
-					for (; it2 != clients.end(); it2++)
+					for (size_t j = 0; j < _server->channels[i]->members.size(); j++)
 					{
+						// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
 						std::string joinMsg = ":" + _client->getNickName() + " JOIN " + _server->channels[i]->getChName();
-						(*it2)->sendReply(joinMsg);
+						_server->channels[i]->members[j]->user->sendReply(joinMsg);
 					}
 					// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + (_server->channels[i])->getChName();
 					// _client->sendReply(joinMsg);
@@ -171,6 +172,7 @@ void ft::Join::execute()
 			if (channelKey != "" || channelKey != "x"){
 				channel->setKey(channelKey);
 			}
+			std::cout << "FD " << _client->fd << std::endl;
 			// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
 			_server->channels.push_back(channel);			// send message to client
 			std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channel->getChName();

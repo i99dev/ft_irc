@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/26 05:38:45 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:26:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	ft::Topic::execute(void)
 	{
 		// ? change the topic
 		// ? only member can change the topic
-		if (channel->isMember(_client->fd))
+		if (channel->isMember(_client->getNickName()))
 		{
 			// ? check the mode of the channel if it's allowed to users to change the topic
 			if (channel->isCHModeSet('t'))
 			{
-				if (channel->isMemberOperator(_client->fd)) // ? check if operator to change the topic
+				if (channel->isMemberOperator(_client->getNickName())) // ? check if operator to change the topic
 					changeTopic();
 				else
 				{

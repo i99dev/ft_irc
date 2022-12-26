@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 20:59:47 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 09:26:14 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void ft::Invite::execute()
 		_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), _message->getParameter()[1]));
 		return;
 	}
-	if (channel->isMemberOperator(_client->fd) == false){ // check if user is operator
+	if (channel->isMemberOperator(_client->getNickName()) == false){ // check if user is operator
 		_client->sendReply(":" + _server->getServerName() + " 481 " + _client->getNickName() + " :You need operator Privilege\n");
 		return ;
 	}

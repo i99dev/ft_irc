@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 00:27:03 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 09:30:44 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void ft::Kick::execute(){
 					_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), _server->channels[j]->getChName()));
 					return ;
 				}
-				if (_server->channels[j]->isMemberOperator(_client->fd) == false){ // to check previliges
+				if (_server->channels[j]->isMemberOperator(_client->getNickName()) == false){ // to check previliges
 					_client->sendReply(":" + _server->getServerName() + " 481 " + _client->getNickName() + " :You need operator Privilege\n");
 					return ;
 				}
@@ -79,7 +79,7 @@ void ft::Kick::execute(){
 					_client->sendReply(ERR_USERNOTINCHANNEL(_server->getServerName(), target->getNickName(), _server->channels[j]->getChName()));
 					return ;
 				}
-				_server->channels[j]->removeUser(target->fd);
+				_server->channels[j]->removeUser(target->getNickName());
 				target->sendReply(":" + _client->getNickName() + " KICK " + _server->channels[j]->getChName() + " " + target->getNickName() + " :" + _message->getParameter()[2]);
 				std::vector<Client *> clients = (_server->channels[j])->getUsers();
 				std::vector<Client *>::iterator it2 = clients.begin();

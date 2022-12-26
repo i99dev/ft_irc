@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 17:35:54 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:28:55 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,6 @@ ft::Channel::~Channel()
 
 // * Channel Check * //
 
-bool	ft::Channel::isMember(int ownerFD)
-{
-	for (long unsigned int i = 0; i < this->members.size(); i++)
-	{
-		if (this->members[i]->user->fd == ownerFD)
-			return (true);
-	}
-	return (false);
-}
-
 bool	ft::Channel::isMember(std::string nick)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
@@ -75,11 +65,11 @@ bool	ft::Channel::isMember(std::string nick)
 	return (false);
 }
 
-bool	ft::Channel::isMemberOperator(int OwnerFd)
+bool	ft::Channel::isMemberOperator(std::string nick)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i]->user->fd == OwnerFd)
+		if (this->members[i]->user->getNickName() == nick)
 		{
 			if (this->members[i]->user_mode == o_OPERATOR_PRIVILEGE || this->members[i]->user_mode == O_CHANNEL_CREATOR)
 				return (true);
@@ -363,7 +353,7 @@ int	ft::Channel::setMemberMode(Client *user, char mode)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			if (this->members[i]->user->fd == user->fd)
+			if (this->members[i]->user->getNickName() == user->getNickName())
 			{
 				// ? if not an operatot not creator .. the user can be set to whatever voice priv or oper ptiv
 				if (this->members[i]->user_mode != O_CHANNEL_CREATOR && this->members[i]->user_mode != o_OPERATOR_PRIVILEGE)
@@ -383,7 +373,7 @@ int	ft::Channel::removeMemberMode(Client *user, char mode)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			if (this->members[i]->user->fd == user->fd)
+			if (this->members[i]->user->getNickName() == user->getNickName())
 			{
 				this->members[i]->user_mode = CLEAR_MODE;
 				return (1);
@@ -450,7 +440,7 @@ bool	ft::Channel::isMEModeSet(Client *user, char mode)
 	{
 		for (long unsigned int i = 0; i < this->members.size(); i++)
 		{
-			if (this->members[i]->user->fd == user->fd)
+			if (this->members[i]->user->getNickName() == user->getNickName())
 			{
 				if (this->members[i]->user_mode == ft::ModeTools::findChannelMode(mode))
 					return (true);
@@ -491,11 +481,11 @@ bool	ft::Channel::isUserExcepted(ft::Client *client)
 }
 
 // ? PART
-void	ft::Channel::removeUser(int userFD)
+void	ft::Channel::removeUser(std::string nick)
 {
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
-		if (this->members[i]->user->fd == userFD)
+		if (this->members[i]->user->getNickName() == nick)
 		{
 			this->members.erase(this->members.begin() + i);
 			return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 17:17:39 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:29:24 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ namespace ft
 			bool									isCHModeSet(char mode);
 			bool									isMEModeSet(Client *user, char mode);
 			std::string								getCHMode(void);
-			bool									isMember(int OwnerFD);
+			// bool									isMember(int OwnerFD);
 			bool									isMember(std::string nick);
-			bool									isMemberOperator(int OwnerFD);
+			bool									isMemberOperator(std::string nick);
 			bool									isRepeatedMask(const std::vector<ft::Mask *> &MasksList, t_mask *mask);
 			// ? PART
-			void									removeUser(int userFD);
+			void									removeUser(std::string nick);
 	};
 	class WrongChannelNameRequir : public std::exception
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 00:20:47 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 09:30:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void    ft::Part::execute(){
 						flag2 = 1;
 						std::string joinMsg = "";
 		                // remove client from channel
-						_server->getChannels()[i]->removeUser(_client->fd);
+						_server->getChannels()[i]->removeUser(_client->getNickName());
 						joinMsg = ":" + _client->getNickName() + " PART :" + _server->getChannels()[i]->getChName();
 						_client->sendReply(joinMsg);
 		                // send message to clients in channel
