@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 17:40:03 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 13:35:52 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void ft::Join::execute()
 				}
 				if (!channels[i]->isUserExcepted(_client)){
 					if (channels[i]->isUserBanned(_client)){
-						std::cout << "oh noooooo" << std::endl;
 						_client->sendReply(":" + _server->getServerName() + " 474 " + _client->getNickName() + channels[i]->getChName() + " :You are banned from this channel\n");
 						break ;
 					}
