@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/15 02:51:30 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 09:26:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft::Topic::sendTopic()
 	for (long unsigned int i = 0; i < channel->members.size(); i++)
 	{
 		std::cout << "the is topic" << std::endl;
-		channel->members[i].user->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
+		channel->members[i]->user->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 	}
 }
 
@@ -66,6 +66,7 @@ void	ft::Topic::execute(void)
 	}
 	std::cout << "topic executed" << std::endl;
 	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+	std::cout << "------>" << this->_message->getParameter()[0] << std::endl;
 	if (!channel)
 	{
 		_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), this->_message->getParameter()[0])); // ! ErrMsg no channel
@@ -75,12 +76,12 @@ void	ft::Topic::execute(void)
 	{
 		// ? change the topic
 		// ? only member can change the topic
-		if (channel->isMember(_client->fd))
+		if (channel->isMember(_client->getNickName()))
 		{
 			// ? check the mode of the channel if it's allowed to users to change the topic
 			if (channel->isCHModeSet('t'))
 			{
-				if (channel->isMemberOperator(_client->fd)) // ? check if operator to change the topic
+				if (channel->isMemberOperator(_client->getNickName())) // ? check if operator to change the topic
 					changeTopic();
 				else
 				{

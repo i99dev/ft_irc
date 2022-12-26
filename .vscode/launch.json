@@ -64,7 +64,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ircserv", //path to your programs exe and exe name
-            "args": ["6665", "123456"],
+            "args": ["6667", "123456"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -76,11 +76,11 @@
                 //     "text": "-enable-pretty-printing",
                 //     "ignoreFailures": true,
                 // },
-                // {
-                //     "description": "Enable Follow Fork Proccess for gdb",
-                //     "text": "-gdb-set follow-fork-mode child",
-                //     "ignoreFailures": true,
-                // }
+                {
+                    "description": "Enable Follow Fork Proccess for gdb",
+                    "text": "-gdb-set follow-fork-mode child",
+                    "ignoreFailures": true,
+                }
             ],
             "preLaunchTask": "build",
         },

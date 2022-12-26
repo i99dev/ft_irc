@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 16:49:03 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/25 07:21:53 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ namespace ft
 			std::string				getHostName(void)const;
 			void 					setHostName(std::string hostName);
 			int 					getSocket(void)const;
+			void 					setSocket(int socket);
 			//user channels
 			std::string				getChannelsJoined(void)const;
 			void 					setChannelsJoined(std::string channelsJoined);

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 05:45:44 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:26:39 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ ex. /mode #lala O -> MODE #lala +O
 void	ft::Mode::checkCHModeCases(ft::Channel *channel)
 {
 	// ! check if the client is channel operator
-	if (channel->isMemberOperator(this->_client->fd))
+	if (channel->isMemberOperator(this->_client->getNickName()))
 		changeCHMode();
 	else
 	{

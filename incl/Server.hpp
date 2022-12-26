@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 02:34:31 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 13:59:52 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ namespace ft
 
         // client functions
         std::vector<Client *> getClients();
-        bool isNickNameTaken(std::string nickName);
-        // Connection 'Liveness' Functions
+        bool isNickNameTaken(std::string nickName, Client *client);
         void checkConnection();
+        void removeClient(Client *client);
+        void remove_fds(int fd);
 
         // message functions
         void sendReply(Client *client, std::string msg);
