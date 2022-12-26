@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 17:18:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/26 05:38:45 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft::Topic::execute(void)
 	}
 	std::cout << "topic executed" << std::endl;
 	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+	std::cout << "------>" << this->_message->getParameter()[0] << std::endl;
 	if (!channel)
 	{
 		_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), this->_message->getParameter()[0])); // ! ErrMsg no channel

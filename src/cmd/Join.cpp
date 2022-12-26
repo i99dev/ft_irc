@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 17:26:59 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/26 06:00:14 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ void ft::Join::execute()
 			}
 			// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
 			_server->getChannels().push_back(channel);
+			std::cout << "channel vector size " << _server->getChannels().size() << std::endl;
 			// send message to client
 			std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channel->getChName();
 			_client->sendReply(joinMsg);

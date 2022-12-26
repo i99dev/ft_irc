@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/25 17:36:22 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/26 05:41:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -425,10 +425,12 @@ bool ft::Server::isChannel(std::string CHname)
 
 ft::Channel *ft::Server::getChannel(std::string CHname)
 {
+	std::cout << "size " << this->channels.size() << std::endl;
     for (long unsigned int i = 0; i < this->channels.size(); i++)
     {
+		std::cout << i << " " << this->channels[i]->getChName() << std::endl; 
         if (this->channels[i]->getChName() == CHname)
-            return (this->channels[i]);
+        	return (this->channels[i]);
     }
     return (NULL);
 }
