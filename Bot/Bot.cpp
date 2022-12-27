@@ -6,12 +6,16 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/16 03:07:02 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 20:37:08 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+bool closeServer = false;
 #include "Bot.hpp"
 #include "msgAdd.cpp"
+#include <signal.h>
+#include <csignal>
+#include <poll.h>
 
 int main(int argc, char **argv)
 {
@@ -35,7 +39,7 @@ ft::Bot::Bot(std::string p, char *h){
 	struct sockaddr_in serv_addr;
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(std::stoi(this->port));
+	serv_addr.sin_port = htons(6667);
 	serv_addr.sin_addr.s_addr = inet_addr(this->host);
 
 	// Connect to the server
@@ -58,7 +62,7 @@ std::string ft::Bot::receiveFromServer(){
 	if (recv(sockfd, recv_buffer, sizeof(recv_buffer), 0) <= 0){
 		std::cerr << "Error receiving message from the server" << std::endl;
 		close(this->sockfd);
-		exit(1);
+		return "error";
 	}
 	return std::string(recv_buffer);
 }
@@ -168,10 +172,24 @@ void ft::Bot::header(int i, std::string s){
 	std::cout << "\033[0;32m" << msg << "\033[0;00m" << std::endl;
 }
 
+
+void sig_handler(int signo)
+{
+	(void)signo;
+    if (signo == SIGINT)
+    {
+        std::cout << "NOT SAFE to close it through ctrl c\nCLOSE the server instead" << std::endl;
+        closeServer = true;
+		exit(0);
+    }
+}
+
 void ft::Bot::loop(){
 	int i = 0;
-	while (1){
-		this->msg = receiveFromServer();
+	while (!closeServer){
+
+		if ((this->msg = receiveFromServer()) == "error")
+			return ;
 		if (this->msg.size() > 1 && ((i = this->msg.find("NOTICE") != std::string::npos) || (i = this->msg.find("PRIVMSG") != std::string::npos))){
 			getSender();
 			if (this->msg.find("NOTICE") != std::string::npos)
@@ -201,6 +219,7 @@ void ft::Bot::loop(){
 			}
 		}
 	}
+	std::raise(SIGINT);
 }
 
 void ft::Bot::initCtrl(){
