@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 10:57:02 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 11:04:44 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,9 +249,9 @@ void ft::Server::receiveMessage(int i)
     if (nbytes < 0)
     {
 		// ! remove a disconnected client in all cases it's gone forever
+        std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
         remove_fds(fds[i].fd);
         removeClient(clients[i - 1]);
-        std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
         return;
     }
     else
