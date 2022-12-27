@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 11:04:44 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 11:23:58 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,7 @@ void	ft::Server::resetFD(Client *OLDclient, Client *NEWclient)
 	CLIENTBACKFD = NEWclient->fd;
 	for (size_t i = 0; i < this->clients.size(); i++)
     {
+		// ! removing the new client that was added to the vector for checking and connecting processes
         if (this->clients[i] == NEWclient)
         {
             delete this->clients[i];
