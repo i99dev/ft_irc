@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 14:19:56 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 12:49:52 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,13 @@ void ft::Privmsg::execute()
 					return;
 				}
 			}
-			std::vector<Client *> clients = (*it)->getUsers();
-			std::vector<Client *>::iterator it2 = clients.begin();
-			for (; it2 != clients.end(); it2++)
+			for (size_t i = 0; i < (*it)->members.size(); i++)
 			{
 				flag = 1;
-				if ((*it2)->fd != _client->fd)
+				if ((*it)->members[i].user->fd != _client->fd)
 				{
 					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
-					(*it2)->sendReply(reply);
+					(*it)->members[i].user->sendReply(reply);
 				}
 			}
 		}

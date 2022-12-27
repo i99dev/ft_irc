@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/26 09:26:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:18:07 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft::Topic::sendTopic()
 	for (long unsigned int i = 0; i < channel->members.size(); i++)
 	{
 		std::cout << "the is topic" << std::endl;
-		channel->members[i]->user->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
+		channel->members[i].user->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 	}
 }
 

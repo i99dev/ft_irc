@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   List.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 00:24:37 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 17:18:40 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    ft::List::execute(){
 		for (int i = 0; i < int(_server->channels.size()); i++){
 			std::stringstream s;
 			std::string ss = "";
-			s << _server->channels[i]->getUsers().size();
+			s << _server->channels[i]->members.size();
 			s >> ss;
 			_client->sendReply(RPL_LIST(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName(), ss, _server->channels[i]->getCHMode(), _server->channels[i]->getTopic()));
 		}
@@ -60,7 +60,7 @@ void    ft::List::execute(){
 					ok = true;
 					std::stringstream s;
 					std::string ss = "";
-					s << _server->channels[c]->getUsers().size();
+					s << _server->channels[c]->members.size();
 					s >> ss;
 					_client->sendReply(RPL_LIST(_server->getServerName(), _client->getNickName(), _server->channels[c]->getChName(), ss, _server->channels[c]->getCHMode(), _server->channels[c]->getTopic()));
 				}

@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:35:45 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 12:49:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void ft::Invite::execute()
 		}
 	}
 	ok = false;
-	for (int i = 0; i < int(channel->getUsers().size()); i++){ // check if user inviting is on channel
-		if (channel->getUsers()[i]->getNickName() == _client->getNickName()){
+	for (int i = 0; i < int(channel->members.size()); i++){ // check if user inviting is on channel
+		if (channel->members[i].user->getNickName() == _client->getNickName()){
 			ok = true;
 		}
 	}
@@ -84,8 +84,8 @@ void ft::Invite::execute()
 		return ;
 	}
 	ok = true;
-	for (int i = 0; i < int(channel->getUsers().size()); i++){ // check if user invited is on channel
-		if (channel->getUsers()[i]->getNickName() == _message->getParameter()[0]){
+	for (int i = 0; i < int(channel->members.size()); i++){ // check if user invited is on channel
+		if (channel->members[i].user->getNickName() == _message->getParameter()[0]){
 			ok = false;
 		}
 	}
