@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 09:30:03 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:13:31 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void    ft::Part::execute(){
 	        {
 				flag = 1;
 				// check if user is in that channel
-				for (int j = 0; j < int(_server->getChannels()[i]->getUsers().size()); j++){
-					if (_server->getChannels()[i]->getUsers()[j]->getNickName() == _client->getNickName()){
+				for (int j = 0; j < int(_server->getChannels()[i]->members.size()); j++){
+					if (_server->getChannels()[i]->members[j].user->getNickName() == _client->getNickName()){
 						flag2 = 1;
 						std::string joinMsg = "";
 		                // remove client from channel
@@ -74,12 +74,12 @@ void    ft::Part::execute(){
 						joinMsg = ":" + _client->getNickName() + " PART :" + _server->getChannels()[i]->getChName();
 						_client->sendReply(joinMsg);
 		                // send message to clients in channel
-						std::vector<Client *> clients = (_server->getChannels()[i])->getUsers();
-						std::vector<Client *>::iterator it2 = clients.begin();
+						std::vector<Channel_Member> clients = (_server->getChannels()[i])->members;
+						std::vector<Channel_Member>::iterator it2 = clients.begin();
 						for (; it2 != clients.end(); it2++)
 						{
 							joinMsg = ":" + _client->getNickName() + " PART " + _server->getChannels()[i]->getChName() + " :" + msg;
-							(*it2)->sendReply(joinMsg);
+							(*it2).user->sendReply(joinMsg);
 						}
 					}
 				}

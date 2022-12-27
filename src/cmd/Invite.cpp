@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 09:26:14 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:17:20 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void ft::Invite::execute()
 		return;
 	}
 	ok = false;
-	for (int i = 0; i < int(channel->getUsers().size()); i++){ // check if user inviting is on channel
-		if (channel->getUsers()[i]->getNickName() == _client->getNickName()){
+	for (int i = 0; i < int(channel->members.size()); i++){ // check if user inviting is on channel
+		if (channel->members[i].user->getNickName() == _client->getNickName()){
 			ok = true;
 		}
 	}
@@ -71,8 +71,8 @@ void ft::Invite::execute()
 		return ;
 	}
 	ok = true;
-	for (int i = 0; i < int(channel->getUsers().size()); i++){ // check if user invited is on channel
-		if (channel->getUsers()[i]->getNickName() == _message->getParameter()[0]){
+	for (int i = 0; i < int(channel->members.size()); i++){ // check if user invited is on channel
+		if (channel->members[i].user->getNickName() == _message->getParameter()[0]){
 			ok = false;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/26 09:29:24 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:01:23 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,13 @@ namespace ft
 			~Channel();
 		
 			// * Channel members * //
-			std::vector<ft::Channel_Member *>			members;
+			std::vector<ft::Channel_Member>			members;
 		
 			// * Getters * //
 			std::string								getChName(void);
 			std::string								getkey(void);
-			std::vector<ft::Channel_Member *>			getMembers(void);
 			ft::Client								*getCreator(void);
 			std::string								getTopic(void);
-			std::vector<ft::Client *>				getUsers(void);
 			ft::Client								*getMember(std::string nick);
 			std::vector<ft::Mask *>					getExceptionList(void);
 			std::vector<ft::Mask *>					getInvitedList(void);

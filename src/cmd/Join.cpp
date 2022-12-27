@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 09:42:34 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:03:23 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ void ft::Join::execute()
 				flag = 1;
 				for (int j = 0; j < int(_server->channels[i]->members.size()); j++)
 				{
-					std::cout << "NICK " << _server->channels[i]->members[j]->user->getNickName() << " " << _client->getNickName() << std::endl;
-					std::cout << "FD " << _server->channels[i]->members[j]->user->fd << " " << _client->fd << std::endl;
-					if (_server->channels[i]->members[j]->user->getNickName() == _client->getNickName() && _server->channels[i]->members[j]->user->fd == _client->fd)
+					std::cout << "NICK " << _server->channels[i]->members[j].user->getNickName() << " " << _client->getNickName() << std::endl;
+					std::cout << "FD " << _server->channels[i]->members[j].user->fd << " " << _client->fd << std::endl;
+					if (_server->channels[i]->members[j].user->getNickName() == _client->getNickName() && _server->channels[i]->members[j].user->fd == _client->fd)
 					{
 						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
 						gg = 1;
@@ -133,7 +133,7 @@ void ft::Join::execute()
 						{
 							// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
 							std::string joinMsg = ":" + _client->getNickName() + " JOIN " + _server->channels[i]->getChName();
-							_server->channels[i]->members[j]->user->sendReply(joinMsg);
+							_server->channels[i]->members[j].user->sendReply(joinMsg);
 						}
 						// _client->sendReply(joinMsg);
 					}
@@ -153,7 +153,7 @@ void ft::Join::execute()
 					{
 						// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
 						std::string joinMsg = ":" + _client->getNickName() + " JOIN " + _server->channels[i]->getChName();
-						_server->channels[i]->members[j]->user->sendReply(joinMsg);
+						_server->channels[i]->members[j].user->sendReply(joinMsg);
 					}
 					// std::string joinMsg = ":" + _client->getNickName() + " JOIN " + (_server->channels[i])->getChName();
 					// _client->sendReply(joinMsg);

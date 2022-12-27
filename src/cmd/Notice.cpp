@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Notice.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/15 00:24:05 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 17:16:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ void ft::Notice::execute(){
 	for (int i = 0; i < int(_server->channels.size()); i++){
 		if (_server->channels[i]->getChName() == target){
 			flag = 1;
-			std::vector<Client *> clients = (_server->getChannels()[i])->getUsers();
-			std::vector<Client *>::iterator it2 = clients.begin();
+			std::vector<Channel_Member> clients = (_server->getChannels()[i])->members;
+			std::vector<Channel_Member>::iterator it2 = clients.begin();
 			for (; it2 != clients.end(); it2++)
 			{
-				if ((*it2)->getNickName() == _client->getNickName() && !ok){
+				if ((*it2).user->getNickName() == _client->getNickName() && !ok){
 					ok = true;
 					it2 = clients.begin();
 				}
 				if (ok){
 					joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-					(*it2)->sendReply(joinMsg);
+					(*it2).user->sendReply(joinMsg);
 				}
 			}
 		}
