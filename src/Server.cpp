@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 11:23:58 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:04:38 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #include "../incl/cmd/Topic.hpp"
 #include "../incl/cmd/List.hpp"
 #include "../incl/cmd/Pong.hpp"
+#include "../incl/cmd/Quit.hpp"
 
 std::string storage = "";
 
@@ -318,6 +319,7 @@ void ft::Server::init_commands(void)
     _commands["INVITE"] = new ft::Invite();
     _commands["TOPIC"] = new ft::Topic();
     _commands["LIST"] = new ft::List();
+    _commands["QUIT"] = new ft::Quit();
 }
 
 /**

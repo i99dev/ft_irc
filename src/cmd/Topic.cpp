@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/26 17:18:07 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:00:08 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 ft::Topic::Topic(void)
 {
-    _name =  "Nick";
-    _description = "Change your nickname or set it if you don't have one";
-    _usage = "/nick <nickname>";
+    _name =  "Topic";
+    _description = "Change the topic or clear it";
+    _usage = "/topic <newTopic>";
 }
 
 void	ft::Topic::sendTopic()
