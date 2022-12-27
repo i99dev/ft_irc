@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:03:23 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 14:11:57 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,17 @@ void ft::Join::execute()
 						break ;
 					}
 				}
+				if (_server->channels[i]->isCHModeSet('l')){
+					if (_server->channels[i]->isChannelFull()){
+						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+l) - channel is full");
+						break ;
+					}
+				}
 				// check if channel has a key
-				if (_server->channels[i]->getkey() != "")
+				if (_server->channels[i]->isCHModeSet('k'))
 				{
 					// check if key is correct
-					if (_message->getParameter()[1].size() > 0 && _server->channels[i]->getkey() == channelKey)
+					if ((_message->getParameter()[1].size() > 0 && _server->channels[i]->getkey() == channelKey) || _server->channels[i]->isUserInvited(_client))
 					{
 						// add client to channel
 						_server->channels[i]->addUser(_client);
@@ -168,8 +174,18 @@ void ft::Join::execute()
 		}
 		if (flag == 0){
 			//if channel does not exist create 
-			Channel *channel = new Channel(_client,channelName);
-			if (channelKey != "" || channelKey != "x"){
+			Channel *channel;
+			try
+			{
+				channel = new Channel(_client,channelName);
+			}
+			catch(const std::exception& e)
+			{
+				std::cerr << e.what() << '\n';
+				break ;
+			}
+			if (channelKey != "" && channelKey != "x"){
+				channel->setChannelMode('k', channelKey);
 				channel->setKey(channelKey);
 			}
 			std::cout << "FD " << _client->fd << std::endl;

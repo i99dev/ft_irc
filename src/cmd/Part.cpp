@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:13:31 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:49:26 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ ft::Part::Part(void)
 }
 
 void    ft::Part::execute(){
-	if (_message->getParameter().size() != 1)
+	if (_message->getParameter().size() < 1 && _message->getParameter().size() > 2)
 	{
 		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 		return;
 	}
 	std::string cmd = _message->getParameter()[0];
 	std::string msg = "";
-	if (_message->getParameter()[1].size() > 1)
+	if (_message->getParameter().size() > 1)
 		msg = _message->getParameter()[1];
 	std::vector<std::string> channels;
 	std::string s;

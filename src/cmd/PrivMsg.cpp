@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:09:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:49:52 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ void ft::Privmsg::execute()
 				_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channelName));
 				return;
 			}
-			if ((*it)->isMEModeSet(_client, 'v'))
+			if ((*it)->isCHModeSet('m'))
 			{
-				":" + _client->getServerName() + " 404 " + _client->getNickName() + " " + channelName + " :Cannot send to channel, you're on mode V";
-				return;
+				if (!(*it)->isMEModeSet(_client, 'v') && !(*it)->isMEModeSet(_client, 'o'))
+				{
+					":" + _client->getServerName() + " 404 " + _client->getNickName() + " " + channelName + " :Cannot send to channel, you're on mode V";
+					return;
+				}
 			}
 			for (size_t i = 0; i < (*it)->members.size(); i++)
 			{

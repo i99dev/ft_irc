@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:17:20 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:49:03 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,16 @@ void ft::Invite::execute()
 		_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), _message->getParameter()[1]));
 		return;
 	}
-	if (channel->isMemberOperator(_client->getNickName()) == false){ // check if user is operator
-		_client->sendReply(":" + _server->getServerName() + " 481 " + _client->getNickName() + " :You need operator Privilege\n");
-		return ;
+	if (!channel->isMember(_client->getNickName()))
+	{
+		_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), _message->getParameter()[1]));
+		return;
+	}
+	if (channel->isCHModeSet('i')){
+		if (!channel->isMemberOperator(_client->getNickName())){ // check if user is operator
+			_client->sendReply(":" + _server->getServerName() + " 481 " + _client->getNickName() + " :You need operator Privilege\n");
+			return ;
+		}
 	}
 	ok = false;
 	for (int i = 0; i < int(_server->clients.size()); i++){ // check if user exist
@@ -50,15 +57,21 @@ void ft::Invite::execute()
 			client = _server->clients[i];
 		}
 	}
+	if (!ok){
+		_client->sendReply(ERR_NOSUCHNICK(_server->getServerName(), _client->getNickName()));
+		return;
+	}
 	if (!channel->isUserExcepted(client)){
 		if (channel->isUserBanned(client)){
 			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channel->getChName() + " (+b) - banned");
 			return;
 		}
 	}
-	if (!ok){
-		_client->sendReply(ERR_NOSUCHNICK(_server->getServerName(), _client->getNickName()));
-		return;
+	if (channel->isCHModeSet('l')){
+		if (channel->isChannelFull()){
+			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channel->getChName() + " (+l) - channel is full");
+			return ;
+		}
 	}
 	ok = false;
 	for (int i = 0; i < int(channel->members.size()); i++){ // check if user inviting is on channel
