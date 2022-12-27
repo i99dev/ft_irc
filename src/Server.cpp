@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 09:14:57 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 09:21:42 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,9 +268,6 @@ void ft::Server::receiveMessage(int i)
             std::vector<Message *> args = ft::Server::splitMessage(storage, '\n', fds[i].fd);
             for (size_t k = 0; k < args.size(); k++)
             {
-				// std::cout << "SIZE " << clients.size() << std::endl;
-				// std::cout << "POS " << i - 1 << std::endl;
-                // this->clients[i - 1]->setMsgSend(args[k]);
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
                 {
