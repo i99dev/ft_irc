@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 14:27:16 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 12:35:45 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void ft::Invite::execute()
 		if (channel->isUserBanned(client)){
 			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channel->getChName() + " (+b) - banned");
 			return;
+		}
+	}
+	if (channel->isCHModeSet('l')){
+		if (channel->isChannelFull()){
+			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channel->getChName() + " (+l) - channel is full");
+			return ;
 		}
 	}
 	ok = false;
