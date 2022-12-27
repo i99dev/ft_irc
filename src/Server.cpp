@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 00:04:47 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 12:32:45 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void ft::Server::createPoll()
 			std::cout << "Closing server" << std::endl;
 			break;
 		}
-		VALGRIND_DO_LEAK_CHECK;
+		// VALGRIND_DO_LEAK_CHECK;
     }
 }
 

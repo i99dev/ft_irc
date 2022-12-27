@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 00:04:35 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 12:32:38 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #include <cerrno>
 #include <netdb.h>
 #include <sstream>
-#include <valgrind/memcheck.h>
+// #include <valgrind/memcheck.h>
 
 #define HOST "127.0.0.1"
 #define CRLF "\r\n"
