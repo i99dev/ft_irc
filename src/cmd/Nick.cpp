@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:45:12 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 14:18:00 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,18 @@ void	ft::Nick::connectClientBack()
 	_server->CLIENTISBACK = false;
 	std::string msg = RPL_WELCOMEBACK(_server->getServerName(), _message->getParameter()[0]);
 	send(_server->CLIENTBACKFD, msg.c_str(), msg.size(), 0);
-	std::cout << "join back to old channels" << std::endl;
+	// std::cout << "join back to old channels" << std::endl;
 	for (size_t i = 0; i < _server->channels.size(); i++)
 	{
 		if (_server->channels[i]->isMember(_message->getParameter()[0]))
 		{
 			for (size_t j = 0; j < _server->channels[i]->members.size(); j++)
 			{
-				// std::string joinMsg = ":" + _client->getNickName() + " NOTICE " + target + " :" + msg;
-				std::string joinMsg = ":" + _message->getParameter()[0] + " JOIN " + _server->channels[i]->getChName();
-				_server->channels[i]->members[j].user->sendReply(joinMsg);
+				if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD)
+				{
+					std::string joinMsg = ":" + _message->getParameter()[0] + " JOIN " + _server->channels[i]->getChName();
+					_server->channels[i]->members[j].user->sendReply(joinMsg);					
+				}
 			}
 		}
 	}
