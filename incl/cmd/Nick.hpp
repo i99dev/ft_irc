@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:12:53 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/19 23:40:00 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:28:36 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ namespace ft
 		Nick(void);
 		void execute();
 		bool isvalid();
-		void isNickNameAvailable(std::string nickName);
+		void	isNickNameAvailable(std::string nickName);
+		void	connectClientBack();
 	};
 
 }

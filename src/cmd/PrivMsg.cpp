@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:49:52 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:17:28 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ void ft::Privmsg::execute()
 			for (size_t i = 0; i < (*it)->members.size(); i++)
 			{
 				flag = 1;
-				if ((*it)->members[i].user->fd != _client->fd)
+				if ((*it)->members[i].user->getNickName() != _client->getNickName())
 				{
+					std::cout << _client->getNickName() << " sending msg to " << (*it)->members[i].user->getNickName() <<  std::endl;
 					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
 					(*it)->members[i].user->sendReply(reply);
 				}

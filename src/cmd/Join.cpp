@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 14:11:57 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 12:26:18 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void ft::Join::execute()
 				{
 					std::cout << "NICK " << _server->channels[i]->members[j].user->getNickName() << " " << _client->getNickName() << std::endl;
 					std::cout << "FD " << _server->channels[i]->members[j].user->fd << " " << _client->fd << std::endl;
-					if (_server->channels[i]->members[j].user->getNickName() == _client->getNickName() && _server->channels[i]->members[j].user->fd == _client->fd)
+					if (_server->channels[i]->members[j].user->getNickName() == _client->getNickName())
 					{
 						_client->sendReply(ERR_USERONCHANNEL(_server->getServerName(), _client->getNickName()));
 						gg = 1;
