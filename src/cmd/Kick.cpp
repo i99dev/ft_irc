@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 09:30:44 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:14:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ void ft::Kick::execute(){
 				}
 				_server->channels[j]->removeUser(target->getNickName());
 				target->sendReply(":" + _client->getNickName() + " KICK " + _server->channels[j]->getChName() + " " + target->getNickName() + " :" + _message->getParameter()[2]);
-				std::vector<Client *> clients = (_server->channels[j])->getUsers();
-				std::vector<Client *>::iterator it2 = clients.begin();
+				std::vector<Channel_Member> clients = (_server->channels[j])->members;
+				std::vector<Channel_Member>::iterator it2 = clients.begin();
 				for (; it2 != clients.end(); it2++)
 				{
-					(*it2)->sendReply(":" + _client->getNickName() + " KICK " + _server->channels[j]->getChName() + " " + target->getNickName() + " :" + _message->getParameter()[2]);
+					(*it2).user->sendReply(":" + _client->getNickName() + " KICK " + _server->channels[j]->getChName() + " " + target->getNickName() + " :" + _message->getParameter()[2]);
 				}
 			}
 		}

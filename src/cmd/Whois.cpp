@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Whois.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/08 16:45:55 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/26 17:09:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void ft::Whois::execute()
 		return ;
 	}
 	for (int i = 0; i < int(_server->channels.size()); i++){
-		for (int j = 0; j < int(_server->channels[i]->getUsers().size()); j++){
-			if (_server->channels[i]->getUsers()[j]->getNickName() == target->getNickName()){
+		for (int j = 0; j < int(_server->channels[i]->members.size()); j++){
+			if (_server->channels[i]->members[j].user->getNickName() == target->getNickName()){
 				channels.push_back(_server->channels[i]->getChName());
 			}
 		}

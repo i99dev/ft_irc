@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 09:22:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:09:10 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ void ft::Privmsg::execute()
 				":" + _client->getServerName() + " 404 " + _client->getNickName() + " " + channelName + " :Cannot send to channel, you're on mode V";
 				return;
 			}
-			std::vector<Client *> clients = (*it)->getUsers();
-			std::vector<Client *>::iterator it2 = clients.begin();
-			for (; it2 != clients.end(); it2++)
+			for (size_t i = 0; i < (*it)->members.size(); i++)
 			{
 				flag = 1;
-				if ((*it2)->fd != _client->fd)
+				if ((*it)->members[i].user->fd != _client->fd)
 				{
 					std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
-					(*it2)->sendReply(reply);
+					(*it)->members[i].user->sendReply(reply);
 				}
 			}
 		}
