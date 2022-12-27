@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 10:22:47 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 09:14:57 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ void ft::Server::receiveMessage(int i)
     nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes < 0)
     {
+		// ! remove a disconnected client in all cases it's gone forever
         remove_fds(fds[i].fd);
         removeClient(clients[i - 1]);
         std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
@@ -267,7 +268,9 @@ void ft::Server::receiveMessage(int i)
             std::vector<Message *> args = ft::Server::splitMessage(storage, '\n', fds[i].fd);
             for (size_t k = 0; k < args.size(); k++)
             {
-                this->clients[i - 1]->setMsgSend(args[k]);
+				// std::cout << "SIZE " << clients.size() << std::endl;
+				// std::cout << "POS " << i - 1 << std::endl;
+                // this->clients[i - 1]->setMsgSend(args[k]);
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
                 {
@@ -448,6 +451,7 @@ void ft::Server::removeClient(Client *client)
 					this->channels[k]->removeUser(this->clients[i]->getNickName());
 			}
             delete this->clients[i];
+            this->clients[i] = NULL;
             this->clients.erase(this->clients.begin() + i);
             //TODO: reomve from channel
         }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 10:17:25 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 09:12:34 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,24 @@ void ft::Nick::execute()
     // get nick name and clean it from \r
     std::string nickName = _message->getParameter()[0];
     // check if nick name is valid
+	std::cout << "my current nickName " << _client->getNickName() << std::endl;
+	std::cout << "my future nickName " << nickName << std::endl;
+	for (size_t i = 0; i < _server->clients.size(); i++)
+    {
+        if (_server->clients[i]->getNickName() == _client->getNickName())
+        {
+			std::cout << "\e[1;31m" << "clientPointer " << _server->clients[i] << " " << _client << "\033[0m" << std::endl;
+			std::cout << "\e[1;31m" << "FD " << _server->clients[i]->fd  << "\033[0m" << std::endl;
+			std::cout << "\e[1;31m" << "FD " << _client->fd  << "\033[0m" << std::endl;
+			std::cout << "\e[1;31m" << "FD " << _server->clients[i]->fd  << "\033[0m" << std::endl;
+			std::cout << "\e[1;31m" << "FD " << _client->fd  << "\033[0m" << std::endl;
+		}
+    }
     if (!ft::Nick::isvalid())
      {
         _server->remove_fds(_client->fd);
         _server->removeClient(_client);
+		_client = NULL;
         return;
      }
     if (_client->getNickName() == "")
@@ -50,6 +64,7 @@ void ft::Nick::execute()
         return;
     }
     _client->setNickName(nickName);
+	
     std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
     _server->sendReply(_client, msg);
 }
