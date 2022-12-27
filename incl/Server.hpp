@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 05:28:33 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 10:39:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ namespace ft
         addrinfo hints, *servinfo;
 
     public:
+		bool	CLIENTISBACK;
+		int		CLIENTBACKFD;
         Server(std::string const &port, std::string const &password);
         ~Server();
 
@@ -104,6 +106,7 @@ namespace ft
         std::vector<Client *> getClients();
         bool isNickNameTaken(std::string nickName, Client *client);
         void checkConnection();
+		void	resetFD(Client *OLDclient, Client *NEWclient);
         void removeClient(Client *client);
         void remove_fds(int fd);
 

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 09:21:12 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 10:46:57 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,40 @@ void ft::Nick::execute()
     std::string nickName = _message->getParameter()[0];
     // check if nick name is valid
     if (!ft::Nick::isvalid())
-     {
-        _server->remove_fds(_client->fd);
-        _server->removeClient(_client);
+	{
+		_server->remove_fds(_client->fd);
+		_server->removeClient(_client);
 		_client = NULL;
-        return;
-     }
-    if (_client->getNickName() == "")
-    {
-        _client->setNickName(nickName);
-        std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-        _server->sendReply(_client, msg);
-        msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
-        _server->sendReply(_client, msg);
-        msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
-        _server->sendReply(_client, msg);
-        msg = RPL_MYINFO(_server->getServerName(), _server->getVersion(), "iow", "o", "ov");
-        _server->sendReply(_client, msg);
-        return;
-    }
-    _client->setNickName(nickName);
-	
-    std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-    _server->sendReply(_client, msg);
+		return;
+	}
+	if (_server->CLIENTISBACK)
+	{
+		_server->CLIENTISBACK = false;
+		_client = NULL;
+		std::string msg = RPL_WELCOMEBACK(_server->getServerName(), _message->getParameter()[0]);
+		send(_server->CLIENTBACKFD, msg.c_str(), msg.size(), 0);
+		return;
+	}
+	if (_client)
+	{
+		if (_client->getNickName() == "")
+		{
+			_client->setNickName(nickName);
+			std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+			_server->sendReply(_client, msg);
+			msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
+			_server->sendReply(_client, msg);
+			msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
+			_server->sendReply(_client, msg);
+			msg = RPL_MYINFO(_server->getServerName(), _server->getVersion(), "iow", "o", "ov");
+			_server->sendReply(_client, msg);
+			return;
+		}
+		_client->setNickName(nickName);
+		
+		std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+		_server->sendReply(_client, msg);
+	}
 }
 
 bool ft::Nick::isvalid()

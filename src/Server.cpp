@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 09:21:42 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 10:39:33 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
                                                                            version("0.1"),
                                                                            port(port),
                                                                            password(password),
-                                                                           storage("")
+                                                                           storage(""),
+																		   CLIENTISBACK(false)
 {
     std::cout << "Server created" << std::endl;
     std::cout << "Host: " << host << std::endl;
     std::cout << "Port: " << port << std::endl;
     std::cout << "Password: " << password << std::endl;
     std::cout << "Servername: " << servername << std::endl;
-
+	
     this->create_socket();
     init_commands();
     this->createPoll();
@@ -376,9 +377,8 @@ void ft::Server::sendReply(Client *client, std::string reply)
     send(client->fd, msg.c_str(), msg.size(), 0);
 }
 
-bool ft::Server::isNickNameTaken(std::string nickname, Client *clinet)
+bool ft::Server::isNickNameTaken(std::string nickname, Client *client)
 {
-    (void)clinet;
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         //send pong to the client
@@ -394,9 +394,12 @@ bool ft::Server::isNickNameTaken(std::string nickname, Client *clinet)
             int nybtes = recv(this->clients[i]->fd, buf, sizeof(buf), 0);
             if (nybtes <= 0)
             {
-                std::cout << "Client " << this->clients[i]->getNickName() << " disconnected" << std::endl;
+                std::cout << "Client " << this->clients[i]->getNickName() << " is back" << std::endl;
                 remove_fds(this->clients[i]->fd);
-                removeClient(this->clients[i]);
+				resetFD(this->clients[i], client);
+				client = NULL;
+				CLIENTISBACK = true;
+                // removeClient(this->clients[i]);
                 return false;
             }
             {
@@ -433,6 +436,21 @@ ft::Channel *ft::Server::getChannel(std::string CHname)
         	return (this->channels[i]);
     }
     return (NULL);
+}
+
+void	ft::Server::resetFD(Client *OLDclient, Client *NEWclient)
+{
+	OLDclient->fd = NEWclient->fd;
+	CLIENTBACKFD = NEWclient->fd;
+	for (size_t i = 0; i < this->clients.size(); i++)
+    {
+        if (this->clients[i] == NEWclient)
+        {
+            delete this->clients[i];
+            this->clients[i] = NULL;
+            this->clients.erase(this->clients.begin() + i);
+        }
+    }
 }
 
 void ft::Server::removeClient(Client *client)

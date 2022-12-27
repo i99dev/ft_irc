@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Replies.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 08:11:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/27 10:46:37 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 #define RPL_WELCOME(servername, nick) \
 ":" + servername + " 001 " + nick + " :Welcome to the Internet Relay Network " + nick + "\n"
+#define RPL_WELCOMEBACK(servername, nick) \
+":" + servername + " 001 " + nick + " :Welcome back to the Internet Relay Network " + nick + "\n"
 #define RPL_YOURHOST(servername, nick, version) \
 ":" + servername + " 002 " + nick + " :Your host is " + servername + ", running version " + version + "\n"
 #define RPL_CREATED(servername, nick) \
