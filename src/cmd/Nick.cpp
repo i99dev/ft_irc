@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 19:30:45 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/27 19:49:10 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ void	ft::Nick::connectClientBack()
 			{
 				if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD && _server->channels[i]->members[j].user_mode != O_CHANNEL_CREATOR)
 				{
+					std::string joinMsg = ":" + _message->getParameter()[0] + " PART " + _server->channels[i]->getChName() + " :" + "bye";
+					_server->channels[i]->members[j].user->sendReply(joinMsg);
+					ft::Client *tmp = _server->channels[i]->members[j].user;
+					joinMsg = ":" + _message->getParameter()[0] + " JOIN " + _server->channels[i]->getChName();
+					tmp->sendReply(joinMsg);					
+				}
+				else if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD && _server->channels[i]->members[j].user_mode == O_CHANNEL_CREATOR){
 					std::string joinMsg = ":" + _message->getParameter()[0] + " PART " + _server->channels[i]->getChName() + " :" + "bye";
 					_server->channels[i]->members[j].user->sendReply(joinMsg);
 					ft::Client *tmp = _server->channels[i]->members[j].user;
