@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 16:12:16 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 06:22:59 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft::Nick::connectClientBack()
 		{
 			for (size_t j = 0; j < _server->channels[i]->members.size(); j++)
 			{
-				if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD && _server->channels[i]->members[j].user_mode != O_CHANNEL_CREATOR)
+				if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD)
 				{
 					std::string joinMsg = ":" + _message->getParameter()[0] + " JOIN " + _server->channels[i]->getChName();
 					_server->channels[i]->members[j].user->sendReply(joinMsg);					
