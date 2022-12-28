@@ -121,7 +121,7 @@ int	Server::connectClients()
 			std::cout << "Accept: " << strerror(errno) << std::endl;
 			return (0);
 		}
-		std::cout << "New connection: socket fd is " << this->_newSocket << ", ip address is " << inet_ntoa(this->_address.sin_addr) << ", port is" << ntohs(this->_address.sin_port) << std::endl;
+		std::cout << "💬 New connection: socket fd is " << this->_newSocket << ", ip address is " << inet_ntoa(this->_address.sin_addr) << ", port is" << ntohs(this->_address.sin_port) << std::endl;
 		// send a welcome message to the connected socket
 		if (send(this->_newSocket, WLCMSG, strlen(WLCMSG), 0) != strlen(WLCMSG))
 			std::cout << "Send: " << strerror(errno) << std::endl;

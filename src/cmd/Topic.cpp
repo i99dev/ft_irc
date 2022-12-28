@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/27 12:00:08 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:03:35 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft::Topic::changeTopic(void)
 	// ? if topic was empty it means need to clear the topic
 	if (_message->getParameter()[1].empty())
 	{
-		std::cout << "delete message" << std::endl;
+		std::cout << "clear topic" << std::endl;
 		channel->setTopic(0);
 		sendTopic();
 	}
@@ -101,6 +101,9 @@ void	ft::Topic::execute(void)
 	{
 		std::cout << "send topic" << std::endl;
 		// ? send the topic
-		_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
+		if (channel->getTopic().empty())
+			_client->sendReply(RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), channel->getChName()));
+		else
+			_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 	}
 }

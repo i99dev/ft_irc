@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:26:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:35:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void ft::Join::execute()
 					if (_server->channels[i]->getTopic() != "SET TOPIC")
 						topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName(), _server->channels[i]->getTopic());
 					else
-						topicMsg = ":" + _client->getServerName() + " 331 " + _client->getNickName() + " " + _client->getNickName() + " " + channelName + " :No topic is set";
+						topicMsg = RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName());
 					_client->sendReply(topicMsg);
 				}
 			}

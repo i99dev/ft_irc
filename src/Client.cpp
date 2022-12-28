@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 12:39:04 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:26:41 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,4 +223,5 @@ ft::Client::~Client() {
 	// clear all the messages
 	_msgRecv.clear();
 	_msgSend.clear();
+	std::cout << BRED << "client destructor called" << DEFCOLO << std::endl;
 }

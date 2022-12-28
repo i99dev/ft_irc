@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:09:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,15 @@ void ft::Message::parseMessage(std::string const &msg)
 	}
 
 	//cout 
-	std::cout << "Command: " << _Command << std::endl;
-	std::cout << "Parameter: " << std::endl;
+	std::cout << BYEL << "_____________" << DEFCOLO  << std::endl;
+	std::cout << BBLU << "Command: " << DEFCOLO << _Command << std::endl;
+	std::cout << BBLU << "Parameter: " << DEFCOLO << std::endl;
 	for (size_t i = 0; i < _Parameter.size(); i++)
 	{
 		std::cout << _Parameter[i] << std::endl;
 	}
 	std::cout << "Parameter size: " << _Parameter.size() << std::endl;
-	std::cout << "_____________" << std::endl;
+	std::cout << BYEL << "_____________" << DEFCOLO << std::endl;
 }
 
 ft::Message::Message(std::string msg,int owner_fd){

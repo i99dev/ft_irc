@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/26 17:01:57 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:41:15 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,30 @@ ft::Channel::Channel(Client *user, std::string &name)
 	this->_limit = 0;
 	this->_totalMem = 1;
 	this->_topic = "";
-	std::cout << "created channel:" << _name << std::endl;
+	std::cout << "A chennel is created: " << _name << std::endl;
 }
 
 ft::Channel::~Channel()
 {
 	if (!_bannedList.empty())
 	{
-		std::cout << "free _bannedList" << std::endl;
+		std::cout << BRED << "free _bannedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _bannedList.size(); i++)
 			delete _bannedList[i];
 	}
 	if (!_invitedList.empty())
 	{
-		std::cout << "free _invitedList" << std::endl;
+		std::cout << BRED << "free _invitedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _invitedList.size(); i++)
 			delete _invitedList[i];
 	}
 	if (!_exceptedList.empty())
 	{
-		std::cout << "free _exceptedList" << std::endl;
+		std::cout << BRED << "free _exceptedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _exceptedList.size(); i++)
 			delete _exceptedList[i];	
 	}
+	std::cout << BRED << "Channel destructor called" << DEFCOLO << std::endl;
 }
 
 // * Channel Check * //
@@ -67,10 +68,12 @@ bool	ft::Channel::isMember(std::string nick)
 
 bool	ft::Channel::isMemberOperator(std::string nick)
 {
+	// std::cout << "member size " << this->members.size() << std::endl;
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
 		if (this->members[i].user->getNickName() == nick)
 		{
+			// std::cout << "member "<< std::endl;
 			if (this->members[i].user_mode == o_OPERATOR_PRIVILEGE || this->members[i].user_mode == O_CHANNEL_CREATOR)
 				return (true);
 		}
@@ -202,7 +205,7 @@ int	ft::Channel::setChannelMode(char mode, std::string param)
 {
 	if (ft::ModeTools::isCHMode(mode))
 	{
-		std::cout << mode << " yes add the channel mode" << std::endl;
+		std::cout << mode << "add the channel mode" << std::endl;
 		this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
 	}
 	if (mode == 'k')
@@ -249,7 +252,7 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 	}
 	else if (ft::ModeTools::isMEMode(mode))
 	{
-		std::cout << mode << " yes it's a member mode" << std::endl;
+		std::cout << mode << "it's a member mode" << std::endl;
 		if (mode == 'o')
 			return (this->removeMemberMode(this->getMember(param), 'o'));
 		else if (mode == 'v')
@@ -263,12 +266,12 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 
 int	ft::Channel::setChannelFlag(char mode, std::string param)
 {
-	std::cout << "mask param " << param << std::endl;
+	// std::cout << "mask param " << param << std::endl;
 	Mask *mask = new Mask(param);
 	
 	if (mask->is_mask)
 	{
-		std::cout << "yes it's a mask " << param << std::endl;
+		std::cout << "it's a mask " << param << std::endl;
 		if (mode == 'I' && !this->isRepeatedMask(this->getInvitedList(), mask->getMask()))
 		{
 			if (!this->isCHModeSet('i') && !isRepeatedMask(_invitedList, mask->getMask()))
@@ -305,8 +308,8 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 			//  TODO: check if the mask was there using isrepeated function then delete it using findMask
 			if (isRepeatedMask(_invitedList, mask->getMask()) && !_invitedList.empty())
 			{
-				std::cout << "pos " << _findMask(_invitedList, mask->getMask()) << std::endl;
-				std::cout << _invitedList[0]->getMask()->nick << std::endl;
+				// std::cout << "pos " << _findMask(_invitedList, mask->getMask()) << std::endl;
+				// std::cout << _invitedList[0]->getMask()->nick << std::endl;
 				int i = _findMask(_invitedList, mask->getMask());
 				delete _invitedList[i];
 				_invitedList.erase(_invitedList.begin() + i);
@@ -462,6 +465,7 @@ bool	ft::Channel::isUserInvited(ft::Client *client)
 		if (this->_invitedList[i]->match_client_mask(client))
 			return (true);
 	}
+	std::cout << "it doesn't match the mask" << std::endl;
 	return (false);
 }
 

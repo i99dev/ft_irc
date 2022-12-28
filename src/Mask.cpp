@@ -50,9 +50,10 @@ t_mask *split_mask(std::string &str)
 {
 	t_mask *mask = new t_mask;
 	mask->is_mask = false;
+			// std::cout << "mask here 1 ->" << str << std::endl;
     if (str.find('!') != std::string::npos && str.find('@') != std::string::npos)
     {
-		if (str.find_first_of('!') == str.find_last_of('!') && str.find_first_of('@') && str.find_last_of('@'))
+		if (str.find_first_of('!') == str.find_last_of('!') && str.find_first_of('@') == str.find_last_of('@'))
 		{
 			if (str.find('!') < str.find('@'))
 			{
@@ -74,11 +75,11 @@ t_mask *split_mask(std::string &str)
 bool ft::Mask::match_client_mask(ft::Client *client)
 {
     if (_mask->nick != "" && _mask->nick.size() > 1 && match_wildCard(client->getNickName(), _mask->nick) == false)
-        return false;
+        return (false);
     if (_mask->user != "" && _mask->user.size() > 1 && match_wildCard(client->getUserName(), _mask->user) == false)
-        return false;
+        return (false);
     if (_mask->host != "" && _mask->host.size() > 1 && match_wildCard(client->getHostName(), _mask->host) == false)
-        return false;
+        return (false);
     return true;
 }
 
