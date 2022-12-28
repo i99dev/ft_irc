@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 10:56:55 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 06:14:30 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ namespace ft
 		void	resetFD(Client *OLDclient, Client *NEWclient);
         void removeClient(Client *client);
         void remove_fds(int fd);
-
+		int	getClientInfoPos(int FDpos);
         // message functions
         void sendReply(Client *client, std::string msg);
     };
