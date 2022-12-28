@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:38:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 06:59:27 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,16 @@ void ft::Server::acceptConnection()
     std::cout << "New connection from " << ip_client << " on socket " << new_fd << std::endl;
 }
 
+int	ft::Server::getClientInfoPos(int FDpos)
+{
+	for (size_t i = 0; i < clients.size(); i++)
+	{
+		if (clients[i]->fd == fds[FDpos].fd)
+			return (i);	
+	}
+	return (FDpos - 1);
+}
+
 /**
  * @brief Receive message from client
  */
@@ -250,9 +260,9 @@ void ft::Server::receiveMessage(int i)
     if (nbytes < 0)
     {
 		// ! remove a disconnected client in all cases it's gone forever
-        std::cout << "Client " << clients[i - 1]->getNickName() << " disconnected" << std::endl;
+        std::cout << "Client " << clients[getClientInfoPos(i)]->getNickName() << " disconnected" << std::endl;
         remove_fds(fds[i].fd);
-        removeClient(clients[i - 1]);
+        removeClient(clients[getClientInfoPos(i)]);
         return;
     }
     else
@@ -274,7 +284,10 @@ void ft::Server::receiveMessage(int i)
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
                 {
                     Command *cmd = it->second;
-                    cmd->setClient(this->clients[i - 1]);
+					std::cout << "fd pos " << i << " " << fds[i].fd << std::endl;
+					std::cout << "client info pos " << i - 1 << this->clients[i - 1] << std::endl;
+					std::cout << "client info pos " << getClientInfoPos(i) << std::endl;
+                    cmd->setClient(this->clients[getClientInfoPos(i)]);
                     cmd->setServer(this);
                     cmd->setMessage(args[k]);
                     cmd->execute();
@@ -284,7 +297,7 @@ void ft::Server::receiveMessage(int i)
                 }
                 else
                 {
-                    this->clients[i - 1]->sendReply("ERROR :Unknown command\r");
+                    this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
                     delete args[k];
                     args[k] = NULL;
                     std::cout << "free message Two" << std::endl;
