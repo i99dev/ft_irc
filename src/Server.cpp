@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/28 06:16:55 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 06:59:27 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ int	ft::Server::getClientInfoPos(int FDpos)
 		if (clients[i]->fd == fds[FDpos].fd)
 			return (i);	
 	}
-	return (-1);
+	return (FDpos - 1);
 }
 
 /**
@@ -284,7 +284,9 @@ void ft::Server::receiveMessage(int i)
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
                 {
                     Command *cmd = it->second;
-					std::cout << this->clients[getClientInfoPos(i)]->getNickName() << std::endl;
+					std::cout << "fd pos " << i << " " << fds[i].fd << std::endl;
+					std::cout << "client info pos " << i - 1 << this->clients[i - 1] << std::endl;
+					std::cout << "client info pos " << getClientInfoPos(i) << std::endl;
                     cmd->setClient(this->clients[getClientInfoPos(i)]);
                     cmd->setServer(this);
                     cmd->setMessage(args[k]);
