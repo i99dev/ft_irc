@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 20:37:08 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/29 08:19:13 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ int main(int argc, char **argv)
 		std::cerr << "Usage: " << argv[0] << " <host> <port>" << std::endl;
 		exit(1);
 	}
+	for (size_t i = 0; i < strlen(argv[2]); i++)
+    {
+        if (!isdigit(argv[2][i]))
+        {
+            std::cout << "Port must be a number" << std::endl;
+            return (EXIT_FAILURE);
+        }
+    }
 	ft::Bot bot(argv[2], argv[1]);
 }
 
