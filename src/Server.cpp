@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/29 16:52:22 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:57:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void sig_handler(int signo)
     }
 }
 
-ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
+ft::Server::Server(std::string const &port, std::string const &password) : host("10.19.248.82"),
                                                                            servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
