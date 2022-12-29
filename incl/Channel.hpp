@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/28 15:25:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/29 08:33:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ namespace ft
 			bool									isMember(std::string nick);
 			bool									isMemberOperator(std::string nick);
 			bool									isRepeatedMask(const std::vector<ft::Mask *> &MasksList, t_mask *mask);
+			// void									kickBannedMember(ft::Mask *mask);
 			// ? PART
 			void									removeUser(std::string nick);
 	};

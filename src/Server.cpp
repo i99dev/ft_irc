@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/28 20:04:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:52:22 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
 
 ft::Server::~Server()
 {
-    std::cout << BRED <<  "Server destroyed" << DEFCOLO << std::endl;
+    std::cout << BGRN <<  "Server destroyed" << DEFCOLO << std::endl;
     // close all sockets
     for (size_t i = 0; i < clients.size(); i++)
     {
-        std::cout << BRED << "free this client " << clients[i]->fd << DEFCOLO << std::endl;
+        std::cout << BGRN << "free this client " << clients[i]->fd << DEFCOLO << std::endl;
         close(clients[i]->fd);
         delete clients[i];
     }
@@ -95,12 +95,12 @@ ft::Server::~Server()
     // delete all channels
     for (std::vector<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
     {
-        std::cout << BRED << "free this Channel " << (*it)->getChName() << DEFCOLO << std::endl;
+        std::cout << BGRN << "free this Channel " << (*it)->getChName() << DEFCOLO << std::endl;
         delete (*it);
     }
 
     // delete all commands
-        std::cout << BRED << "free Cmmands  " << DEFCOLO << std::endl;
+        std::cout << BGRN << "free Cmmands  " << DEFCOLO << std::endl;
     for (std::map<std::string, ft::Command *>::iterator it = _commands.begin(); it != _commands.end(); it++)
     {
         delete it->second;
@@ -308,14 +308,14 @@ void ft::Server::receiveMessage(int i)
                     cmd->execute();
                     delete args[k];
                     args[k] = NULL;
-                    std::cout << BRED << "free message" << DEFCOLO << std::endl;
+                    std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
                 else
                 {
                     this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
                     delete args[k];
                     args[k] = NULL;
-                    std::cout << BRED << "free message" << DEFCOLO << std::endl;
+                    std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
             }
             storage = "";
@@ -486,7 +486,7 @@ void	ft::Server::resetFD(Client *OLDclient, Client *NEWclient)
 
 void ft::Server::removeClient(Client *client)
 {
-	std::cout << BRED << "remmove the client " << client->fd << DEFCOLO << std::endl;
+	std::cout << BGRN << "remmove the client " << client->fd << DEFCOLO << std::endl;
     for (size_t i = 0; i < this->clients.size(); i++)
     {
         if (this->clients[i] == client)

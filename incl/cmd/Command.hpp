@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:10:43 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/28 15:24:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:53:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
 		Command(void){};
 		virtual ~Command()
 		{
-			std::cout << BRED << "Command " << _name << " destructor called" << DEFCOLO << std::endl;
+			std::cout << BGRN << "Command " << _name << " destructor called" << DEFCOLO << std::endl;
 		};
 		virtual void execute() = 0;
 		virtual bool validate(void)

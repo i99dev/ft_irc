@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/28 19:41:15 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:52:22 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ ft::Channel::~Channel()
 {
 	if (!_bannedList.empty())
 	{
-		std::cout << BRED << "free _bannedList" << DEFCOLO << std::endl;
+		std::cout << BGRN << "free _bannedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _bannedList.size(); i++)
 			delete _bannedList[i];
 	}
 	if (!_invitedList.empty())
 	{
-		std::cout << BRED << "free _invitedList" << DEFCOLO << std::endl;
+		std::cout << BGRN << "free _invitedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _invitedList.size(); i++)
 			delete _invitedList[i];
 	}
 	if (!_exceptedList.empty())
 	{
-		std::cout << BRED << "free _exceptedList" << DEFCOLO << std::endl;
+		std::cout << BGRN << "free _exceptedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _exceptedList.size(); i++)
 			delete _exceptedList[i];	
 	}
-	std::cout << BRED << "Channel destructor called" << DEFCOLO << std::endl;
+	std::cout << BGRN << "Channel destructor called" << DEFCOLO << std::endl;
 }
 
 // * Channel Check * //
@@ -283,7 +283,9 @@ int	ft::Channel::setChannelFlag(char mode, std::string param)
 		else if (mode == 'b' && !this->isRepeatedMask(this->getBannedList(), mask->getMask()))
 		{
 			this->_bannedList.push_back(mask);
+			// this->kickBannedMember(mask);
 			std::cout << "add to the ban list" << std::endl;
+			std::cout << "kick the banned member in this mask" << std::endl;
 		}
 		else if (mode == 'e' && !this->isRepeatedMask(this->getExceptionList(), mask->getMask()))
 		{
