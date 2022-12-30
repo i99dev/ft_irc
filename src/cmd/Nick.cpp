@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 20:54:09 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:24:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void ft::Nick::execute()
 		return ;
     if (!ft::Nick::isvalid())
 	{
-		std::cout << "remove the client it's using others nick" << std::endl;
+		std::cout << "Remove the client it's using others nick" << std::endl;
 		_server->remove_fds(_client->fd);
 		_server->removeClient(_client);
 		_client = NULL;
@@ -73,19 +73,20 @@ void ft::Nick::execute()
 		if (_client->getNickName() == "")
 		{
 			_client->setNickName(nickName);
-			std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-			_server->sendReply(_client, msg);
-			msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
-			_server->sendReply(_client, msg);
-			msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
-			_server->sendReply(_client, msg);
-			msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
-			_server->sendReply(_client, msg);
+			std::cout << "The first set to the Nick " << nickName << std::endl;
+			// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+			// _server->sendReply(_client, msg);
+			// msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
+			// _server->sendReply(_client, msg);
+			// msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
+			// _server->sendReply(_client, msg);
+			// msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
+			// _server->sendReply(_client, msg);
 			_client->NICKflag++;
 			return;
 		}
 		_client->setNickName(nickName);
-		
+		std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
 		// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
 		// _server->sendReply(_client, msg);
 	}
