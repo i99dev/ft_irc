@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 14:37:38 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:15:01 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void ft::User::execute()
 			_client->USERflag++;
 			std::cout << "User executed" << std::endl;
 			for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-				std::cout << i << " " << this->_message->getParameter()[i] << std::endl; 
-			
+				std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
 	}
 }

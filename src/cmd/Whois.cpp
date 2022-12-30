@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Whois.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:09:59 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:04:49 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ ft::Whois::Whois()
 
 void ft::Whois::execute()
 {
+	if (_client->getNickName() == "")
+	{
+		_client->sendReply("431 :No nickname given");
+		return;
+	}
+	if (_message->getParameter().size() != 1){
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return;
+	}
 	std::vector <std::string> channels;
 	ft::Client *target;
 	int flag = 0;

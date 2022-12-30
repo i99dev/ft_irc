@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 19:51:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:14:44 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,7 @@ int	isCarriage(std::string arg)
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
-    char buf[1024];
+    char buf[1024] = {0};
     nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes < 0)
     {
@@ -302,6 +302,7 @@ void ft::Server::receiveMessage(int i)
     }
     else
     {
+        std::cout << "CHECK____" << buf << "____CHECK" << std::endl;
         buf[nbytes] = '\0';
         // std::string buff = buf;
         if (!strchr(buf, '\n'))

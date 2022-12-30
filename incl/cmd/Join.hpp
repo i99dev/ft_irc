@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:58:17 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/11/29 07:50:00 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:32:43 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ namespace ft
 	public:
 		Join(void);
 		void execute();
+		int createCH(std::string, std::string);
+		int breakers(std::string, int);
+		void addClient(int);
+		void split(std::vector<std::string> &v, char seperator);
 	};
 
 }
