@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:49:26 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/30 09:14:04 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ void    ft::Part::execute(){
 	        }
 	    }
 		if (flag == 0){
-			_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), channelName));
+			_client->sendReply(ERR_NOSUCHNICK(_server->getServerName(), channelName));
+			return ;
 		}
 		if (flag2 == 0){
 			_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channelName));
+			return ;
 		}
 	}
 }
