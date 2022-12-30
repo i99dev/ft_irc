@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/29 16:57:48 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 17:43:12 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ void sig_handler(int signo)
     }
 }
 
-ft::Server::Server(std::string const &port, std::string const &password) : host("10.19.248.82"),
+ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
                                                                            password(password),
-                                                                           storage(""),
 																		   CLIENTISBACK(false)
 {
 	
@@ -174,6 +173,7 @@ void ft::Server::createPoll()
     pfd.fd = this->master_fd;
     pfd.events = POLLIN;
     this->fds.push_back(pfd);
+	storage.push_back("");
 
     // set timeout to 120 seconds
     const int timeout = 5 * 1000;
@@ -254,6 +254,7 @@ void ft::Server::acceptConnection()
     this->clients.push_back(new ft::Client(new_fd, servername, ip_client));
     pollfd pfd = {new_fd, POLLIN, 0};
     fds.push_back(pfd);
+	storage.push_back("");
     std::cout << "💬 New connection from " << ip_client << " on socket " << new_fd << std::endl;
 }
 
@@ -289,13 +290,13 @@ void ft::Server::receiveMessage(int i)
         std::string buff = buf;
         if (!strchr(buf, '\n'))
         {
-            storage += buff;
+            storage[i] += buff;
         }
         else
         {
-            storage += buff;
+            storage[i] += buff;
             // std::cout << "/" << storage << std::endl;
-            std::vector<Message *> args = ft::Server::splitMessage(storage, '\n', fds[i].fd);
+            std::vector<Message *> args = ft::Server::splitMessage(storage[i], '\n', fds[i].fd);
             for (size_t k = 0; k < args.size(); k++)
             {
                 std::map<std::string, Command *>::iterator it;
@@ -303,6 +304,9 @@ void ft::Server::receiveMessage(int i)
                 {
                     Command *cmd = it->second;
                     cmd->setClient(this->clients[getClientInfoPos(i)]);
+					std::cout << BMAG << "client pos " << getClientInfoPos(i) << " client size " << clients.size() << std::endl;
+					std::cout << "fd pos " << i << " fd size " << fds.size() << std::endl;
+					// std::cout << "fd in fds " << fds[i].fd << " fd in client " << clients[getClientInfoPos(i)]->fd << DEFCOLO << std::endl;
                     cmd->setServer(this);
                     cmd->setMessage(args[k]);
                     cmd->execute();
@@ -318,7 +322,8 @@ void ft::Server::receiveMessage(int i)
                     std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
             }
-            storage = "";
+			if ((int)storage.size() > i)
+            	storage[i] = "";
             for (size_t k = 0; k < args.size(); k++)
             {
                 if (args[k] != NULL)
@@ -512,6 +517,7 @@ void ft::Server::remove_fds(int fd)
         if (this->fds[i].fd == fd)
         {
             this->fds.erase(this->fds.begin() + i);
+			storage.erase(storage.begin() + i);
         }
     }
 }
