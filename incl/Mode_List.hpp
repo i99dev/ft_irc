@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode_List.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:35:36 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/24 03:59:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:55:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ inline bool	ft::ModeTools::isCHMode(char mode)
 
 inline bool	ft::ModeTools::isCHflag(char mode)
 {
-	for (int i = 5; i < 9; ++i)
+	for (int i = 5; i < 8; ++i)
 	{
 		if (CHMODE_CHAR[i] == mode)
 			return (true);

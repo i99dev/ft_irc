@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/25 07:21:53 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:53:04 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@
 #include <fstream>
 #include <vector>
 #include "Mode_List.hpp"
+
+# define BBLK "\e[1;30m"
+# define BRED "\e[1;31m"
+# define BGRN "\e[1;32m"
+# define BYEL "\e[1;33m"
+# define BBLU "\e[1;34m"
+# define BMAG "\e[1;35m"
+# define BCYN "\e[1;36m"
+# define BWHT "\e[1;37m"
+# define BPUR "\e[0;35m"
+# define DEFCOLO "\033[0m"
+
 namespace ft
 {
 	class Client

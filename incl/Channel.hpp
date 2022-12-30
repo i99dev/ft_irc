@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/26 17:01:23 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/29 08:33:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <vector>
 #include <iostream>
 #include "./Client.hpp"
+
 // #include "./Mode_List.hpp"
 #include <cstdarg>
 #define CHNAME_LENGTH 50
@@ -97,6 +98,7 @@ namespace ft
 			bool									isMember(std::string nick);
 			bool									isMemberOperator(std::string nick);
 			bool									isRepeatedMask(const std::vector<ft::Mask *> &MasksList, t_mask *mask);
+			// void									kickBannedMember(ft::Mask *mask);
 			// ? PART
 			void									removeUser(std::string nick);
 	};
