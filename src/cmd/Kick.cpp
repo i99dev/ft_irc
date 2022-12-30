@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:14:48 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:01:12 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ ft::Kick::Kick(void)
 }
 
 void ft::Kick::execute(){
+	if (_client->getNickName() == "")
+	{
+		_client->sendReply("431 :No nickname given");
+		return;
+	}
 	if (_message->getParameter().size() > 3 || _message->getParameter().size() < 2)
 	{
 		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
@@ -84,9 +89,7 @@ void ft::Kick::execute(){
 				std::vector<Channel_Member> clients = (_server->channels[j])->members;
 				std::vector<Channel_Member>::iterator it2 = clients.begin();
 				for (; it2 != clients.end(); it2++)
-				{
 					(*it2).user->sendReply(":" + _client->getNickName() + " KICK " + _server->channels[j]->getChName() + " " + target->getNickName() + " :" + _message->getParameter()[2]);
-				}
 			}
 		}
 		if (ok == false)

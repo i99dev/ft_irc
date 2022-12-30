@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/29 16:57:48 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:38:53 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void sig_handler(int signo)
     }
 }
 
-ft::Server::Server(std::string const &port, std::string const &password) : host("10.19.248.82"),
+ft::Server::Server(std::string const &port, std::string const &password) : host("127.0.0.1"),
                                                                            servername("42_irc"),
                                                                            version("0.1"),
                                                                            port(port),
@@ -273,7 +273,7 @@ int	ft::Server::getClientInfoPos(int FDpos)
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
-    char buf[1024];
+    char buf[1024] = {0};
     nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes < 0)
     {
@@ -285,6 +285,7 @@ void ft::Server::receiveMessage(int i)
     }
     else
     {
+        std::cout << "CHECK____" << buf << "____CHECK" << std::endl;
         buf[nbytes] = '\0';
         std::string buff = buf;
         if (!strchr(buf, '\n'))

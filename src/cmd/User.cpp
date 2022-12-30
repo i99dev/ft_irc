@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 09:16:46 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 00:08:15 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void ft::User::execute()
 			_client->setRealName(_message->getParameter()[3]);
 			std::cout << "User executed" << std::endl;
 			for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-				std::cout << i << " " << this->_message->getParameter()[i] << std::endl; 
+				std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
 	}
 }
