@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 09:16:46 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:37:38 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void ft::User::execute()
 {
 	if (_client)
 	{
+		if (_client->USERflag == 1)
+		{
+			_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));
+			return;	
+		}
 		if (_message->getParameter().size() != 4)
 		{
 			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
@@ -32,8 +37,10 @@ void ft::User::execute()
 			_client->setHostName(_message->getParameter()[1]);
 			_client->setServerName(_message->getParameter()[2]);
 			_client->setRealName(_message->getParameter()[3]);
+			_client->USERflag++;
 			std::cout << "User executed" << std::endl;
 			for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
 				std::cout << i << " " << this->_message->getParameter()[i] << std::endl; 
+			
 	}
 }

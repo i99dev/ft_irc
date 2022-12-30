@@ -6,7 +6,7 @@
 #    By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2022/12/27 12:05:16 by aaljaber         ###   ########.fr        #
+#    Updated: 2022/12/30 13:46:02 by aaljaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRC =	main.cpp \
 		./src/cmd/Invite.cpp \
 		./src/cmd/Topic.cpp \
 		./src/cmd/List.cpp \
-		./src/cmd/Quit.cpp 
+		./src/cmd/Quit.cpp \
+		./src/cmd/Pass.cpp 
 
 
 OBJ_DIR = obj

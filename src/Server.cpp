@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 17:43:12 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:51:10 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 #include "../incl/cmd/List.hpp"
 #include "../incl/cmd/Pong.hpp"
 #include "../incl/cmd/Quit.hpp"
+#include "../incl/cmd/Pass.hpp"
+#include <string.h>
+#include <cstring>
+
 
 std::string storage = "";
 
@@ -177,7 +181,7 @@ void ft::Server::createPoll()
 
     // set timeout to 120 seconds
     const int timeout = 5 * 1000;
-    std::cout << "Server is online" << "\e[0;00m" << std::endl;
+    std::cout << "Server is online" << DEFCOLO << std::endl;
     signal(SIGINT, sig_handler);
     while (1)
     {
@@ -268,6 +272,18 @@ int	ft::Server::getClientInfoPos(int FDpos)
 	return (FDpos - 1);
 }
 
+int	isCarriage(std::string arg)
+{
+	// std::cout << "--->" << arg << std::endl;
+	for (size_t i = 0; i < arg.size(); i++)
+	{
+		if (!std::isprint(arg[i]))
+			return (1);
+	}
+	// std::cout << "does have carraige" << std::endl;
+	return (0);
+}
+
 /**
  * @brief Receive message from client
  */
@@ -287,20 +303,25 @@ void ft::Server::receiveMessage(int i)
     else
     {
         buf[nbytes] = '\0';
-        std::string buff = buf;
+        // std::string buff = buf;
         if (!strchr(buf, '\n'))
         {
-            storage[i] += buff;
+            storage[i] += buf;
         }
         else
         {
-            storage[i] += buff;
+            storage[i] += buf;
             // std::cout << "/" << storage << std::endl;
             std::vector<Message *> args = ft::Server::splitMessage(storage[i], '\n', fds[i].fd);
+			if (args.size() < 1)
+            {
+				this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
+                std::cout << BRED << "Unknown command" << DEFCOLO << std::endl;
+			}
             for (size_t k = 0; k < args.size(); k++)
             {
                 std::map<std::string, Command *>::iterator it;
-                if ((it = _commands.find(args[k]->getCommand())) != _commands.end())
+                if ((it = _commands.find(args[k]->getCommand())) != _commands.end() && !isCarriage(args[k]->getmsg()))
                 {
                     Command *cmd = it->second;
                     cmd->setClient(this->clients[getClientInfoPos(i)]);
@@ -312,18 +333,19 @@ void ft::Server::receiveMessage(int i)
                     cmd->execute();
                     delete args[k];
                     args[k] = NULL;
-                    std::cout << BGRN << "free message" << DEFCOLO << std::endl;
+                    // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
                 else
                 {
+                    std::cout << BRED << "Unknown command" << DEFCOLO << std::endl;
                     this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
                     delete args[k];
                     args[k] = NULL;
-                    std::cout << BGRN << "free message" << DEFCOLO << std::endl;
+                    // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
             }
 			if ((int)storage.size() > i)
-            	storage[i] = "";
+				storage[i] = "";
             for (size_t k = 0; k < args.size(); k++)
             {
                 if (args[k] != NULL)
@@ -353,6 +375,23 @@ void ft::Server::init_commands(void)
     _commands["TOPIC"] = new ft::Topic();
     _commands["LIST"] = new ft::List();
     _commands["QUIT"] = new ft::Quit();
+    _commands["PASS"] = new ft::Pass();
+}
+
+int		isMsgParsed(std::string msg)
+{
+	if (msg.size() == 1 && msg[0] == '\n')
+		return (0);
+	for (size_t i = 0; i < msg.size(); i++)
+	{
+		if (((int)msg[i] > 0 && (int)msg[i] < 32) && (int)msg[i] > 126)
+		{
+			std::cout << i << " " << (int)msg[i] << " " << msg.size() << std::endl;
+			if ((int)msg[i] != 13 && (int)msg[i] != 10)
+				return (0);
+		}
+	}
+	return (1);
 }
 
 /**
@@ -364,9 +403,14 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
     std::vector<ft::Message *> messages;
     std::stringstream ss(msg);
     std::string item;
+	std::cout << "Received -> (" << msg << ")" << std::endl;
+	if (!isMsgParsed(msg))
+		return (messages);
     while (std::getline(ss, item, delim))
     {
-        ft::Message *message = new ft::Message(item.substr(0, item.size() - 1), fd);
+		if (strchr(item.c_str(), '\r'))
+       		item = item.substr(0, item.size() - 1);
+       	ft::Message *message = new ft::Message(item, fd);
         messages.push_back(message);
     }
     return messages;
@@ -450,7 +494,6 @@ std::string ft::Server::getVersion()
     return this->version;
 }
 
-
 bool ft::Server::isChannel(std::string CHname)
 {
     for (long unsigned int i = 0; i < this->channels.size(); i++)
@@ -517,7 +560,7 @@ void ft::Server::remove_fds(int fd)
         if (this->fds[i].fd == fd)
         {
             this->fds.erase(this->fds.begin() + i);
-			storage.erase(storage.begin() + i);
+			this->storage.erase(this->storage.begin() + i);
         }
     }
 }

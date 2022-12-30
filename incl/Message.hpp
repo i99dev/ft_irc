@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:26:45 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/20 09:13:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 09:13:41 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ namespace ft
 			bool 		isCommand();
 			bool 		isParameter();
 			bool 		isTrailing();
+			std::string	getmsg();
 	};
 }
 
