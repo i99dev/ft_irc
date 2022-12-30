@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 20:14:44 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:07:02 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,7 @@ void ft::Server::receiveMessage(int i)
                     Command *cmd = it->second;
                     cmd->setClient(this->clients[getClientInfoPos(i)]);
 					std::cout << BMAG << "client pos " << getClientInfoPos(i) << " client size " << clients.size() << std::endl;
-					std::cout << "fd pos " << i << " fd size " << fds.size() << std::endl;
+					std::cout << "fd pos " << i << " fd size " << fds.size() << DEFCOLO << std::endl;
 					// std::cout << "fd in fds " << fds[i].fd << " fd in client " << clients[getClientInfoPos(i)]->fd << DEFCOLO << std::endl;
                     cmd->setServer(this);
                     cmd->setMessage(args[k]);

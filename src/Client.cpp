@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/30 14:36:51 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:47:26 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 	_hostName = "";
 	PASSFlag = 0;
 	USERflag = 0;
+	NICKflag = 0;
 }
 
 void ft::Client::setPing(int ping)

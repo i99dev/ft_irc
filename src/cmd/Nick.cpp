@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 20:14:50 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:54:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void ft::Nick::execute()
 			_server->sendReply(_client, msg);
 			msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
 			_server->sendReply(_client, msg);
-			msg = RPL_MYINFO(_server->getServerName(), _server->getVersion(), "iow", "o", "ov");
+			msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
 			_server->sendReply(_client, msg);
+			_client->NICKflag++;
 			return;
 		}
 		_client->setNickName(nickName);
