@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/30 10:30:27 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:37:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ namespace ft
 			
 		public:
 			int							PASSFlag;
+			int							USERflag;
 			int							fd;
 			std::vector <std::string>	invites;
 			//user info

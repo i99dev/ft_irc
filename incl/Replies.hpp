@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 10:46:37 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:33:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@
 #define ERR_NOTREGISTERED 451
 #define ERR_NEEDMOREPARAMS(servername, nick, command) \
 	":" + servername + " 461 " + nick + " " + command + " :Wrong num parameters\n"
-#define ERR_ALREADYREGISTERED 462
+#define ERR_ALREADYREGISTERED(servername, nick) \
+	":" + servername + " 462 " + nick + " :You are Already Registered\n"
 #define ERR_PASSWDMISMATCH(servername, nick) \
 	":" + servername + " 464 " + nick + " :Password incorrect\n"
 #define ERR_YOUREBANNEDCREEP(servername, nick) \
