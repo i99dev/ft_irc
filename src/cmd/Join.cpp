@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 03:17:19 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/31 03:21:50 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void ft::Join::execute()
 				if (_server->channels[i]->isCHModeSet('k'))
 				{
 					// check if key is correct
-					if ((_message->getParameter().size() > 1 && _server->channels[i]->getkey() == channelKey))
+					if (((channelKey != "" && channelKey != "x") && _server->channels[i]->getkey() == channelKey))
 						addClient(i);
 					else
 						_client->sendReply(ERR_BADCHANNELKEY(_server->getServerName(), _client->getNickName(), channelName));
