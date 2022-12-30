@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 13:17:28 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 09:17:14 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,19 @@ void ft::Privmsg::execute()
 	if (flag == 1)
 		return;
 	// user to user
+	flag = 0;
 	std::vector<Client *>::iterator it3 = _server->clients.begin();
 	for (; it3 != _server->clients.end(); it3++)
 	{
 		if ((*it3)->getNickName() == channelName)
 		{
+			flag = 1;
 			std::string reply = ":" + _client->getNickName() + "!" + _client->getUserName() + "@" + _client->getIp() + " PRIVMSG " + channelName + " :" + msg;
 			(*it3)->sendReply(reply);
 		}
+	}
+	if (flag == 1){
+		_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), channelName));
+		return;
 	}
 }
