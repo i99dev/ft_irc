@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 09:16:46 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:27:54 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,11 @@ void ft::User::execute()
 			std::cout << "User executed" << std::endl;
 			for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
 				std::cout << i << " " << this->_message->getParameter()[i] << std::endl; 
+			std::string msg = \
+			RPL_WELCOME(_message->getParameter()[2], _message->getParameter()[0]) + \
+			RPL_YOURHOST("42_irc", _message->getParameter()[0], "0.1") + \
+			RPL_CREATED("42_irc", _message->getParameter()[0]) + \
+			RPL_MYINFO("42_irc", _message->getParameter()[0], "0.1", "iow", "ov");
+			_server->sendReply(_client, msg);
 	}
 }

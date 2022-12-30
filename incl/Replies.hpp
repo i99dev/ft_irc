@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Replies.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 10:46:37 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:56:16 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@
 #define ERR_INPUTTOOLONG 417
 #define ERR_UNKNOWNCOMMAND 421
 #define ERR_NOMOTD 422
+#define ERR_NONICKNAMEGIVEN 431
 #define ERR_ERRONEUSNICKNAME 432
 #define ERR_NICKNAMEINUSE(servername, nick) \
 	":" + servername + " 433 * " + nick + " :Nickname is already in use\n"

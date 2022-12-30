@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/28 19:34:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:01:56 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,11 @@ void	ft::Mode::UserMode(void)
 
 void ft::Mode::execute(void)
 {
+	if (_client->getNickName() == "")
+	{
+		_client->sendReply("431 :No nickname given");
+		return;
+	}
     std::cout << "Mode executed" << std::endl;
 	for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
 		std::cout << i << " " << this->_message->getParameter()[i] << std::endl;

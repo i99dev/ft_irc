@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/28 06:22:59 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:19:34 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void ft::Nick::execute()
 		}
 		_client->setNickName(nickName);
 		
-		std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-		_server->sendReply(_client, msg);
+		// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+		// _server->sendReply(_client, msg);
 	}
 }
 

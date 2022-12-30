@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   List.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/26 17:18:40 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:01:20 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ ft::List::List(void)
 }
 
 void    ft::List::execute(){
+	if (_client->getNickName() == "")
+	{
+		_client->sendReply("431 :No nickname given");
+		return;
+	}
 	if (_message->getParameter().size() > 2){
 		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 		return ;

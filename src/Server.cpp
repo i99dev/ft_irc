@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 09:32:25 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/30 22:38:53 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ int	ft::Server::getClientInfoPos(int FDpos)
 void ft::Server::receiveMessage(int i)
 {
     int nbytes;
-    char buf[1024];
+    char buf[1024] = {0};
     nbytes = recv(fds[i].fd, buf, 1024, 0);
     if (nbytes < 0)
     {
@@ -285,6 +285,7 @@ void ft::Server::receiveMessage(int i)
     }
     else
     {
+        std::cout << "CHECK____" << buf << "____CHECK" << std::endl;
         buf[nbytes] = '\0';
         std::string buff = buf;
         if (!strchr(buf, '\n'))
