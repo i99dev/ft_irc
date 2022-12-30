@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:26:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 09:15:38 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,24 @@ void ft::Join::execute()
 				if (gg == 1){
 					break ;
 				}
-				if (_server->channels[i]->isCHModeSet('i')){
-					if (!_server->channels[i]->isUserInvited(_client)){
-						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+i) - invite only");
-						break ;
-					}
-				}
+				// check if client is banned
 				if (!_server->channels[i]->isUserExcepted(_client)){
 					if (_server->channels[i]->isUserBanned(_client)){
 						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+b) - banned");
 						break ;
 					}
 				}
+				// check if channel is full
 				if (_server->channels[i]->isCHModeSet('l')){
 					if (_server->channels[i]->isChannelFull()){
 						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+l) - channel is full");
+						break ;
+					}
+				}
+				// check if channel is invite only
+				if (_server->channels[i]->isCHModeSet('i')){
+					if (!_server->channels[i]->isUserInvited(_client)){
+						_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+i) - invite only");
 						break ;
 					}
 				}
