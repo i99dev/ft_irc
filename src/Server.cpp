@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 10:16:06 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:51:10 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void ft::Server::createPoll()
     pfd.fd = this->master_fd;
     pfd.events = POLLIN;
     this->fds.push_back(pfd);
-	this->storage.push_back("");
+	storage.push_back("");
 
     // set timeout to 120 seconds
     const int timeout = 5 * 1000;
@@ -325,6 +325,9 @@ void ft::Server::receiveMessage(int i)
                 {
                     Command *cmd = it->second;
                     cmd->setClient(this->clients[getClientInfoPos(i)]);
+					std::cout << BMAG << "client pos " << getClientInfoPos(i) << " client size " << clients.size() << std::endl;
+					std::cout << "fd pos " << i << " fd size " << fds.size() << std::endl;
+					// std::cout << "fd in fds " << fds[i].fd << " fd in client " << clients[getClientInfoPos(i)]->fd << DEFCOLO << std::endl;
                     cmd->setServer(this);
                     cmd->setMessage(args[k]);
                     cmd->execute();

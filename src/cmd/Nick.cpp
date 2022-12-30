@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/28 06:22:59 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:47:57 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ void ft::Nick::execute()
     // get nick name and clean it from \r
     std::string nickName = _message->getParameter()[0];
     // check if nick name is valid
+	if (_client->getNickName() == _message->getParameter()[0])
+		return ;
     if (!ft::Nick::isvalid())
 	{
+		std::cout << "remove the client it's using others nick" << std::endl;
 		_server->remove_fds(_client->fd);
 		_server->removeClient(_client);
 		_client = NULL;
@@ -82,8 +85,8 @@ void ft::Nick::execute()
 		}
 		_client->setNickName(nickName);
 		
-		std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-		_server->sendReply(_client, msg);
+		// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+		// _server->sendReply(_client, msg);
 	}
 }
 
