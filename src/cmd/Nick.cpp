@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 21:24:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:55:12 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ ft::Nick::Nick(void)
 void	ft::Nick::connectClientBack()
 {
 	_client = NULL;
-	_server->CLIENTISBACK = false;
+	// _server->CLIENTISBACK = false;
 	std::string msg = RPL_WELCOMEBACK(_server->getServerName(), _message->getParameter()[0]);
 	send(_server->CLIENTBACKFD, msg.c_str(), msg.size(), 0);
 	// std::cout << "join back to old channels" << std::endl;
@@ -47,7 +47,7 @@ void ft::Nick::execute()
 {
     if (_message->getParameter().size() != 1)
     {
-        _client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+        _client->sendReply(ERR_NONICKNAMEGIVEN(_server->getServerName(), _client->getNickName()));
         return;
     }
     // get nick name and clean it from \r

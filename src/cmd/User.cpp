@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 21:41:42 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:57:35 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void ft::User::execute()
 	std::cout << "User executed" << std::endl;
 	if (_client)
 	{
+		if (_server->CLIENTISBACK)
+		{
+			_server->CLIENTISBACK = false;
+			return;
+		}
 		if (_client->USERflag == 1)
 		{
 			_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));

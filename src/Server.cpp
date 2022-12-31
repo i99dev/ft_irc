@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 11:12:03 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:18:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,14 +322,21 @@ void ft::Server::receiveMessage(int i)
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end() && !isCarriage(args[k]->getmsg()))
                 {
-                    Command *cmd = it->second;
-                    cmd->setClient(this->clients[getClientInfoPos(i)]);
-					// std::cout << BMAG << "client pos " << getClientInfoPos(i) << " client size " << clients.size() << std::endl;
-					// std::cout << "fd pos " << i << " fd size " << fds.size() << DEFCOLO << std::endl;
-					// std::cout << "fd in fds " << fds[i].fd << " fd in client " << clients[getClientInfoPos(i)]->fd << DEFCOLO << std::endl;
-                    cmd->setServer(this);
-                    cmd->setMessage(args[k]);
-                    cmd->execute();
+					if ((this->clients[getClientInfoPos(i)]->PASSFlag == 1 && this->clients[getClientInfoPos(i)]->NICKflag == 1 && this->clients[getClientInfoPos(i)]->USERflag == 1) || \
+					args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP")
+					{
+						
+						Command *cmd = it->second;
+						cmd->setClient(this->clients[getClientInfoPos(i)]);
+						// std::cout << BMAG << "client pos " << getClientInfoPos(i) << " client size " << clients.size() << std::endl;
+						// std::cout << "fd pos " << i << " fd size " << fds.size() << DEFCOLO << std::endl;
+						// std::cout << "fd in fds " << fds[i].fd << " fd in client " << clients[getClientInfoPos(i)]->fd << DEFCOLO << std::endl;
+						cmd->setServer(this);
+						cmd->setMessage(args[k]);
+						cmd->execute();
+					}
+					else
+                   		this->clients[getClientInfoPos(i)]->sendReply("ERROR :You are not fully registered\r");
                     delete args[k];
                     args[k] = NULL;
                     // std::cout << BGRN << "free message" << DEFCOLO << std::endl;

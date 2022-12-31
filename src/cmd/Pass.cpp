@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:10:38 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/30 21:24:39 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:25:11 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void ft::Pass::execute()
     std::cout << "Pass executed" << std::endl;
 	if (_message->getParameter().size() == 1)
 	{
+		if (_server->CLIENTISBACK)
+			return;
 		if (_client->PASSFlag == 1)
 		{
 			_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));	

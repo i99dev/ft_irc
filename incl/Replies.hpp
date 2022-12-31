@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 20:48:29 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:17:01 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@
 #define ERR_INPUTTOOLONG 417
 #define ERR_UNKNOWNCOMMAND 421
 #define ERR_NOMOTD 422
-#define ERR_NONICKNAMEGIVEN 431
+#define ERR_NONICKNAMEGIVEN(servername, nick) \
+":" + servername + " 431 " + nick + " :No nickname given\n"
 #define ERR_ERRONEUSNICKNAME 432
 #define ERR_NICKNAMEINUSE(servername, nick) \
 	":" + servername + " 433 * " + nick + " :Nickname is already in use\n"
