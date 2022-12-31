@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/28 15:09:09 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 08:45:58 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::map<size_t, std::string>::iterator ite = tokens.end();
 	std::string tmp;
 
+	if (it == ite)
+		return;
 	
 	if (it->first == 0)
 	{
