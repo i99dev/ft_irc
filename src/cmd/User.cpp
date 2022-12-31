@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 18:19:08 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 19:27:43 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ void ft::User::execute()
 			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 			return;
 		}
-		_client->setUserName(_message->getParameter()[0]);
-		_client->setHostName(_message->getParameter()[1]);
-		_client->setServerName(_message->getParameter()[2]);
-		_client->setRealName(_message->getParameter()[3]);
-		_client->USERflag++;
-
 		if (_client->PASSFlag == 1 && _client->NICKflag == 1 && _client->USERflag == 1)
 		{
+			_client->setUserName(_message->getParameter()[0]);
+			_client->setHostName(_message->getParameter()[1]);
+			_client->setServerName(_message->getParameter()[2]);
+			_client->setRealName(_message->getParameter()[3]);
+			_client->USERflag++;
 			if (_client->ALREADYREGISTERED == 0)
 			{
 				std::string msg = RPL_WELCOME(_server->getServerName(), _client->getNickName());
