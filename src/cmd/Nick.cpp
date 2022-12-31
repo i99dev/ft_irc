@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 16:55:12 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 18:27:09 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ bool ft::Nick::isvalid()
         _client->sendReply(err);
         return false;
     }
+	
     // check if nick name is valid
     if (_message->getParameter()[0].size() > 9)
     {
@@ -110,8 +111,19 @@ bool ft::Nick::isvalid()
     // check if nick name is already taken
     if (_server->isNickNameTaken(_message->getParameter()[0],_client))
     {
-        std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
+		for (size_t i = 0; i < _server->getClients().size(); i++)
+		{
+			if (_server->getClients()[i]->getNickName() == _message->getParameter()[0])
+			{
+				if (_message->getParameter()[0] == _client->getNickName())
+				{
+					if (_server->getClients()[i]->fd == _client->fd)
+						return true;
+				}
+			}
+		}
         // std::string err = ERR_NICKNAMEINUSE(_server->getServerName(), _client->getNickName());
+        std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
         _client->sendReply(err);
         return false;
     }

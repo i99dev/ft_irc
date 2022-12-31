@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 16:57:35 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 18:19:08 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ void ft::User::execute()
 			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 			return;
 		}
-			_client->setUserName(_message->getParameter()[0]);
-			_client->setHostName(_message->getParameter()[1]);
-			_client->setServerName(_message->getParameter()[2]);
-			_client->setRealName(_message->getParameter()[3]);
-			_client->USERflag++;
-			if (_client->PASSFlag == 1 && _client->NICKflag == 1 && _client->USERflag == 1)
+		_client->setUserName(_message->getParameter()[0]);
+		_client->setHostName(_message->getParameter()[1]);
+		_client->setServerName(_message->getParameter()[2]);
+		_client->setRealName(_message->getParameter()[3]);
+		_client->USERflag++;
+
+		if (_client->PASSFlag == 1 && _client->NICKflag == 1 && _client->USERflag == 1)
+		{
+			if (_client->ALREADYREGISTERED == 0)
 			{
 				std::string msg = RPL_WELCOME(_server->getServerName(), _client->getNickName());
 				_server->sendReply(_client, msg);
@@ -53,14 +56,16 @@ void ft::User::execute()
 				msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
 				_server->sendReply(_client, msg);
 				msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
-				_server->sendReply(_client, msg);				
+				_server->sendReply(_client, msg);
+				_client->ALREADYREGISTERED = 1;
 			}
-			else
-			{
-				std::cout << "🛑 Disconnect, connection registration failed" << std::endl;
-				_server->remove_fds(_client->fd);
-				_server->removeClient(_client);
-				_client = NULL;
-			}			
+		}
+		else
+		{
+			std::cout << "🛑 Disconnect, connection registration failed" << std::endl;
+			_server->remove_fds(_client->fd);
+			_server->removeClient(_client);
+			_client = NULL;
+		}
 	}
 }

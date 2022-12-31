@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 17:18:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/31 18:28:01 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,8 +322,7 @@ void ft::Server::receiveMessage(int i)
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end() && !isCarriage(args[k]->getmsg()))
                 {
-					if ((this->clients[getClientInfoPos(i)]->PASSFlag == 1 && this->clients[getClientInfoPos(i)]->NICKflag == 1 && this->clients[getClientInfoPos(i)]->USERflag == 1) || \
-					args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP")
+					if (args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP" || this->clients[getClientInfoPos(i)]->ALREADYREGISTERED == 1)
 					{
 						
 						Command *cmd = it->second;
