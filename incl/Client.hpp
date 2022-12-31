@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:17:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/29 16:53:04 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:46:54 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define BBLU "\e[1;34m"
 # define BMAG "\e[1;35m"
 # define BCYN "\e[1;36m"
+
 # define BWHT "\e[1;37m"
 # define BPUR "\e[0;35m"
 # define DEFCOLO "\033[0m"
@@ -65,6 +66,9 @@ namespace ft
 			 
 			
 		public:
+			int							PASSFlag;
+			int							USERflag;
+			int							NICKflag;
 			int							fd;
 			std::vector <std::string>	invites;
 			//user info

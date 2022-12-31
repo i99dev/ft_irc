@@ -6,7 +6,7 @@
 /*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/31 08:45:58 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/31 20:08:24 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static std::map<size_t, std::string> tokenize(std::string const &str, const char
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
+	// std::cout << "msg size "
 	std::map<size_t, std::string> tokens = tokenize(msg, ' ');
 	std::map<size_t, std::string>::iterator it = tokens.begin();
 	std::map<size_t, std::string>::iterator ite = tokens.end();
@@ -86,10 +87,12 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::cout << BYEL << "_____________" << DEFCOLO << std::endl;
 }
 
-ft::Message::Message(std::string msg,int owner_fd){
+ft::Message::Message(std::string msg,int owner_fd)
+{
 	this->_owner_fd = owner_fd;
 	this->_msg = msg;
-	parseMessage(msg);
+	if (msg.size() > 0)
+		parseMessage(msg);
 }
 
 ft::Message::~Message(){
@@ -107,7 +110,10 @@ std::vector<std::string> ft::Message::getParameter(){
 	return _Parameter;
 }
 
-
+std::string	ft::Message::getmsg()
+{
+	return (_msg);	
+}
 
 
 bool ft::Message::isValid(){

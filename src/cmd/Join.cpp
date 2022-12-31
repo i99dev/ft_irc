@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 21:57:16 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/31 03:21:50 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,41 @@ void ft::Join::execute()
 	std::vector<std::string> passwords; // to store all passwords
 
 	// loop to get all the channel names one by one
-	std::string s;
-	split(chName, ',');
+	std::string s = "";
+	int i = 0;
+	while(_message->getParameter()[0][i] != '\0')
+	{
+		if(_message->getParameter()[0][i] != ',')
+		{
+			s += _message->getParameter()[0][i];
+		}
+		else{
+			chName.push_back(s);
+			s.clear();
+		}
+		i++;
+ 
+	}
+	chName.push_back(s);
+	s.clear();
 
-	if (_message->getParameter().size() > 1)
-		split(passwords, ',');
+	if (_message->getParameter().size() > 1){
+		int i = 0;
+		while(_message->getParameter()[1][i] != '\0')
+		{
+			if(_message->getParameter()[1][i] != ',')
+			{
+				s += _message->getParameter()[1][i];
+			}
+			else{
+				passwords.push_back(s);
+				s.clear();
+			}
+			i++;
+	 
+		}
+		passwords.push_back(s);
+	}
 
 	for (int i = 0; i < int(chName.size()); i++){
 		if (chName[i][0] != '#' && chName[i][0] != '&'){
@@ -69,7 +99,7 @@ void ft::Join::execute()
 				if (_server->channels[i]->isCHModeSet('k'))
 				{
 					// check if key is correct
-					if ((_message->getParameter()[1].size() > 0 && _server->channels[i]->getkey() == channelKey) || _server->channels[i]->isUserInvited(_client))
+					if (((channelKey != "" && channelKey != "x") && _server->channels[i]->getkey() == channelKey))
 						addClient(i);
 					else
 						_client->sendReply(ERR_BADCHANNELKEY(_server->getServerName(), _client->getNickName(), channelName));
@@ -86,8 +116,8 @@ void ft::Join::execute()
 	}
 }
 
-void ft::Join::split(std::vector<std::string> &v, char seperator){
-	std::string s;
+void ft::Join::split(std::vector<std::string> v, char seperator){
+	std::string s = "";
 	int i = 0;
 	while(_message->getParameter()[0][i] != '\0')
 	{
@@ -117,8 +147,8 @@ int ft::Join::createCH(std::string channelName, std::string channelKey){
 		return 1 ;
 	}
 	if (channelKey != "" && channelKey != "x"){
-		channel->setChannelMode('k', channelKey);
 		channel->setKey(channelKey);
+		channel->setChannelMode('k', channelKey);
 	}
 	// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
 	_server->channels.push_back(channel);			// send message to client
@@ -164,7 +194,7 @@ void ft::Join::addClient(int i){
 	_server->channels[i]->addUser(_client);
 	// send message to all clients in that channel
 	for (size_t j = 0; j < _server->channels[i]->members.size(); j++)
-		_server->channels[i]->members[j].user->sendReply(_client->getNickName() + " JOIN " + _server->channels[i]->getChName());
+		_server->channels[i]->members[j].user->sendReply(":" + _client->getNickName() + " JOIN " + _server->channels[i]->getChName());
 	std::string topicMsg = RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName());
 	if (_server->channels[i]->getTopic() != "SET TOPIC")
 		topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName(), _server->channels[i]->getTopic());
