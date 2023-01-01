@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 11:57:08 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 19:34:57 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:30:34 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft::Quit::execute(void)
 {
 	if (_client)
 	{
-		std::cout << "Quit executed" << std::endl;
+		std::cout << BBLU << "Quit executed" << DEFCOLO << std::endl;
 		std::cout << "🔴 " << _client->getNickName() << " is leaving the server" << std::endl;
 		_server->remove_fds(_client->fd);
 		_server->removeClient(_client);

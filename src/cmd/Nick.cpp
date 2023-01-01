@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 19:33:41 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 21:04:44 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void ft::Nick::execute()
 {
 	if (_client)
 	{
-		std::cout << "Nick executed" << std::endl;
+		std::cout << BBLU << "Nick executed" << DEFCOLO << std::endl;
 		if (_message->getParameter().size() != 1)
 		{
 			_client->sendReply(ERR_NONICKNAMEGIVEN(_server->getServerName(), _client->getNickName()));
@@ -61,9 +61,9 @@ void ft::Nick::execute()
 		if (!ft::Nick::isvalid())
 		{
 			std::cout << "Remove the client it's using others nick" << std::endl;
-			// _server->remove_fds(_client->fd);
-			// _server->removeClient(_client);
-			// _client = NULL;
+			_server->remove_fds(_client->fd);
+			_server->removeClient(_client);
+			_client = NULL;
 			return;
 		}
 		if (_server->CLIENTISBACK)
@@ -73,6 +73,7 @@ void ft::Nick::execute()
 		}
 		if (_client)
 		{
+			// std::cout << "nick " << _client->getNickName() << std::endl;
 			if (_client->getNickName() == "")
 			{
 				_client->setNickName(nickName);
@@ -86,10 +87,11 @@ void ft::Nick::execute()
 				// msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
 				// _server->sendReply(_client, msg);
 				_client->NICKflag++;
+				_server->registerClient(_client);
 				return;
 			}
-			_client->setNickName(nickName);
 			std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
+			_client->setNickName(nickName);
 			// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
 			// _server->sendReply(_client, msg);
 		}

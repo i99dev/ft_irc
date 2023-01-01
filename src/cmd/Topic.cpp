@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 19:35:07 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:30:49 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft::Topic::execute(void)
 {
 	if (_client)
 	{
-		std::cout << "Topic executed" << std::endl;
+		std::cout << BBLU << "Topic executed" << DEFCOLO << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");
@@ -72,7 +72,6 @@ void	ft::Topic::execute(void)
 			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 			return;
 		}
-		std::cout << "topic executed" << std::endl;
 		Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 		std::cout << "------>" << this->_message->getParameter()[0] << std::endl;
 		if (!channel)

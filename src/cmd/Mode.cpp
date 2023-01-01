@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 17:54:55 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:29:25 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,7 @@ void ft::Mode::execute(void)
 {
 	if (_client)
 	{
-		std::cout << "Mode executed" << std::endl;
+		std::cout << BBLU << "Mode executed" << DEFCOLO << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

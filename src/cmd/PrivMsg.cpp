@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 19:34:47 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:30:23 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void ft::Privmsg::execute()
 {
 	if (_client)
 	{
-		std::cout << "Privmsg executed" << std::endl;
+		std::cout << BBLU << "Privmsg executed" << DEFCOLO << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

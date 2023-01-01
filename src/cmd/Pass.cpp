@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:10:38 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 19:36:54 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:29:56 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void ft::Pass::execute()
 {
 	if (_client)
 	{		
-		std::cout << "Pass executed" << std::endl;
+		std::cout << BBLU << "Pass executed" << DEFCOLO << std::endl;
 		if (_message->getParameter().size() == 1)
 		{
 			if (_server->CLIENTISBACK)
@@ -38,6 +38,7 @@ void ft::Pass::execute()
 			if (_message->getParameter()[0] == _server->password)
 			{
 				_client->PASSFlag++;
+				_server->registerClient(_client);
 				std::cout << BGRN << "Correct password" << DEFCOLO << std::endl;
 			}
 			else

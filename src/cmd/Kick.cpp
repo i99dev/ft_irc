@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 19:33:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:29:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ ft::Kick::Kick(void)
 void ft::Kick::execute(){
 	if (_client)
 	{		
-		std::cout << "Kick executed" << std::endl;
+		std::cout << BBLU << "Kick executed" << DEFCOLO << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

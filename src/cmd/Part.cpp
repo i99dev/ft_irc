@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 19:34:16 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:29:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ ft::Part::Part(void)
 void    ft::Part::execute(){
 	if (_client)
 	{
-		std::cout << "Part executed" << std::endl;
+		std::cout << BBLU << "Part executed" << DEFCOLO << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

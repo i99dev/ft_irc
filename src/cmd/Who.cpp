@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 18:00:51 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:31:07 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ ft::Who::Who(void)
 
 void ft::Who::execute()
 {
-	std::cout << "WHO executed" << std::endl;
 	if (_client)
 	{
+		std::cout << "WHO executed" << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");
