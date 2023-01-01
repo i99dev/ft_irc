@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 18:28:01 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 16:24:53 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,8 @@ void ft::Server::receiveMessage(int i)
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end() && !isCarriage(args[k]->getmsg()))
                 {
-					if (args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP" || this->clients[getClientInfoPos(i)]->ALREADYREGISTERED == 1)
+					if (args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP" || \
+					(getClientInfoPos(i) < (int)this->clients.size() && this->clients[getClientInfoPos(i)]->ALREADYREGISTERED == 1))
 					{
 						
 						Command *cmd = it->second;
@@ -335,7 +336,10 @@ void ft::Server::receiveMessage(int i)
 						cmd->execute();
 					}
 					else
-                   		this->clients[getClientInfoPos(i)]->sendReply("ERROR :You are not fully registered\r");
+					{
+						if (getClientInfoPos(i) < (int)this->clients.size())
+                   			this->clients[getClientInfoPos(i)]->sendReply("ERROR :You are not fully registered\r");
+					}
                     delete args[k];
                     args[k] = NULL;
                     // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
@@ -343,7 +347,8 @@ void ft::Server::receiveMessage(int i)
                 else
                 {
                     std::cout << BRED << "Unknown command" << DEFCOLO << std::endl;
-                    this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
+					if (getClientInfoPos(i) < (int)this->clients.size())
+                    	this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
                     delete args[k];
                     args[k] = NULL;
                     // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
