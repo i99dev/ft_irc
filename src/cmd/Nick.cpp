@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 18:27:09 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:53:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,50 +45,53 @@ void	ft::Nick::connectClientBack()
 // TODO: i have error still need some work on it
 void ft::Nick::execute()
 {
-    if (_message->getParameter().size() != 1)
-    {
-        _client->sendReply(ERR_NONICKNAMEGIVEN(_server->getServerName(), _client->getNickName()));
-        return;
-    }
-    // get nick name and clean it from \r
-    std::string nickName = _message->getParameter()[0];
-    // check if nick name is valid
-	if (_client->getNickName() == _message->getParameter()[0])
-		return ;
-    if (!ft::Nick::isvalid())
-	{
-		std::cout << "Remove the client it's using others nick" << std::endl;
-		_server->remove_fds(_client->fd);
-		_server->removeClient(_client);
-		_client = NULL;
-		return;
-	}
-	if (_server->CLIENTISBACK)
-	{
-		connectClientBack();
-		return;
-	}
 	if (_client)
-	{
-		if (_client->getNickName() == "")
+	{		
+		if (_message->getParameter().size() != 1)
 		{
-			_client->setNickName(nickName);
-			std::cout << "The first set to the Nick " << nickName << std::endl;
-			// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-			// _server->sendReply(_client, msg);
-			// msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
-			// _server->sendReply(_client, msg);
-			// msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
-			// _server->sendReply(_client, msg);
-			// msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
-			// _server->sendReply(_client, msg);
-			_client->NICKflag++;
+			_client->sendReply(ERR_NONICKNAMEGIVEN(_server->getServerName(), _client->getNickName()));
 			return;
 		}
-		_client->setNickName(nickName);
-		std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
-		// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-		// _server->sendReply(_client, msg);
+		// get nick name and clean it from \r
+		std::string nickName = _message->getParameter()[0];
+		// check if nick name is valid
+		if (_client->getNickName() == _message->getParameter()[0])
+			return ;
+		if (!ft::Nick::isvalid())
+		{
+			std::cout << "Remove the client it's using others nick" << std::endl;
+			// _server->remove_fds(_client->fd);
+			// _server->removeClient(_client);
+			// _client = NULL;
+			return;
+		}
+		if (_server->CLIENTISBACK)
+		{
+			connectClientBack();
+			return;
+		}
+		if (_client)
+		{
+			if (_client->getNickName() == "")
+			{
+				_client->setNickName(nickName);
+				std::cout << "The first set to the Nick " << nickName << std::endl;
+				// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+				// _server->sendReply(_client, msg);
+				// msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
+				// _server->sendReply(_client, msg);
+				// msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
+				// _server->sendReply(_client, msg);
+				// msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
+				// _server->sendReply(_client, msg);
+				_client->NICKflag++;
+				return;
+			}
+			_client->setNickName(nickName);
+			std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
+			// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
+			// _server->sendReply(_client, msg);
+		}
 	}
 }
 

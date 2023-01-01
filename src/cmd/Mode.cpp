@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 21:40:48 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:54:55 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,24 +278,27 @@ void	ft::Mode::UserMode(void)
 
 void ft::Mode::execute(void)
 {
-    std::cout << "Mode executed" << std::endl;
-	if (_client->getNickName() == "")
+	if (_client)
 	{
-		_client->sendReply("431 :No nickname given");
-		return;
+		std::cout << "Mode executed" << std::endl;
+		if (_client->getNickName() == "")
+		{
+			_client->sendReply("431 :No nickname given");
+			return;
+		}
+		if (this->_message->getParameter().size() < 1)
+		{
+			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+			return ;
+		}
+		
+		// for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
+		// 	std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
+		if (this->_message->getParameter()[0][0] == '#')
+			ChannelMode();
+		// else
+		// 	UserMode();
+		this->modes.clear();
 	}
-	if (this->_message->getParameter().size() < 1)
-	{
-		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
-		return ;
-	}
-	
-	// for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-	// 	std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
-	if (this->_message->getParameter()[0][0] == '#')
-		ChannelMode();
-	// else
-	// 	UserMode();
-	this->modes.clear();
 }
 

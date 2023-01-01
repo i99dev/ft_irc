@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/30 22:03:03 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/01 18:00:05 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,56 +59,59 @@ TODO: check if the client need to be a member to check the TOPIC
 */
 void	ft::Topic::execute(void)
 {
-	if (_client->getNickName() == "")
-	{
-		_client->sendReply("431 :No nickname given");
-		return;
-	}
-	if (_message->getParameter().size() < 1 || _message->getParameter().size() > 2)
-	{
-		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
-		return;
-	}
-	std::cout << "topic executed" << std::endl;
-	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
-	std::cout << "------>" << this->_message->getParameter()[0] << std::endl;
-	if (!channel)
-	{
-		_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), this->_message->getParameter()[0])); // ! ErrMsg no channel
-		return ;
-	}
-	if (this->_message->getParameter().size() > 1)
-	{
-		// ? change the topic
-		// ? only member can change the topic
-		if (channel->isMember(_client->getNickName()))
+	if (_client)
+	{		
+		if (_client->getNickName() == "")
 		{
-			// ? check the mode of the channel if it's allowed to users to change the topic
-			if (channel->isCHModeSet('t'))
+			_client->sendReply("431 :No nickname given");
+			return;
+		}
+		if (_message->getParameter().size() < 1 || _message->getParameter().size() > 2)
+		{
+			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+			return;
+		}
+		std::cout << "topic executed" << std::endl;
+		Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
+		std::cout << "------>" << this->_message->getParameter()[0] << std::endl;
+		if (!channel)
+		{
+			_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), this->_message->getParameter()[0])); // ! ErrMsg no channel
+			return ;
+		}
+		if (this->_message->getParameter().size() > 1)
+		{
+			// ? change the topic
+			// ? only member can change the topic
+			if (channel->isMember(_client->getNickName()))
 			{
-				if (channel->isMemberOperator(_client->getNickName())) // ? check if operator to change the topic
-					changeTopic();
-				else
+				// ? check the mode of the channel if it's allowed to users to change the topic
+				if (channel->isCHModeSet('t'))
 				{
-					std::cout << "not a channel operator" << std::endl;
-					_client->sendReply(ERR_CHANOPRIVSNEEDED(_server->getServerName(), _client->getNickName())); // ! ErrMsg need operator PRIVELEGE
+					if (channel->isMemberOperator(_client->getNickName())) // ? check if operator to change the topic
+						changeTopic();
+					else
+					{
+						std::cout << "not a channel operator" << std::endl;
+						_client->sendReply(ERR_CHANOPRIVSNEEDED(_server->getServerName(), _client->getNickName())); // ! ErrMsg need operator PRIVELEGE
+					}
 				}
+				else
+					changeTopic(); // ? the mode is not set .. anyone can change the topic
 			}
 			else
-				changeTopic(); // ? the mode is not set .. anyone can change the topic
+			{
+				_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channel->getChName())); // ! ErrMsg not in channel
+			}
 		}
 		else
 		{
-			_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), channel->getChName())); // ! ErrMsg not in channel
+			std::cout << "send topic" << std::endl;
+			// ? send the topic
+			if (channel->getTopic().empty())
+				_client->sendReply(RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), channel->getChName()));
+			else
+				_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 		}
-	}
-	else
-	{
-		std::cout << "send topic" << std::endl;
-		// ? send the topic
-		if (channel->getTopic().empty())
-			_client->sendReply(RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), channel->getChName()));
-		else
-			_client->sendReply(RPL_TOPIC(_server->getServerName(), _client->getNickName(), channel->getChName(), channel->getTopic()));
 	}
 }
