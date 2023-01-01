@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 20:04:21 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/01 14:36:15 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ namespace ft
 			std::string _nickname;
 			std::string	port;
 			std::string msg;
+			std::string nick;
+			std::string pass;
 			std::string msgRecv;
 			std::string toSend;
 			std::string	sender;
@@ -62,7 +64,7 @@ namespace ft
 			static const int i = 105;
 			static std::string jokes[i];
 		public:
-			Bot(std::string, char *);
+			Bot(std::string, char *, std::string, std::string);
 			void		generateNickName();
 			void		doProcess();
 			void		getSender();
