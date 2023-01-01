@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 17:53:03 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:33:41 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	ft::Nick::connectClientBack()
 void ft::Nick::execute()
 {
 	if (_client)
-	{		
+	{
+		std::cout << "Nick executed" << std::endl;
 		if (_message->getParameter().size() != 1)
 		{
 			_client->sendReply(ERR_NONICKNAMEGIVEN(_server->getServerName(), _client->getNickName()));

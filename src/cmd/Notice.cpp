@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 17:57:21 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:34:05 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ ft::Notice::Notice(){
 
 void ft::Notice::execute(){
 	if (_client)
-	{		
+	{
+		std::cout << "Notice executed" << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

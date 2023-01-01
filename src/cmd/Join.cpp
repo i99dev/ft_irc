@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 17:56:34 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:33:06 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ ft::Join::Join(void)
 void ft::Join::execute()
 {
 	if (_client)
-	{		
+	{
+		std::cout << "Join executed" << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

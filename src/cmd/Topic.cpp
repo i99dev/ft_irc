@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 18:00:05 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:35:07 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ TODO: check if the client need to be a member to check the TOPIC
 void	ft::Topic::execute(void)
 {
 	if (_client)
-	{		
+	{
+		std::cout << "Topic executed" << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");

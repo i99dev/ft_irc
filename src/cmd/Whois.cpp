@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:55:45 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 18:01:12 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:35:30 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ ft::Whois::Whois()
 void ft::Whois::execute()
 {
 	if (_client)
-	{		
+	{
+		std::cout << "Whois executed" << std::endl;
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");
