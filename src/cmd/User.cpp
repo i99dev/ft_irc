@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 00:08:15 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/31 22:50:06 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,50 @@ ft::User::User()
 
 void ft::User::execute()
 {
+	std::cout << "User executed" << std::endl;
 	if (_client)
 	{
+		if (_server->CLIENTISBACK)
+		{
+			_server->CLIENTISBACK = false;
+			return;
+		}
+		if (_client->USERflag == 1)
+		{
+			_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));
+			return;	
+		}
 		if (_message->getParameter().size() != 4)
 		{
 			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 			return;
 		}
-			_client->setUserName(_message->getParameter()[0]);
-			_client->setHostName(_message->getParameter()[1]);
-			_client->setServerName(_message->getParameter()[2]);
-			_client->setRealName(_message->getParameter()[3]);
-			std::cout << "User executed" << std::endl;
-			for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-				std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
+		_client->setUserName(_message->getParameter()[0]);
+		_client->setHostName(_message->getParameter()[1]);
+		_client->setServerName(_message->getParameter()[2]);
+		_client->setRealName(_message->getParameter()[3]);
+		_client->USERflag++;
+		if (_client->PASSFlag == 1 && _client->NICKflag == 1 && _client->USERflag == 1)
+		{
+			if (_client->ALREADYREGISTERED == 0)
+			{
+				std::string msg = RPL_WELCOME(_server->getServerName(), _client->getNickName());
+				_server->sendReply(_client, msg);
+				msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
+				_server->sendReply(_client, msg);
+				msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
+				_server->sendReply(_client, msg);
+				msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
+				_server->sendReply(_client, msg);
+				_client->ALREADYREGISTERED = 1;
+			}
+		}
+		else
+		{
+			std::cout << "🛑 Disconnect, connection registration failed" << std::endl;
+			_server->remove_fds(_client->fd);
+			_server->removeClient(_client);
+			_client = NULL;
+		}
 	}
 }

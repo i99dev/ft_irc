@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Pass.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 20:00:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 16:24:41 by aaljaber         ###   ########.fr       */
+/*   Created: 2022/12/30 10:10:52 by aaljaber          #+#    #+#             */
+/*   Updated: 2022/12/30 10:12:43 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef USER_HPP
-
-#define USER_HPP
-
+#ifndef PASS_HPP
+#define PASS_HPP
 #include "./Command.hpp"
-#include "../Replies.hpp"
 
 namespace ft
 {
     class Command;
-    class User : public Command
+    class Pass : public Command
     {
     public:
-        User(void);
-		void	connectClientBack();
-        void execute();
-    };
+        Pass(void);
+        void						execute(void);
+	};
 }
 
 #endif

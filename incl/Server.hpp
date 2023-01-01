@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/28 06:14:30 by aaljaber         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:55:34 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ namespace ft
         std::string const servername;
         std::string const version;
         std::string const port;
-        std::string const password;
         int master_fd;     // file descriptor
         int master_socket; // new socket
-		std::string storage;
+		std::vector <std::string> storage;
         addrinfo hints, *servinfo;
 
     public:
+        std::string const password;
 		bool	CLIENTISBACK;
 		int		CLIENTBACKFD;
+		ft::Client *CLIENTBACK;
         Server(std::string const &port, std::string const &password);
         ~Server();
 

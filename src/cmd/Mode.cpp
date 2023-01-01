@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 22:01:56 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/30 21:40:48 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ void	ft::Mode::UserMode(void)
 		return;
 	}
 	// ? mode command only applied on the same client
-	std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
+	// std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
 	if (this->_message->getParameter()[0] == this->_client->getNickName())
 	{
 		// ? if one param then it's asking about the mode
@@ -278,18 +278,24 @@ void	ft::Mode::UserMode(void)
 
 void ft::Mode::execute(void)
 {
+    std::cout << "Mode executed" << std::endl;
 	if (_client->getNickName() == "")
 	{
 		_client->sendReply("431 :No nickname given");
 		return;
 	}
-    std::cout << "Mode executed" << std::endl;
-	for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-		std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
+	if (this->_message->getParameter().size() < 1)
+	{
+		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
+		return ;
+	}
+	
+	// for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
+	// 	std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
 	if (this->_message->getParameter()[0][0] == '#')
 		ChannelMode();
-	else
-		UserMode();
+	// else
+	// 	UserMode();
 	this->modes.clear();
 }
 

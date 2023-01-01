@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cap.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 22:59:42 by oal-tena         ###   ########.fr       */
+/*   Updated: 2022/12/31 19:10:16 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ ft::Cap::Cap()
 
 void ft::Cap::execute()
 {
-    std::cout << "Cap executed" << std::endl;
-    // // //send to client
-    std::string msg = "CAP * LS :multi-prefix sasl\r\n";
-    if (send(_client->getSocket(), msg.c_str(), msg.size(), 0) == -1)
-        std::cout << "Error: send" << std::endl;
-    else
-        std::cout << "CAP sent" << std::endl;
+	if (_client)
+	{		
+		std::cout << "Cap executed" << std::endl;
+		// // //send to client
+		std::string msg = "CAP * LS :multi-prefix sasl\r\n";
+		if (send(_client->getSocket(), msg.c_str(), msg.size(), 0) == -1)
+			std::cout << "Error: send" << std::endl;
+		else
+			std::cout << "CAP sent" << std::endl;
+	}
 }

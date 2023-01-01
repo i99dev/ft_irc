@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Replies.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:03:16 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 21:56:16 by isaad            ###   ########.fr       */
+/*   Updated: 2022/12/31 16:17:01 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #define RPL_YOURHOST(servername, nick, version) \
 ":" + servername + " 002 " + nick + " :Your host is " + servername + ", running version " + version + "\n"
 #define RPL_CREATED(servername, nick) \
-":" + servername + " 003 " + nick + " :This server was created January 1st, 1970\n"
+":" + servername + " 003 " + nick + " :This server was created November 5th, 2022\n"
 #define RPL_MYINFO(servername, nick, version, usermodes, chanmodes) \
 ":" + servername + " 004 " + nick + " " + servername + " " + version + " " + usermodes + " " + chanmodes + " :" + servername + " server\n"
 #define RPL_ISUPPORT 005
@@ -107,7 +107,8 @@
 #define ERR_INPUTTOOLONG 417
 #define ERR_UNKNOWNCOMMAND 421
 #define ERR_NOMOTD 422
-#define ERR_NONICKNAMEGIVEN 431
+#define ERR_NONICKNAMEGIVEN(servername, nick) \
+":" + servername + " 431 " + nick + " :No nickname given\n"
 #define ERR_ERRONEUSNICKNAME 432
 #define ERR_NICKNAMEINUSE(servername, nick) \
 	":" + servername + " 433 * " + nick + " :Nickname is already in use\n"
@@ -120,7 +121,8 @@
 #define ERR_NOTREGISTERED 451
 #define ERR_NEEDMOREPARAMS(servername, nick, command) \
 	":" + servername + " 461 " + nick + " " + command + " :Wrong num parameters\n"
-#define ERR_ALREADYREGISTERED 462
+#define ERR_ALREADYREGISTERED(servername, nick) \
+	":" + servername + " 462 " + nick + " :You are Already Registered\n"
 #define ERR_PASSWDMISMATCH(servername, nick) \
 	":" + servername + " 464 " + nick + " :Password incorrect\n"
 #define ERR_YOUREBANNEDCREEP(servername, nick) \
