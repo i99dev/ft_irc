@@ -45,19 +45,7 @@ used to disconnect from the server.</br>
 ```
 /quit [<message>]
 ```
-### - Server Operator Commands:
-- KILL</br>
-used to forcibly disconnect a user from the server. This command can only be executed by a server operator or someone with the appropriate permissions.</br>
--> Syntax:
-```
-/kill <nickname> <comment>
-```
-- OPER</br>
-used to authenticate a user as an IRC operator. IRC operators are users who have special privileges on the server, such as the ability to kick or ban other users, change channel modes, and access certain restricted areas of the network.</br>
--> Syntax:
-```
-/oper <username> <password>
-```
+
 ### - Channel Commands:
 - JOIN</br>
 used to join a specified channel on an IRC server.</br>
@@ -110,10 +98,7 @@ used to set or display the topic for a channel. When used without any arguments,
 - MODE (Operator Only)</br>
 used to set or modify the modes of a user or channel. Modes are settings that can be applied to users or channels to control their behavior and access. In brief, it is devided into two parts: user modes, and channel modes</br>
 -> Syntax:
-#### for user mode:
-```
-/mode <nickname> {[+|-]|i|w|s|o}
-```
+
 #### for channel mode:
 ```
 /mode <channel> {[+|-]|o|p|s|i|t|n|b|v} [<limit>] [<user>] [<ban mask>]
