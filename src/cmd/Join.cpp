@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/31 03:21:50 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/02 11:25:06 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void ft::Join::execute()
 	}
 
 	for (int i = 0; i < int(chName.size()); i++){
-		if (chName[i][0] != '#' && chName[i][0] != '&'){
+		if ((chName[i][0] != '#' && chName[i][0] != '&') || chName[i].size() <= 1){
 			_client->sendReply(":" + _server->getServerName() + " 403 " + _client->getNickName() + " " + chName[i] + " :Bad channel name\n");
 			continue ;
 		}
