@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/29 08:19:13 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/01 15:07:34 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ bool closeServer = false;
 
 int main(int argc, char **argv)
 {
-	if (argc != 3) {
-		std::cerr << "Usage: " << argv[0] << " <host> <port>" << std::endl;
+	if (argc != 5) {
+		std::cerr << "Usage: " << argv[0] << " <host> <port> <pass> <nick>" << std::endl;
 		exit(1);
 	}
 	for (size_t i = 0; i < strlen(argv[2]); i++)
@@ -31,12 +31,14 @@ int main(int argc, char **argv)
             return (EXIT_FAILURE);
         }
     }
-	ft::Bot bot(argv[2], argv[1]);
+	ft::Bot bot(argv[2], argv[1], argv[3], argv[4]);
 }
 
-ft::Bot::Bot(std::string p, char *h){
+ft::Bot::Bot(std::string p, char *h, std::string pass, std::string nick){
 	this->port = p;
 	this->host = h;
+	this->pass = pass;
+	this->nick = nick;
 	this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		std::cerr << "Error creating socket" << std::endl;
@@ -264,12 +266,14 @@ void ft::Bot::doProcess(){
 	initFunc();
 	initCtrl();
 	sendToServer("CAP LS\r\n");
-	generateNickName();
-	sendToServer("USER " + this->_nickname + " " + this->_nickname + " 127.0.0.1 :bot\r\n");
+	sendToServer("PASS " + this->pass + "\r\n");
+	sendToServer("NICK " + this->nick + "\r\n");
+	// generateNickName();
+	sendToServer("USER " + this->nick + " " + this->nick + " 127.0.0.1 :bot\r\n");
 	loop();
 }
 
 std::string ft::Bot::getJoke(){
 	std::srand(time(0));
-	return this->jokes[std::rand() % 105] + "\r\n";
+	return this->format + this->jokes[std::rand() % 105] + "\r\n";
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 20:28:53 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:18:20 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ ft::Join::Join(void)
 
 void ft::Join::execute()
 {
-	if (_client)
-	{
-		std::cout << BBLU << "Join executed" << DEFCOLO << std::endl;
+	if (_client){
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");
@@ -54,7 +52,7 @@ void ft::Join::execute()
 				s.clear();
 			}
 			i++;
-	
+	 
 		}
 		chName.push_back(s);
 		s.clear();
@@ -72,13 +70,13 @@ void ft::Join::execute()
 					s.clear();
 				}
 				i++;
-		
+		 
 			}
 			passwords.push_back(s);
 		}
 
 		for (int i = 0; i < int(chName.size()); i++){
-			if (chName[i][0] != '#' && chName[i][0] != '&'){
+			if ((chName[i][0] != '#' && chName[i][0] != '&') || chName[i].size() <= 1){
 				_client->sendReply(":" + _server->getServerName() + " 403 " + _client->getNickName() + " " + chName[i] + " :Bad channel name\n");
 				continue ;
 			}

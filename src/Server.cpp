@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 20:57:13 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:59:44 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "../incl/cmd/Nick.hpp"
 #include "../incl/cmd/Invite.hpp"
 #include "../incl/cmd/Whois.hpp"
-#include "../incl/cmd/Who.hpp"
 #include "../incl/cmd/Cap.hpp"
 #include "../incl/cmd/Mode.hpp"
 #include "../incl/cmd/Ping.hpp"
@@ -396,7 +395,6 @@ void ft::Server::init_commands(void)
     _commands["NICK"] = new ft::Nick();
     _commands["KICK"] = new ft::Kick();
     _commands["WHOIS"] = new ft::Whois();
-    _commands["WHO"] = new ft::Who();
     _commands["CAP"] = new ft::Cap();
     _commands["MODE"] = new ft::Mode();
     _commands["PING"] = new ft::Ping();

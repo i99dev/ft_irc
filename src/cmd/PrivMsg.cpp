@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 20:30:23 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:17:35 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ ft::Privmsg::Privmsg()
 
 void ft::Privmsg::execute()
 {
-	if (_client)
-	{
-		std::cout << BBLU << "Privmsg executed" << DEFCOLO << std::endl;
+	if (_client){
 		if (_client->getNickName() == "")
 		{
 			_client->sendReply("431 :No nickname given");
@@ -83,8 +81,8 @@ void ft::Privmsg::execute()
 				(*it3)->sendReply(reply);
 			}
 		}
-		if (flag == 1){
-			_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), channelName));
+		if (flag == 0){
+			_client->sendReply(ERR_NOSUCHNICK(_server->getServerName(), channelName));
 			return;
 		}
 	}
