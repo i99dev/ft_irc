@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 10:23:25 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/02 22:59:44 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,25 @@ int	isCarriage(std::string arg)
 	return (0);
 }
 
+void	ft::Server::registerClient(Client *client)
+{
+	if (client->PASSFlag == 1 && client->NICKflag == 1 && client->USERflag == 1)
+	{
+		if (client->ALREADYREGISTERED == 0)
+		{
+			std::string msg = RPL_WELCOME(getServerName(), client->getNickName());
+			sendReply(client, msg);
+			msg = RPL_YOURHOST(getServerName(), client->getNickName(), getVersion());
+			sendReply(client, msg);
+			msg = RPL_CREATED(getServerName(), client->getNickName());
+			sendReply(client, msg);
+			msg = RPL_MYINFO(getServerName(), client->getNickName(), getVersion(), "User modes: ov", "Channel modes: imtlk");
+			sendReply(client, msg);
+			client->ALREADYREGISTERED = 1;
+		}
+	}
+}
+
 /**
  * @brief Receive message from client
  */
@@ -318,10 +337,13 @@ void ft::Server::receiveMessage(int i)
 			}
             for (size_t k = 0; k < args.size(); k++)
             {
+				// if (getClientInfoPos(i) < (int)this->clients.size())
+				// 	registerClient(this->clients[getClientInfoPos(i)]);
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end() && !isCarriage(args[k]->getmsg()))
                 {
-					if (args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP" || this->clients[getClientInfoPos(i)]->ALREADYREGISTERED == 1)
+					if (args[k]->getCommand() == "PASS" || args[k]->getCommand() == "NICK" || args[k]->getCommand() == "USER" || args[k]->getCommand() == "CAP" || \
+					(getClientInfoPos(i) < (int)this->clients.size() && this->clients[getClientInfoPos(i)]->ALREADYREGISTERED == 1))
 					{
 						
 						Command *cmd = it->second;
@@ -334,7 +356,12 @@ void ft::Server::receiveMessage(int i)
 						cmd->execute();
 					}
 					else
-                   		this->clients[getClientInfoPos(i)]->sendReply("ERROR :You are not fully registered\r");
+					{
+						// if (getClientInfoPos(i) < (int)this->clients.size())
+						// 	registerClient(this->clients[getClientInfoPos(i)]);
+						if (getClientInfoPos(i) < (int)this->clients.size())
+                   			this->clients[getClientInfoPos(i)]->sendReply("ERROR :You are not fully registered\r");
+					}
                     delete args[k];
                     args[k] = NULL;
                     // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
@@ -342,7 +369,8 @@ void ft::Server::receiveMessage(int i)
                 else
                 {
                     std::cout << BRED << "Unknown command" << DEFCOLO << std::endl;
-                    this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
+					if (getClientInfoPos(i) < (int)this->clients.size())
+                    	this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
                     delete args[k];
                     args[k] = NULL;
                     // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
@@ -406,7 +434,7 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
     std::vector<ft::Message *> messages;
     std::stringstream ss(msg);
     std::string item;
-	// std::cout << "Received -> (" << msg.substr(0, msg.size() - 2) << ")" << std::endl;
+	std::cout << "Received -> (" << msg.substr(0, msg.size() - 2) << ")" << std::endl;
 	if (!isMsgParsed(msg))
 		return (messages);
     while (std::getline(ss, item, delim))

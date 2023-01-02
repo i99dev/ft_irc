@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 07:06:48 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/21 22:59:48 by oal-tena         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:30:03 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ ft::Ping::Ping()
 
 void ft::Ping::execute()
 {
-    std::cout << "Ping executed" << std::endl;
-    _client->setPing(1);
-    std::string pong =  "PONG :" + _client->getServerName() + "\r\n";
-    if (send(_client->getSocket(), pong.c_str(), pong.size(), 0) == -1)
-        std::cout << "Error: send" << std::endl;
-    else
-    {
-        std::cout << "ping sent count = " << _client->getPing() << std::endl;
-    }
+	if (_client)
+	{
+		std::cout << BBLU << "Ping executed" << DEFCOLO << std::endl;
+		_client->setPing(1);
+		std::string pong =  "PONG :" + _client->getServerName() + "\r\n";
+		if (send(_client->getSocket(), pong.c_str(), pong.size(), 0) == -1)
+			std::cout << "Error: send" << std::endl;
+		else
+		{
+			std::cout << "ping sent count = " << _client->getPing() << std::endl;
+		}
+	}
 }
