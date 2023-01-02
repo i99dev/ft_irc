@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:54:14 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 19:55:34 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/01 20:12:56 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ namespace ft
         std::map<std::string, ft::Command *> _commands;
         std::vector<ft::Message *> messages;
 
+		void	registerClient(Client *client);
         enum Status
         {
             OFFLINE,

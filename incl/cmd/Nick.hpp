@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:12:53 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/27 12:28:36 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:24:18 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ namespace ft
 		bool isvalid();
 		void	isNickNameAvailable(std::string nickName);
 		void	connectClientBack();
+		bool		isNickOwnerRegistered(std::string nickName);
 	};
 
 }

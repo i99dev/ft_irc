@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:10:38 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/31 18:19:53 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:34:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,33 @@ ft::Pass::Pass()
 
 void ft::Pass::execute()
 {
-    std::cout << "Pass executed" << std::endl;
-	if (_message->getParameter().size() == 1)
-	{
-		if (_server->CLIENTISBACK)
-			return;
-		if (_client->PASSFlag == 1 || _client->ALREADYREGISTERED == 1)
+	if (_client)
+	{		
+		std::cout << BBLU << "Pass executed" << DEFCOLO << std::endl;
+		if (_message->getParameter().size() == 1)
 		{
-			_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));	
-			return ;
-		}
-		// std::cout << "server password " << _server->password << std::endl;
-		// std::cout << "pass received " << _message->getParameter()[0] << std::endl;
-		if (_message->getParameter()[0] == _server->password)
-		{
-			_client->PASSFlag++;
-			std::cout << BGRN << "Correct password" << DEFCOLO << std::endl;
+			if (_server->CLIENTISBACK)
+				return ;
+			if (_client->PASSFlag == 1 || _client->ALREADYREGISTERED == 1)
+			{
+				_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));	
+				return ;
+			}
+			// std::cout << "server password " << _server->password << std::endl;
+			// std::cout << "pass received " << _message->getParameter()[0] << std::endl;
+			if (_message->getParameter()[0] == _server->password)
+			{
+				_client->PASSFlag++;
+				_server->registerClient(_client);
+				std::cout << BGRN << "Correct password" << DEFCOLO << std::endl;
+			}
+			else
+			{
+				_client->sendReply(ERR_PASSWDMISMATCH(_server->getServerName(), _client->getNickName()));
+				std::cout << BRED << "Wrong password" << DEFCOLO << std::endl;
+			}
 		}
 		else
-		{
-			_client->sendReply(ERR_PASSWDMISMATCH(_server->getServerName(), _client->getNickName()));
-			std::cout << BRED << "Wrong password" << DEFCOLO << std::endl;
-		}
+			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));	
 	}
-	else
-		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));	
 }
