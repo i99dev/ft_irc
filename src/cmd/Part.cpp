@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2022/12/30 22:02:28 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/02 10:23:11 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    ft::Part::execute(){
 		_client->sendReply("431 :No nickname given");
 		return;
 	}
-	if (_message->getParameter().size() < 1 && _message->getParameter().size() > 2)
+	if (_message->getParameter().size() < 1 || _message->getParameter().size() > 2)
 	{
 		_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 		return;
