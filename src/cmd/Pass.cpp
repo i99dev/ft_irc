@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:10:38 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 20:29:56 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:34:17 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void ft::Pass::execute()
 		if (_message->getParameter().size() == 1)
 		{
 			if (_server->CLIENTISBACK)
-				return;
+				return ;
 			if (_client->PASSFlag == 1 || _client->ALREADYREGISTERED == 1)
 			{
 				_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));	

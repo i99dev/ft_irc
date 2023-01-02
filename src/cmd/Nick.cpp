@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 21:04:44 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:57:18 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,27 @@ void ft::Nick::execute()
 	}
 }
 
+bool	ft::Nick::isNickOwnerRegistered(std::string nick)
+{
+	int clientID = -1;
+	for (size_t i = 0; i < _server->getClients().size(); i++)
+	{
+		if (_server->getClients()[i]->getNickName() == nick)
+			clientID = i;
+	}
+	if (clientID > -1)
+	{
+		if (!_server->getClients()[clientID]->ALREADYREGISTERED)
+		{
+			_server->remove_fds(_server->getClients()[clientID]->fd);
+			_server->removeClient(_server->getClients()[clientID]);
+			return (false);
+		}
+		return (true);
+	}
+	return (false);
+}
+
 bool ft::Nick::isvalid()
 {
     if (_message->getParameter().size() != 1)
@@ -106,7 +127,6 @@ bool ft::Nick::isvalid()
         _client->sendReply(err);
         return false;
     }
-	
     // check if nick name is valid
     if (_message->getParameter()[0].size() > 9)
     {
@@ -114,25 +134,27 @@ bool ft::Nick::isvalid()
         _client->sendReply(err);
         return false;
     }
-    // check if nick name is already taken
-    if (_server->isNickNameTaken(_message->getParameter()[0],_client))
-    {
-		for (size_t i = 0; i < _server->getClients().size(); i++)
+	if (this->isNickOwnerRegistered(_message->getParameter()[0]))
+	{
+		// check if nick name is already taken
+		if (_server->isNickNameTaken(_message->getParameter()[0],_client))
 		{
-			if (_server->getClients()[i]->getNickName() == _message->getParameter()[0])
+			for (size_t i = 0; i < _server->getClients().size(); i++)
 			{
-				if (_message->getParameter()[0] == _client->getNickName())
+				if (_server->getClients()[i]->getNickName() == _message->getParameter()[0])
 				{
-					if (_server->getClients()[i]->fd == _client->fd)
-						return true;
+					if (_message->getParameter()[0] == _client->getNickName())
+					{
+						if (_server->getClients()[i]->fd == _client->fd)
+							return true;
+					}
 				}
 			}
+			std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
+			_client->sendReply(err);
+			return false;
 		}
-        // std::string err = ERR_NICKNAMEINUSE(_server->getServerName(), _client->getNickName());
-        std::string err = "433 " + _message->getParameter()[0] + " :Nickname is already in use";
-        _client->sendReply(err);
-        return false;
-    }
+	}
     // check if nick name not contain special char
     if (_message->getParameter()[0].find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_[]\\`^{}|") != std::string::npos)
     {
