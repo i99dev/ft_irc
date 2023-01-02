@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 16:57:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 00:33:23 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,16 @@ void ft::Nick::execute()
 				return;
 			}
 			std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
+			for (size_t i = 0; i < _server->channels.size(); i++)
+			{
+				if (_server->channels[i]->isMember(_client->getNickName()))
+				{
+					for (size_t j = 0; j < _server->channels[i]->members.size(); j++){
+						if(_server->channels[i]->members[j].user->fd != _client->fd)
+							_server->channels[i]->members[j].user->sendReply(":" + _client->getNickName() + "!" + " NICK :" + nickName);
+					}
+				}
+			}
 			_client->setNickName(nickName);
 			// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
 			// _server->sendReply(_client, msg);
