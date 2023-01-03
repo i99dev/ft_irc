@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/02 20:58:55 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:33 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,8 +284,8 @@ int	ft::Channel::setChannelFlag(char mode, std::string param)
 		else if (mode == 'b' && !this->isRepeatedMask(this->getBannedList(), mask->getMask()))
 		{
 			this->_bannedList.push_back(mask);
-			this->kickBannedMember(mask);
-			std::cout << "Add to the ban list" << std::endl;
+			std::cout << "add to the ban list" << std::endl;
+			std::cout << "kick the banned member in this mask" << std::endl;
 		}
 		else if (mode == 'e' && !this->isRepeatedMask(this->getExceptionList(), mask->getMask()))
 		{

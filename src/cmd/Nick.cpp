@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/03 05:40:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 06:21:05 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void ft::Nick::execute()
 				return;
 			}
 			std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
+			_client->sendReply(":" + _client->getNickName() + " NICK :" + nickName);
 			_client->setNickName(nickName);
-
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/02 20:36:58 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:42 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 std::string ft::Client::getNickName(void) const
 {
-	// if (_nickName.empty())
-	// 	return _userName;
 	return _nickName;
 }
 
@@ -123,7 +121,7 @@ void ft::Client::sendReply(int reply)
 
 ft::Client::Client(int &fd, std::string servername, std::string clinet_ip)
 {
-	(void)servername;  //TODO: remove this later
+	(void)servername;
 	this->fd = fd;
 	this->_is_authenticated = false;
 	this->_is_ope = false;

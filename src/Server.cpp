@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/03 05:43:40 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:56 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
     std::cout << BCYN << "Port: " << DEFCOLO << port << std::endl;
     std::cout << BCYN << "Password: " << DEFCOLO << password << std::endl;
     std::cout << BCYN << "Servername: " << DEFCOLO << servername << std::endl;
-	
+
     this->create_socket();
     init_commands();
     this->createPoll();
@@ -192,8 +192,6 @@ void ft::Server::createPoll()
         }
         else if (ret == 0)
         {
-            // std::cout << "|timeout|" << std::endl;
-            // checkConnection();
         }
         else if (ret > 0)
         {

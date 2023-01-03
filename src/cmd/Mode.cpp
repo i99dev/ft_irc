@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 20:25:26 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 06:21:25 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	ft::Mode::changeCHMode(void)
 				? if there were more than one param mode in required pM_count will increment
 				? so that it can point at the next position for the paramter
 			*/
-			// ! this meant to protect accesseing the array + check if the param of the next mode is available
 			if ((size_t)(MODEPARAMPOS + pM_count) >= this->_message->getParameter().size())
 			{ 
 				// ! ErrMsg more param needed for mode
@@ -277,8 +276,6 @@ void ft::Mode::execute(void)
 		}
 		if (this->_message->getParameter()[0][0] == '#')
 			ChannelMode();
-		// else
-		// 	UserMode();
 		this->modes.clear();
 	}
 }
