@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/03 09:19:27 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:46 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static std::map<size_t, std::string> tokenize(std::string const &str, const char
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
-	// std::cout << "msg size "
 	std::map<size_t, std::string> tokens = tokenize(msg, ' ');
 	std::map<size_t, std::string>::iterator it = tokens.begin();
 	std::map<size_t, std::string>::iterator ite = tokens.end();
@@ -73,10 +72,7 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::cout << BBLU << "Command: " << DEFCOLO << _Command << std::endl;
 	std::cout << BBLU << "Parameter: " << DEFCOLO << std::endl;
 	for (size_t i = 0; i < _Parameter.size(); i++)
-	{
 		std::cout << _Parameter[i] << std::endl;
-	}
-	std::cout << "Parameter size: " << _Parameter.size() << std::endl;
 	std::cout << BYEL << "_____________" << DEFCOLO << std::endl;
 }
 

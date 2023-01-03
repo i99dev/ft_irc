@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/03 09:13:34 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 06:21:05 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	ft::Nick::connectClientBack()
 				if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD)
 				{
 					std::string joinMsg = ":" + _message->getParameter()[0] + " JOIN " + _server->channels[i]->getChName();
-					_server->channels[i]->members[j].user->sendReply(joinMsg);					
+					_server->channels[i]->members[j].user->sendReply(joinMsg);
+					joinMsg = RPL_TOPIC(_server->getServerName(), _server->channels[i]->members[j].user->getNickName(), _server->channels[i]->getChName(), _server->channels[i]->getTopic());
+					_server->channels[i]->members[j].user->sendReply(joinMsg);				
 				}
 			}
 		}

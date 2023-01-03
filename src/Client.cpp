@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/03 09:18:45 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:42 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,5 +224,4 @@ ft::Client::~Client() {
 	// clear all the messages
 	_msgRecv.clear();
 	_msgSend.clear();
-	std::cout << BGRN << "client destructor called" << DEFCOLO << std::endl;
 }

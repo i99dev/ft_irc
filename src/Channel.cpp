@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/03 09:18:22 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:33 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,19 @@ ft::Channel::~Channel()
 {
 	if (!_bannedList.empty())
 	{
-		std::cout << BGRN << "free _bannedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _bannedList.size(); i++)
 			delete _bannedList[i];
 	}
 	if (!_invitedList.empty())
 	{
-		std::cout << BGRN << "free _invitedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _invitedList.size(); i++)
 			delete _invitedList[i];
 	}
 	if (!_exceptedList.empty())
 	{
-		std::cout << BGRN << "free _exceptedList" << DEFCOLO << std::endl;
 		for (long unsigned int i = 0; i < _exceptedList.size(); i++)
 			delete _exceptedList[i];	
 	}
-	std::cout << BGRN << "Channel destructor called" << DEFCOLO << std::endl;
 }
 
 // * Channel Check * //
@@ -203,7 +199,7 @@ int	ft::Channel::setChannelMode(char mode, std::string param)
 {
 	if (ft::ModeTools::isCHMode(mode))
 	{
-		std::cout << mode << "add the channel mode" << std::endl;
+		std::cout << mode << " Add the channel mode" << std::endl;
 		this->_mode.push_back(ft::ModeTools::findChannelMode(mode));
 	}
 	if (mode == 'k')
@@ -250,7 +246,7 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 	}
 	else if (ft::ModeTools::isMEMode(mode))
 	{
-		std::cout << mode << "it's a member mode" << std::endl;
+		std::cout << mode << " it's a member mode" << std::endl;
 		if (mode == 'o')
 			return (this->removeMemberMode(this->getMember(param), 'o'));
 		else if (mode == 'v')
@@ -262,21 +258,28 @@ int	ft::Channel::removeChannelMode(char mode, std::string param)
 	return (0);
 }
 
+void	ft::Channel::kickBannedMember(Mask *mask)
+{
+	for (size_t i = 0; i < members.size(); i++)
+	{
+		if (mask->match_client_mask(members[i].user))
+			members[i].user->sendReply(":" + members[i].user->getNickName() + " KICK " + this->_name + " " + members[i].user->getNickName() + " :You are Banned");
+	}
+}
+
 int	ft::Channel::setChannelFlag(char mode, std::string param)
 {
-	// std::cout << "mask param " << param << std::endl;
 	Mask *mask = new Mask(param);
 	
 	if (mask->is_mask)
 	{
-		std::cout << "it's a mask " << param << std::endl;
 		if (mode == 'I' && !this->isRepeatedMask(this->getInvitedList(), mask->getMask()))
 		{
 			if (!this->isCHModeSet('i') && !isRepeatedMask(_invitedList, mask->getMask()))
 				this->_mode.push_back(ft::ModeTools::findChannelMode('i'));
 			this->_invitedList.push_back(mask);
-			std::cout << "set i into channel mode if it was I and i was not set" << std::endl;
-			std::cout << "add to the invited list" << std::endl;
+			// std::cout << "set i into channel mode if it was I and i was not set" << std::endl;
+			std::cout << "Add to the invited list" << std::endl;
 		}
 		else if (mode == 'b' && !this->isRepeatedMask(this->getBannedList(), mask->getMask()))
 		{
@@ -287,7 +290,7 @@ int	ft::Channel::setChannelFlag(char mode, std::string param)
 		else if (mode == 'e' && !this->isRepeatedMask(this->getExceptionList(), mask->getMask()))
 		{
 			this->_exceptedList.push_back(mask);
-			std::cout << "add to the exception list" << std::endl;
+			std::cout << "Add to the exception list" << std::endl;
 		}
 		else
 			delete mask;
@@ -310,7 +313,7 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 				int i = _findMask(_invitedList, mask->getMask());
 				delete _invitedList[i];
 				_invitedList.erase(_invitedList.begin() + i);
-				std::cout << "delete " << param << " from the invite list" << std::endl;
+				std::cout << "Delete " << param << " from the invite list" << std::endl;
 			}
 		}
 		else if (mode == 'b')
@@ -320,7 +323,7 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 				int i = _findMask(_bannedList, mask->getMask());
 				delete _bannedList[i];
 				_bannedList.erase(_bannedList.begin() + i);
-				std::cout << "delete " << param << " from the ban list" << std::endl;
+				std::cout << "Delete " << param << " from the ban list" << std::endl;
 			}
 		}
 		else if (mode == 'e')
@@ -330,7 +333,7 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 				int i = _findMask(_exceptedList, mask->getMask());
 				delete _exceptedList[i];
 				_exceptedList.erase(_exceptedList.begin() + i);
-				std::cout << "delete " << param << " from the exception list" << std::endl;
+				std::cout << "Delete " << param << " from the exception list" << std::endl;
 			}
 		}
 	}
@@ -462,7 +465,6 @@ bool	ft::Channel::isUserInvited(ft::Client *client)
 		if (this->_invitedList[i]->match_client_mask(client))
 			return (true);
 	}
-	std::cout << "it doesn't match the mask" << std::endl;
 	return (false);
 }
 

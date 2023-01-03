@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 20:29:03 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 05:26:28 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void ft::Kick::execute(){
 		ft::Client *target;
 		for (int i = 0; i < int(_server->clients.size()); i++){
 			if (_server->clients[i]->getNickName() == _message->getParameter()[1]){
+				std::cout << BRED << "ErrMsg: No such a nick" << DEFCOLO << std::endl;
 				target = _server->clients[i];
 				ok = true;
 			}
@@ -76,15 +77,18 @@ void ft::Kick::execute(){
 				if (_server->channels[j]->getChName() == chName[i]){ // to check if channel exists and get the channel
 					if (_server->channels[j]->isMember(_client->getNickName()) == false){ // to check if user is in channel
 						_client->sendReply(ERR_NOTONCHANNEL(_server->getServerName(), _client->getNickName(), _server->channels[j]->getChName()));
+						std::cout << BRED << "ErrMsg: User not on channel" << DEFCOLO << std::endl;
 						return ;
 					}
 					if (_server->channels[j]->isMemberOperator(_client->getNickName()) == false){ // to check previliges
 						_client->sendReply(":" + _server->getServerName() + " 481 " + _client->getNickName() + " :You need operator Privilege\n");
+						std::cout << BRED << "ErrMsg: not a channel operator" << DEFCOLO << std::endl;
 						return ;
 					}
 					ok = true;
 					if (_server->channels[j]->isMember(target->getNickName()) == false){ // to check if user is in channel
 						_client->sendReply(ERR_USERNOTINCHANNEL(_server->getServerName(), target->getNickName(), _server->channels[j]->getChName()));
+						std::cout << BRED << "ErrMsg: User not on channel" << DEFCOLO << std::endl;
 						return ;
 					}
 					_server->channels[j]->removeUser(target->getNickName());
@@ -92,11 +96,17 @@ void ft::Kick::execute(){
 					std::vector<Channel_Member> clients = (_server->channels[j])->members;
 					std::vector<Channel_Member>::iterator it2 = clients.begin();
 					for (; it2 != clients.end(); it2++)
+					{
 						(*it2).user->sendReply(":" + _client->getNickName() + " KICK " + _server->channels[j]->getChName() + " " + target->getNickName() + " :" + _message->getParameter()[2]);
+						std::cout << "Kick " << _client->getNickName() << std::endl;
+					}
 				}
 			}
 			if (ok == false)
+			{
 				_client->sendReply(ERR_NOSUCHCHANNEL(_server->getServerName(), _client->getNickName(), chName[i]));
+				std::cout << BRED << "ErrMsg: no such a channel" << DEFCOLO << std::endl;
+			}
 		}
 	}
 }

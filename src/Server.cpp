@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/03 09:23:37 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 06:19:56 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void sig_handler(int signo)
 {
     if (signo == SIGINT)
     {
-        std::cout << "Closing server from ctrl+C" << std::endl;
+        std::cout << std::endl;
         closeServer = true;
     }
 }
@@ -84,11 +84,9 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
 
 ft::Server::~Server()
 {
-    std::cout << BGRN <<  "Server destroyed" << DEFCOLO << std::endl;
     // close all sockets
     for (size_t i = 0; i < clients.size(); i++)
     {
-        std::cout << BGRN << "free this client " << clients[i]->fd << DEFCOLO << std::endl;
         close(clients[i]->fd);
         delete clients[i];
     }
@@ -97,12 +95,10 @@ ft::Server::~Server()
     // delete all channels
     for (std::vector<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
     {
-        std::cout << BGRN << "free this Channel " << (*it)->getChName() << DEFCOLO << std::endl;
         delete (*it);
     }
 
     // delete all commands
-        std::cout << BGRN << "free Cmmands  " << DEFCOLO << std::endl;
     for (std::map<std::string, ft::Command *>::iterator it = _commands.begin(); it != _commands.end(); it++)
     {
         delete it->second;
@@ -137,7 +133,6 @@ void ft::Server::create_socket()
             freeaddrinfo(servinfo);
         exit(1);
     }
-    // set SO_KEEPALIVE
 
     if (setsockopt(this->master_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
     {
@@ -251,7 +246,7 @@ void ft::Server::acceptConnection()
         exit(1);
     }
     inet_ntop(their_addr.ss_family, get_in_addr((sockaddr *)&their_addr), ip_client, sizeof(ip_client));
-    std::cout << "create this client " << new_fd << std::endl;
+    std::cout << "Create this client " << new_fd << std::endl;
     this->clients.push_back(new ft::Client(new_fd, servername, ip_client));
     pollfd pfd = {new_fd, POLLIN, 0};
     fds.push_back(pfd);
@@ -403,7 +398,6 @@ int		isMsgParsed(std::string msg)
 	{
 		if (((int)msg[i] > 0 && (int)msg[i] < 32) && (int)msg[i] > 126)
 		{
-			// std::cout << i << " " << (int)msg[i] << " " << msg.size() << std::endl;
 			if ((int)msg[i] != 13 && (int)msg[i] != 10)
 				return (0);
 		}
@@ -420,7 +414,6 @@ std::vector<ft::Message *> ft::Server::splitMessage(std::string msg, char delim,
     std::vector<ft::Message *> messages;
     std::stringstream ss(msg);
     std::string item;
-	std::cout << "Received -> (" << msg.substr(0, msg.size() - 2) << ")" << std::endl;
 	if (!isMsgParsed(msg))
 		return (messages);
     while (std::getline(ss, item, delim))
@@ -522,10 +515,8 @@ bool ft::Server::isChannel(std::string CHname)
 
 ft::Channel *ft::Server::getChannel(std::string CHname)
 {
-	// std::cout << "size " << this->channels.size() << std::endl;
     for (long unsigned int i = 0; i < this->channels.size(); i++)
     {
-		// std::cout << i << " " << this->channels[i]->getChName() << std::endl; 
         if (this->channels[i]->getChName() == CHname)
         	return (this->channels[i]);
     }
