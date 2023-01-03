@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
+#    By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2023/01/03 09:24:29 by isaad            ###   ########.fr        #
+#    Updated: 2023/01/03 12:44:55 by oal-tena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,5 +78,8 @@ fclean:
 	@rm -f $(FT_NAME)
 
 re: fclean all
+
+bot:
+	make -C ./Bot
 
 .PHONY: all clean fclean re

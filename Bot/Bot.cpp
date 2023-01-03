@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bot.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oal-tena <oal-tena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 15:07:34 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 12:43:25 by oal-tena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ bool closeServer = false;
 #include <signal.h>
 #include <csignal>
 #include <poll.h>
+#include <unistd.h>
+#include <string>
 
 int main(int argc, char **argv)
 {
@@ -49,7 +51,7 @@ ft::Bot::Bot(std::string p, char *h, std::string pass, std::string nick){
 	struct sockaddr_in serv_addr;
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(6667);
+	serv_addr.sin_port = htons(atoi(this->port.c_str()));
 	serv_addr.sin_addr.s_addr = inet_addr(this->host);
 
 	// Connect to the server
