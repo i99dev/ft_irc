@@ -50,7 +50,6 @@ t_mask *split_mask(std::string &str)
 {
 	t_mask *mask = new t_mask;
 	mask->is_mask = false;
-			// std::cout << "mask here 1 ->" << str << std::endl;
     if (str.find('!') != std::string::npos && str.find('@') != std::string::npos)
     {
 		if (str.find_first_of('!') == str.find_last_of('!') && str.find_first_of('@') == str.find_last_of('@'))

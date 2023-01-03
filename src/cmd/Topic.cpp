@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 07:34:42 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 20:30:49 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 09:17:42 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ void	ft::Topic::changeTopic(void)
 	}
 }
 
-/*
-TODO: check if the client need to be a member to check the TOPIC
-	// for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-	// {
-	// 	if (this->_message->getParameter()[i].empty())
-	// 		std::cout << i << " empty" << std::endl;
-	// 	else std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
-	// 	// for (size_t j = 0; j < this->_message->getParameter()[i].size(); j++)
-	// 	// 	std::cout << "i " << i << " j " << j << " " << (int)this->_message->getParameter()[i][j] << std::endl;
-	// }
-*/
 void	ft::Topic::execute(void)
 {
 	if (_client)

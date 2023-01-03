@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 22:59:44 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 09:23:37 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ ft::Server::Server(std::string const &port, std::string const &password) : host(
     std::cout << BCYN << "Port: " << DEFCOLO << port << std::endl;
     std::cout << BCYN << "Password: " << DEFCOLO << password << std::endl;
     std::cout << BCYN << "Servername: " << DEFCOLO << servername << std::endl;
-	
+
     this->create_socket();
     init_commands();
     this->createPoll();
@@ -197,8 +197,6 @@ void ft::Server::createPoll()
         }
         else if (ret == 0)
         {
-            // std::cout << "|timeout|" << std::endl;
-            // checkConnection();
         }
         else if (ret > 0)
         {
@@ -273,13 +271,11 @@ int	ft::Server::getClientInfoPos(int FDpos)
 
 int	isCarriage(std::string arg)
 {
-	// std::cout << "--->" << arg << std::endl;
 	for (size_t i = 0; i < arg.size(); i++)
 	{
 		if (!std::isprint(arg[i]))
 			return (1);
 	}
-	// std::cout << "does have carraige" << std::endl;
 	return (0);
 }
 
@@ -320,7 +316,6 @@ void ft::Server::receiveMessage(int i)
     }
     else
     {
-        // std::cout << "CHECK____" << buf << "____CHECK" << std::endl;
         buf[nbytes] = '\0';
         if (!strchr(buf, '\n'))
         {
@@ -337,8 +332,6 @@ void ft::Server::receiveMessage(int i)
 			}
             for (size_t k = 0; k < args.size(); k++)
             {
-				// if (getClientInfoPos(i) < (int)this->clients.size())
-				// 	registerClient(this->clients[getClientInfoPos(i)]);
                 std::map<std::string, Command *>::iterator it;
                 if ((it = _commands.find(args[k]->getCommand())) != _commands.end() && !isCarriage(args[k]->getmsg()))
                 {
@@ -348,23 +341,17 @@ void ft::Server::receiveMessage(int i)
 						
 						Command *cmd = it->second;
 						cmd->setClient(this->clients[getClientInfoPos(i)]);
-						// std::cout << BMAG << "client pos " << getClientInfoPos(i) << " client size " << clients.size() << std::endl;
-						// std::cout << "fd pos " << i << " fd size " << fds.size() << DEFCOLO << std::endl;
-						// std::cout << "fd in fds " << fds[i].fd << " fd in client " << clients[getClientInfoPos(i)]->fd << DEFCOLO << std::endl;
 						cmd->setServer(this);
 						cmd->setMessage(args[k]);
 						cmd->execute();
 					}
 					else
 					{
-						// if (getClientInfoPos(i) < (int)this->clients.size())
-						// 	registerClient(this->clients[getClientInfoPos(i)]);
 						if (getClientInfoPos(i) < (int)this->clients.size())
                    			this->clients[getClientInfoPos(i)]->sendReply("ERROR :You are not fully registered\r");
 					}
                     delete args[k];
                     args[k] = NULL;
-                    // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
                 else
                 {
@@ -373,7 +360,6 @@ void ft::Server::receiveMessage(int i)
                     	this->clients[getClientInfoPos(i)]->sendReply("ERROR :Unknown command\r");
                     delete args[k];
                     args[k] = NULL;
-                    // std::cout << BGRN << "free message" << DEFCOLO << std::endl;
                 }
             }
 			if ((int)storage.size() > i)

@@ -6,7 +6,7 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 23:18:20 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 09:14:18 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ int ft::Join::createCH(std::string channelName, std::string channelKey){
 		channel->setKey(channelKey);
 		channel->setChannelMode('k', channelKey);
 	}
-	// channel->addUser(_client); // don't uncomment without Ibraar authroztion !!! :) 
 	_server->channels.push_back(channel);			// send message to client
 	std::string joinMsg = ":" + _client->getNickName() + " JOIN " + channel->getChName();
 	_client->sendReply(joinMsg);

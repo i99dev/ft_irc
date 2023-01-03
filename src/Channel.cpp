@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:48:50 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/29 16:52:22 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 09:18:22 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,10 @@ bool	ft::Channel::isMember(std::string nick)
 
 bool	ft::Channel::isMemberOperator(std::string nick)
 {
-	// std::cout << "member size " << this->members.size() << std::endl;
 	for (long unsigned int i = 0; i < this->members.size(); i++)
 	{
 		if (this->members[i].user->getNickName() == nick)
 		{
-			// std::cout << "member "<< std::endl;
 			if (this->members[i].user_mode == o_OPERATOR_PRIVILEGE || this->members[i].user_mode == O_CHANNEL_CREATOR)
 				return (true);
 		}
@@ -283,7 +281,6 @@ int	ft::Channel::setChannelFlag(char mode, std::string param)
 		else if (mode == 'b' && !this->isRepeatedMask(this->getBannedList(), mask->getMask()))
 		{
 			this->_bannedList.push_back(mask);
-			// this->kickBannedMember(mask);
 			std::cout << "add to the ban list" << std::endl;
 			std::cout << "kick the banned member in this mask" << std::endl;
 		}
@@ -310,8 +307,6 @@ int	ft::Channel::removeChannelFlag(char mode, std::string param)
 			//  TODO: check if the mask was there using isrepeated function then delete it using findMask
 			if (isRepeatedMask(_invitedList, mask->getMask()) && !_invitedList.empty())
 			{
-				// std::cout << "pos " << _findMask(_invitedList, mask->getMask()) << std::endl;
-				// std::cout << _invitedList[0]->getMask()->nick << std::endl;
 				int i = _findMask(_invitedList, mask->getMask());
 				delete _invitedList[i];
 				_invitedList.erase(_invitedList.begin() + i);

@@ -6,7 +6,7 @@
 #    By: isaad <isaad@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 10:58:57 by oal-tena          #+#    #+#              #
-#    Updated: 2023/01/03 00:11:14 by isaad            ###   ########.fr        #
+#    Updated: 2023/01/03 09:24:29 by isaad            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ OBJ_DIR = obj
 OBJ_NAME = $(SRC:.cpp=.o)
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 
-CXX = g++  
+CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 all: $(FT_NAME)

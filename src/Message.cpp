@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/30 09:36:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 09:19:27 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ void ft::Message::parseMessage(std::string const &msg)
 	
 	if (it->first == 0)
 	{
-		// if (it->second[0] == ':')
-		// {
-		// 	_Prefix = it->second.substr(1);
-		// 	it++;
-		// }
 		_Command = it->second;
 		it++;
 	}
@@ -117,13 +112,6 @@ std::string	ft::Message::getmsg()
 bool ft::Message::isValid(){
 	return true;
 }
-
-// bool ft::Message::isCommand(){
-// 	if (_Command.empty())
-// 		return false;
-// 	return true;
-// }
-
 
 bool ft::Message::isParameter(){
 	if (_Parameter.empty())

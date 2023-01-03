@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:56:51 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 20:29:25 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 09:16:52 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	ft::Mode::nextMode(std::string mode, int begin)
 
 	while (++i < mode.length())
 	{
-		// std::cout << "here " << mode[i] << std::endl;
 		if (mode[i] == '-' || mode[i] == '+')
 			return (i - 1);
 		this->modes[0] += action;
@@ -59,9 +58,6 @@ void	ft::Mode::actionToChangeCHMode(char mode, std::string param, char action)
 	Channel *channel = this->_server->getChannel(this->_message->getParameter()[0]);
 	if (action == SET)
 	{
-		// std::cout << "is channel mode " << ft::ModeTools::isCHMode(mode) << " is channel mode already set " << channel->isCHModeSet(mode) << std::endl;
-		// std::cout << "is member mode " << ft::ModeTools::isMEMode(mode) << " is member mode already set " << channel->isMEModeSet(channel->getMember(param), mode) << std::endl;
-		// std::cout << "is channel flag " << ft::ModeTools::isCHflag(mode) << std::endl;
 		if ((ft::ModeTools::isMEMode(mode) && !channel->isMEModeSet(channel->getMember(param), mode)) || (ft::ModeTools::isCHMode(mode) && !channel->isCHModeSet(mode)) || (ft::ModeTools::isCHflag(mode)))
 		{
 			std::cout << "set the channel mode" << std::endl;
@@ -94,9 +90,6 @@ void	ft::Mode::changeCHMode(void)
 	std::cout << "change the channel mode" << std::endl;
 	for (long unsigned int i = 0; i < this->modes[MODE].size(); i++)
 	{
-		// std::cout << "is channel mode " << ft::ModeTools::isCHMode(this->modes[MODE][i]) << std::endl;
-		// std::cout << "is member mode " << ft::ModeTools::isMEMode(this->modes[MODE][i]) << std::endl;
-		// std::cout << "is param mode " << ft::ModeTools::isParamMode(this->modes[MODE][i]) << std::endl;
 		if (!ft::ModeTools::isCHMode(this->modes[MODE][i]) && !ft::ModeTools::isMEMode(this->modes[MODE][i]) && !ft::ModeTools::isCHflag(this->modes[MODE][i]))
 		{
 			// ! ErrMsg unknown channel mode
@@ -118,8 +111,6 @@ void	ft::Mode::changeCHMode(void)
 				? if there were more than one param mode in required pM_count will increment
 				? so that it can point at the next position for the paramter
 			*/
-			// ! this meant to protect accesseing the array + check if the param of the next mode is available
-			// std::cout << "size of mode param " << this->_message->getParameter().size() << std::endl;
 			if ((size_t)(MODEPARAMPOS + pM_count) >= this->_message->getParameter().size())
 			{ 
 				// ! ErrMsg more param needed for mode
@@ -128,10 +119,8 @@ void	ft::Mode::changeCHMode(void)
 				std::cout << this->modes[MODE][i] << " errmsg NMP " << i << std::endl;
 				continue ;
 			}
-			// std::cout << "get mode param " << i << std::endl;
 			std::string param = this->_message->getParameter()[MODEPARAMPOS + pM_count];
 			pM_count++;
-			// std::cout << "param " << param << std::endl;
 			actionToChangeCHMode(this->modes[MODE][i], param, this->modes[ACTION][i]);
 			std::cout << this->modes[MODE][i] << " a param CHMode" << std::endl;
 		}
@@ -247,7 +236,6 @@ void	ft::Mode::UserMode(void)
 		return;
 	}
 	// ? mode command only applied on the same client
-	// std::cout << this->_client->getNickName() << " " << this->_message->getParameter()[0] << std::endl;
 	if (this->_message->getParameter()[0] == this->_client->getNickName())
 	{
 		// ? if one param then it's asking about the mode
@@ -291,13 +279,8 @@ void ft::Mode::execute(void)
 			_client->sendReply(ERR_NEEDMOREPARAMS(_server->getServerName(), _client->getNickName(), _message->getCommand()));
 			return ;
 		}
-		
-		// for (long unsigned int i = 0; i < this->_message->getParameter().size(); i++)
-		// 	std::cout << i << " " << this->_message->getParameter()[i] << std::endl;
 		if (this->_message->getParameter()[0][0] == '#')
 			ChannelMode();
-		// else
-		// 	UserMode();
 		this->modes.clear();
 	}
 }
