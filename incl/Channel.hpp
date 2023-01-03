@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:26:10 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/29 08:33:09 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:44:40 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ namespace ft
 			bool									isUserExcepted(ft::Client *client);
 			bool									isChannelFull();
 			bool									isCorrectKey(std::string &key);
-			
 			// ? MODE
 			int										setChannelMode(char mode, std::string param);
 			int										setChannelFlag(char mode, std::string param);
@@ -94,11 +93,10 @@ namespace ft
 			bool									isCHModeSet(char mode);
 			bool									isMEModeSet(Client *user, char mode);
 			std::string								getCHMode(void);
-			// bool									isMember(int OwnerFD);
 			bool									isMember(std::string nick);
 			bool									isMemberOperator(std::string nick);
 			bool									isRepeatedMask(const std::vector<ft::Mask *> &MasksList, t_mask *mask);
-			// void									kickBannedMember(ft::Mask *mask);
+			void									kickBannedMember(ft::Mask *mask);
 			// ? PART
 			void									removeUser(std::string nick);
 	};

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:18:38 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/01 20:31:01 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:30:19 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,5 @@ void ft::User::execute()
 			_client->USERflag++;
 			_server->registerClient(_client);
 		}
-		// if (_client->PASSFlag == 1 && _client->NICKflag == 1 && _client->USERflag >= 1)
-		// {
-		// 	if (_client->ALREADYREGISTERED == 0)
-		// 	{
-		// 		std::string msg = RPL_WELCOME(_server->getServerName(), _client->getNickName());
-		// 		_server->sendReply(_client, msg);
-		// 		msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
-		// 		_server->sendReply(_client, msg);
-		// 		msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
-		// 		_server->sendReply(_client, msg);
-		// 		msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
-		// 		_server->sendReply(_client, msg);
-		// 		_client->ALREADYREGISTERED = 1;
-		// 	}
-		// }
-		// else
-		// {
-		// 	std::cout << "🛑 Disconnect, connection registration failed" << std::endl;
-		// 	_server->remove_fds(_client->fd);
-		// 	_server->removeClient(_client);
-		// 	_client = NULL;
-		// }
 	}
 }

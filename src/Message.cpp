@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:55:02 by aaljaber          #+#    #+#             */
-/*   Updated: 2022/12/30 09:36:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 05:29:16 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static std::map<size_t, std::string> tokenize(std::string const &str, const char
 */
 void ft::Message::parseMessage(std::string const &msg)
 {
-	// std::cout << "msg size "
 	std::map<size_t, std::string> tokens = tokenize(msg, ' ');
 	std::map<size_t, std::string>::iterator it = tokens.begin();
 	std::map<size_t, std::string>::iterator ite = tokens.end();
@@ -46,11 +45,6 @@ void ft::Message::parseMessage(std::string const &msg)
 	
 	if (it->first == 0)
 	{
-		// if (it->second[0] == ':')
-		// {
-		// 	_Prefix = it->second.substr(1);
-		// 	it++;
-		// }
 		_Command = it->second;
 		it++;
 	}
@@ -78,10 +72,7 @@ void ft::Message::parseMessage(std::string const &msg)
 	std::cout << BBLU << "Command: " << DEFCOLO << _Command << std::endl;
 	std::cout << BBLU << "Parameter: " << DEFCOLO << std::endl;
 	for (size_t i = 0; i < _Parameter.size(); i++)
-	{
 		std::cout << _Parameter[i] << std::endl;
-	}
-	std::cout << "Parameter size: " << _Parameter.size() << std::endl;
 	std::cout << BYEL << "_____________" << DEFCOLO << std::endl;
 }
 
@@ -117,13 +108,6 @@ std::string	ft::Message::getmsg()
 bool ft::Message::isValid(){
 	return true;
 }
-
-// bool ft::Message::isCommand(){
-// 	if (_Command.empty())
-// 		return false;
-// 	return true;
-// }
-
 
 bool ft::Message::isParameter(){
 	if (_Parameter.empty())

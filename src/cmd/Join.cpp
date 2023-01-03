@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 23:18:20 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/03 05:37:30 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void ft::Join::addClient(int i){
 	for (size_t j = 0; j < _server->channels[i]->members.size(); j++)
 		_server->channels[i]->members[j].user->sendReply(":" + _client->getNickName() + " JOIN " + _server->channels[i]->getChName());
 	std::string topicMsg = RPL_NOTOPIC(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName());
-	if (_server->channels[i]->getTopic() != "SET TOPIC")
+	if (!_server->channels[i]->getTopic().empty())
 		topicMsg = RPL_TOPIC(_server->getServerName(), _client->getNickName(), _server->channels[i]->getChName(), _server->channels[i]->getTopic());
 	_client->sendReply(topicMsg);
 }

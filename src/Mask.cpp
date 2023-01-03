@@ -62,13 +62,13 @@ t_mask *split_mask(std::string &str)
 					mask->user = str.substr(str.find('!') + 1, str.find('@') - (str.find('!') + 1));
 				mask->host = str.substr(str.find('@') + 1);
 				mask->is_mask = true;
-				std::cout << "this case is a mask" << std::endl;
+				std::cout << "It is a mask" << std::endl;
 				return mask;
 			}
 		}
     }
 	delete mask;
-	std::cout << "ignore this case .. it's not a mask" << std::endl;
+	std::cout << "Ignore .. it's not a mask" << std::endl;
 	return (NULL);
 }
 
@@ -92,7 +92,6 @@ ft::Mask::Mask(std::string const &str):_mask(NULL), is_WildCard(false)
 	else
 	{
 		this->is_mask = this->_mask->is_mask;
-		std::cout << "is mask? " << this->is_mask << std::endl;
 		if (str.find('*') != std::string::npos)
 		{
 			if (str.find_first_of('*') == str.find_last_of('*'))

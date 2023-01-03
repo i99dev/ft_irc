@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:10:38 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/02 16:34:17 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 05:32:52 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void ft::Pass::execute()
 				_client->sendReply(ERR_ALREADYREGISTERED(_server->getServerName(), _client->getNickName()));	
 				return ;
 			}
-			// std::cout << "server password " << _server->password << std::endl;
-			// std::cout << "pass received " << _message->getParameter()[0] << std::endl;
 			if (_message->getParameter()[0] == _server->password)
 			{
 				_client->PASSFlag++;

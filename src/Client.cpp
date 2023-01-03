@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:47:17 by aaljaber          #+#    #+#             */
-/*   Updated: 2023/01/01 20:42:00 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:36:58 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,5 +226,4 @@ ft::Client::~Client() {
 	// clear all the messages
 	_msgRecv.clear();
 	_msgSend.clear();
-	std::cout << BGRN << "client destructor called" << DEFCOLO << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:14:34 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/02 16:57:18 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/03 05:40:10 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ ft::Nick::Nick(void)
 void	ft::Nick::connectClientBack()
 {
 	_client = NULL;
-	// _server->CLIENTISBACK = false;
 	std::string msg = RPL_WELCOMEBACK(_server->getServerName(), _message->getParameter()[0]);
 	send(_server->CLIENTBACKFD, msg.c_str(), msg.size(), 0);
-	// std::cout << "join back to old channels" << std::endl;
 	for (size_t i = 0; i < _server->channels.size(); i++)
 	{
 		if (_server->channels[i]->isMember(_message->getParameter()[0]))
@@ -35,7 +33,9 @@ void	ft::Nick::connectClientBack()
 				if (_server->channels[i]->members[j].user->fd == _server->CLIENTBACKFD)
 				{
 					std::string joinMsg = ":" + _message->getParameter()[0] + " JOIN " + _server->channels[i]->getChName();
-					_server->channels[i]->members[j].user->sendReply(joinMsg);					
+					_server->channels[i]->members[j].user->sendReply(joinMsg);
+					joinMsg = RPL_TOPIC(_server->getServerName(), _server->channels[i]->members[j].user->getNickName(), _server->channels[i]->getChName(), _server->channels[i]->getTopic());
+					_server->channels[i]->members[j].user->sendReply(joinMsg);				
 				}
 			}
 		}
@@ -73,27 +73,17 @@ void ft::Nick::execute()
 		}
 		if (_client)
 		{
-			// std::cout << "nick " << _client->getNickName() << std::endl;
 			if (_client->getNickName() == "")
 			{
 				_client->setNickName(nickName);
 				std::cout << "The first set to the Nick " << nickName << std::endl;
-				// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-				// _server->sendReply(_client, msg);
-				// msg = RPL_YOURHOST(_server->getServerName(), _client->getNickName(), _server->getVersion());
-				// _server->sendReply(_client, msg);
-				// msg = RPL_CREATED(_server->getServerName(), _client->getNickName());
-				// _server->sendReply(_client, msg);
-				// msg = RPL_MYINFO(_server->getServerName(), _client->getNickName(), _server->getVersion(), "User modes: ov", "Channel modes: imtlk");
-				// _server->sendReply(_client, msg);
 				_client->NICKflag++;
 				_server->registerClient(_client);
 				return;
 			}
 			std::cout << "Changing the Nick from " << _client->getNickName() << " to " << nickName << std::endl;
 			_client->setNickName(nickName);
-			// std::string msg = RPL_WELCOME(_server->getServerName(), nickName);
-			// _server->sendReply(_client, msg);
+
 		}
 	}
 }
