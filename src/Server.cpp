@@ -6,7 +6,7 @@
 /*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:10:58 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/03 06:19:56 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/05 07:20:24 by aaljaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ int	isCarriage(std::string arg)
 {
 	for (size_t i = 0; i < arg.size(); i++)
 	{
-		if (!std::isprint(arg[i]))
+		if (!std::isprint(arg[i]) && (int)arg[i] != 1)
 			return (1);
 	}
 	return (0);
