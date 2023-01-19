@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaljaber <aaljaber@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 06:54:54 by oal-tena          #+#    #+#             */
-/*   Updated: 2023/01/03 06:20:10 by aaljaber         ###   ########.fr       */
+/*   Updated: 2023/01/19 09:05:44 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int ft::Join::breakers(std::string channelName, int i){
 	if (!_server->channels[i]->isUserExcepted(_client)){
 		if (_server->channels[i]->isUserBanned(_client)){
 			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+b) - banned");
+			_client->sendReply(":" + _client->getNickName() + " KICK " + channelName + " " + _client->getNickName() + " :" + "Cannot join channel (+i) - invite only");
 			return 1;
 		}
 	}
@@ -177,6 +178,7 @@ int ft::Join::breakers(std::string channelName, int i){
 	if (_server->channels[i]->isCHModeSet('l')){
 		if (_server->channels[i]->isChannelFull()){
 			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+l) - channel is full");
+			_client->sendReply(":" + _client->getNickName() + " KICK " + channelName + " " + _client->getNickName() + " :" + "Cannot join channel (+i) - invite only");
 			return 1;
 		}
 	}
@@ -184,6 +186,7 @@ int ft::Join::breakers(std::string channelName, int i){
 	if (_server->channels[i]->isCHModeSet('i')){
 		if (!_server->channels[i]->isUserInvited(_client)){
 			_client->sendReply("-!- " + _client->getNickName() + ": Cannot join channel " + channelName + " (+i) - invite only");
+			_client->sendReply(":" + _client->getNickName() + " KICK " + channelName + " " + _client->getNickName() + " :" + "Cannot join channel (+i) - invite only");
 			return 1;
 		}
 	}
